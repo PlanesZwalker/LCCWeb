@@ -371,19 +371,35 @@
 
             // Initialize 2D Game
             console.log('🎮 Creating LettersCascadeGame instance...');
-            window.game = new LettersCascadeGame();
-            console.log('✅ 2D Game initialized successfully');
+            
+            // Check if canvas exists before creating game
+            const canvas = document.getElementById('gameCanvas');
+            if (!canvas) {
+                console.error('❌ Canvas element not found! Cannot initialize game.');
+                return;
+            }
+            console.log('✅ Canvas element found:', canvas);
+            
+            try {
+                window.game = new LettersCascadeGame();
+                console.log('✅ 2D Game initialized successfully');
+            } catch (error) {
+                console.error('❌ Error initializing game:', error);
+                return;
+            }
             
             // Check game state
             console.log('📊 Game state after initialization:', {
                 game: window.game,
                 hasGame: !!window.game,
-                gameType: typeof window.game
+                gameType: typeof window.game,
+                canvas: window.game.canvas,
+                ctx: window.game.ctx
             });
             
             // Check DOM elements
             const gameElements = {
-                gameGrid: document.getElementById('gameGrid'),
+                gameCanvas: document.getElementById('gameCanvas'),
                 scoreDisplay: document.getElementById('scoreDisplay'),
                 levelDisplay: document.getElementById('levelDisplay'),
                 wordsCompleted: document.getElementById('wordsCompleted'),
@@ -404,6 +420,18 @@
                     console.log('✅ Found DOM element:', name);
                 }
             });
+            
+            // Additional game checks
+            if (window.game) {
+                console.log('🎯 Game properties check:', {
+                    gridSize: window.game.gridSize,
+                    cellSize: window.game.cellSize,
+                    canvas: window.game.canvas,
+                    ctx: window.game.ctx,
+                    gameRunning: window.game.gameRunning,
+                    targetWords: window.game.targetWords
+                });
+            }
         });
         
         // Add debugging for game control functions
