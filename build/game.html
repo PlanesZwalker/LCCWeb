@@ -10,40 +10,46 @@
     <link rel="stylesheet" href="css/shared.css">
     <script src="js/utils.js"></script>
     <style>
-        /* Enhanced 3D Game Layout */
+        /* Enhanced 3D Game Layout - Optimized for single screen */
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: var(--spacing-xl);
+            grid-template-columns: 1fr 300px;
+            gap: var(--spacing-md);
             max-width: 1400px;
             margin: 0 auto;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .game-section {
-            animation: slideInUp 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
         }
 
         .sidebar {
-            animation: slideInRight 0.6s ease-out;
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-sm);
+            height: 100%;
+            overflow-y: auto;
         }
 
-        /* Enhanced Game Header */
+        /* Enhanced Game Header - Compact */
         .game-header {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
             border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
         }
 
         .game-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: var(--spacing-sm);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-xs);
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -51,28 +57,32 @@
         }
 
         .game-header p {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--gray-300);
             margin: 0;
         }
 
-        /* Enhanced Game Container */
+        /* Enhanced Game Container - Compact */
         .game-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
+            padding: var(--spacing-md);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
-        /* Enhanced Controls Section */
+        /* Enhanced Controls Section - Compact */
         .controls-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-lg);
-            margin-bottom: var(--spacing-xl);
-            padding: var(--spacing-lg);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-md);
             background: rgba(255, 255, 255, 0.03);
             border-radius: var(--radius-lg);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -81,30 +91,28 @@
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-md);
+            gap: var(--spacing-sm);
         }
 
         .control-group h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--gray-300);
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        /* Enhanced Game Controls */
+        /* Enhanced Game Controls - Compact */
         .game-controls {
             display: flex;
-            gap: var(--spacing-md);
+            gap: var(--spacing-sm);
             flex-wrap: wrap;
         }
 
         .game-controls .btn {
-            flex: 1;
-            min-width: 120px;
-            padding: var(--spacing-md) var(--spacing-lg);
-            font-size: 1rem;
-            font-weight: 600;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 0.9rem;
+            min-width: auto;
         }
 
         /* Enhanced Mode and Grid Selection */
@@ -228,133 +236,129 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Enhanced Game Info */
+        /* Enhanced Game Info - Compact */
         .game-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
         }
 
         .info-section {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .info-section h3 {
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-md);
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        /* Enhanced Score Display */
-        .score-display {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: var(--spacing-md);
-        }
-
-        .score-item {
             background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--radius-md);
             padding: var(--spacing-sm);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .score-item span {
+        .info-section h4 {
+            font-size: 0.8rem;
+            color: var(--gray-300);
+            margin-bottom: var(--spacing-xs);
+            text-transform: uppercase;
+        }
+
+        .info-section .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Enhanced Score Display - Compact */
+        .score-display {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .score-display span {
+            display: block;
             font-size: 0.9rem;
             color: var(--gray-300);
+            margin-bottom: var(--spacing-xs);
         }
 
-        .score-item strong {
-            display: block;
-            font-size: 1.2rem;
+        .score-display strong {
+            font-size: 1.5rem;
             color: var(--accent-color);
-            margin-top: var(--spacing-xs);
+            font-weight: bold;
         }
 
-        /* Enhanced Word List */
-        .word-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: var(--spacing-sm);
+        /* Enhanced Word List - Compact */
+        .word-list {
+            max-height: 120px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
         }
 
         .word-list li {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
             cursor: pointer;
         }
 
-        .word-list li:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-
         .word-list li.completed {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
-            border-color: rgba(76, 175, 80, 0.3);
-            color: #4caf50;
+            background: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.5);
         }
 
-        /* Enhanced Letter Queue */
+        /* Enhanced Letter Queue - Compact */
         .letter-queue {
-            margin-top: var(--spacing-lg);
-        }
-
-        .queue-display {
             display: flex;
-            gap: var(--spacing-sm);
-            flex-wrap: wrap;
-            margin-top: var(--spacing-sm);
+            gap: var(--spacing-xs);
+            justify-content: center;
+            margin-bottom: var(--spacing-sm);
         }
 
         .queue-letter {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border-radius: var(--radius-md);
+            width: 30px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--white);
             font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-            animation: queueBounce 2s infinite;
+            font-size: 0.9rem;
+            transition: var(--transition);
         }
 
-        /* Enhanced Sidebar */
+        /* Enhanced Sidebar Sections - Compact */
         .sidebar-section {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
 
         .sidebar-section h3 {
-            font-size: 1.2rem;
-            margin-bottom: var(--spacing-md);
-            color: var(--accent-color);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
+            font-size: 1rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--white);
         }
 
         .sidebar-section p {
+            font-size: 0.9rem;
             color: var(--gray-300);
-            line-height: 1.6;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
 
         /* Enhanced Concept Showcase */
@@ -413,45 +417,25 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Responsive Design */
+        /* Responsive adjustments */
         @media (max-width: 1200px) {
             .main-content {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-lg);
-            }
-
-            .sidebar {
-                order: 2;
-            }
-
-            .game-section {
-                order: 1;
-            }
-
-            .controls-section {
-                grid-template-columns: 1fr;
-            }
-
-            .game-info {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 250px;
             }
         }
 
         @media (max-width: 768px) {
-            .game-header h1 {
-                font-size: 2rem;
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
             }
-
-            .game-controls {
-                flex-direction: column;
+            
+            .controls-section {
+                grid-template-columns: 1fr;
             }
-
-            .mode-selection, .grid-selection {
-                justify-content: center;
-            }
-
-            .score-display {
-                grid-template-columns: repeat(2, 1fr);
+            
+            .game-info {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -542,31 +526,28 @@
                         <!-- Enhanced Game Info -->
                         <div class="game-info">
                             <div class="info-section">
-                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
-                                <div class="score-display">
-                                    <div class="score-item">
-                                        <span>Score</span>
-                                        <strong id="scoreValue">0</strong>
+                                <h4>Score</h4>
+                                <strong class="value" id="scoreValue">0</strong>
             </div>
-                                    <div class="score-item">
-                                        <span>Niveau</span>
-                                        <strong id="levelValue">1</strong>
+                                    <div class="info-section">
+                                        <h4>Niveau</h4>
+                                        <strong class="value" id="levelValue">1</strong>
             </div>
-                                    <div class="score-item">
-                                        <span>Mode</span>
-                                        <strong id="currentMode">2D</strong>
+                                    <div class="info-section">
+                                        <h4>Mode</h4>
+                                        <strong class="value" id="currentMode">2D</strong>
             </div>
-                                    <div class="score-item">
-                                        <span>Grille</span>
-                                        <strong id="currentGrid">10×10</strong>
+                                    <div class="info-section">
+                                        <h4>Grille</h4>
+                                        <strong class="value" id="currentGrid">10×10</strong>
             </div>
-                                    <div class="score-item">
-                                        <span>Temps</span>
-                                        <strong id="timeValue">00:00</strong>
+                                    <div class="info-section">
+                                        <h4>Temps</h4>
+                                        <strong class="value" id="timeValue">00:00</strong>
         </div>
-                                    <div class="score-item">
-                                        <span>Mots</span>
-                                        <strong id="wordsValue">0</strong>
+                                    <div class="info-section">
+                                        <h4>Mots</h4>
+                                        <strong class="value" id="wordsValue">0</strong>
         </div>
         </div>
         </div>
