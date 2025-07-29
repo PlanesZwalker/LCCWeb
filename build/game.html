@@ -478,6 +478,384 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Enhanced Full Screen Mode */
+        .game-container.fullscreen {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 9999 !important;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            animation: fullscreenEnter 0.5s ease-out !important;
+        }
+
+        @keyframes fullscreenEnter {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .game-container.fullscreen .game-header {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 1rem 2rem !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            animation: slideDown 0.5s ease-out !important;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .game-container.fullscreen .game-header h1 {
+            font-size: 2rem !important;
+            margin: 0 !important;
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        .game-container.fullscreen .controls-section {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 1rem 2rem !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+            gap: 2rem !important;
+            animation: slideDown 0.5s ease-out 0.1s both !important;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .game-container.fullscreen .game-grid-container {
+            flex: 1 !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 2rem !important;
+            position: relative !important;
+        }
+
+        .game-container.fullscreen .game-grid-container::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: radial-gradient(circle at center, rgba(102, 126, 234, 0.1) 0%, transparent 70%) !important;
+            pointer-events: none !important;
+        }
+
+        .game-container.fullscreen #gameGrid canvas {
+            max-width: 90vw !important;
+            max-height: 90vh !important;
+            width: auto !important;
+            height: auto !important;
+            border: 3px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+            animation: canvasAppear 0.8s ease-out 0.3s both !important;
+        }
+
+        @keyframes canvasAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateY(15deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        .game-container.fullscreen .game-info {
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            padding: 1rem 2rem !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+            gap: 1.5rem !important;
+            animation: slideUp 0.5s ease-out 0.2s both !important;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .game-container.fullscreen .info-section {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            padding: 1rem !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .game-container.fullscreen .info-section:hover {
+            background: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2) !important;
+        }
+
+        .game-container.fullscreen .info-section h4 {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.5rem !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .game-container.fullscreen .info-section .value {
+            font-size: 1.5rem !important;
+            font-weight: 700 !important;
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        .game-container.fullscreen .btn {
+            padding: 0.75rem 1.5rem !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+        }
+
+        .game-container.fullscreen .btn:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        .game-container.fullscreen .btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        /* Full Screen Exit Button */
+        .fullscreen-exit {
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            width: 50px !important;
+            height: 50px !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            z-index: 10000 !important;
+            font-size: 1.5rem !important;
+            color: white !important;
+            transition: all 0.3s ease !important;
+            animation: exitButtonAppear 0.5s ease-out 0.4s both !important;
+        }
+
+        @keyframes exitButtonAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(180deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .fullscreen-exit:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        /* Full Screen Sidebar */
+        .game-container.fullscreen .sidebar {
+            position: fixed !important;
+            right: 20px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            width: 300px !important;
+            max-height: 80vh !important;
+            background: rgba(0, 0, 0, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 16px !important;
+            padding: 1.5rem !important;
+            overflow-y: auto !important;
+            z-index: 10001 !important;
+            animation: sidebarSlideIn 0.6s ease-out 0.5s both !important;
+        }
+
+        @keyframes sidebarSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .game-container.fullscreen .sidebar-section {
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .game-container.fullscreen .sidebar-section:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            transform: translateX(-5px) !important;
+        }
+
+        .game-container.fullscreen .sidebar-section h3 {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.75rem !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .game-container.fullscreen .sidebar-section p {
+            font-size: 0.9rem !important;
+            line-height: 1.5 !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        /* Full Screen Word List */
+        .game-container.fullscreen .word-list {
+            max-height: 200px !important;
+            overflow-y: auto !important;
+        }
+
+        .game-container.fullscreen .word-list li {
+            padding: 0.5rem 0.75rem !important;
+            margin-bottom: 0.5rem !important;
+            font-size: 0.9rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .game-container.fullscreen .word-list li:hover {
+            background: rgba(102, 126, 234, 0.2) !important;
+            transform: translateX(5px) !important;
+        }
+
+        /* Full Screen Letter Queue */
+        .game-container.fullscreen .letter-queue {
+            margin-top: 1rem !important;
+        }
+
+        .game-container.fullscreen .queue-display {
+            display: flex !important;
+            gap: 0.5rem !important;
+            flex-wrap: wrap !important;
+        }
+
+        .game-container.fullscreen .queue-letter {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.2rem !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .game-container.fullscreen .queue-letter:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        /* Responsive Full Screen */
+        @media (max-width: 1200px) {
+            .game-container.fullscreen .controls-section {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .game-container.fullscreen .sidebar {
+                width: 250px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-container.fullscreen .game-header h1 {
+                font-size: 1.5rem !important;
+            }
+            
+            .game-container.fullscreen .controls-section {
+                padding: 0.75rem 1rem !important;
+            }
+            
+            .game-container.fullscreen .game-info {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
+            }
+            
+            .game-container.fullscreen .sidebar {
+                position: static !important;
+                width: 100% !important;
+                max-height: none !important;
+                transform: none !important;
+                margin-top: 1rem !important;
+            }
+            
+            .game-container.fullscreen #gameGrid canvas {
+                max-width: 95vw !important;
+                max-height: 60vh !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1866,29 +2244,55 @@
             console.log('🎨 Canvas found for fullscreen:', canvas);
             
             if (canvas && game3D && game3D.renderer) {
+                // Calculate optimal canvas size for full screen
                 const container = gameContainer.querySelector('.game-grid-container');
                 const containerRect = container.getBoundingClientRect();
-                const maxSize = Math.min(containerRect.width, containerRect.height) * 0.9;
+                const maxWidth = Math.min(containerRect.width * 0.9, window.innerWidth * 0.8);
+                const maxHeight = Math.min(containerRect.height * 0.9, window.innerHeight * 0.7);
+                const canvasSize = Math.min(maxWidth, maxHeight);
                 
                 console.log('📐 Fullscreen dimensions:', {
                     containerWidth: containerRect.width,
                     containerHeight: containerRect.height,
-                    maxSize: maxSize
+                    maxWidth: maxWidth,
+                    maxHeight: maxHeight,
+                    canvasSize: canvasSize
                 });
                 
-                canvas.width = maxSize;
-                canvas.height = maxSize;
-                game3D.renderer.setSize(maxSize, maxSize);
+                canvas.width = canvasSize;
+                canvas.height = canvasSize;
+                game3D.renderer.setSize(canvasSize, canvasSize);
                 
                 // Update camera aspect ratio
                 if (game3D.camera) {
-                    game3D.camera.aspect = maxSize / maxSize;
+                    game3D.camera.aspect = canvasSize / canvasSize;
                     game3D.camera.updateProjectionMatrix();
                     console.log('📷 Camera aspect ratio updated for fullscreen');
+                }
+                
+                // Enhance 3D scene for full screen
+                if (game3D.scene) {
+                    // Adjust camera position for better view
+                    game3D.camera.position.set(0, 0, 18);
+                    game3D.camera.lookAt(0, 0, 0);
+                    
+                    // Enhance lighting for full screen
+                    game3D.scene.children.forEach(child => {
+                        if (child.type === 'DirectionalLight') {
+                            child.intensity = 1.5;
+                        } else if (child.type === 'PointLight') {
+                            child.intensity = 1.2;
+                        }
+                    });
+                    
+                    console.log('🎬 3D scene enhanced for fullscreen');
                 }
             } else {
                 console.warn('⚠️ Canvas or renderer not available for fullscreen resize');
             }
+            
+            // Add keyboard shortcuts for full screen
+            document.addEventListener('keydown', handleFullScreenKeyboard);
             
             console.log('✅ Entered full screen mode');
         }
@@ -1924,11 +2328,74 @@
                     game3D.camera.updateProjectionMatrix();
                     console.log('📷 Camera aspect ratio reset');
                 }
+                
+                // Reset 3D scene to normal mode
+                if (game3D.scene) {
+                    // Reset camera position
+                    game3D.camera.position.set(0, 0, 15);
+                    game3D.camera.lookAt(0, 0, 0);
+                    
+                    // Reset lighting
+                    game3D.scene.children.forEach(child => {
+                        if (child.type === 'DirectionalLight') {
+                            child.intensity = 1.2;
+                        } else if (child.type === 'PointLight') {
+                            child.intensity = 1;
+                        }
+                    });
+                    
+                    console.log('🎬 3D scene reset to normal mode');
+                }
             } else {
                 console.warn('⚠️ Canvas or renderer not available for fullscreen exit resize');
             }
             
+            // Remove keyboard shortcuts
+            document.removeEventListener('keydown', handleFullScreenKeyboard);
+            
             console.log('✅ Exited full screen mode');
+        }
+
+        function handleFullScreenKeyboard(event) {
+            switch(event.key) {
+                case 'Escape':
+                    console.log('⌨️ Escape key pressed - exiting fullscreen');
+                    event.preventDefault();
+                    exitFullScreen();
+                    break;
+                case 'F11':
+                    console.log('⌨️ F11 key pressed - exiting fullscreen');
+                    event.preventDefault();
+                    exitFullScreen();
+                    break;
+                case ' ':
+                    console.log('⌨️ Space key pressed - toggling game pause');
+                    event.preventDefault();
+                    if (game3D) {
+                        if (game3D.gameRunning && !game3D.paused) {
+                            game3D.pauseGame();
+                        } else if (game3D.gameRunning && game3D.paused) {
+                            game3D.startGame();
+                        }
+                    }
+                    break;
+                case 'r':
+                case 'R':
+                    console.log('⌨️ R key pressed - resetting game');
+                    event.preventDefault();
+                    if (game3D) {
+                        game3D.resetGame();
+                    }
+                    break;
+                case 's':
+                case 'S':
+                    console.log('⌨️ S key pressed - starting game');
+                    event.preventDefault();
+                    if (game3D && !game3D.gameRunning) {
+                        game3D.startGame();
+                    }
+                    break;
+            }
         }
 
         // Keyboard shortcut for full screen (F11)
