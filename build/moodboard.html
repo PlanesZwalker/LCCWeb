@@ -9,10 +9,106 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/shared.css">
     <style>
-        /* Professional Market Study Layout */
+        /* Professional Market Study Layout - Enhanced */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-xl);
+            min-height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .nav-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: fit-content;
+            position: sticky;
+            top: var(--spacing-lg);
+        }
+
+        .nav-sidebar h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-links a:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .glass-panel h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass-panel p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
         .market-study-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: var(--spacing-xl);
             margin-top: var(--spacing-xl);
         }
@@ -28,7 +124,7 @@
         }
 
         .market-section:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow-xl);
         }
 
@@ -38,15 +134,15 @@
             display: flex;
             align-items: center;
             gap: var(--spacing-md);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: var(--spacing-sm);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: var(--spacing-md);
         }
 
         .reference-analysis {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: var(--spacing-lg);
             margin-top: var(--spacing-lg);
         }
@@ -68,7 +164,7 @@
 
         .reference-card img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
             border-radius: var(--radius-md);
             margin-bottom: var(--spacing-md);
@@ -77,54 +173,74 @@
 
         .reference-card h3 {
             color: var(--gray-800);
-            margin-bottom: var(--spacing-sm);
-            font-size: 1.2rem;
-            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            font-size: 1.3rem;
+            font-weight: 700;
         }
 
         .reference-card .insight {
-            color: var(--gray-600);
-            font-size: 0.95rem;
+            color: var(--gray-700);
+            font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary-color);
         }
 
         .reference-card .key-points {
             background: rgba(102, 126, 234, 0.1);
             border-left: 3px solid var(--primary-color);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-sm);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+        }
+
+        .reference-card .key-points strong {
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: var(--spacing-sm);
         }
 
         .reference-card .key-points ul {
             margin: 0;
             padding-left: var(--spacing-md);
             color: var(--gray-700);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .reference-card .key-points li {
             margin-bottom: var(--spacing-xs);
+            line-height: 1.5;
         }
 
         .market-insight {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
             border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
+            padding: var(--spacing-xl);
             margin: var(--spacing-xl) 0;
             border-left: 4px solid var(--accent-color);
         }
 
         .market-insight h3 {
             color: var(--primary-color);
-            margin-bottom: var(--spacing-md);
-            font-size: 1.3rem;
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .market-insight p {
             color: var(--gray-700);
-            line-height: 1.6;
-            margin-bottom: var(--spacing-sm);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+            font-size: 1rem;
+        }
+
+        .market-insight strong {
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         .concept-showcase {
@@ -141,12 +257,33 @@
             box-shadow: var(--shadow-lg);
         }
 
+        .concept-main h2 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
         .concept-main img {
             width: 100%;
-            height: 300px;
+            height: 320px;
             object-fit: cover;
             border-radius: var(--radius-lg);
             margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .concept-main h3 {
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .concept-main p {
+            color: var(--gray-700);
+            line-height: 1.6;
+            font-size: 1rem;
         }
 
         .concept-analysis {
@@ -154,6 +291,13 @@
             border-radius: var(--radius-xl);
             padding: var(--spacing-xl);
             box-shadow: var(--shadow-lg);
+        }
+
+        .concept-analysis h2 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .analysis-item {
@@ -167,21 +311,44 @@
         .analysis-item h4 {
             color: var(--primary-color);
             margin-bottom: var(--spacing-sm);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .analysis-item p {
             color: var(--gray-700);
-            line-height: 1.5;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 1200px) {
+            .page-layout {
+                grid-template-columns: 250px 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .market-study-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
-            .reference-analysis {
+            .page-layout {
                 grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .nav-sidebar {
+                position: static;
+                margin-bottom: var(--spacing-lg);
             }
             
             .concept-showcase {
                 grid-template-columns: 1fr;
+            }
+            
+            .glass-panel h1 {
+                font-size: 2rem;
             }
         }
     </style>
