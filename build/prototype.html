@@ -1038,6 +1038,13 @@
             
             try {
                 window.game = new LettersCascadeGame();
+                // Initialize the game after creation
+                if (window.game && typeof window.game.init === 'function') {
+                    window.game.init();
+                    console.log('✅ Game initialization completed');
+                } else {
+                    console.error('❌ Game init method not available');
+                }
                 console.log('✅ 2D Game initialized successfully');
             } catch (error) {
                 console.error('❌ Error initializing game:', error);

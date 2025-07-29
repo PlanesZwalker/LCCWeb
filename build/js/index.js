@@ -31,6 +31,9 @@ class LettersCascadeGame {
         this.fallSpeed = 1000; // milliseconds
         this.fallTimer = null;
         
+        // Initialize grid immediately
+        this.createGrid();
+        
         // Word Detection System
         this.dictionary = this.loadDictionary();
         this.wordDetector = new WordDetector(this.dictionary);
@@ -77,7 +80,6 @@ class LettersCascadeGame {
         this.resizeCanvas();
         
         // Initialize game systems
-        this.createGrid();
         this.generateLetterQueue();
         this.updateDisplay();
         this.setupEventListeners();
@@ -492,15 +494,40 @@ class LettersCascadeGame {
     }
     
     checkCollision(x, y) {
+        // Add safety checks for grid
+        if (!this.grid) {
+            console.error('❌ Grid is undefined in checkCollision');
+            return true; // Return collision to prevent further errors
+        }
+        
         if (y >= this.currentGridSize) return true;
         if (x < 0 || x >= this.currentGridSize) return true;
-        return this.grid[y] && this.grid[y][x] !== null;
+        
+        // Add safety check for grid row
+        if (!this.grid[y]) {
+            console.error('❌ Grid row is undefined:', y);
+            return true;
+        }
+        
+        return this.grid[y][x] !== null;
     }
     
     placeLetter() {
         if (!this.fallingLetter) return;
         
         const { x, y, letter } = this.fallingLetter;
+        
+        // Add safety checks for grid
+        if (!this.grid) {
+            console.error('❌ Grid is undefined in placeLetter');
+            return;
+        }
+        
+        if (!this.grid[y]) {
+            console.error('❌ Grid row is undefined:', y);
+            return;
+        }
+        
         this.grid[y][x] = letter;
         this.stats.lettersPlaced++;
         
