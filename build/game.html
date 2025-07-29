@@ -755,68 +755,110 @@
                 const container = document.getElementById('gameGrid');
                 const canvas = document.createElement('canvas');
                 canvas.id = 'threejsCanvas';
-                canvas.width = 400;
-                canvas.height = 400;
+                canvas.width = 500;
+                canvas.height = 500;
                 canvas.style.border = '2px solid rgba(255, 255, 255, 0.3)';
-                canvas.style.borderRadius = '8px';
-            container.innerHTML = '';
+                canvas.style.borderRadius = '12px';
+                canvas.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                container.innerHTML = '';
                 container.appendChild(canvas);
 
+                // Enhanced scene setup
                 this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x1a1a2e);
+                
+                // Enhanced camera with better positioning
                 this.camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
-                this.renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                this.camera.position.set(0, 0, 15);
+                this.camera.lookAt(0, 0, 0);
+
+                // Enhanced renderer with better quality
+                this.renderer = new THREE.WebGLRenderer({ 
+                    canvas: canvas, 
+                    alpha: true, 
+                    antialias: true,
+                    powerPreference: "high-performance"
+                });
                 
                 this.renderer.setSize(canvas.width, canvas.height);
-                this.renderer.setClearColor(0x000000, 0.1);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 this.renderer.shadowMap.enabled = true;
                 this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
 
-                // Create 3D grid with better materials
-                const cellSize = 0.8;
+                // Create enhanced 3D grid
+                const cellSize = 1.2;
+                const gap = 0.2;
                 this.grid = [];
 
                 for (let row = 0; row < this.gridSize; row++) {
                     this.grid[row] = [];
                     for (let col = 0; col < this.gridSize; col++) {
+                        // Enhanced cube geometry
                         const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+                        
+                        // Enhanced material with gradient effect
                         const material = new THREE.MeshPhongMaterial({ 
-                            color: 0x667eea, 
+                            color: 0x2a2a3e, 
                             transparent: true, 
-                            opacity: 0.4,
-                            shininess: 100
+                            opacity: 0.8,
+                            shininess: 100,
+                            specular: 0x444444
                         });
+                        
                         const cube = new THREE.Mesh(geometry, material);
                         cube.position.set(
-                            (col - this.gridSize/2) * cellSize,
-                            (row - this.gridSize/2) * cellSize,
+                            (col - this.gridSize/2) * (cellSize + gap),
+                            (row - this.gridSize/2) * (cellSize + gap),
                             0
                         );
                         cube.castShadow = true;
                         cube.receiveShadow = true;
+                        
+                        // Add user data for interaction
+                        cube.userData = { row, col, hovered: false };
+                        
                         this.scene.add(cube);
-                        this.grid[row][col] = { mesh: cube, letter: null, filled: false };
+                        this.grid[row][col] = { 
+                            mesh: cube, 
+                            letter: null, 
+                            filled: false,
+                            row,
+                            col
+                        };
                     }
                 }
 
-                // Add better lighting
-                const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+                // Enhanced lighting system
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
                 this.scene.add(ambientLight);
                 
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-                directionalLight.position.set(5, 10, 5);
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                directionalLight.position.set(10, 10, 5);
                 directionalLight.castShadow = true;
-                directionalLight.shadow.mapSize.width = 1024;
-                directionalLight.shadow.mapSize.height = 1024;
+                directionalLight.shadow.mapSize.width = 2048;
+                directionalLight.shadow.mapSize.height = 2048;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 50;
+                directionalLight.shadow.camera.left = -10;
+                directionalLight.shadow.camera.right = 10;
+                directionalLight.shadow.camera.top = 10;
+                directionalLight.shadow.camera.bottom = -10;
                 this.scene.add(directionalLight);
 
-                // Add point light for better illumination
-                const pointLight = new THREE.PointLight(0x4ecdc4, 0.5, 10);
-                pointLight.position.set(0, 5, 5);
-                this.scene.add(pointLight);
+                // Multiple point lights for better illumination
+                const pointLight1 = new THREE.PointLight(0x4ecdc4, 0.8, 15);
+                pointLight1.position.set(5, 5, 5);
+                this.scene.add(pointLight1);
 
-                // Position camera for better view
-                this.camera.position.set(0, 0, 12);
-                this.camera.lookAt(0, 0, 0);
+                const pointLight2 = new THREE.PointLight(0x667eea, 0.6, 12);
+                pointLight2.position.set(-5, 3, -5);
+                this.scene.add(pointLight2);
+
+                // Add subtle fog for depth
+                this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
 
                 // Setup raycaster for mouse interaction
                 this.raycaster = new THREE.Raycaster();
@@ -828,15 +870,27 @@
                 // Add click event
                 canvas.addEventListener('click', (event) => this.onCanvasClick(event));
                 
-                console.log('3D scene initialized successfully');
+                // Add mouse move event for hover effects
+                canvas.addEventListener('mousemove', (event) => this.onMouseMove(event));
+                
+                console.log('Enhanced 3D scene initialized successfully');
             }
 
             animate() {
                 requestAnimationFrame(() => this.animate());
                 
-                // Add subtle rotation to the scene
+                // Enhanced animation with floating effect
                 if (this.scene) {
-                    this.scene.rotation.y += 0.001;
+                    this.scene.rotation.y += 0.002;
+                    
+                    // Add floating animation to cubes
+                    this.grid.forEach(row => {
+                        row.forEach(cell => {
+                            if (cell.mesh) {
+                                cell.mesh.position.y += Math.sin(Date.now() * 0.001 + cell.row + cell.col) * 0.001;
+                            }
+                        });
+                    });
                 }
                 
                 this.renderer.render(this.scene, this.camera);
@@ -852,14 +906,43 @@
 
                 if (intersects.length > 0) {
                     const clickedCube = intersects[0].object;
-                    // Find grid position
-                    for (let row = 0; row < this.gridSize; row++) {
-                        for (let col = 0; col < this.gridSize; col++) {
-                            if (this.grid[row][col].mesh === clickedCube && !this.grid[row][col].filled) {
-                                this.placeLetter3D(row, col, event);
-                                break;
-                            }
+                    const userData = clickedCube.userData;
+                    
+                    if (userData && !this.grid[userData.row][userData.col].filled) {
+                        this.placeLetter3D(userData.row, userData.col, event);
+                    }
+                }
+            }
+
+            // Add hover effects for 3D cubes
+            onMouseMove(event) {
+                if (!this.raycaster || !this.mouse) return;
+                
+                const rect = event.target.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+                // Reset all cube colors
+                this.grid.forEach(row => {
+                    row.forEach(cell => {
+                        if (cell.mesh && !cell.filled) {
+                            cell.mesh.material.color.setHex(0x2a2a3e);
+                            cell.mesh.scale.set(1, 1, 1);
                         }
+                    });
+                });
+
+                // Highlight hovered cube
+                if (intersects.length > 0) {
+                    const hoveredCube = intersects[0].object;
+                    const userData = hoveredCube.userData;
+                    
+                    if (userData && !this.grid[userData.row][userData.col].filled) {
+                        hoveredCube.material.color.setHex(0x4ecdc4);
+                        hoveredCube.scale.set(1.1, 1.1, 1.1);
                     }
                 }
             }
@@ -868,67 +951,152 @@
                 if (this.letters.length > 0) {
                     const letter = this.letters.shift();
                     
-                    // Create 3D text using a simple approach
-                    const textGeometry = new THREE.PlaneGeometry(0.6, 0.6);
-                    const textMaterial = new THREE.MeshBasicMaterial({ 
-                        color: 0xffffff,
-                        transparent: true,
-                        opacity: 0.9
-                    });
-                    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                    // Create enhanced 3D text
+                    const textGeometry = new THREE.PlaneGeometry(0.8, 0.8);
                     
-                    // Position the text
-                    textMesh.position.set(
-                        (col - this.gridSize/2) * 0.8,
-                        (row - this.gridSize/2) * 0.8,
-                        0.5
-                    );
-                    
-                    // Add text label
+                    // Create canvas for better text rendering
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
-                    canvas.width = 64;
-                    canvas.height = 64;
+                    canvas.width = 128;
+                    canvas.height = 128;
+                    
+                    // Create gradient background
+                    const gradient = context.createRadialGradient(64, 64, 0, 64, 64, 64);
+                    gradient.addColorStop(0, '#4ecdc4');
+                    gradient.addColorStop(1, '#667eea');
+                    context.fillStyle = gradient;
+                    context.fillRect(0, 0, 128, 128);
+                    
+                    // Add text with shadow
+                    context.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                    context.shadowBlur = 4;
+                    context.shadowOffsetX = 2;
+                    context.shadowOffsetY = 2;
                     context.fillStyle = '#ffffff';
-                    context.font = 'bold 48px Arial';
+                    context.font = 'bold 72px Arial';
                     context.textAlign = 'center';
                     context.textBaseline = 'middle';
-                    context.fillText(letter, 32, 32);
+                    context.fillText(letter, 64, 64);
                     
                     const texture = new THREE.CanvasTexture(canvas);
-                    textMaterial.map = texture;
-                    textMaterial.needsUpdate = true;
+                    const textMaterial = new THREE.MeshBasicMaterial({ 
+                        map: texture,
+                        transparent: true,
+                        opacity: 0.95
+                    });
                     
+                    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                    
+                    // Position the text with offset
+                    textMesh.position.set(
+                        (col - this.gridSize/2) * 1.4,
+                        (row - this.gridSize/2) * 1.4,
+                        0.8
+                    );
+
+                    // Add glow effect
+                    const glowGeometry = new THREE.PlaneGeometry(1.2, 1.2);
+                    const glowMaterial = new THREE.MeshBasicMaterial({
+                        color: 0x4ecdc4,
+                        transparent: true,
+                        opacity: 0.3
+                    });
+                    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+                    glowMesh.position.copy(textMesh.position);
+                    glowMesh.position.z = 0.7;
+                    
+                    this.scene.add(glowMesh);
                     this.scene.add(textMesh);
+                    
                     this.grid[row][col].letter = textMesh;
+                    this.grid[row][col].glow = glowMesh;
                     this.grid[row][col].filled = true;
                     
-                    // Add animation
+                    // Enhanced animation
                     textMesh.scale.set(0, 0, 0);
-                    const scaleAnimation = new THREE.Vector3(1, 1, 1);
+                    glowMesh.scale.set(0, 0, 0);
+                    
                     const animate = () => {
-                        textMesh.scale.lerp(scaleAnimation, 0.1);
-                        if (textMesh.scale.x < 0.9) {
+                        textMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.15);
+                        glowMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+                        
+                        if (textMesh.scale.x < 0.95) {
                             requestAnimationFrame(animate);
+                        } else {
+                            // Add pulse animation
+                            this.addPulseAnimation(textMesh);
                         }
                     };
                     animate();
+                    
+                    // Update cube color when letter is placed
+                    const cube = this.grid[row][col].mesh;
+                    cube.material.color.setHex(0x4ecdc4);
+                    cube.material.opacity = 0.9;
                     
                     this.score += 10;
                     this.updateDisplay();
                     this.updateLetterQueue();
                     this.checkWordCompletion();
                     
+                    // Enhanced particle effects
                     if (typeof Utils !== 'undefined') {
                         Utils.createParticleEffect(
                             event.clientX,
                             event.clientY,
-                            5,
+                            8,
                             '#4ecdc4'
                         );
-                        Utils.playSound('place', 600, 0.1);
+                        Utils.playSound('place', 600, 0.15);
                     }
                 }
+            }
+
+            addPulseAnimation(mesh) {
+                const originalScale = mesh.scale.clone();
+                const pulse = () => {
+                    const scale = 1 + Math.sin(Date.now() * 0.01) * 0.05;
+                    mesh.scale.set(scale, scale, scale);
+                    requestAnimationFrame(pulse);
+                };
+                pulse();
+            }
+
+            // Enhanced victory effects for 3D mode
+            createVictoryEffect3D(word, positions) {
+                positions.forEach((pos, index) => {
+                    const cell = this.grid[pos.row][pos.col];
+                    if (cell.letter) {
+                        // Create explosion effect
+                        const explosionGeometry = new THREE.SphereGeometry(0.3, 8, 6);
+                        const explosionMaterial = new THREE.MeshBasicMaterial({
+                            color: 0xffd700,
+                            transparent: true,
+                            opacity: 0.8
+                        });
+                        const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
+                        explosion.position.copy(cell.letter.position);
+                        explosion.position.z += 0.5;
+                        
+                        this.scene.add(explosion);
+                        
+                        // Animate explosion
+                        const animateExplosion = () => {
+                            explosion.scale.multiplyScalar(1.1);
+                            explosion.material.opacity -= 0.02;
+                            
+                            if (explosion.material.opacity > 0) {
+                                requestAnimationFrame(animateExplosion);
+                            } else {
+                                this.scene.remove(explosion);
+                            }
+                        };
+                        animateExplosion();
+                        
+                        // Pulse the letter
+                        this.addPulseAnimation(cell.letter);
+                    }
+                });
             }
 
             createGrid() {
