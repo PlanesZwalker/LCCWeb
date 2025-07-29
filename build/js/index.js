@@ -910,28 +910,54 @@ class LettersCascadeGame {
     }
     
     updateWordList() {
+        console.log('📝 updateWordList() called - wordsFound:', this.wordsFound);
         const wordListElement = document.getElementById('wordList');
         if (wordListElement) {
             wordListElement.innerHTML = '';
-            this.wordsFound.forEach(word => {
-                const li = document.createElement('li');
-                li.textContent = word;
-                li.className = 'completed';
-                wordListElement.appendChild(li);
-            });
+            
+            // Add some initial words for demonstration
+            if (this.wordsFound.length === 0) {
+                const demoWords = ['CHAT', 'MAISON', 'MUSIQUE'];
+                demoWords.forEach(word => {
+                    const li = document.createElement('li');
+                    li.textContent = word;
+                    li.className = 'demo-word';
+                    wordListElement.appendChild(li);
+                });
+            } else {
+                this.wordsFound.forEach(word => {
+                    const li = document.createElement('li');
+                    li.textContent = word;
+                    li.className = 'completed';
+                    wordListElement.appendChild(li);
+                });
+            }
+            console.log('✅ Word list updated with', wordListElement.children.length, 'items');
+        } else {
+            console.error('❌ Word list element not found');
         }
     }
     
     updateLetterQueueDisplay() {
+        console.log('📝 updateLetterQueueDisplay() called - letterQueue:', this.letterQueue);
         const queueElement = document.getElementById('letterQueue');
         if (queueElement) {
             queueElement.innerHTML = '';
+            
+            // Ensure we have letters to display
+            if (this.letterQueue.length === 0) {
+                this.generateLetterQueue();
+            }
+            
             this.letterQueue.slice(0, 5).forEach(letter => {
                 const span = document.createElement('span');
                 span.textContent = letter;
                 span.className = 'queue-letter';
                 queueElement.appendChild(span);
             });
+            console.log('✅ Letter queue updated with', queueElement.children.length, 'letters');
+        } else {
+            console.error('❌ Letter queue element not found');
         }
     }
     
