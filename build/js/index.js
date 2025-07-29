@@ -102,15 +102,28 @@ class LettersCascadeGame {
     generateLetterQueue() {
         console.log('📝 Generating letter queue...');
         this.letterQueue = [];
+        
+        // Enhanced letter distribution for better gameplay
         const vowels = ['A', 'E', 'I', 'O', 'U'];
         const consonants = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'];
         
-        // Balanced letter distribution
+        // Target words for better letter distribution
+        const targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'PORTE', 'FENETRE'];
+        
+        // Generate letters based on target words
         for (let i = 0; i < 10; i++) {
-            if (Math.random() < 0.4) {
-                this.letterQueue.push(vowels[Math.floor(Math.random() * vowels.length)]);
+            if (i < 5) {
+                // First 5 letters: balanced distribution
+                if (Math.random() < 0.4) {
+                    this.letterQueue.push(vowels[Math.floor(Math.random() * vowels.length)]);
+                } else {
+                    this.letterQueue.push(consonants[Math.floor(Math.random() * consonants.length)]);
+                }
             } else {
-                this.letterQueue.push(consonants[Math.floor(Math.random() * consonants.length)]);
+                // Last 5 letters: weighted towards target words
+                const targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];
+                const targetLetter = targetWord[Math.floor(Math.random() * targetWord.length)];
+                this.letterQueue.push(targetLetter);
             }
         }
         
@@ -118,7 +131,7 @@ class LettersCascadeGame {
         this.updateLetterQueueDisplay();
     }
     
-    // Word Detection System
+    // Enhanced Word Detection System
     checkWordCompletion() {
         console.log('🔍 Checking word completion...');
         
@@ -155,14 +168,17 @@ class LettersCascadeGame {
         // Add word to found list
         this.wordsFound.push(word);
         
-        // Calculate score
-        const wordScore = word.length * 10;
+        // Calculate score with enhanced bonuses
+        const baseScore = word.length * 10;
+        const lengthBonus = word.length >= 6 ? 50 : 0; // Bonus for long words
+        const wordScore = baseScore + lengthBonus;
+        
         this.addScore(wordScore);
         
-        // Remove word from grid
+        // Remove word from grid with enhanced animation
         this.removeWordFromGrid(word);
         
-        // Create particle effect
+        // Create enhanced particle effect
         this.particleSystem.createWordCompletionEffect(word);
         
         // Play sound
@@ -171,7 +187,91 @@ class LettersCascadeGame {
         // Check level progression
         this.levelManager.checkLevelProgression(this.wordsFound.length);
         
+        // Show word completion notification
+        this.showWordCompletionNotification(word, wordScore);
+        
         console.log('✅ Word completed:', word, 'Score:', wordScore);
+    }
+    
+    showWordCompletionNotification(word, score) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'word-completion-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <h3>🎉 Mot trouvé!</h3>
+                <p class="word">${word}</p>
+                <p class="score">+${score} points</p>
+            </div>
+        `;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            animation: notificationAppear 0.5s ease-out;
+            text-align: center;
+        `;
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes notificationAppear {
+                from {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.5);
+                }
+                to {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+            .word-completion-notification .word {
+                font-size: 2rem;
+                font-weight: bold;
+                margin: 1rem 0;
+            }
+            .word-completion-notification .score {
+                font-size: 1.2rem;
+                opacity: 0.9;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(notification);
+        
+        // Remove notification after 2 seconds
+        setTimeout(() => {
+            notification.style.animation = 'notificationDisappear 0.5s ease-out';
+            notification.style.animationFillMode = 'forwards';
+            
+            const disappearStyle = document.createElement('style');
+            disappearStyle.textContent = `
+                @keyframes notificationDisappear {
+                    from {
+                        opacity: 1;
+                        transform: translate(-50%, -50%) scale(1);
+                    }
+                    to {
+                        opacity: 0;
+                        transform: translate(-50%, -50%) scale(0.5);
+                    }
+                }
+            `;
+            document.head.appendChild(disappearStyle);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 2000);
     }
     
     removeWordFromGrid(word) {
@@ -251,37 +351,44 @@ class LettersCascadeGame {
         }
     }
     
-    // Game Controls
+    // Enhanced Game Controls
     setupControls() {
-        console.log('🎮 Setting up game controls...');
+        console.log('🎮 Setting up enhanced game controls...');
         
         document.addEventListener('keydown', (e) => {
             this.keys[e.key] = true;
-            this.handleKeyPress(e.key);
+            this.handleEnhancedKeyPress(e.key);
         });
         
         document.addEventListener('keyup', (e) => {
             this.keys[e.key] = false;
         });
         
-        console.log('✅ Controls setup completed');
+        // Add touch controls for mobile
+        this.setupTouchControls();
+        
+        console.log('✅ Enhanced controls setup completed');
     }
     
-    handleKeyPress(key) {
+    handleEnhancedKeyPress(key) {
         if (!this.gameRunning || this.paused) return;
         
         switch(key) {
             case 'ArrowLeft':
                 this.moveFallingLetter(-1);
+                this.audioManager.playMove();
                 break;
             case 'ArrowRight':
                 this.moveFallingLetter(1);
+                this.audioManager.playMove();
                 break;
             case 'ArrowDown':
                 this.dropFallingLetter();
+                this.audioManager.playDrop();
                 break;
             case ' ':
                 this.rotateFallingLetter();
+                this.audioManager.playRotate();
                 break;
             case 'p':
             case 'P':
@@ -291,7 +398,53 @@ class LettersCascadeGame {
             case 'R':
                 this.resetGame();
                 break;
+            case 'f':
+            case 'F':
+                this.toggleFullScreen();
+                break;
         }
+    }
+    
+    setupTouchControls() {
+        const canvas = this.canvas;
+        if (!canvas) return;
+        
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+        });
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+        
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const touch = e.changedTouches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal swipe
+                if (deltaX > 50) {
+                    this.moveFallingLetter(1);
+                } else if (deltaX < -50) {
+                    this.moveFallingLetter(-1);
+                }
+            } else {
+                // Vertical swipe
+                if (deltaY > 50) {
+                    this.dropFallingLetter();
+                } else if (deltaY < -50) {
+                    this.rotateFallingLetter();
+                }
+            }
+        });
     }
     
     // Falling Letter System
@@ -363,9 +516,9 @@ class LettersCascadeGame {
         console.log('✅ Letter placed:', letter, 'at', x, y);
     }
     
-    // Game Loop
+    // Enhanced Game State Management
     startGame() {
-        console.log('▶️ Starting game...');
+        console.log('▶️ Starting enhanced game...');
         
         if (this.gameRunning) return;
         
@@ -379,11 +532,50 @@ class LettersCascadeGame {
         this.gameLoop();
         
         this.audioManager.playStart();
-        console.log('✅ Game started');
+        this.showGameStartNotification();
+        console.log('✅ Enhanced game started');
+    }
+    
+    showGameStartNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'game-start-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <h3>🎮 Commencer le jeu!</h3>
+                <p>Utilisez les flèches pour déplacer les lettres</p>
+                <p>Espace pour faire pivoter</p>
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            animation: notificationAppear 0.5s ease-out;
+            text-align: center;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'notificationDisappear 0.5s ease-out';
+            notification.style.animationFillMode = 'forwards';
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 3000);
     }
     
     pauseGame() {
-        console.log('⏸️ Pausing game...');
+        console.log('⏸️ Pausing enhanced game...');
         
         if (!this.gameRunning) return;
         
@@ -392,17 +584,53 @@ class LettersCascadeGame {
         if (this.paused) {
             this.stopFallTimer();
             this.audioManager.playPause();
+            this.showPauseNotification();
         } else {
             this.startFallTimer();
             this.audioManager.playResume();
+            this.hidePauseNotification();
         }
         
         this.updateDisplay();
-        console.log('✅ Game paused:', this.paused);
+        console.log('✅ Enhanced game paused:', this.paused);
+    }
+    
+    showPauseNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'pause-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <h3>⏸️ Jeu en pause</h3>
+                <p>Appuyez sur P pour reprendre</p>
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            z-index: 10000;
+            text-align: center;
+        `;
+        
+        document.body.appendChild(notification);
+        this.pauseNotification = notification;
+    }
+    
+    hidePauseNotification() {
+        if (this.pauseNotification) {
+            document.body.removeChild(this.pauseNotification);
+            this.pauseNotification = null;
+        }
     }
     
     resetGame() {
-        console.log('🔄 Resetting game...');
+        console.log('🔄 Resetting enhanced game...');
         
         this.gameRunning = false;
         this.paused = false;
@@ -421,7 +649,8 @@ class LettersCascadeGame {
         this.updateDisplay();
         
         this.audioManager.playReset();
-        console.log('✅ Game reset');
+        this.hidePauseNotification();
+        console.log('✅ Enhanced game reset');
     }
     
     startFallTimer() {
@@ -459,81 +688,176 @@ class LettersCascadeGame {
         requestAnimationFrame(() => this.gameLoop());
     }
     
-    // Rendering
+    // Enhanced Rendering
     render() {
         if (!this.ctx) return;
         
-        // Clear canvas
+        // Clear canvas with enhanced background
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Draw background
-        this.drawBackground();
+        // Draw enhanced background
+        this.drawEnhancedBackground();
         
-        // Draw grid
-        this.drawGrid();
+        // Draw grid with enhanced styling
+        this.drawEnhancedGrid();
         
-        // Draw falling letter
+        // Draw falling letter with enhanced effects
         if (this.fallingLetter) {
-            this.drawFallingLetter();
+            this.drawEnhancedFallingLetter();
         }
         
         // Draw particles
         this.particleSystem.render(this.ctx);
+        
+        // Draw UI overlays
+        this.drawUIOverlays();
     }
     
-    drawBackground() {
-        this.ctx.fillStyle = 'rgba(102, 126, 234, 0.1)';
+    drawEnhancedBackground() {
+        // Create gradient background
+        const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
+        gradient.addColorStop(0, 'rgba(102, 126, 234, 0.1)');
+        gradient.addColorStop(1, 'rgba(118, 75, 162, 0.1)');
+        
+        this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Add subtle pattern
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        this.ctx.lineWidth = 1;
+        for (let i = 0; i < this.canvas.width; i += 40) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(i, 0);
+            this.ctx.lineTo(i, this.canvas.height);
+            this.ctx.stroke();
+        }
+        for (let i = 0; i < this.canvas.height; i += 40) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, i);
+            this.ctx.lineTo(this.canvas.width, i);
+            this.ctx.stroke();
+        }
     }
     
-    drawGrid() {
+    drawEnhancedGrid() {
         for (let row = 0; row < this.currentGridSize; row++) {
             for (let col = 0; col < this.currentGridSize; col++) {
                 const x = col * this.cellSize;
                 const y = row * this.cellSize;
                 
                 if (this.grid[row][col]) {
-                    this.drawCell(x, y, this.grid[row][col]);
+                    this.drawEnhancedCell(x, y, this.grid[row][col]);
                 } else {
-                    this.drawEmptyCell(x, y);
+                    this.drawEnhancedEmptyCell(x, y);
                 }
             }
         }
     }
     
-    drawCell(x, y, letter) {
-        // Cell background
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    drawEnhancedCell(x, y, letter) {
+        // Cell background with gradient
+        const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.85)');
+        
+        this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Letter
+        // Cell border
+        this.ctx.strokeStyle = 'rgba(102, 126, 234, 0.3)';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+        
+        // Letter with enhanced styling
         this.ctx.fillStyle = '#667eea';
         this.ctx.font = 'bold 20px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+        
+        // Add text shadow
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.ctx.shadowBlur = 2;
+        this.ctx.shadowOffsetX = 1;
+        this.ctx.shadowOffsetY = 1;
+        
         this.ctx.fillText(letter, x + this.cellSize / 2, y + this.cellSize / 2);
+        
+        // Reset shadow
+        this.ctx.shadowColor = 'transparent';
+        this.ctx.shadowBlur = 0;
+        this.ctx.shadowOffsetX = 0;
+        this.ctx.shadowOffsetY = 0;
     }
     
-    drawEmptyCell(x, y) {
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    drawEnhancedEmptyCell(x, y) {
+        // Empty cell with subtle styling
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
         this.ctx.lineWidth = 1;
+        this.ctx.setLineDash([5, 5]);
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+        this.ctx.setLineDash([]);
     }
     
-    drawFallingLetter() {
+    drawEnhancedFallingLetter() {
         const x = this.fallingLetter.x * this.cellSize;
         const y = this.fallingLetter.y * this.cellSize;
         
-        // Falling letter background
-        this.ctx.fillStyle = 'rgba(118, 75, 162, 0.9)';
+        // Falling letter background with gradient
+        const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
+        gradient.addColorStop(0, 'rgba(118, 75, 162, 0.9)');
+        gradient.addColorStop(1, 'rgba(102, 126, 234, 0.9)');
+        
+        this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+        
+        // Falling letter border with glow effect
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
         // Falling letter text
         this.ctx.fillStyle = 'white';
         this.ctx.font = 'bold 20px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+        
+        // Add glow effect
+        this.ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+        this.ctx.shadowBlur = 5;
         this.ctx.fillText(this.fallingLetter.letter, x + this.cellSize / 2, y + this.cellSize / 2);
+        
+        // Reset shadow
+        this.ctx.shadowColor = 'transparent';
+        this.ctx.shadowBlur = 0;
+    }
+    
+    drawUIOverlays() {
+        // Draw score overlay
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        this.ctx.fillRect(10, 10, 120, 40);
+        
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 16px Arial';
+        this.ctx.textAlign = 'left';
+        this.ctx.fillText(`Score: ${this.score}`, 20, 30);
+        
+        // Draw level overlay
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        this.ctx.fillRect(10, 60, 120, 40);
+        
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 16px Arial';
+        this.ctx.fillText(`Level: ${this.level}`, 20, 80);
+        
+        // Draw combo overlay if active
+        if (this.combo > 1) {
+            this.ctx.fillStyle = 'rgba(251, 191, 36, 0.9)';
+            this.ctx.fillRect(10, 110, 120, 40);
+            
+            this.ctx.fillStyle = 'white';
+            this.ctx.font = 'bold 16px Arial';
+            this.ctx.fillText(`Combo: x${this.combo}`, 20, 130);
+        }
     }
     
     // Display Updates
