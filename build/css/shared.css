@@ -239,6 +239,58 @@ a:hover {
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: var(--transition);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.glass-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Section spacing */
+.main-content > .glass-card {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.main-content > .glass-card:last-child {
+    margin-bottom: 0;
+}
+
+/* Hero section spacing */
+.hero-section {
+    margin-bottom: var(--spacing-3xl);
+}
+
+/* Technology section spacing */
+.tech-grid {
+    margin-top: var(--spacing-xl);
+}
+
+/* Features section spacing */
+.features-grid {
+    margin-top: var(--spacing-xl);
+}
+
+/* Progression section spacing */
+.progression-grid {
+    margin-top: var(--spacing-xl);
+}
+
+/* Pipeline section spacing */
+.pipeline-grid {
+    margin-top: var(--spacing-xl);
+}
+
+/* Additional section spacing */
+.main-content {
+    gap: var(--spacing-2xl);
+}
+
+.main-content > * {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.main-content > *:last-child {
+    margin-bottom: 0;
 }
 
 .glass-card:hover {
