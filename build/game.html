@@ -150,16 +150,45 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        /* Enhanced Game Grid */
+        /* Enhanced Game Grid Container */
         .game-grid-container {
+            flex: 1;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: var(--spacing-lg);
+            justify-content: center;
             background: rgba(255, 255, 255, 0.02);
             border-radius: var(--radius-lg);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-height: 400px;
+            margin: var(--spacing-md) 0;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-3d {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #gameGrid {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #gameGrid canvas {
+            display: block !important;
+            margin: 0 auto !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
         }
 
         /* Full Screen Styles for 3D Game */
@@ -709,6 +738,13 @@
             init() {
                 console.log('🚀 init() called - mode:', this.mode, 'THREE available:', typeof THREE !== 'undefined');
                 
+                // Show loading indicator
+                const loadingIndicator = document.getElementById('loadingIndicator');
+                if (loadingIndicator) {
+                    loadingIndicator.style.display = 'flex';
+                    console.log('⏳ Loading indicator shown');
+                }
+                
                 if (this.mode === '3d' && typeof THREE !== 'undefined') {
                     console.log('🎮 Three.js loaded, checking WebGL support...');
                     
@@ -743,6 +779,12 @@
                     console.warn('⚠️ Utils not available');
                 }
                 
+                // Hide loading indicator
+                if (loadingIndicator) {
+                    loadingIndicator.style.display = 'none';
+                    console.log('✅ Loading indicator hidden');
+                }
+                
                 console.log('🎉 init() completed successfully');
             }
 
@@ -757,6 +799,8 @@
                     return;
                 }
                 
+                // Clear container and create canvas
+                container.innerHTML = '';
                 const canvas = document.createElement('canvas');
                 canvas.id = 'threejsCanvas';
                 canvas.width = 500;
@@ -764,7 +808,8 @@
                 canvas.style.border = '2px solid rgba(255, 255, 255, 0.3)';
                 canvas.style.borderRadius = '12px';
                 canvas.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
-                container.innerHTML = '';
+                canvas.style.display = 'block';
+                canvas.style.margin = '0 auto';
                 container.appendChild(canvas);
                 
                 console.log('🎨 Canvas created and added to container');
@@ -792,57 +837,12 @@
                 this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 this.renderer.shadowMap.enabled = true;
                 this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-                this.renderer.outputEncoding = THREE.sRGBEncoding;
-                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-                this.renderer.toneMappingExposure = 1.2;
                 console.log('🎨 Renderer created with enhanced settings');
 
                 // Create enhanced 3D grid
-                const cellSize = 1.2;
-                const gap = 0.2;
-                this.grid = [];
-                console.log('🏗️ Creating 3D grid with size:', this.gridSize, 'cellSize:', cellSize);
-
-                for (let row = 0; row < this.gridSize; row++) {
-                    this.grid[row] = [];
-                    for (let col = 0; col < this.gridSize; col++) {
-                        // Enhanced cube geometry
-                        const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
-                        
-                        // Enhanced material with gradient effect
-                        const material = new THREE.MeshPhongMaterial({ 
-                            color: 0x2a2a3e, 
-                            transparent: true, 
-                            opacity: 0.8,
-                            shininess: 100,
-                            specular: 0x444444
-                        });
-                        
-                        const cube = new THREE.Mesh(geometry, material);
-                        cube.position.set(
-                            (col - this.gridSize/2) * (cellSize + gap),
-                            (row - this.gridSize/2) * (cellSize + gap),
-                            0
-                        );
-                        cube.castShadow = true;
-                        cube.receiveShadow = true;
-                        
-                        // Add user data for interaction
-                        cube.userData = { row, col, hovered: false };
-                        
-                        this.scene.add(cube);
-                        this.grid[row][col] = { 
-                            mesh: cube, 
-                            letter: null, 
-                            filled: false,
-                            row,
-                            col
-                        };
-                    }
-                }
-                console.log('✅ 3D grid created successfully');
-
-                // Enhanced lighting system
+                this.create3DGrid();
+                
+                // Enhanced lighting
                 const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
                 this.scene.add(ambientLight);
                 console.log('💡 Ambient light added');
@@ -860,39 +860,84 @@
                 directionalLight.shadow.camera.bottom = -10;
                 this.scene.add(directionalLight);
                 console.log('💡 Directional light added');
-
-                // Multiple point lights for better illumination
-                const pointLight1 = new THREE.PointLight(0x4ecdc4, 0.8, 15);
+                
+                // Add point lights for better atmosphere
+                const pointLight1 = new THREE.PointLight(0x4ecdc4, 1, 100);
                 pointLight1.position.set(5, 5, 5);
                 this.scene.add(pointLight1);
-
-                const pointLight2 = new THREE.PointLight(0x667eea, 0.6, 12);
-                pointLight2.position.set(-5, 3, -5);
+                
+                const pointLight2 = new THREE.PointLight(0x667eea, 1, 100);
+                pointLight2.position.set(-5, -5, 5);
                 this.scene.add(pointLight2);
                 console.log('💡 Point lights added');
-
-                // Add subtle fog for depth
+                
+                // Add fog for depth
                 this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
                 console.log('🌫️ Fog added');
-
+                
                 // Setup raycaster for mouse interaction
                 this.raycaster = new THREE.Raycaster();
                 this.mouse = new THREE.Vector2();
-                console.log('🎯 Raycaster and mouse setup complete');
-
-                // Animation loop
+                console.log('🎯 Raycaster setup complete');
+                
+                // Start animation loop
                 this.animate();
-                console.log('🔄 Animation loop started');
-
-                // Add click event
+                console.log('🎬 Animation loop started');
+                
+                // Add mouse event listeners
                 canvas.addEventListener('click', (event) => this.onCanvasClick(event));
-                console.log('🖱️ Click event listener added');
-                
-                // Add mouse move event for hover effects
                 canvas.addEventListener('mousemove', (event) => this.onMouseMove(event));
-                console.log('🖱️ Mouse move event listener added');
+                console.log('🖱️ Mouse event listeners added');
                 
-                console.log('🎉 Enhanced 3D scene initialized successfully');
+                console.log('✅ initThreeJS() completed successfully');
+            }
+
+            create3DGrid() {
+                console.log('🏗️ create3DGrid() called');
+                
+                this.grid = [];
+                const cellSize = 1.2;
+                const gap = 0.2;
+                const totalSize = this.gridSize * (cellSize + gap) - gap;
+                const startX = -totalSize / 2;
+                const startZ = -totalSize / 2;
+                
+                console.log('📐 Grid dimensions:', {
+                    cellSize: cellSize,
+                    gap: gap,
+                    totalSize: totalSize,
+                    startX: startX,
+                    startZ: startZ
+                });
+                
+                for (let row = 0; row < this.gridSize; row++) {
+                    this.grid[row] = [];
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const x = startX + col * (cellSize + gap);
+                        const z = startZ + row * (cellSize + gap);
+                        
+                        // Create cube geometry
+                        const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+                        const material = new THREE.MeshPhongMaterial({ 
+                            color: 0x2a2a3e,
+                            specular: 0x444444,
+                            shininess: 100
+                        });
+                        
+                        const cube = new THREE.Mesh(geometry, material);
+                        cube.position.set(x, 0, z);
+                        cube.castShadow = true;
+                        cube.receiveShadow = true;
+                        cube.userData = { row: row, col: col, letter: null, occupied: false };
+                        
+                        this.scene.add(cube);
+                        this.grid[row][col] = cube;
+                        
+                        console.log(`📦 Cube created at row ${row}, col ${col}, position (${x}, 0, ${z})`);
+                    }
+                }
+                
+                console.log('✅ 3D grid created successfully');
             }
 
             animate() {
@@ -905,8 +950,8 @@
                     // Add floating animation to cubes
                     this.grid.forEach(row => {
                         row.forEach(cell => {
-                            if (cell.mesh) {
-                                cell.mesh.position.y += Math.sin(Date.now() * 0.001 + cell.row + cell.col) * 0.001;
+                            if (cell) {
+                                cell.position.y += Math.sin(Date.now() * 0.001 + cell.userData.row + cell.userData.col) * 0.001;
                             }
                         });
                     });
@@ -935,7 +980,7 @@
                     
                     console.log('🎯 Clicked cube userData:', userData);
                     
-                    if (userData && !this.grid[userData.row][userData.col].filled) {
+                    if (userData && !userData.occupied) {
                         console.log('✅ Valid click - placing letter at row:', userData.row, 'col:', userData.col);
                         this.placeLetter3D(userData.row, userData.col, event);
                     } else {
@@ -963,9 +1008,9 @@
                 // Reset all cube colors
                 this.grid.forEach(row => {
                     row.forEach(cell => {
-                        if (cell.mesh && !cell.filled) {
-                            cell.mesh.material.color.setHex(0x2a2a3e);
-                            cell.mesh.scale.set(1, 1, 1);
+                        if (cell && !cell.userData.occupied) {
+                            cell.material.color.setHex(0x2a2a3e);
+                            cell.scale.set(1, 1, 1);
                         }
                     });
                 });
@@ -975,7 +1020,7 @@
                     const hoveredCube = intersects[0].object;
                     const userData = hoveredCube.userData;
                     
-                    if (userData && !this.grid[userData.row][userData.col].filled) {
+                    if (userData && !userData.occupied) {
                         hoveredCube.material.color.setHex(0x4ecdc4);
                         hoveredCube.scale.set(1.1, 1.1, 1.1);
                     }
@@ -1046,9 +1091,8 @@
                     this.scene.add(glowMesh);
                     this.scene.add(textMesh);
                     
-                    this.grid[row][col].letter = textMesh;
-                    this.grid[row][col].glow = glowMesh;
-                    this.grid[row][col].filled = true;
+                    this.grid[row][col].userData.letter = textMesh;
+                    this.grid[row][col].userData.occupied = true;
                     
                     console.log('✅ Letter placed successfully in 3D scene');
                     
@@ -1070,7 +1114,7 @@
                     animate();
                     
                     // Update cube color when letter is placed
-                    const cube = this.grid[row][col].mesh;
+                    const cube = this.grid[row][col];
                     cube.material.color.setHex(0x4ecdc4);
                     cube.material.opacity = 0.9;
                     
@@ -1114,7 +1158,7 @@
             createVictoryEffect3D(word, positions) {
                 positions.forEach((pos, index) => {
                     const cell = this.grid[pos.row][pos.col];
-                    if (cell.letter) {
+                    if (cell && cell.userData.letter) {
                         // Create explosion effect
                         const explosionGeometry = new THREE.SphereGeometry(0.3, 8, 6);
                         const explosionMaterial = new THREE.MeshBasicMaterial({
@@ -1123,7 +1167,7 @@
                             opacity: 0.8
                         });
                         const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
-                        explosion.position.copy(cell.letter.position);
+                        explosion.position.copy(cell.userData.letter.position);
                         explosion.position.z += 0.5;
                         
                         this.scene.add(explosion);
@@ -1142,7 +1186,7 @@
                         animateExplosion();
                         
                         // Pulse the letter
-                        this.addPulseAnimation(cell.letter);
+                        this.addPulseAnimation(cell.userData.letter);
                     }
                 });
             }
@@ -1315,9 +1359,9 @@
                 for (let row = 0; row < this.gridSize; row++) {
                     grid[row] = [];
                     for (let col = 0; col < this.gridSize; col++) {
-                        if (this.grid[row] && this.grid[row][col] && this.grid[row][col].letter) {
+                        if (this.grid[row] && this.grid[row][col] && this.grid[row][col].userData.letter) {
                             // Extract letter from 3D mesh (simplified)
-                            grid[row][col] = this.getLetterFrom3DMesh(this.grid[row][col].letter) || '';
+                            grid[row][col] = this.getLetterFrom3DMesh(this.grid[row][col].userData.letter) || '';
                         } else {
                             grid[row][col] = '';
                         }
@@ -1520,17 +1564,17 @@
                     console.log('🎮 Clearing 3D grid');
                     this.grid.forEach(row => {
                         row.forEach(cell => {
-                            if (cell.letter) {
-                                this.scene.remove(cell.letter);
-                                cell.letter = null;
+                            if (cell.userData.letter) {
+                                this.scene.remove(cell.userData.letter);
+                                cell.userData.letter = null;
                             }
-                            if (cell.glow) {
-                                this.scene.remove(cell.glow);
-                                cell.glow = null;
+                            if (cell.userData.glow) {
+                                this.scene.remove(cell.userData.glow);
+                                cell.userData.glow = null;
                             }
-                            cell.filled = false;
-                            cell.mesh.material.color.setHex(0x2a2a3e);
-                            cell.mesh.material.opacity = 0.8;
+                            cell.userData.occupied = false;
+                            cell.material.color.setHex(0x2a2a3e);
+                            cell.material.opacity = 0.8;
                         });
                     });
                 } else {
@@ -1731,18 +1775,54 @@
             // Check if Three.js is available
             if (typeof THREE === 'undefined') {
                 console.error('❌ THREE.js not loaded!');
+                // Show error message to user
+                const container = document.getElementById('gameGrid');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #ff6b6b;">
+                            <h3>❌ Erreur de chargement</h3>
+                            <p>Three.js n'a pas pu être chargé. Veuillez rafraîchir la page.</p>
+                        </div>
+                    `;
+                }
                 return;
             }
             
             console.log('✅ THREE.js available, creating Game3D instance...');
-            game3D = new Game3D();
-            console.log('🎮 3D Game initialized successfully');
             
-            // Check if Utils is available
-            if (typeof Utils !== 'undefined') {
-                console.log('✅ Utils available for sound and particle effects');
-            } else {
-                console.warn('⚠️ Utils not available - sound and particle effects disabled');
+            try {
+                game3D = new Game3D();
+                console.log('🎮 3D Game initialized successfully');
+                
+                // Check if Utils is available
+                if (typeof Utils !== 'undefined') {
+                    console.log('✅ Utils available for sound and particle effects');
+                } else {
+                    console.warn('⚠️ Utils not available - sound and particle effects disabled');
+                }
+                
+                // Update display after initialization
+                setTimeout(() => {
+                    if (game3D && typeof game3D.updateDisplay === 'function') {
+                        game3D.updateDisplay();
+                        console.log('📊 Display updated after initialization');
+                    }
+                }, 100);
+                
+            } catch (error) {
+                console.error('❌ Error initializing 3D game:', error);
+                const container = document.getElementById('gameGrid');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #ff6b6b;">
+                            <h3>❌ Erreur d'initialisation</h3>
+                            <p>Le jeu 3D n'a pas pu être initialisé: ${error.message}</p>
+                            <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                Rafraîchir la page
+                            </button>
+                        </div>
+                    `;
+                }
             }
         });
 
