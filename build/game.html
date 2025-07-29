@@ -696,6 +696,7 @@
         // Complete 3D Game Engine for Letters Cascade Challenge
         class Game3D {
             constructor() {
+                console.log('🔧 Game3D constructor called');
                 this.mode = '3d';
                 this.gridSize = 10;
                 this.score = 0;
@@ -720,39 +721,61 @@
                 this.raycaster = null;
                 this.mouse = null;
                 
+                console.log('🔧 Game3D constructor completed, calling init()');
                 this.init();
             }
 
             init() {
+                console.log('🚀 init() called - mode:', this.mode, 'THREE available:', typeof THREE !== 'undefined');
+                
                 if (this.mode === '3d' && typeof THREE !== 'undefined') {
-                    console.log('Three.js loaded, checking WebGL support...');
+                    console.log('🎮 Three.js loaded, checking WebGL support...');
                     
                     // Check WebGL support
                     const canvas = document.createElement('canvas');
                     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
                     
                     if (gl) {
-                        console.log('WebGL supported, creating 3D game...');
+                        console.log('✅ WebGL supported, creating 3D game...');
                         this.initThreeJS();
                     } else {
-                        console.warn('WebGL not supported, falling back to 2D grid...');
+                        console.warn('⚠️ WebGL not supported, falling back to 2D grid...');
                         this.createGrid(); // Fallback to original 2D grid
                     }
                 } else {
-                    console.log('Using 2D grid mode...');
+                    console.log('📱 Using 2D grid mode...');
                     this.createGrid(); // Use 2D grid
                 }
+                
+                console.log('🔄 Calling updateLetterQueue()');
                 this.updateLetterQueue();
+                
+                console.log('📊 Calling updateDisplay()');
                 this.updateDisplay();
+                
+                console.log('🎯 Calling setupEventListeners()');
                 this.setupEventListeners();
                 
                 if (typeof Utils !== 'undefined') {
-                    console.log('Game initialized with Utils');
+                    console.log('✅ Game initialized with Utils');
+                } else {
+                    console.warn('⚠️ Utils not available');
                 }
+                
+                console.log('🎉 init() completed successfully');
             }
 
             initThreeJS() {
+                console.log('🎮 initThreeJS() called');
+                
                 const container = document.getElementById('gameGrid');
+                console.log('📦 Container found:', container);
+                
+                if (!container) {
+                    console.error('❌ gameGrid container not found!');
+                    return;
+                }
+                
                 const canvas = document.createElement('canvas');
                 canvas.id = 'threejsCanvas';
                 canvas.width = 500;
@@ -762,15 +785,19 @@
                 canvas.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
                 container.innerHTML = '';
                 container.appendChild(canvas);
+                
+                console.log('🎨 Canvas created and added to container');
 
                 // Enhanced scene setup
                 this.scene = new THREE.Scene();
                 this.scene.background = new THREE.Color(0x1a1a2e);
+                console.log('🌌 Scene created');
                 
                 // Enhanced camera with better positioning
                 this.camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
                 this.camera.position.set(0, 0, 15);
                 this.camera.lookAt(0, 0, 0);
+                console.log('📷 Camera created and positioned');
 
                 // Enhanced renderer with better quality
                 this.renderer = new THREE.WebGLRenderer({ 
@@ -787,11 +814,13 @@
                 this.renderer.outputEncoding = THREE.sRGBEncoding;
                 this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
                 this.renderer.toneMappingExposure = 1.2;
+                console.log('🎨 Renderer created with enhanced settings');
 
                 // Create enhanced 3D grid
                 const cellSize = 1.2;
                 const gap = 0.2;
                 this.grid = [];
+                console.log('🏗️ Creating 3D grid with size:', this.gridSize, 'cellSize:', cellSize);
 
                 for (let row = 0; row < this.gridSize; row++) {
                     this.grid[row] = [];
@@ -830,10 +859,12 @@
                         };
                     }
                 }
+                console.log('✅ 3D grid created successfully');
 
                 // Enhanced lighting system
                 const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
                 this.scene.add(ambientLight);
+                console.log('💡 Ambient light added');
                 
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
                 directionalLight.position.set(10, 10, 5);
@@ -847,6 +878,7 @@
                 directionalLight.shadow.camera.top = 10;
                 directionalLight.shadow.camera.bottom = -10;
                 this.scene.add(directionalLight);
+                console.log('💡 Directional light added');
 
                 // Multiple point lights for better illumination
                 const pointLight1 = new THREE.PointLight(0x4ecdc4, 0.8, 15);
@@ -856,24 +888,30 @@
                 const pointLight2 = new THREE.PointLight(0x667eea, 0.6, 12);
                 pointLight2.position.set(-5, 3, -5);
                 this.scene.add(pointLight2);
+                console.log('💡 Point lights added');
 
                 // Add subtle fog for depth
                 this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
+                console.log('🌫️ Fog added');
 
                 // Setup raycaster for mouse interaction
                 this.raycaster = new THREE.Raycaster();
                 this.mouse = new THREE.Vector2();
+                console.log('🎯 Raycaster and mouse setup complete');
 
                 // Animation loop
                 this.animate();
+                console.log('🔄 Animation loop started');
 
                 // Add click event
                 canvas.addEventListener('click', (event) => this.onCanvasClick(event));
+                console.log('🖱️ Click event listener added');
                 
                 // Add mouse move event for hover effects
                 canvas.addEventListener('mousemove', (event) => this.onMouseMove(event));
+                console.log('🖱️ Mouse move event listener added');
                 
-                console.log('Enhanced 3D scene initialized successfully');
+                console.log('🎉 Enhanced 3D scene initialized successfully');
             }
 
             animate() {
@@ -897,26 +935,42 @@
             }
 
             onCanvasClick(event) {
+                console.log('🖱️ Canvas click detected at:', event.clientX, event.clientY);
+                
                 const rect = event.target.getBoundingClientRect();
                 this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
                 this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                console.log('🎯 Mouse coordinates:', this.mouse.x, this.mouse.y);
 
                 this.raycaster.setFromCamera(this.mouse, this.camera);
                 const intersects = this.raycaster.intersectObjects(this.scene.children);
+                
+                console.log('🎯 Intersections found:', intersects.length);
 
                 if (intersects.length > 0) {
                     const clickedCube = intersects[0].object;
                     const userData = clickedCube.userData;
                     
+                    console.log('🎯 Clicked cube userData:', userData);
+                    
                     if (userData && !this.grid[userData.row][userData.col].filled) {
+                        console.log('✅ Valid click - placing letter at row:', userData.row, 'col:', userData.col);
                         this.placeLetter3D(userData.row, userData.col, event);
+                    } else {
+                        console.log('❌ Invalid click - cube already filled or no userData');
                     }
+                } else {
+                    console.log('❌ No intersections found');
                 }
             }
 
             // Add hover effects for 3D cubes
             onMouseMove(event) {
-                if (!this.raycaster || !this.mouse) return;
+                if (!this.raycaster || !this.mouse) {
+                    console.log('⚠️ Raycaster or mouse not initialized');
+                    return;
+                }
                 
                 const rect = event.target.getBoundingClientRect();
                 this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -948,8 +1002,11 @@
             }
 
             placeLetter3D(row, col, event) {
+                console.log('🎯 placeLetter3D() called - row:', row, 'col:', col, 'letters remaining:', this.letters.length);
+                
                 if (this.letters.length > 0) {
                     const letter = this.letters.shift();
+                    console.log('📝 Placing letter:', letter);
                     
                     // Create enhanced 3D text
                     const textGeometry = new THREE.PlaneGeometry(0.8, 0.8);
@@ -1012,6 +1069,8 @@
                     this.grid[row][col].glow = glowMesh;
                     this.grid[row][col].filled = true;
                     
+                    console.log('✅ Letter placed successfully in 3D scene');
+                    
                     // Enhanced animation
                     textMesh.scale.set(0, 0, 0);
                     glowMesh.scale.set(0, 0, 0);
@@ -1035,12 +1094,15 @@
                     cube.material.opacity = 0.9;
                     
                     this.score += 10;
+                    console.log('📊 Score updated:', this.score);
+                    
                     this.updateDisplay();
                     this.updateLetterQueue();
                     this.checkWordCompletion();
                     
                     // Enhanced particle effects
                     if (typeof Utils !== 'undefined') {
+                        console.log('✨ Creating particle effects');
                         Utils.createParticleEffect(
                             event.clientX,
                             event.clientY,
@@ -1048,11 +1110,16 @@
                             '#4ecdc4'
                         );
                         Utils.playSound('place', 600, 0.15);
+                    } else {
+                        console.warn('⚠️ Utils not available for particle effects');
                     }
+                } else {
+                    console.warn('⚠️ No letters remaining in queue');
                 }
             }
 
             addPulseAnimation(mesh) {
+                console.log('💫 Adding pulse animation to mesh');
                 const originalScale = mesh.scale.clone();
                 const pulse = () => {
                     const scale = 1 + Math.sin(Date.now() * 0.01) * 0.05;
@@ -1100,7 +1167,16 @@
             }
 
             createGrid() {
+                console.log('🏗️ createGrid() called - gridSize:', this.gridSize);
+                
                 const grid = document.getElementById('gameGrid');
+                console.log('📦 Grid container found:', grid);
+                
+                if (!grid) {
+                    console.error('❌ gameGrid element not found!');
+                    return;
+                }
+                
                 grid.innerHTML = '';
                 
                 // Remove existing grid classes
@@ -1109,45 +1185,69 @@
                 // Add the correct grid class based on size
                 if (this.gridSize === 8) {
                     grid.classList.add('grid-8x8');
+                    console.log('📐 Added grid-8x8 class');
                 } else if (this.gridSize === 10) {
                     grid.classList.add('grid-10x10');
+                    console.log('📐 Added grid-10x10 class');
                 } else if (this.gridSize === 12) {
                     grid.classList.add('grid-12x12');
+                    console.log('📐 Added grid-12x12 class');
                 }
 
                 for (let i = 0; i < this.gridSize * this.gridSize; i++) {
-                const cell = document.createElement('div');
-                cell.className = 'grid-cell';
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
                     cell.textContent = '';
                     cell.onclick = () => this.placeLetter(cell);
                     grid.appendChild(cell);
                 }
+                
+                console.log('✅ 2D grid created with', this.gridSize * this.gridSize, 'cells');
             }
 
             updateLetterQueue() {
+                console.log('🔄 updateLetterQueue() called - letters:', this.letters);
+                
                 const queue = document.getElementById('letterQueue');
+                console.log('📦 Letter queue container found:', queue);
+                
+                if (!queue) {
+                    console.error('❌ letterQueue element not found!');
+                    return;
+                }
+                
                 queue.innerHTML = '';
                 
-                this.letters.slice(0, 5).forEach(letter => {
+                this.letters.slice(0, 5).forEach((letter, index) => {
                     const letterDiv = document.createElement('div');
                     letterDiv.className = 'queue-letter';
                     letterDiv.textContent = letter;
                     queue.appendChild(letterDiv);
+                    console.log('📝 Added letter to queue:', letter, 'at position:', index);
                 });
+                
+                console.log('✅ Letter queue updated');
             }
 
             placeLetter(cell) {
+                console.log('🎯 placeLetter() called - cell:', cell, 'cell text:', cell.textContent);
+                
                 if (!cell.textContent && this.letters.length > 0) {
                     const letter = this.letters.shift();
                     cell.textContent = letter;
                     cell.classList.add('filled');
                     
+                    console.log('📝 Placed letter:', letter, 'in 2D grid');
+                    
                     this.score += 10;
+                    console.log('📊 Score updated:', this.score);
+                    
                     this.updateDisplay();
                     this.updateLetterQueue();
                     this.checkWordCompletion();
                     
                     if (typeof Utils !== 'undefined') {
+                        console.log('✨ Creating particle effects for 2D');
                         Utils.createParticleEffect(
                             cell.offsetLeft + cell.offsetWidth / 2,
                             cell.offsetTop + cell.offsetHeight / 2,
@@ -1155,21 +1255,29 @@
                             '#4ecdc4'
                         );
                         Utils.playSound('place', 600, 0.1);
+                    } else {
+                        console.warn('⚠️ Utils not available for 2D particle effects');
                     }
+                } else {
+                    console.log('❌ Cannot place letter - cell filled or no letters remaining');
                 }
             }
 
             checkWordCompletion() {
+                console.log('🔍 checkWordCompletion() called - mode:', this.mode);
+                
                 if (this.mode === '3d') {
-                    // Handle 3D mode word completion
+                    console.log('🎮 Checking 3D word completion');
                     this.checkWordCompletion3D();
                 } else {
-                    // Handle 2D mode word completion
+                    console.log('📱 Checking 2D word completion');
                     this.checkWordCompletion2D();
                 }
             }
 
             checkWordCompletion2D() {
+                console.log('📱 checkWordCompletion2D() called');
+                
                 const directions = [
                     [-1, -1], [-1, 0], [-1, 1],
                     [0, -1],           [0, 1],
@@ -1177,6 +1285,8 @@
                 ];
 
                 const cells = document.querySelectorAll('.grid-cell');
+                console.log('📦 Found', cells.length, 'grid cells');
+                
                 const grid = [];
                 
                 // Convert cells to 2D grid
@@ -1191,6 +1301,8 @@
                         }
                     }
                 }
+                
+                console.log('📐 2D grid created:', grid);
 
                 // Check for words in all directions
                 for (let row = 0; row < this.gridSize; row++) {
@@ -1199,6 +1311,7 @@
                             for (let [dx, dy] of directions) {
                                 const word = this.checkWordInDirection(grid, col, row, dx, dy);
                                 if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
+                                    console.log('🏆 Word completed in 2D:', word);
                                     this.completeWord(word);
                                 }
                             }
@@ -1208,6 +1321,8 @@
             }
 
             checkWordCompletion3D() {
+                console.log('🎮 checkWordCompletion3D() called');
+                
                 const directions = [
                     [-1, -1], [-1, 0], [-1, 1],
                     [0, -1],           [0, 1],
@@ -1227,6 +1342,8 @@
                         }
                     }
                 }
+                
+                console.log('📐 3D grid created:', grid);
 
                 // Check for words in all directions
                 for (let row = 0; row < this.gridSize; row++) {
@@ -1235,6 +1352,7 @@
                             for (let [dx, dy] of directions) {
                                 const word = this.checkWordInDirection(grid, col, row, dx, dy);
                                 if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
+                                    console.log('🏆 Word completed in 3D:', word);
                                     this.completeWord(word);
                                 }
                             }
@@ -1244,46 +1362,63 @@
             }
 
             getLetterFrom3DMesh(mesh) {
+                console.log('🔍 getLetterFrom3DMesh() called for mesh:', mesh);
                 // For now, return a placeholder letter
                 // In a real implementation, you'd extract the letter from the mesh texture
                 return 'A'; // Placeholder
             }
 
-            checkWordInDirection(grid, startX, startY, dx, dy) {
-                let word = '';
-                let x = startX;
-                let y = startY;
+            checkWordInDirection(grid, startCol, startRow, dx, dy) {
+                console.log('🔍 checkWordInDirection() called - startCol:', startCol, 'startRow:', startRow, 'dx:', dx, 'dy:', dy);
                 
-                while (x >= 0 && x < this.gridSize && y >= 0 && y < this.gridSize) {
-                    if (grid[y] && grid[y][x]) {
-                        word += grid[y][x];
-                } else {
+                let word = '';
+                let col = startCol;
+                let row = startRow;
+                
+                while (col >= 0 && col < this.gridSize && row >= 0 && row < this.gridSize) {
+                    const letter = grid[row][col];
+                    if (letter) {
+                        word += letter;
+                    } else {
                         break;
                     }
-                    x += dx;
-                    y += dy;
+                    col += dx;
+                    row += dy;
                 }
                 
-                return word.length >= 3 ? word : null;
+                console.log('📝 Word found in direction:', word);
+                return word;
             }
 
             completeWord(word) {
-                this.completedWords.push(word);
-                this.score += word.length * 10;
-                this.wordsFound++;
+                console.log('🏆 completeWord() called - word:', word);
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.playSound('complete', 1000, 0.5);
-                    Utils.createVictorySparkles(15);
+                this.completedWords.push(word);
+                this.wordsFound++;
+                this.score += word.length * 10;
+                
+                console.log('📊 Word completion stats - wordsFound:', this.wordsFound, 'score:', this.score);
+                
+                // Add word to completed list
+                const wordList = document.getElementById('wordsFound');
+                if (wordList) {
+                    const wordItem = document.createElement('li');
+                    wordItem.textContent = word;
+                    wordItem.classList.add('completed');
+                    wordList.appendChild(wordItem);
+                    console.log('📝 Added word to completed list:', word);
                 }
                 
                 this.updateDisplay();
-                this.updateWordList();
                 
-                // Check level progression
-                if (this.score >= this.level * 100) {
-                    this.levelUp();
+                // Victory effects
+                if (typeof Utils !== 'undefined') {
+                    console.log('✨ Creating victory effects');
+                    Utils.createVictorySparkles();
+                    Utils.playSound('complete', 1000, 0.3);
                 }
+                
+                console.log('✅ Word completed successfully');
             }
 
             levelUp() {
@@ -1301,109 +1436,142 @@
             }
 
             selectMode(mode) {
-                this.mode = mode;
+                console.log('🎮 selectMode() called - mode:', mode);
+                
+                // Update active button
                 document.querySelectorAll('.mode-btn').forEach(btn => {
                     btn.classList.remove('active');
+                    if (btn.dataset.mode === mode) {
+                        btn.classList.add('active');
+                        console.log('✅ Activated mode button:', btn.textContent);
+                    }
                 });
-                document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
                 
-                // Reset game state when changing modes
-                this.score = 0;
-                this.level = 1;
-                this.wordsFound = 0;
-                this.completedWords = [];
-                this.gameRunning = false;
-                this.paused = false;
-                this.startTime = null;
-                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                this.mode = mode;
+                console.log('🎮 Mode changed to:', this.mode);
                 
-                if (this.gameInterval) {
-                    clearInterval(this.gameInterval);
-                }
-                
-                // Reinitialize the game with new mode
+                // Reinitialize game with new mode
+                this.resetGame();
                 this.init();
-                console.log(`Mode changed to: ${mode}`);
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.playSound('start', 800, 0.2);
-                }
+                console.log('✅ Mode selection completed');
             }
 
             selectGrid(size) {
-                const [rows, cols] = size.split('x').map(Number);
-                this.gridSize = rows;
+                console.log('📐 selectGrid() called - size:', size);
                 
+                // Update active button
                 document.querySelectorAll('.grid-btn').forEach(btn => {
                     btn.classList.remove('active');
+                    if (parseInt(btn.dataset.size) === size) {
+                        btn.classList.add('active');
+                        console.log('✅ Activated grid button:', btn.textContent);
+                    }
                 });
-                document.querySelector(`[data-size="${size}"]`).classList.add('active');
                 
-                // Reinitialize the game with new grid size
+                this.gridSize = size;
+                console.log('📐 Grid size changed to:', this.gridSize);
+                
+                // Reinitialize game with new grid size
+                this.resetGame();
                 this.init();
-                console.log(`Grid size changed to: ${size}`);
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.playSound('start', 800, 0.2);
-                }
+                console.log('✅ Grid selection completed');
             }
 
             startGame() {
+                console.log('▶️ startGame() called');
+                
                 if (!this.gameRunning) {
                     this.gameRunning = true;
                     this.startTime = Date.now();
-                    this.gameInterval = setInterval(() => {
-                        if (!this.paused) {
-                            this.updateGame();
-                        }
-                    }, this.gameSpeed);
-                    console.log('Game started');
+                    console.log('⏰ Game started at:', this.startTime);
                     
-                    if (typeof Utils !== 'undefined') {
-                        Utils.playSound('start', 800, 0.2);
+                    // Update button text
+                    const startButton = document.getElementById('startBtn');
+                    if (startButton) {
+                        startButton.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                        startButton.onclick = () => this.pauseGame();
                     }
+                    
+                    console.log('✅ Game started successfully');
+                } else {
+                    console.log('⚠️ Game already running');
                 }
             }
 
             pauseGame() {
-                this.paused = !this.paused;
-                const pauseBtn = document.getElementById('pauseBtn');
-                if (this.paused) {
-                    pauseBtn.innerHTML = '<i class="fas fa-play"></i> Reprendre';
-                    console.log('Game paused');
-                } else {
-                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                    console.log('Game resumed');
-                }
+                console.log('⏸️ pauseGame() called');
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.playSound('place', 600, 0.1);
+                if (this.gameRunning) {
+                    this.gameRunning = false;
+                    console.log('⏰ Game paused');
+                    
+                    // Update button text
+                    const pauseButton = document.getElementById('pauseBtn');
+                    if (pauseButton) {
+                        pauseButton.innerHTML = '<i class="fas fa-play"></i> Démarrer';
+                        pauseButton.onclick = () => this.startGame();
+                    }
+                    
+                    console.log('✅ Game paused successfully');
+                } else {
+                    console.log('⚠️ Game not running');
                 }
             }
 
             resetGame() {
+                console.log('🔄 resetGame() called');
+                
+                this.gameRunning = false;
+                this.paused = false;
                 this.score = 0;
                 this.level = 1;
                 this.wordsFound = 0;
-                this.completedWords = [];
-                this.gameRunning = false;
-                this.paused = false;
                 this.startTime = null;
-                
-                if (this.gameInterval) {
-                    clearInterval(this.gameInterval);
-                }
-                
-                // Reset letters
                 this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                this.completedWords = [];
                 
-                this.init();
-                this.updateDisplay();
-                console.log('Game reset');
+                console.log('🔄 Game state reset');
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.playSound('complete', 1000, 0.3);
+                // Clear grid
+                if (this.mode === '3d') {
+                    console.log('🎮 Clearing 3D grid');
+                    this.grid.forEach(row => {
+                        row.forEach(cell => {
+                            if (cell.letter) {
+                                this.scene.remove(cell.letter);
+                                cell.letter = null;
+                            }
+                            if (cell.glow) {
+                                this.scene.remove(cell.glow);
+                                cell.glow = null;
+                            }
+                            cell.filled = false;
+                            cell.mesh.material.color.setHex(0x2a2a3e);
+                            cell.mesh.material.opacity = 0.8;
+                        });
+                    });
+                } else {
+                    console.log('📱 Clearing 2D grid');
+                    const cells = document.querySelectorAll('.grid-cell');
+                    cells.forEach(cell => {
+                        cell.textContent = '';
+                        cell.classList.remove('filled');
+                    });
                 }
+                
+                this.updateDisplay();
+                this.updateLetterQueue();
+                
+                // Reset button text
+                const startButton = document.getElementById('startBtn');
+                if (startButton) {
+                    startButton.innerHTML = '<i class="fas fa-play"></i> Démarrer';
+                    startButton.onclick = () => this.startGame();
+                }
+                
+                console.log('✅ Game reset successfully');
             }
 
             updateGame() {
@@ -1417,11 +1585,32 @@
             }
 
             updateDisplay() {
-                document.getElementById('scoreValue').textContent = this.score;
-                document.getElementById('levelValue').textContent = this.level;
-                document.getElementById('currentMode').textContent = this.mode === '3d' ? '3D' : '2D';
-                document.getElementById('currentGrid').textContent = `${this.gridSize}×${this.gridSize}`;
-                document.getElementById('wordsValue').textContent = this.wordsFound;
+                console.log('📊 updateDisplay() called - score:', this.score, 'level:', this.level);
+                
+                const scoreElement = document.getElementById('scoreValue');
+                const levelElement = document.getElementById('levelValue');
+                const timeElement = document.getElementById('timeValue');
+                const wordsElement = document.getElementById('wordsValue');
+                
+                console.log('📦 Display elements found:', {
+                    score: scoreElement,
+                    level: levelElement,
+                    time: timeElement,
+                    words: wordsElement
+                });
+                
+                if (scoreElement) scoreElement.textContent = this.score;
+                if (levelElement) levelElement.textContent = this.level;
+                
+                // Update time if game is running
+                if (this.gameRunning && this.startTime) {
+                    const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                    if (timeElement) timeElement.textContent = `${Math.floor(elapsed / 60)}:${(elapsed % 60).toString().padStart(2, '0')}`;
+                }
+                
+                if (wordsElement) wordsElement.textContent = this.wordsFound;
+                
+                console.log('✅ Display updated');
             }
 
             updateWordList() {
@@ -1437,50 +1626,92 @@
             }
 
             setupEventListeners() {
+                console.log('🎯 setupEventListeners() called');
+                
                 // Game control buttons
                 const startBtn = document.getElementById('startBtn');
                 const pauseBtn = document.getElementById('pauseBtn');
                 const resetBtn = document.getElementById('resetBtn');
                 
-                if (startBtn) startBtn.addEventListener('click', () => this.startGame());
-                if (pauseBtn) pauseBtn.addEventListener('click', () => this.pauseGame());
-                if (resetBtn) resetBtn.addEventListener('click', () => this.resetGame());
+                console.log('🎮 Control buttons found:', {
+                    start: startBtn,
+                    pause: pauseBtn,
+                    reset: resetBtn
+                });
                 
-                // Mode selection buttons
-                document.querySelectorAll('.mode-btn').forEach(btn => {
+                if (startBtn) {
+                    startBtn.addEventListener('click', () => {
+                        console.log('🖱️ Start button clicked');
+                        this.startGame();
+                    });
+                }
+                
+                if (pauseBtn) {
+                    pauseBtn.addEventListener('click', () => {
+                        console.log('🖱️ Pause button clicked');
+                        this.pauseGame();
+                    });
+                }
+                
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => {
+                        console.log('🖱️ Reset button clicked');
+                        this.resetGame();
+                    });
+                }
+                
+                // Mode selection
+                const modeButtons = document.querySelectorAll('.mode-btn');
+                console.log('🎮 Mode buttons found:', modeButtons.length);
+                
+                modeButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
-                        const mode = btn.getAttribute('data-mode');
-                        this.selectMode(mode);
-            });
-        });
-
-                // Grid size selection buttons
-                document.querySelectorAll('.grid-btn').forEach(btn => {
+                        console.log('🖱️ Mode button clicked:', btn.textContent);
+                        this.selectMode(btn.dataset.mode);
+                    });
+                });
+                
+                // Grid size selection
+                const gridButtons = document.querySelectorAll('.grid-btn');
+                console.log('📐 Grid buttons found:', gridButtons.length);
+                
+                gridButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
-                        const size = btn.getAttribute('data-size');
-                        this.selectGrid(size);
+                        console.log('🖱️ Grid button clicked:', btn.textContent);
+                        this.selectGrid(parseInt(btn.dataset.size));
                     });
                 });
                 
                 // Keyboard controls
                 document.addEventListener('keydown', (event) => {
+                    console.log('⌨️ Key pressed:', event.key);
+                    
                     switch(event.key) {
                         case ' ':
+                            console.log('⏸️ Space key - toggling pause');
                             event.preventDefault();
-                            this.pauseGame();
+                            if (this.gameRunning) {
+                                this.pauseGame();
+                            } else {
+                                this.startGame();
+                            }
                             break;
                         case 'r':
                         case 'R':
+                            console.log('🔄 R key - resetting game');
+                            event.preventDefault();
                             this.resetGame();
                             break;
                         case 's':
                         case 'S':
+                            console.log('▶️ S key - starting game');
+                            event.preventDefault();
                             this.startGame();
                             break;
                     }
                 });
                 
-                console.log('Event listeners setup complete');
+                console.log('✅ Event listeners setup completed');
             }
         }
 
@@ -1514,24 +1745,48 @@
 
         // Initialize 3D game when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Initializing 3D game...');
+            console.log('🚀 DOM Content Loaded - Initializing 3D game...');
+            
+            // Check if Three.js is available
+            if (typeof THREE === 'undefined') {
+                console.error('❌ THREE.js not loaded!');
+                return;
+            }
+            
+            console.log('✅ THREE.js available, creating Game3D instance...');
             game3D = new Game3D();
-            console.log('3D Game initialized successfully');
+            console.log('🎮 3D Game initialized successfully');
+            
+            // Check if Utils is available
+            if (typeof Utils !== 'undefined') {
+                console.log('✅ Utils available for sound and particle effects');
+            } else {
+                console.warn('⚠️ Utils not available - sound and particle effects disabled');
+            }
         });
 
         // Fullscreen function
         function toggleFullScreen() {
+            console.log('🖥️ toggleFullScreen() called');
+            
             const gameContainer = document.querySelector('.game-container');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             
+            console.log('📦 Game container found:', gameContainer);
+            console.log('🔘 Fullscreen button found:', fullscreenBtn);
+            
             if (gameContainer.classList.contains('fullscreen')) {
+                console.log('📤 Exiting fullscreen mode');
                 exitFullScreen();
             } else {
+                console.log('📥 Entering fullscreen mode');
                 enterFullScreen();
             }
         }
 
         function enterFullScreen() {
+            console.log('📥 enterFullScreen() called');
+            
             const gameContainer = document.querySelector('.game-container');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             
@@ -1547,10 +1802,19 @@
             
             // Resize 3D canvas for full screen
             const canvas = document.getElementById('threejsCanvas');
+            console.log('🎨 Canvas found for fullscreen:', canvas);
+            
             if (canvas && game3D && game3D.renderer) {
                 const container = gameContainer.querySelector('.game-grid-container');
                 const containerRect = container.getBoundingClientRect();
                 const maxSize = Math.min(containerRect.width, containerRect.height) * 0.9;
+                
+                console.log('📐 Fullscreen dimensions:', {
+                    containerWidth: containerRect.width,
+                    containerHeight: containerRect.height,
+                    maxSize: maxSize
+                });
+                
                 canvas.width = maxSize;
                 canvas.height = maxSize;
                 game3D.renderer.setSize(maxSize, maxSize);
@@ -1559,13 +1823,18 @@
                 if (game3D.camera) {
                     game3D.camera.aspect = maxSize / maxSize;
                     game3D.camera.updateProjectionMatrix();
+                    console.log('📷 Camera aspect ratio updated for fullscreen');
                 }
+            } else {
+                console.warn('⚠️ Canvas or renderer not available for fullscreen resize');
             }
             
-            console.log('Entered full screen mode');
+            console.log('✅ Entered full screen mode');
         }
 
         function exitFullScreen() {
+            console.log('📤 exitFullScreen() called');
+            
             const gameContainer = document.querySelector('.game-container');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             
@@ -1576,28 +1845,35 @@
             const exitBtn = gameContainer.querySelector('.fullscreen-exit');
             if (exitBtn) {
                 exitBtn.remove();
+                console.log('❌ Exit button removed');
             }
             
             // Reset 3D canvas size
             const canvas = document.getElementById('threejsCanvas');
+            console.log('🎨 Canvas found for exit fullscreen:', canvas);
+            
             if (canvas && game3D && game3D.renderer) {
-                canvas.width = 400;
-                canvas.height = 400;
-                game3D.renderer.setSize(400, 400);
+                canvas.width = 500;
+                canvas.height = 500;
+                game3D.renderer.setSize(500, 500);
                 
                 // Update camera aspect ratio
                 if (game3D.camera) {
                     game3D.camera.aspect = 1;
                     game3D.camera.updateProjectionMatrix();
+                    console.log('📷 Camera aspect ratio reset');
                 }
+            } else {
+                console.warn('⚠️ Canvas or renderer not available for fullscreen exit resize');
             }
             
-            console.log('Exited full screen mode');
+            console.log('✅ Exited full screen mode');
         }
 
         // Keyboard shortcut for full screen (F11)
         document.addEventListener('keydown', function(event) {
             if (event.key === 'F11') {
+                console.log('⌨️ F11 key pressed - toggling fullscreen');
                 event.preventDefault();
                 toggleFullScreen();
             }

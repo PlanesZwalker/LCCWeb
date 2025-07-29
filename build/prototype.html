@@ -428,44 +428,159 @@
     <script>
         // Initialize 2D game when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing 2D game...');
+            console.log('🚀 DOM Content Loaded - Initializing 2D game...');
+            
+            // Check if index.js is loaded
+            if (typeof LettersCascadeGame === 'undefined') {
+                console.error('❌ LettersCascadeGame class not found! Check if index.js is loaded properly.');
+                return;
+            }
+            
+            console.log('✅ LettersCascadeGame class found');
             
             // Initialize utilities
             if (typeof Utils !== 'undefined') {
-                console.log('Utils loaded successfully');
+                console.log('✅ Utils loaded successfully');
+                
                 // Add sound effects to buttons
-                document.querySelectorAll('.btn').forEach(btn => {
+                const buttons = document.querySelectorAll('.btn');
+                console.log('🎮 Found', buttons.length, 'buttons for sound effects');
+                
+                buttons.forEach((btn, index) => {
                     btn.addEventListener('click', function() {
+                        console.log('🖱️ Button clicked:', btn.textContent, 'index:', index);
                         Utils.playSound('start', 800, 0.2);
                     });
                 });
 
                 // Add particle effects to completed words
-                document.querySelectorAll('.word-list li').forEach(word => {
+                const wordListItems = document.querySelectorAll('.word-list li');
+                console.log('📝 Found', wordListItems.length, 'word list items for particle effects');
+                
+                wordListItems.forEach((word, index) => {
                     word.addEventListener('click', function() {
+                        console.log('🖱️ Word clicked:', word.textContent, 'index:', index);
                         if (this.classList.contains('completed')) {
+                            console.log('✨ Creating particle effect for completed word:', word.textContent);
                             Utils.createParticleEffect(
                                 this.offsetLeft + this.offsetWidth / 2,
                                 this.offsetTop + this.offsetHeight / 2,
                                 10,
                                 '#4ecdc4'
                             );
+                        } else {
+                            console.log('⚠️ Word not completed yet:', word.textContent);
                         }
                     });
                 });
             } else {
-                console.warn('Utils not loaded');
+                console.warn('⚠️ Utils not loaded - sound and particle effects disabled');
             }
 
             // Initialize 2D Game
-            if (typeof LettersCascadeGame !== 'undefined') {
-                console.log('Game class found, creating 2D game instance...');
-                window.game = new LettersCascadeGame();
-                console.log('2D Game initialized successfully');
-            } else {
-                console.error('LettersCascadeGame class not found');
-            }
+            console.log('🎮 Creating LettersCascadeGame instance...');
+            window.game = new LettersCascadeGame();
+            console.log('✅ 2D Game initialized successfully');
+            
+            // Check game state
+            console.log('📊 Game state after initialization:', {
+                game: window.game,
+                hasGame: !!window.game,
+                gameType: typeof window.game
+            });
+            
+            // Check DOM elements
+            const gameElements = {
+                gameGrid: document.getElementById('gameGrid'),
+                scoreDisplay: document.getElementById('scoreDisplay'),
+                levelDisplay: document.getElementById('levelDisplay'),
+                wordsCompleted: document.getElementById('wordsCompleted'),
+                wordList: document.getElementById('wordList'),
+                letterPreview: document.getElementById('letterPreview'),
+                currentLevel: document.getElementById('currentLevel'),
+                targetScore: document.getElementById('targetScore'),
+                wordsFound: document.getElementById('wordsFound')
+            };
+            
+            console.log('📦 DOM elements found:', gameElements);
+            
+            // Check for missing elements
+            Object.entries(gameElements).forEach(([name, element]) => {
+                if (!element) {
+                    console.error('❌ Missing DOM element:', name);
+                } else {
+                    console.log('✅ Found DOM element:', name);
+                }
+            });
         });
+        
+        // Add debugging for game control functions
+        function startGame() {
+            console.log('▶️ startGame() called from prototype.html');
+            if (window.game && typeof window.game.startGame === 'function') {
+                window.game.startGame();
+            } else {
+                console.error('❌ Game instance or startGame method not available');
+            }
+        }
+        
+        function pauseGame() {
+            console.log('⏸️ pauseGame() called from prototype.html');
+            if (window.game && typeof window.game.pauseGame === 'function') {
+                window.game.pauseGame();
+            } else {
+                console.error('❌ Game instance or pauseGame method not available');
+            }
+        }
+        
+        function resetGame() {
+            console.log('🔄 resetGame() called from prototype.html');
+            if (window.game && typeof window.game.resetGame === 'function') {
+                window.game.resetGame();
+            } else {
+                console.error('❌ Game instance or resetGame method not available');
+            }
+        }
+        
+        // Add debugging for fullscreen functionality
+        function toggleFullScreen() {
+            console.log('🖥️ toggleFullScreen() called from prototype.html');
+            
+            const gameContainer = document.querySelector('.game-container');
+            console.log('📦 Game container found:', gameContainer);
+            
+            if (gameContainer.classList.contains('fullscreen')) {
+                console.log('📤 Exiting fullscreen mode');
+                exitFullScreen();
+            } else {
+                console.log('📥 Entering fullscreen mode');
+                enterFullScreen();
+            }
+        }
+        
+        function enterFullScreen() {
+            console.log('📥 enterFullScreen() called from prototype.html');
+            
+            const gameContainer = document.querySelector('.game-container');
+            if (gameContainer) {
+                gameContainer.classList.add('fullscreen');
+                console.log('✅ Fullscreen class added');
+            } else {
+                console.error('❌ Game container not found for fullscreen');
+            }
+        }
+        
+        function exitFullScreen() {
+            console.log('📤 exitFullScreen() called from prototype.html');
+            
+            const gameContainer = document.querySelector('.game-container');
+            if (gameContainer) {
+                gameContainer.classList.remove('fullscreen');
+                console.log('✅ Fullscreen class removed');
+            } else {
+                console.error('❌ Game container not found for fullscreen exit');
+            }
+        }
     </script>
 </body>
 </html>
