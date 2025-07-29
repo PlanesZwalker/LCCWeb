@@ -921,16 +921,16 @@
                                 <div class="game-controls">
                                     <h3><i class="fas fa-gamepad"></i> CONTRÔLES DU JEU</h3>
                                     <div class="game-controls">
-                                        <button class="btn" onclick="game.startGame()">
+                                        <button class="btn" onclick="game3D.startGame()">
                                             <i class="fas fa-play"></i> Démarrer
                                         </button>
-                                        <button class="btn" onclick="game.pauseGame()">
+                                        <button class="btn" onclick="game3D.pauseGame()">
                                             <i class="fas fa-pause"></i> Pause
                                         </button>
-                                        <button class="btn" onclick="game.resetGame()">
+                                        <button class="btn" onclick="game3D.resetGame()">
                                             <i class="fas fa-redo"></i> Reset
                                         </button>
-                                        <button class="btn" onclick="game.toggleFullScreen()">
+                                        <button class="btn" onclick="game3D.toggleFullScreen()">
                                             <i class="fas fa-expand"></i> Plein Écran
                                         </button>
                                     </div>
@@ -941,16 +941,16 @@
                                     <div class="config-group">
                                         <label>Mode de Jeu</label>
                                         <div class="config-buttons">
-                                            <button class="config-btn" onclick="game.selectMode('2d')">Mode 2D</button>
-                                            <button class="config-btn active" onclick="game.selectMode('3d')">Mode 3D</button>
+                                            <button class="config-btn" onclick="game3D.selectMode('2d')">Mode 2D</button>
+                                            <button class="config-btn active" onclick="game3D.selectMode('3d')">Mode 3D</button>
                                         </div>
                                     </div>
                                     <div class="config-group">
                                         <label>Taille de Grille</label>
                                         <div class="config-buttons">
-                                            <button class="config-btn" onclick="game.selectGrid(8)">8x8</button>
-                                            <button class="config-btn active" onclick="game.selectGrid(10)">10x10</button>
-                                            <button class="config-btn" onclick="game.selectGrid(12)">12x12</button>
+                                            <button class="config-btn" onclick="game3D.selectGrid(8)">8x8</button>
+                                            <button class="config-btn active" onclick="game3D.selectGrid(10)">10x10</button>
+                                            <button class="config-btn" onclick="game3D.selectGrid(12)">12x12</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1893,6 +1893,24 @@
                     'VERT', 'JAUNE', 'ORANGE', 'VIOLET', 'ROSE', 'GRIS',
                     'MARRON', 'BEIGE', 'DORE', 'ARGENTE', 'BRONZE', 'CUIVRE'
                 ]);
+            }
+            
+            // Mode and Grid Selection Methods
+            selectMode(mode) {
+                console.log('🎮 selectMode called with mode:', mode);
+                this.mode = mode;
+                this.updateDisplay();
+                this.updateModeButtons();
+            }
+            
+            selectGrid(size) {
+                console.log('🎮 selectGrid called with size:', size);
+                if (this.gridSizes.includes(size)) {
+                    this.currentGridSize = size;
+                    this.create3DGrid();
+                    this.generateLetterQueue();
+                    this.updateDisplay();
+                }
             }
         }
         
