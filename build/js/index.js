@@ -14,11 +14,13 @@ class LettersCascadeGame {
         this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
         this.currentLetter = null;
         this.letterPosition = { x: 0, y: 0 };
-        this.gameSpeed = 1000;
+        this.gameSpeed = 800; // Slower speed for better control
         this.gameInterval = null;
         this.paused = false;
         this.wordsFound = 0;
         this.targetScore = 100;
+        this.lastMoveTime = 0;
+        this.moveDelay = 500; // Minimum time between moves
         
         this.init();
     }
@@ -97,8 +99,8 @@ class LettersCascadeGame {
         // Analyze word requirements
         const wordRequirements = this.analyzeWordRequirements();
         
-        // Create balanced letter queue
-        this.letterQueue = this.createBalancedLetterQueue(wordRequirements, 20);
+        // Create more balanced letter queue with better distribution
+        this.letterQueue = this.createBalancedLetterQueue(wordRequirements, 30);
         
         this.updateLetterPreview();
     }
@@ -119,20 +121,30 @@ class LettersCascadeGame {
         const queue = [];
         const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         
-        // Add required letters first
+        // Add required letters with better distribution (max 2 per letter initially)
         for (let letter in requirements) {
             const needed = requirements[letter];
-            for (let i = 0; i < Math.min(needed, 3); i++) {
+            const maxPerLetter = Math.min(needed, 2);
+            for (let i = 0; i < maxPerLetter; i++) {
                 queue.push(letter);
             }
         }
         
-        // Fill remaining slots with random letters
+        // Fill remaining slots with random letters, avoiding clusters
         while (queue.length < count) {
-            queue.push(letters[Math.floor(Math.random() * letters.length)]);
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            
+            // Avoid adding too many of the same letter in a row
+            if (queue.length === 0 || queue[queue.length - 1] !== randomLetter) {
+                queue.push(randomLetter);
+            } else {
+                // If last letter is the same, add a different random letter
+                const otherLetters = letters.replace(randomLetter, '');
+                queue.push(otherLetters[Math.floor(Math.random() * otherLetters.length)]);
+            }
         }
         
-        // Shuffle the queue
+        // Shuffle the queue for better randomness
         return this.shuffleArray(queue);
     }
 
@@ -210,12 +222,36 @@ class LettersCascadeGame {
     spawnNewLetter() {
         if (this.letterQueue.length > 0) {
             this.currentLetter = this.letterQueue.shift();
-            this.letterPosition = { x: Math.floor(this.gridSize / 2), y: 0 };
+            // Spawn letter at random horizontal position at the top
+            this.letterPosition = { 
+                x: Math.floor(Math.random() * this.gridSize), 
+                y: 0 
+            };
+            
+            // If the spawn position is occupied, find a free position
+            if (this.isCellOccupied(this.letterPosition.x, this.letterPosition.y)) {
+                this.findFreeSpawnPosition();
+            }
+            
             this.updateLetterPreview();
         } else {
             this.generateSmartLetterQueue();
             this.spawnNewLetter();
         }
+    }
+
+    findFreeSpawnPosition() {
+        // Try to find a free position at the top row
+        for (let x = 0; x < this.gridSize; x++) {
+            if (!this.isCellOccupied(x, 0)) {
+                this.letterPosition.x = x;
+                this.letterPosition.y = 0;
+                return;
+            }
+        }
+        // If no free position at top, place at random position
+        this.letterPosition.x = Math.floor(Math.random() * this.gridSize);
+        this.letterPosition.y = 0;
     }
 
     gameLoop() {
@@ -225,10 +261,25 @@ class LettersCascadeGame {
         
         this.gameInterval = setInterval(() => {
             if (this.gameRunning && !this.paused) {
-                this.moveLetterDown();
+                const currentTime = Date.now();
+                if (currentTime - this.lastMoveTime >= this.moveDelay) {
+                    this.moveLetterDown();
+                    this.lastMoveTime = currentTime;
+                }
                 this.drawGrid();
             }
-        }, this.gameSpeed);
+        }, 100); // More frequent updates for smoother animation
+    }
+
+    moveLetterDown() {
+        if (this.currentLetter) {
+            if (this.letterPosition.y < this.gridSize - 1 && !this.isCellOccupied(this.letterPosition.x, this.letterPosition.y + 1)) {
+                this.letterPosition.y++;
+                this.drawGrid(); // Redraw to show letter in new position
+            } else {
+                this.placeLetter();
+            }
+        }
     }
 
     placeLetter() {
@@ -301,15 +352,18 @@ class LettersCascadeGame {
         this.score += word.length * 10;
         this.wordsFound++;
         
+        // Clear the completed word from the grid
+        this.clearWordFromGrid(word);
+        
         if (typeof Utils !== 'undefined') {
             Utils.playSound('complete', 1000, 0.5);
             Utils.createVictorySparkles(15);
         }
         
-        this.updateDisplay();
         this.updateWordList();
+        this.updateDisplay();
         
-        // Check level progression
+        // Check for level up
         if (this.score >= this.targetScore) {
             this.levelUp();
         }
@@ -318,7 +372,7 @@ class LettersCascadeGame {
     levelUp() {
         this.level++;
         this.targetScore = this.level * 100;
-        this.gameSpeed = Math.max(200, 1000 - (this.level - 1) * 100);
+        this.moveDelay = Math.max(200, 500 - (this.level - 1) * 50); // Adjust speed based on level
         
         if (typeof Utils !== 'undefined') {
             Utils.showModal(
@@ -329,17 +383,6 @@ class LettersCascadeGame {
         }
         
         this.updateDisplay();
-    }
-
-    moveLetterDown() {
-        if (this.currentLetter) {
-            if (this.letterPosition.y < this.gridSize - 1 && !this.isCellOccupied(this.letterPosition.x, this.letterPosition.y + 1)) {
-                this.letterPosition.y++;
-                this.drawGrid(); // Redraw to show letter in new position
-            } else {
-                this.placeLetter();
-            }
-        }
     }
 
     moveLetterLeft() {
@@ -426,6 +469,39 @@ class LettersCascadeGame {
                 }
             }
         });
+    }
+
+    clearWordFromGrid(word) {
+        // Find and clear all instances of the completed word from the grid
+        const directions = [
+            [-1, -1], [-1, 0], [-1, 1],
+            [0, -1],           [0, 1],
+            [1, -1],  [1, 0],  [1, 1]
+        ];
+
+        for (let row = 0; row < this.gridSize; row++) {
+            for (let col = 0; col < this.gridSize; col++) {
+                if (this.grid[row] && this.grid[row][col]) {
+                    for (let [dx, dy] of directions) {
+                        const foundWord = this.checkWordInDirection(col, row, dx, dy);
+                        if (foundWord === word) {
+                            // Clear the word from the grid
+                            this.clearWordAtPosition(col, row, dx, dy, word.length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    clearWordAtPosition(startX, startY, dx, dy, length) {
+        for (let i = 0; i < length; i++) {
+            const x = startX + (dx * i);
+            const y = startY + (dy * i);
+            if (this.grid[y] && this.grid[y][x]) {
+                this.grid[y][x] = null;
+            }
+        }
     }
 }
 
