@@ -942,7 +942,7 @@
             </div>
                                     <div class="info-section">
                                         <h4>Mode</h4>
-                                        <strong class="value" id="currentMode">2D</strong>
+                                        <strong class="value" id="currentMode">3D</strong>
             </div>
                                     <div class="info-section">
                                         <h4>Grille</h4>
@@ -1988,22 +1988,39 @@
             }
 
             updateDisplay() {
-                console.log('📊 updateDisplay() called - score:', this.score, 'level:', this.level);
+                console.log('📊 updateDisplay() called - score:', this.score, 'level:', this.level, 'mode:', this.mode);
                 
                 const scoreElement = document.getElementById('scoreValue');
                 const levelElement = document.getElementById('levelValue');
                 const timeElement = document.getElementById('timeValue');
                 const wordsElement = document.getElementById('wordsValue');
+                const modeElement = document.getElementById('currentMode');
+                const gridElement = document.getElementById('currentGrid');
                 
                 console.log('📦 Display elements found:', {
                     score: scoreElement,
                     level: levelElement,
                     time: timeElement,
-                    words: wordsElement
+                    words: wordsElement,
+                    mode: modeElement,
+                    grid: gridElement
                 });
                 
                 if (scoreElement) scoreElement.textContent = this.score;
                 if (levelElement) levelElement.textContent = this.level;
+                
+                // Update mode display
+                if (modeElement) {
+                    const modeText = this.mode === '3d' ? '3D' : '2D';
+                    modeElement.textContent = modeText;
+                    console.log('🎮 Mode display updated to:', modeText);
+                }
+                
+                // Update grid size display
+                if (gridElement) {
+                    gridElement.textContent = `${this.gridSize}×${this.gridSize}`;
+                    console.log('📐 Grid display updated to:', `${this.gridSize}×${this.gridSize}`);
+                }
                 
                 // Update time if game is running
                 if (this.gameRunning && this.startTime) {
@@ -2013,7 +2030,26 @@
                 
                 if (wordsElement) wordsElement.textContent = this.wordsFound;
                 
+                // Update mode buttons to reflect current mode
+                this.updateModeButtons();
+                
                 console.log('✅ Display updated');
+            }
+
+            updateModeButtons() {
+                console.log('🎮 updateModeButtons() called - current mode:', this.mode);
+                
+                const modeButtons = document.querySelectorAll('.mode-btn');
+                modeButtons.forEach(btn => {
+                    const btnMode = btn.dataset.mode;
+                    if (btnMode === this.mode) {
+                        btn.classList.add('active');
+                        console.log('✅ Mode button activated:', btnMode);
+                    } else {
+                        btn.classList.remove('active');
+                        console.log('❌ Mode button deactivated:', btnMode);
+                    }
+                });
             }
 
             updateWordList() {
