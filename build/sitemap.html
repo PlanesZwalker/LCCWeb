@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Site - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <style>
+        /* Page-specific styles for sitemap */
+        .sitemap-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-3xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .sitemap-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .sitemap-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .sitemap-section h2 i {
+            color: var(--primary-color);
+        }
+
+        .page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .page-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .page-card:hover::before {
+            left: 100%;
+        }
+
+        .page-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-2xl);
+            border-color: var(--primary-color);
+        }
+
+        .page-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .page-card p {
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .page-card .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-decoration: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .page-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .category-label {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), var(--success-color));
+            color: var(--white);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .info-box {
+            background: rgba(102, 126, 234, 0.1);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .info-box h4 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .info-box ul {
+            color: var(--gray-700);
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        @media (max-width: 768px) {
+            .page-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-sidebar">
+                <h3>Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
+                    <a href="sitemap.html" class="active"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Header -->
+                <div class="glass-panel">
+                    <h1>🗺️ Plan de Site</h1>
+                    <p>Navigation complète du site Letters Cascade Challenge - Trouvez rapidement ce que vous cherchez</p>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2><i class="fas fa-home"></i> Pages Principales</h2>
+                    <div class="page-grid">
+                        <div class="page-card">
+                            <div class="category-label">🏠 Accueil</div>
+                            <h3><i class="fas fa-home"></i> Page d'Accueil</h3>
+                            <p>Présentation générale du projet Letters Cascade Challenge avec vue d'ensemble, caractéristiques uniques et documentation.</p>
+                            <a href="index.html" class="btn">Accéder <i class="fas fa-arrow-right"></i></a>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="category-label">🧪 Maquette</div>
+                            <h3><i class="fas fa-flask"></i> Maquette Jouable</h3>
+                            <p>Version prototype complète avec gameplay fonctionnel, système de score et mécaniques de base du jeu Letters Cascade Challenge.</p>
+                            <a href="prototype.html" class="btn">Tester <i class="fas fa-flask"></i></a>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="category-label">🎮 Prototype</div>
+                            <h3><i class="fas fa-gamepad"></i> Version 3D</h3>
+                            <p>Prototype avancé avec grille 3D interactive, sélection de modes et démonstration des mécaniques avancées.</p>
+                            <a href="game.html" class="btn">Explorer <i class="fas fa-cube"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2><i class="fas fa-file-alt"></i> Documentation</h2>
+                    <div class="page-grid">
+                        <div class="page-card">
+                            <div class="category-label">📋 GDD</div>
+                            <h3><i class="fas fa-file-alt"></i> Game Design Document</h3>
+                            <p>Document de conception complet avec spécifications, règles, mécaniques et architecture technique du jeu.</p>
+                            <a href="GDD.html" class="btn">Lire <i class="fas fa-book-open"></i></a>
+                        </div>
+
+                        <div class="page-card">
+                            <div class="category-label">⚙️ Technique</div>
+                            <h3><i class="fas fa-cogs"></i> Spécifications Techniques</h3>
+                            <p>Documentation technique détaillée pour le développement avec Unreal Engine et pipeline 3D.</p>
+                            <a href="technical-spec.html" class="btn">Consulter <i class="fas fa-code"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2><i class="fas fa-palette"></i> Design & Inspiration</h2>
+                    <div class="page-grid">
+                        <div class="page-card">
+                            <div class="category-label">🎨 Design</div>
+                            <h3><i class="fas fa-palette"></i> Moodboard</h3>
+                            <p>Inspirations visuelles, références artistiques et direction créative pour le design du jeu.</p>
+                            <a href="moodboard.html" class="btn">Explorer <i class="fas fa-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

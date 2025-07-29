@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maquette 3D - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/utils.js"></script>
+    <style>
+        /* Enhanced 3D Game Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-xl);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .game-section {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .sidebar {
+            animation: slideInRight 0.6s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        /* Enhanced Game Header */
+        .game-header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .game-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-header p {
+            font-size: 1.1rem;
+            color: var(--gray-300);
+            margin: 0;
+        }
+
+        /* Enhanced Game Container */
+        .game-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced Controls Section */
+        .controls-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .control-group h3 {
+            font-size: 1rem;
+            color: var(--gray-300);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced Game Controls */
+        .game-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .game-controls .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Enhanced Mode and Grid Selection */
+        .mode-selection, .grid-selection {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .mode-btn, .grid-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .mode-btn:hover, .grid-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mode-btn.active, .grid-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Enhanced Game Grid */
+        .game-grid-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 400px;
+        }
+
+        /* Full Screen Styles for 3D Game */
+        .game-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-lg);
+        }
+
+        .game-container.fullscreen .game-grid-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-container.fullscreen #threejsCanvas {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+        }
+
+        .game-container.fullscreen .controls-section {
+            position: absolute;
+            top: var(--spacing-lg);
+            left: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+        }
+
+        .game-container.fullscreen .game-info {
+            position: absolute;
+            bottom: var(--spacing-lg);
+            left: var(--spacing-lg);
+            right: var(--spacing-lg);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+        }
+
+        .fullscreen-exit {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        #gameGrid {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Enhanced Game Info */
+        .game-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        /* Enhanced Score Display */
+        .score-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .score-item span {
+            font-size: 0.9rem;
+            color: var(--gray-300);
+        }
+
+        .score-item strong {
+            display: block;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-top: var(--spacing-xs);
+        }
+
+        /* Enhanced Word List */
+        .word-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: var(--spacing-sm);
+        }
+
+        .word-list li {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .word-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .word-list li.completed {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+            border-color: rgba(76, 175, 80, 0.3);
+            color: #4caf50;
+        }
+
+        /* Enhanced Letter Queue */
+        .letter-queue {
+            margin-top: var(--spacing-lg);
+        }
+
+        .queue-display {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-top: var(--spacing-sm);
+        }
+
+        .queue-letter {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            animation: queueBounce 2s infinite;
+        }
+
+        /* Enhanced Sidebar */
+        .sidebar-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-md);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .sidebar-section p {
+            color: var(--gray-300);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Enhanced Concept Showcase */
+        .concept-showcase {
+            display: grid;
+            gap: var(--spacing-lg);
+        }
+
+        .concept-showcase-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .concept-showcase-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .concept-info {
+            padding: var(--spacing-md);
+        }
+
+        .concept-info h4 {
+            font-size: 1rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--accent-color);
+        }
+
+        .concept-info p {
+            font-size: 0.9rem;
+            color: var(--gray-400);
+            margin: 0;
+        }
+
+        /* Loading Indicator */
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+
+            .sidebar {
+                order: 2;
+            }
+
+            .game-section {
+                order: 1;
+            }
+
+            .controls-section {
+                grid-template-columns: 1fr;
+            }
+
+            .game-info {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-header h1 {
+                font-size: 2rem;
+            }
+
+            .game-controls {
+                flex-direction: column;
+            }
+
+            .mode-selection, .grid-selection {
+                justify-content: center;
+            }
+
+            .score-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes queueBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-layout">
+            <!-- Navigation Menu -->
+            <div class="nav-sidebar">
+                <h3>Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html" class="active"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
+                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+        </div>
+
+            <div class="main-content">
+                <div class="game-section">
+                    <!-- Enhanced Game Header -->
+                    <div class="game-header">
+                        <h1>🎮 Maquette 3D - Letters Cascade Challenge</h1>
+                        <p>Mode immersif avec grille 3D - Jouabilité avancée</p>
+        </div>
+
+                    <div class="game-container">
+                        <!-- Enhanced Controls Section -->
+                        <div class="controls-section">
+                            <div class="control-group">
+                                <h3><i class="fas fa-gamepad"></i> Contrôles du Jeu</h3>
+                                <div class="game-controls">
+                                    <button id="startBtn" class="btn">
+                                        <i class="fas fa-play"></i> Démarrer
+                                    </button>
+                                    <button id="pauseBtn" class="btn">
+                                        <i class="fas fa-pause"></i> Pause
+                                    </button>
+                                    <button id="resetBtn" class="btn">
+                                        <i class="fas fa-redo"></i> Reset
+                                    </button>
+                                    <button id="fullscreenBtn" class="btn" onclick="toggleFullScreen()">
+                                        <i class="fas fa-expand"></i> Plein Écran
+                                    </button>
+                                </div>
+            </div>
+
+                            <div class="control-group">
+                                <h3><i class="fas fa-cog"></i> Configuration</h3>
+                                <div class="mode-selection">
+                                    <button class="mode-btn" data-mode="2d">
+                                        <i class="fas fa-square"></i> Mode 2D
+                                    </button>
+                                    <button class="mode-btn active" data-mode="3d">
+                                        <i class="fas fa-cube"></i> Mode 3D
+                                    </button>
+                    </div>
+                                <div class="grid-selection">
+                                    <button class="grid-btn" data-size="8x8">8×8</button>
+                                    <button class="grid-btn active" data-size="10x10">10×10</button>
+                                    <button class="grid-btn" data-size="12x12">12×12</button>
+                </div>
+                </div>
+            </div>
+
+                        <!-- Enhanced Game Grid -->
+                        <div class="game-grid-container">
+                            <div id="gameContainer" class="grid-3d">
+                                <div id="gameGrid" class="grid-cube grid-10x10">
+                                    <!-- Grid will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+                        <!-- Enhanced Game Info -->
+                        <div class="game-info">
+                            <div class="info-section">
+                                <h3><i class="fas fa-chart-line"></i> Statistiques</h3>
+                                <div class="score-display">
+                                    <div class="score-item">
+                                        <span>Score</span>
+                                        <strong id="scoreValue">0</strong>
+            </div>
+                                    <div class="score-item">
+                                        <span>Niveau</span>
+                                        <strong id="levelValue">1</strong>
+            </div>
+                                    <div class="score-item">
+                                        <span>Mode</span>
+                                        <strong id="currentMode">2D</strong>
+            </div>
+                                    <div class="score-item">
+                                        <span>Grille</span>
+                                        <strong id="currentGrid">10×10</strong>
+            </div>
+                                    <div class="score-item">
+                                        <span>Temps</span>
+                                        <strong id="timeValue">00:00</strong>
+        </div>
+                                    <div class="score-item">
+                                        <span>Mots</span>
+                                        <strong id="wordsValue">0</strong>
+        </div>
+        </div>
+        </div>
+
+                            <div class="info-section">
+                                <h3><i class="fas fa-list-check"></i> Mots à compléter</h3>
+                                <div class="word-list">
+                                    <ul id="wordsFound">
+                                        <li>CHAT</li>
+                                        <li>MAISON</li>
+                                        <li>MUSIQUE</li>
+                                        <li>PLANTE</li>
+                                        <li>LUMIÈRE</li>
+            </ul>
+        </div>
+                                <div class="letter-queue">
+                                    <h4><i class="fas fa-queue"></i> Prochaines lettres</h4>
+                                    <div id="letterQueue" class="queue-display"></div>
+            </div>
+            </div>
+        </div>
+
+                        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            Chargement du jeu...
+            </div>
+            </div>
+            </div>
+
+                <!-- Enhanced Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-info-circle"></i> À propos de la Maquette 3D</h3>
+                        <p>Cette version présente le mode immersif 3D du jeu Letters Cascade Challenge.</p>
+                        <p><strong>Caractéristiques :</strong> Grille 3D multi-couches, effets visuels avancés, gameplay immersif.</p>
+                        <p><strong>Note :</strong> Interface et design uniquement - logique de jeu en développement.</p>
+            </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-book"></i> Règles du Jeu 3D</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🎯 <strong>Formation de Mots:</strong> Formez des mots de 3+ lettres en utilisant les lettres qui tombent
+                            </li>
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🏆 <strong>Score:</strong> 1 point par lettre + bonus longueur × 10
+                            </li>
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🎮 <strong>Contrôles:</strong> Flèches pour déplacer, Espace pour rotation
+                            </li>
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🌟 <strong>Bonus 3D:</strong> +50 points pour formation 3D
+                            </li>
+                        </ul>
+            </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-mobile-alt"></i> Support Mobile 3D</h3>
+                        <div style="margin-bottom: var(--spacing-md);">
+                            <strong>📱 Portrait:</strong> Grille 120×120px, contrôles compacts, une main suffit
+            </div>
+                        <div>
+                            <strong>🔄 Paysage:</strong> Grille 100×100px, sidebar complète, deux mains recommandées
+                    </div>
+                </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-chart-bar"></i> Progression 3D</h3>
+                        <div style="display: grid; gap: var(--spacing-sm);">
+                            <div style="padding: var(--spacing-sm); background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #4caf50;">
+                                🟢 <strong>Facile:</strong> 8×8, 2-3s par chute, mots 3-4 lettres
+                            </div>
+                            <div style="padding: var(--spacing-sm); background: rgba(255, 193, 7, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #ffc107;">
+                                🟡 <strong>Moyen:</strong> 10×10, 1.5-2s par chute, mots 4-5 lettres
+                        </div>
+                            <div style="padding: var(--spacing-sm); background: rgba(255, 152, 0, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #ff9800;">
+                                🟠 <strong>Difficile:</strong> 12×12, 1-1.5s par chute, mots 5-6 lettres
+                        </div>
+                            <div style="padding: var(--spacing-sm); background: rgba(244, 67, 54, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #f44336;">
+                                🔴 <strong>Expert:</strong> 12×12, 0.5-1s par chute, mots 6+ lettres
+                </div>
+            </div>
+        </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-cube"></i> Mode 3D Avancé</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🎯 <strong>6 Directions:</strong> Horizontal, vertical, profondeur, diagonales
+                            </li>
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🏗️ <strong>3 Couches:</strong> Avant, milieu, arrière pour combos avancés
+                            </li>
+                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
+                                🌟 <strong>Bonus 3D:</strong> +50 points pour formation 3D
+                            </li>
+                    </ul>
+                </div>
+
+                    <!-- Enhanced Concept Images Section -->
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-palette"></i> Concepts Visuels</h3>
+                        <div class="concept-showcase">
+                            <div class="concept-showcase-item">
+                                <img src="images/Cascade Letters - 02 - Decor concept 01.png" alt="Environment Concept - KridVOID" onerror="this.src='https://via.placeholder.com/250x150/667eea/ffffff?text=Environment'">
+                                <div class="concept-info">
+                                    <h4>Environnement 3D</h4>
+                                    <p>Concepts d'environnement immersif avec cascades et éléments naturels</p>
+                </div>
+                </div>
+                            <div class="concept-showcase-item">
+                                <img src="images/HighresScreenshot00002.png" alt="High Resolution Interface - KridVOID" onerror="this.src='https://via.placeholder.com/250x150/764ba2/ffffff?text=Interface'">
+                                <div class="concept-info">
+                                    <h4>Interface Haute Résolution</h4>
+                                    <p>Détails visuels et qualité graphique pour une expérience premium</p>
+                </div>
+            </div>
+        </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Complete 3D Game Engine for Letters Cascade Challenge
+        class Game3D {
+            constructor() {
+                this.mode = '3d';
+                this.gridSize = 10;
+                this.score = 0;
+                this.level = 1;
+                this.wordsFound = 0;
+                this.gameRunning = false;
+                this.paused = false;
+                this.startTime = null;
+                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
+                this.completedWords = [];
+                this.currentLetter = null;
+                this.letterPosition = { x: 0, y: 0 };
+                this.gameSpeed = 1000;
+                this.gameInterval = null;
+                
+                // Three.js properties
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.grid = [];
+                this.raycaster = null;
+                this.mouse = null;
+                
+                this.init();
+            }
+
+            init() {
+                if (this.mode === '3d' && typeof THREE !== 'undefined') {
+                    console.log('Three.js loaded, checking WebGL support...');
+                    
+                    // Check WebGL support
+                    const canvas = document.createElement('canvas');
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    
+                    if (gl) {
+                        console.log('WebGL supported, creating 3D game...');
+                        this.initThreeJS();
+                    } else {
+                        console.warn('WebGL not supported, falling back to 2D grid...');
+                        this.createGrid(); // Fallback to original 2D grid
+                    }
+                } else {
+                    console.log('Using 2D grid mode...');
+                    this.createGrid(); // Use 2D grid
+                }
+                this.updateLetterQueue();
+                this.updateDisplay();
+                this.setupEventListeners();
+                
+                if (typeof Utils !== 'undefined') {
+                    console.log('Game initialized with Utils');
+                }
+            }
+
+            initThreeJS() {
+                const container = document.getElementById('gameGrid');
+                const canvas = document.createElement('canvas');
+                canvas.id = 'threejsCanvas';
+                canvas.width = 400;
+                canvas.height = 400;
+                canvas.style.border = '2px solid rgba(255, 255, 255, 0.3)';
+                canvas.style.borderRadius = '8px';
+            container.innerHTML = '';
+                container.appendChild(canvas);
+
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                
+                this.renderer.setSize(canvas.width, canvas.height);
+                this.renderer.setClearColor(0x000000, 0.1);
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+                // Create 3D grid with better materials
+                const cellSize = 0.8;
+                this.grid = [];
+
+                for (let row = 0; row < this.gridSize; row++) {
+                    this.grid[row] = [];
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+                        const material = new THREE.MeshPhongMaterial({ 
+                            color: 0x667eea, 
+                            transparent: true, 
+                            opacity: 0.4,
+                            shininess: 100
+                        });
+                        const cube = new THREE.Mesh(geometry, material);
+                        cube.position.set(
+                            (col - this.gridSize/2) * cellSize,
+                            (row - this.gridSize/2) * cellSize,
+                            0
+                        );
+                        cube.castShadow = true;
+                        cube.receiveShadow = true;
+                        this.scene.add(cube);
+                        this.grid[row][col] = { mesh: cube, letter: null, filled: false };
+                    }
+                }
+
+                // Add better lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+                this.scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(5, 10, 5);
+                directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 1024;
+                directionalLight.shadow.mapSize.height = 1024;
+                this.scene.add(directionalLight);
+
+                // Add point light for better illumination
+                const pointLight = new THREE.PointLight(0x4ecdc4, 0.5, 10);
+                pointLight.position.set(0, 5, 5);
+                this.scene.add(pointLight);
+
+                // Position camera for better view
+                this.camera.position.set(0, 0, 12);
+                this.camera.lookAt(0, 0, 0);
+
+                // Setup raycaster for mouse interaction
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+
+                // Animation loop
+                this.animate();
+
+                // Add click event
+                canvas.addEventListener('click', (event) => this.onCanvasClick(event));
+                
+                console.log('3D scene initialized successfully');
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // Add subtle rotation to the scene
+                if (this.scene) {
+                    this.scene.rotation.y += 0.001;
+                }
+                
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            onCanvasClick(event) {
+                const rect = event.target.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+
+                if (intersects.length > 0) {
+                    const clickedCube = intersects[0].object;
+                    // Find grid position
+                    for (let row = 0; row < this.gridSize; row++) {
+                        for (let col = 0; col < this.gridSize; col++) {
+                            if (this.grid[row][col].mesh === clickedCube && !this.grid[row][col].filled) {
+                                this.placeLetter3D(row, col, event);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            placeLetter3D(row, col, event) {
+                if (this.letters.length > 0) {
+                    const letter = this.letters.shift();
+                    
+                    // Create 3D text using a simple approach
+                    const textGeometry = new THREE.PlaneGeometry(0.6, 0.6);
+                    const textMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                    
+                    // Position the text
+                    textMesh.position.set(
+                        (col - this.gridSize/2) * 0.8,
+                        (row - this.gridSize/2) * 0.8,
+                        0.5
+                    );
+                    
+                    // Add text label
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = 64;
+                    canvas.height = 64;
+                    context.fillStyle = '#ffffff';
+                    context.font = 'bold 48px Arial';
+                    context.textAlign = 'center';
+                    context.textBaseline = 'middle';
+                    context.fillText(letter, 32, 32);
+                    
+                    const texture = new THREE.CanvasTexture(canvas);
+                    textMaterial.map = texture;
+                    textMaterial.needsUpdate = true;
+                    
+                    this.scene.add(textMesh);
+                    this.grid[row][col].letter = textMesh;
+                    this.grid[row][col].filled = true;
+                    
+                    // Add animation
+                    textMesh.scale.set(0, 0, 0);
+                    const scaleAnimation = new THREE.Vector3(1, 1, 1);
+                    const animate = () => {
+                        textMesh.scale.lerp(scaleAnimation, 0.1);
+                        if (textMesh.scale.x < 0.9) {
+                            requestAnimationFrame(animate);
+                        }
+                    };
+                    animate();
+                    
+                    this.score += 10;
+                    this.updateDisplay();
+                    this.updateLetterQueue();
+                    this.checkWordCompletion();
+                    
+                    if (typeof Utils !== 'undefined') {
+                        Utils.createParticleEffect(
+                            event.clientX,
+                            event.clientY,
+                            5,
+                            '#4ecdc4'
+                        );
+                        Utils.playSound('place', 600, 0.1);
+                    }
+                }
+            }
+
+            createGrid() {
+                const grid = document.getElementById('gameGrid');
+                grid.innerHTML = '';
+                
+                // Remove existing grid classes
+                grid.classList.remove('grid-8x8', 'grid-10x10', 'grid-12x12');
+                
+                // Add the correct grid class based on size
+                if (this.gridSize === 8) {
+                    grid.classList.add('grid-8x8');
+                } else if (this.gridSize === 10) {
+                    grid.classList.add('grid-10x10');
+                } else if (this.gridSize === 12) {
+                    grid.classList.add('grid-12x12');
+                }
+
+                for (let i = 0; i < this.gridSize * this.gridSize; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                    cell.textContent = '';
+                    cell.onclick = () => this.placeLetter(cell);
+                    grid.appendChild(cell);
+                }
+            }
+
+            updateLetterQueue() {
+                const queue = document.getElementById('letterQueue');
+                queue.innerHTML = '';
+                
+                this.letters.slice(0, 5).forEach(letter => {
+                    const letterDiv = document.createElement('div');
+                    letterDiv.className = 'queue-letter';
+                    letterDiv.textContent = letter;
+                    queue.appendChild(letterDiv);
+                });
+            }
+
+            placeLetter(cell) {
+                if (!cell.textContent && this.letters.length > 0) {
+                    const letter = this.letters.shift();
+                    cell.textContent = letter;
+                    cell.classList.add('filled');
+                    
+                    this.score += 10;
+                    this.updateDisplay();
+                    this.updateLetterQueue();
+                    this.checkWordCompletion();
+                    
+                    if (typeof Utils !== 'undefined') {
+                        Utils.createParticleEffect(
+                            cell.offsetLeft + cell.offsetWidth / 2,
+                            cell.offsetTop + cell.offsetHeight / 2,
+                            5,
+                            '#4ecdc4'
+                        );
+                        Utils.playSound('place', 600, 0.1);
+                    }
+                }
+            }
+
+            checkWordCompletion() {
+                const directions = [
+                    [-1, -1], [-1, 0], [-1, 1],
+                    [0, -1],           [0, 1],
+                    [1, -1],  [1, 0],  [1, 1]
+                ];
+
+                const cells = document.querySelectorAll('.grid-cell');
+                const grid = [];
+                
+                // Convert cells to 2D grid
+                for (let row = 0; row < this.gridSize; row++) {
+                    grid[row] = [];
+                    for (let col = 0; col < this.gridSize; col++) {
+                        const index = row * this.gridSize + col;
+                        grid[row][col] = cells[index].textContent || '';
+                    }
+                }
+
+                // Check for words in all directions
+                for (let row = 0; row < this.gridSize; row++) {
+                    for (let col = 0; col < this.gridSize; col++) {
+                        if (grid[row][col]) {
+                            for (let [dx, dy] of directions) {
+                                const word = this.checkWordInDirection(grid, col, row, dx, dy);
+                                if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
+                                    this.completeWord(word);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            checkWordInDirection(grid, startX, startY, dx, dy) {
+                let word = '';
+                let x = startX;
+                let y = startY;
+                
+                while (x >= 0 && x < this.gridSize && y >= 0 && y < this.gridSize) {
+                    if (grid[y] && grid[y][x]) {
+                        word += grid[y][x];
+                } else {
+                        break;
+                    }
+                    x += dx;
+                    y += dy;
+                }
+                
+                return word.length >= 3 ? word : null;
+            }
+
+            completeWord(word) {
+                this.completedWords.push(word);
+                this.score += word.length * 10;
+                this.wordsFound++;
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.playSound('complete', 1000, 0.5);
+                    Utils.createVictorySparkles(15);
+                }
+                
+                this.updateDisplay();
+                this.updateWordList();
+                
+                // Check level progression
+                if (this.score >= this.level * 100) {
+                    this.levelUp();
+                }
+            }
+
+            levelUp() {
+                this.level++;
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.showModal(
+                        'Niveau ' + this.level + ' !',
+                        'Félicitations ! Vous avez atteint le niveau ' + this.level + '.',
+                        [{ text: 'Continuer', action: () => this.updateDisplay() }]
+                    );
+                }
+                
+                this.updateDisplay();
+            }
+
+            selectMode(mode) {
+                this.mode = mode;
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-mode="${mode}"]`).classList.add('active');
+                
+                // Reset game state when changing modes
+                this.score = 0;
+                this.level = 1;
+                this.wordsFound = 0;
+                this.completedWords = [];
+                this.gameRunning = false;
+                this.paused = false;
+                this.startTime = null;
+                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                
+                if (this.gameInterval) {
+                    clearInterval(this.gameInterval);
+                }
+                
+                // Reinitialize the game with new mode
+                this.init();
+                console.log(`Mode changed to: ${mode}`);
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.playSound('start', 800, 0.2);
+                }
+            }
+
+            selectGrid(size) {
+                const [rows, cols] = size.split('x').map(Number);
+                this.gridSize = rows;
+                
+                document.querySelectorAll('.grid-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-size="${size}"]`).classList.add('active');
+                
+                // Reinitialize the game with new grid size
+                this.init();
+                console.log(`Grid size changed to: ${size}`);
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.playSound('start', 800, 0.2);
+                }
+            }
+
+            startGame() {
+                if (!this.gameRunning) {
+                    this.gameRunning = true;
+                    this.startTime = Date.now();
+                    this.gameInterval = setInterval(() => {
+                        if (!this.paused) {
+                            this.updateGame();
+                        }
+                    }, this.gameSpeed);
+                    console.log('Game started');
+                    
+                    if (typeof Utils !== 'undefined') {
+                        Utils.playSound('start', 800, 0.2);
+                    }
+                }
+            }
+
+            pauseGame() {
+                this.paused = !this.paused;
+                const pauseBtn = document.getElementById('pauseBtn');
+                if (this.paused) {
+                    pauseBtn.innerHTML = '<i class="fas fa-play"></i> Reprendre';
+                    console.log('Game paused');
+                } else {
+                    pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                    console.log('Game resumed');
+                }
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.playSound('place', 600, 0.1);
+                }
+            }
+
+            resetGame() {
+                this.score = 0;
+                this.level = 1;
+                this.wordsFound = 0;
+                this.completedWords = [];
+                this.gameRunning = false;
+                this.paused = false;
+                this.startTime = null;
+                
+                if (this.gameInterval) {
+                    clearInterval(this.gameInterval);
+                }
+                
+                // Reset letters
+                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                
+                this.init();
+                this.updateDisplay();
+                console.log('Game reset');
+                
+                if (typeof Utils !== 'undefined') {
+                    Utils.playSound('complete', 1000, 0.3);
+                }
+            }
+
+            updateGame() {
+                // Update game logic here
+                const currentTime = Date.now();
+                if (this.startTime) {
+                    const elapsed = Math.floor((currentTime - this.startTime) / 1000);
+                    document.getElementById('timeValue').textContent = 
+                        `${Math.floor(elapsed / 60)}:${(elapsed % 60).toString().padStart(2, '0')}`;
+                }
+            }
+
+            updateDisplay() {
+                document.getElementById('scoreValue').textContent = this.score;
+                document.getElementById('levelValue').textContent = this.level;
+                document.getElementById('currentMode').textContent = this.mode === '3d' ? '3D' : '2D';
+                document.getElementById('currentGrid').textContent = `${this.gridSize}×${this.gridSize}`;
+                document.getElementById('wordsValue').textContent = this.wordsFound;
+            }
+
+            updateWordList() {
+                const wordList = document.querySelectorAll('.word-list li');
+                wordList.forEach((item, index) => {
+                    const word = this.targetWords[index];
+                    if (this.completedWords.includes(word)) {
+                        item.classList.add('completed');
+                    } else {
+                        item.classList.remove('completed');
+                    }
+                });
+            }
+
+            setupEventListeners() {
+                // Game control buttons
+                const startBtn = document.getElementById('startBtn');
+                const pauseBtn = document.getElementById('pauseBtn');
+                const resetBtn = document.getElementById('resetBtn');
+                
+                if (startBtn) startBtn.addEventListener('click', () => this.startGame());
+                if (pauseBtn) pauseBtn.addEventListener('click', () => this.pauseGame());
+                if (resetBtn) resetBtn.addEventListener('click', () => this.resetGame());
+                
+                // Mode selection buttons
+                document.querySelectorAll('.mode-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const mode = btn.getAttribute('data-mode');
+                        this.selectMode(mode);
+            });
+        });
+
+                // Grid size selection buttons
+                document.querySelectorAll('.grid-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const size = btn.getAttribute('data-size');
+                        this.selectGrid(size);
+                    });
+                });
+                
+                // Keyboard controls
+                document.addEventListener('keydown', (event) => {
+                    switch(event.key) {
+                        case ' ':
+                            event.preventDefault();
+                            this.pauseGame();
+                            break;
+                        case 'r':
+                        case 'R':
+                            this.resetGame();
+                            break;
+                        case 's':
+                        case 'S':
+                            this.startGame();
+                            break;
+                    }
+                });
+                
+                console.log('Event listeners setup complete');
+            }
+        }
+
+        // Global game instance
+        let game3D;
+
+        // Global functions for button controls
+        function selectMode(mode) {
+            if (game3D) game3D.selectMode(mode);
+        }
+
+        function selectGrid(size) {
+            if (game3D) game3D.selectGrid(size);
+        }
+
+        function startGame() {
+            if (game3D) game3D.startGame();
+        }
+
+        function resetGame() {
+            if (game3D) game3D.resetGame();
+        }
+
+        function pauseGame() {
+            if (game3D) game3D.pauseGame();
+        }
+
+        function clearGrid() {
+            if (game3D) game3D.clearGrid();
+        }
+
+        // Initialize 3D game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing 3D game...');
+            game3D = new Game3D();
+            console.log('3D Game initialized successfully');
+        });
+
+        // Fullscreen function
+        function toggleFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            if (gameContainer.classList.contains('fullscreen')) {
+                exitFullScreen();
+            } else {
+                enterFullScreen();
+            }
+        }
+
+        function enterFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            gameContainer.classList.add('fullscreen');
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i> Sortir';
+            
+            // Add exit button
+            const exitBtn = document.createElement('div');
+            exitBtn.className = 'fullscreen-exit';
+            exitBtn.innerHTML = '<i class="fas fa-times"></i>';
+            exitBtn.onclick = exitFullScreen;
+            gameContainer.appendChild(exitBtn);
+            
+            // Resize 3D canvas for full screen
+            const canvas = document.getElementById('threejsCanvas');
+            if (canvas && game3D && game3D.renderer) {
+                const container = gameContainer.querySelector('.game-grid-container');
+                const containerRect = container.getBoundingClientRect();
+                const maxSize = Math.min(containerRect.width, containerRect.height) * 0.9;
+                canvas.width = maxSize;
+                canvas.height = maxSize;
+                game3D.renderer.setSize(maxSize, maxSize);
+                
+                // Update camera aspect ratio
+                if (game3D.camera) {
+                    game3D.camera.aspect = maxSize / maxSize;
+                    game3D.camera.updateProjectionMatrix();
+                }
+            }
+            
+            console.log('Entered full screen mode');
+        }
+
+        function exitFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            gameContainer.classList.remove('fullscreen');
+            fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i> Plein Écran';
+            
+            // Remove exit button
+            const exitBtn = gameContainer.querySelector('.fullscreen-exit');
+            if (exitBtn) {
+                exitBtn.remove();
+            }
+            
+            // Reset 3D canvas size
+            const canvas = document.getElementById('threejsCanvas');
+            if (canvas && game3D && game3D.renderer) {
+                canvas.width = 400;
+                canvas.height = 400;
+                game3D.renderer.setSize(400, 400);
+                
+                // Update camera aspect ratio
+                if (game3D.camera) {
+                    game3D.camera.aspect = 1;
+                    game3D.camera.updateProjectionMatrix();
+                }
+            }
+            
+            console.log('Exited full screen mode');
+        }
+
+        // Keyboard shortcut for full screen (F11)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F11') {
+                event.preventDefault();
+                toggleFullScreen();
+            }
+        });
+    </script>
+</body>
+</html>

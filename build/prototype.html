@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maquette 2D - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/utils.js"></script>
+    <style>
+        /* Page-specific styles for prototype */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .info-box {
+            animation: slideInDown 0.6s ease-out;
+        }
+
+        .sidebar-section {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .sidebar-section:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .sidebar-section:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .word-list {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .word-list li {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            margin-bottom: var(--spacing-xs);
+            color: var(--white);
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .word-list li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .word-list li.completed {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: rgba(76, 175, 80, 0.5);
+            animation: wordGlow 2s ease-in-out infinite;
+        }
+
+        .preview-letters {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .preview-letters li {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            margin-bottom: var(--spacing-xs);
+            color: var(--white);
+            font-weight: 600;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .preview-letters li:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .mobile-controls {
+            display: none;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+        }
+
+        .mobile-controls .btn {
+            min-width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--white);
+        }
+
+        .stat-item .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Game Canvas Styles */
+        .game-canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: var(--spacing-lg) 0;
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+        }
+
+        .concept-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .concept-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .concept-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .concept-item h4 {
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1rem;
+        }
+
+        .concept-item p {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+        }
+
+        .concept-main-illustration {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .concept-main-illustration img {
+            width: 100%;
+            height: 250px; /* Adjust as needed */
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .concept-caption {
+            padding: var(--spacing-md);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .concept-caption h3 {
+            color: var(--white);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.1rem;
+        }
+
+        .concept-caption p {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+        }
+
+        #gameCanvas {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Full Screen Styles */
+        .game-container.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-lg);
+        }
+
+        .game-container.fullscreen .game-canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .game-container.fullscreen #gameCanvas {
+            max-width: 90vw;
+            max-height: 90vh;
+            width: auto;
+            height: auto;
+        }
+
+        .game-container.fullscreen .game-controls {
+            position: absolute;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .game-container.fullscreen .game-stats {
+            position: absolute;
+            top: var(--spacing-lg);
+            left: var(--spacing-lg);
+        }
+
+        .fullscreen-exit {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+            }
+
+            .game-stats {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-sidebar">
+                <h3>Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html" class="active"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
+                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Game Header -->
+                <div class="game-header">
+                    <h1>🎮 Maquette 2D - Letters Cascade Challenge</h1>
+                    <p>Formez des mots et progressez dans les niveaux</p>
+                </div>
+
+                <!-- Game Info -->
+                <div class="glass-card">
+                    <h2>🎮 À propos de la Maquette 2D</h2>
+                    <p>Cette version présente l'interface et les mécaniques de base du jeu Letters Cascade Challenge en mode 2D classique avec grille traditionnelle.</p>
+                    
+                    <div class="concept-main-illustration">
+                        <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Concept Principal - Cascade de Lettres - KridVOID" onerror="this.src='https://via.placeholder.com/400x300/667eea/ffffff?text=Concept+Principal'">
+                        <div class="concept-caption">
+                            <h3>🎯 Concept Principal</h3>
+                            <p>Cette illustration capture l'essence du gameplay : des lettres anthropomorphiques qui tombent en cascade, formant des mots dans un environnement serein.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-images">
+                        <div class="concept-item">
+                            <img src="images/A_letter.png" alt="Letter Character Design" onerror="this.src='https://via.placeholder.com/200x150/667eea/ffffff?text=Character'">
+                            <h4>Personnages de Lettres</h4>
+                            <p>Design des lettres anthropomorphiques</p>
+                        </div>
+                        <div class="concept-item">
+                            <img src="images/Cascade Letters - 01 - Chara TA et recherches.png" alt="Character Research - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/764ba2/ffffff?text=Research'">
+                            <h4>Recherches de Design</h4>
+                            <p>Processus créatif et explorations</p>
+                        </div>
+                        <div class="concept-item">
+                            <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Black & White Style - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Style'">
+                            <h4>Style Graphique</h4>
+                            <p>Illustrations noir et blanc</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Container -->
+                <div class="game-container">
+                    <div class="game-header">
+                        <h1>Letters Cascade Challenge</h1>
+                        <p>Formez des mots et progressez dans les niveaux</p>
+                    </div>
+
+                    <div class="game-canvas-container">
+                        <canvas id="gameCanvas" width="400" height="400"></canvas>
+                    </div>
+
+                    <div class="game-controls">
+                        <button class="btn btn-primary" onclick="startGame()">
+                            <i class="fas fa-play"></i> Démarrer le jeu
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetGame()">
+                            <i class="fas fa-redo"></i> Réinitialiser
+                        </button>
+                        <button class="btn btn-warning" onclick="pauseGame()">
+                            <i class="fas fa-pause"></i> Pause
+                        </button>
+                        <button class="btn btn-info" onclick="toggleFullScreen()" id="fullscreenBtn">
+                            <i class="fas fa-expand"></i> Plein Écran
+                        </button>
+                    </div>
+
+                    <!-- Mobile Controls -->
+                    <div class="mobile-controls">
+                        <button class="btn btn-primary" onclick="moveLeft()">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button class="btn btn-primary" onclick="moveRight()">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-primary" onclick="rotate()">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="btn btn-primary" onclick="drop()">
+                            <i class="fas fa-arrow-down"></i>
+                        </button>
+                    </div>
+
+                    <!-- Game Stats -->
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <div class="value" id="scoreDisplay">0</div>
+                            <div class="label">Score</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value" id="levelDisplay">1</div>
+                            <div class="label">Niveau</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="value" id="wordsCompleted">0</div>
+                            <div class="label">Mots Complétés</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-list"></i> Liste des mots à former</h3>
+                        <ul class="word-list" id="wordList">
+                            <li>CHAT</li>
+                            <li>MAISON</li>
+                            <li>MUSIQUE</li>
+                            <li>JARDIN</li>
+                            <li>LIVRE</li>
+                            <li>TABLE</li>
+                            <li>FENÊTRE</li>
+                            <li>PORTE</li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-eye"></i> Prochaines lettres</h3>
+                        <ul class="preview-letters" id="letterPreview">
+                            <!-- Letters will be populated by JavaScript -->
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-section">
+                        <h3><i class="fas fa-trophy"></i> Progression</h3>
+                        <div style="color: var(--white);">
+                            <p><strong>Niveau actuel :</strong> <span id="currentLevel">1</span></p>
+                            <p><strong>Score requis :</strong> <span id="targetScore">100</span></p>
+                            <p><strong>Mots trouvés :</strong> <span id="wordsFound">0</span>/8</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Initialize game when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing game...');
+            
+            // Initialize utilities
+            if (typeof Utils !== 'undefined') {
+                console.log('Utils loaded successfully');
+                // Add sound effects to buttons
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        Utils.playSound('start', 800, 0.2);
+                    });
+                });
+
+                // Add particle effects to completed words
+                document.querySelectorAll('.word-list li').forEach(word => {
+                    word.addEventListener('click', function() {
+                        if (this.classList.contains('completed')) {
+                            Utils.createParticleEffect(
+                                this.offsetLeft + this.offsetWidth / 2,
+                                this.offsetTop + this.offsetHeight / 2,
+                                10,
+                                '#4ecdc4'
+                            );
+                        }
+                    });
+                });
+            } else {
+                console.warn('Utils not loaded');
+            }
+
+            // Initialize Three.js 3D Game
+            if (typeof THREE !== 'undefined') {
+                console.log('Three.js loaded, checking WebGL support...');
+                
+                // Check WebGL support
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                
+                if (gl) {
+                    console.log('WebGL supported, creating 3D game...');
+                    initThreeJSGame();
+                } else {
+                    console.warn('WebGL not supported, falling back to 2D game...');
+                    // Fallback to original 2D game
+                    if (typeof LettersCascadeGame !== 'undefined') {
+                        console.log('Game class found, creating game instance...');
+                        window.game = new LettersCascadeGame();
+                        console.log('Game initialized successfully');
+                    } else {
+                        console.error('LettersCascadeGame class not found');
+                    }
+                }
+            } else {
+                console.error('Three.js not loaded');
+                // Fallback to original 2D game
+                if (typeof LettersCascadeGame !== 'undefined') {
+                    console.log('Game class found, creating game instance...');
+                    window.game = new LettersCascadeGame();
+                    console.log('Game initialized successfully');
+                } else {
+                    console.error('LettersCascadeGame class not found');
+                }
+            }
+        });
+
+        // Three.js 3D Game Implementation
+        function initThreeJSGame() {
+            const canvas = document.getElementById('gameCanvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            
+            renderer.setSize(canvas.width, canvas.height);
+            renderer.setClearColor(0x000000, 0.1);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            // Create 3D grid
+            const gridSize = 10;
+            const cellSize = 0.8;
+            const grid = [];
+
+            // Create grid geometry
+            for (let row = 0; row < gridSize; row++) {
+                grid[row] = [];
+                for (let col = 0; col < gridSize; col++) {
+                    const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+                    const material = new THREE.MeshPhongMaterial({ 
+                        color: 0x667eea, 
+                        transparent: true, 
+                        opacity: 0.4,
+                        shininess: 100
+                    });
+                    const cube = new THREE.Mesh(geometry, material);
+                    cube.position.set(
+                        (col - gridSize/2) * cellSize,
+                        (row - gridSize/2) * cellSize,
+                        0
+                    );
+                    cube.castShadow = true;
+                    cube.receiveShadow = true;
+                    scene.add(cube);
+                    grid[row][col] = { mesh: cube, letter: null };
+                }
+            }
+
+            // Add better lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 5);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 1024;
+            directionalLight.shadow.mapSize.height = 1024;
+            scene.add(directionalLight);
+
+            // Add point light for better illumination
+            const pointLight = new THREE.PointLight(0x4ecdc4, 0.5, 10);
+            pointLight.position.set(0, 5, 5);
+            scene.add(pointLight);
+
+            // Position camera for better view
+            camera.position.set(0, 0, 12);
+            camera.lookAt(0, 0, 0);
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Add subtle rotation to the scene
+                scene.rotation.y += 0.001;
+                
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Add click event for placing letters
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+
+            canvas.addEventListener('click', function(event) {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(scene.children);
+
+                if (intersects.length > 0) {
+                    const clickedCube = intersects[0].object;
+                    // Find grid position and place letter
+                    for (let row = 0; row < gridSize; row++) {
+                        for (let col = 0; col < gridSize; col++) {
+                            if (grid[row][col].mesh === clickedCube && !grid[row][col].letter) {
+                                placeLetter3D(row, col, event);
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+
+            function placeLetter3D(row, col, event) {
+                const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                if (letters.length > 0) {
+                    const letter = letters.shift();
+                    
+                    // Create 3D text using canvas texture
+                    const textGeometry = new THREE.PlaneGeometry(0.6, 0.6);
+                    const textMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0xffffff,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                    
+                    // Position the text
+                    textMesh.position.set(
+                        (col - gridSize/2) * 0.8,
+                        (row - gridSize/2) * 0.8,
+                        0.5
+                    );
+                    
+                    // Add text label
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = 64;
+                    canvas.height = 64;
+                    context.fillStyle = '#ffffff';
+                    context.font = 'bold 48px Arial';
+                    context.textAlign = 'center';
+                    context.textBaseline = 'middle';
+                    context.fillText(letter, 32, 32);
+                    
+                    const texture = new THREE.CanvasTexture(canvas);
+                    textMaterial.map = texture;
+                    textMaterial.needsUpdate = true;
+                    
+                    scene.add(textMesh);
+                    grid[row][col].letter = textMesh;
+                    
+                    // Add animation
+                    textMesh.scale.set(0, 0, 0);
+                    const scaleAnimation = new THREE.Vector3(1, 1, 1);
+                    const animate = () => {
+                        textMesh.scale.lerp(scaleAnimation, 0.1);
+                        if (textMesh.scale.x < 0.9) {
+                            requestAnimationFrame(animate);
+                        }
+                    };
+                    animate();
+                    
+                    if (typeof Utils !== 'undefined') {
+                        Utils.createParticleEffect(
+                            event.clientX,
+                            event.clientY,
+                            5,
+                            '#4ecdc4'
+                        );
+                        Utils.playSound('place', 600, 0.1);
+                    }
+                }
+            }
+        }
+
+        // Full Screen Functions
+        function toggleFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            if (gameContainer.classList.contains('fullscreen')) {
+                exitFullScreen();
+            } else {
+                enterFullScreen();
+            }
+        }
+
+        function enterFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            gameContainer.classList.add('fullscreen');
+            fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i> Sortir';
+            
+            // Add exit button
+            const exitBtn = document.createElement('div');
+            exitBtn.className = 'fullscreen-exit';
+            exitBtn.innerHTML = '<i class="fas fa-times"></i>';
+            exitBtn.onclick = exitFullScreen;
+            gameContainer.appendChild(exitBtn);
+            
+            // Resize canvas for full screen
+            const canvas = document.getElementById('gameCanvas');
+            if (canvas) {
+                const container = gameContainer.querySelector('.game-canvas-container');
+                const containerRect = container.getBoundingClientRect();
+                const maxSize = Math.min(containerRect.width, containerRect.height) * 0.9;
+                canvas.width = maxSize;
+                canvas.height = maxSize;
+                
+                // Redraw game if it exists
+                if (window.game && window.game.redraw) {
+                    window.game.redraw();
+                }
+            }
+            
+            console.log('Entered full screen mode');
+        }
+
+        function exitFullScreen() {
+            const gameContainer = document.querySelector('.game-container');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            
+            gameContainer.classList.remove('fullscreen');
+            fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i> Plein Écran';
+            
+            // Remove exit button
+            const exitBtn = gameContainer.querySelector('.fullscreen-exit');
+            if (exitBtn) {
+                exitBtn.remove();
+            }
+            
+            // Reset canvas size
+            const canvas = document.getElementById('gameCanvas');
+            if (canvas) {
+                canvas.width = 400;
+                canvas.height = 400;
+                
+                // Redraw game if it exists
+                if (window.game && window.game.redraw) {
+                    window.game.redraw();
+                }
+            }
+            
+            console.log('Exited full screen mode');
+        }
+
+        // Keyboard shortcut for full screen (F11)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'F11') {
+                event.preventDefault();
+                toggleFullScreen();
+            }
+        });
+    </script>
+</body>
+</html>

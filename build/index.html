@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters Cascade Challenge - Jeu de Mots Immersif</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="js/utils.js"></script>
+    <style>
+        /* Page-specific styles for homepage */
+        .hero {
+            text-align: center;
+            padding: var(--spacing-2xl) 0;
+            margin-bottom: var(--spacing-2xl);
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            overflow: hidden;
+        }
+
+        .hero-bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(2px) brightness(0.8);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-2xl);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-xl);
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .hero-image {
+            flex: 0 0 300px;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+        }
+
+        .hero-text .btn {
+            margin-right: var(--spacing-md);
+        }
+
+        .hero-text .btn:last-child {
+            margin-right: 0;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            margin: var(--spacing-md);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        .tech-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tech-logo svg {
+            width: 48px;
+            height: 48px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .tech-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .progression-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .level-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .level-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .level-card h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .pipeline-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .pipeline-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pipeline-item h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .concept-showcase {
+            display: block;
+            margin-top: var(--spacing-lg);
+        }
+
+        .concept-description h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+            font-size: 1.5rem;
+        }
+
+        .concept-description p {
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+
+        .concept-description ul {
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-lg);
+            padding-left: var(--spacing-md);
+        }
+
+        .concept-description li {
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.5;
+        }
+
+        .concept-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .feature-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-image {
+                flex: 0 0 auto;
+            }
+            .concept-showcase {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-sidebar">
+                <h3>Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
+                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Hero Section -->
+                <div class="hero">
+                    <div class="hero-background">
+                        <img src="images/Cascade Letters - 02 - Decor concept 01.png" alt="Background Environment" class="hero-bg-image">
+                    </div>
+                    <div class="hero-content">
+                        <div class="hero-text">
+                            <h1>🎮 Letters Cascade <span style="color: var(--accent-color);">Challenge</span></h1>
+                            <p>Plongez dans un univers de mots où les lettres prennent vie ! Formez des mots, résolvez des énigmes et progressez dans un monde immersif et captivant.</p>
+                            <div style="margin-top: var(--spacing-lg); display: flex; gap: var(--spacing-md); flex-wrap: wrap;">
+                                <a href="prototype.html" class="btn btn-primary" style="flex: 1; min-width: 200px; text-align: center; padding: var(--spacing-md) var(--spacing-lg); font-size: 1.1rem; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+                                    <i class="fas fa-play"></i> Jouer Maintenant
+                                </a>
+                                <a href="GDD.html" class="btn btn-secondary" style="flex: 1; min-width: 200px; text-align: center; padding: var(--spacing-md) var(--spacing-lg); font-size: 1.1rem; font-weight: 600; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                    <i class="fas fa-book"></i> Voir la Documentation
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-image">
+                            <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Letters Cascade Challenge - Concept Art Principal - KridVOID" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5GPPC90ZXh0Pgo8L3N2Zz4K'" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Concept Illustration -->
+                <div class="glass-card">
+                    <h2>🎨 Concept Principal du Jeu</h2>
+                    <p>L'illustration qui capture l'essence de Letters Cascade Challenge</p>
+                    
+                    <div class="concept-showcase">
+                        <div class="concept-description">
+                            <h3>🎯 L'Esprit du Jeu</h3>
+                            <p>Cette illustration représente parfaitement l'essence de Letters Cascade Challenge :</p>
+                            <ul>
+                                <li><strong>Lettres Anthropomorphiques</strong> - Les lettres prennent vie avec des personnalités uniques</li>
+                                <li><strong>Chute de Lettres</strong> - Mécanique centrale inspirée de Tetris avec des lettres</li>
+                                <li><strong>Environnement Cascade</strong> - Ambiance sereine et immersive</li>
+                                <li><strong>Style Cartoon</strong> - Design accessible et engageant</li>
+                            </ul>
+                            <div class="concept-features">
+                                <div class="feature-tag">🎮 Gameplay Unique</div>
+                                <div class="feature-tag">🌊 Cascade de Lettres</div>
+                                <div class="feature-tag">🎨 Style Visuel</div>
+                                <div class="feature-tag">🧩 Puzzle Mots</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technologies Section -->
+                <div class="glass-card">
+                    <h2>🚀 Technologies Utilisées</h2>
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <div class="tech-logo">
+                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 2L2 9v14l14 7 14-7V9L16 2z" fill="#000000"/>
+                                    <path d="M16 2L16 30" stroke="#ffffff" stroke-width="1"/>
+                                    <path d="M2 9L30 9" stroke="#ffffff" stroke-width="1"/>
+                                    <path d="M2 23L30 23" stroke="#ffffff" stroke-width="1"/>
+                                    <circle cx="16" cy="16" r="3" fill="#ffffff"/>
+                                </svg>
+                            </div>
+                            <h3>Unreal Engine 5.6</h3>
+                            <p>Moteur de jeu 3D avancé avec graphismes immersifs et physique réaliste</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-logo">
+                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 8h16v16H8z" fill="#00599C"/>
+                                    <path d="M12 12h8v8h-8z" fill="#ffffff"/>
+                                    <text x="16" y="18" font-family="monospace" font-size="8" fill="#00599C" text-anchor="middle">++</text>
+                                </svg>
+                            </div>
+                            <h3>C++ & Blueprints</h3>
+                            <p>Programmation performante et logique visuelle pour des mécaniques de jeu complexes</p>
+                        </div>
+                        <div class="tech-card">
+                            <div class="tech-logo">
+                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4z" fill="#F5792A"/>
+                                    <path d="M16 8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z" fill="#ffffff"/>
+                                    <path d="M12 12h8v8h-8z" fill="#F5792A"/>
+                                    <path d="M14 14h4v4h-4z" fill="#ffffff"/>
+                                </svg>
+                            </div>
+                            <h3>Blender</h3>
+                            <p>Création de modèles 3D et animations pour les personnages et environnements</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="glass-card">
+                    <h2>🌟 Caractéristiques Uniques</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h3><i class="fas fa-layer-group"></i> Dualité Technologique</h3>
+                            <p>Mode 2D classique et mode 3D immersif pour une expérience adaptée à tous les appareils</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3><i class="fas fa-puzzle-piece"></i> Mécaniques Innovantes</h3>
+                            <p>Formation de mots avec chute de lettres inspirée de Tetris pour un gameplay unique</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3><i class="fas fa-universal-access"></i> Accessibilité Universelle</h3>
+                            <p>Interface adaptative et support complet des technologies d'assistance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progression Section -->
+                <div class="glass-card">
+                    <h2>📈 Progression de Difficulté</h2>
+                    <div class="progression-grid">
+                        <div class="level-card">
+                            <h3>🌱 Facile</h3>
+                            <p>Grille 8×8, mots de 3-4 lettres</p>
+                        </div>
+                        <div class="level-card">
+                            <h3>⚡ Moyen</h3>
+                            <p>Grille 10×10, mots de 4-5 lettres</p>
+                        </div>
+                        <div class="level-card">
+                            <h3>🔥 Difficile</h3>
+                            <p>Grille 12×12, mots de 5-6 lettres</p>
+                        </div>
+                        <div class="level-card">
+                            <h3>💎 Expert</h3>
+                            <p>Grille 12×12, mots de 6+ lettres</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Pipeline Section -->
+                <div class="glass-card">
+                    <h2>📐 Pipeline 3D</h2>
+                    <div class="pipeline-grid">
+                        <div class="pipeline-item">
+                            <h3><i class="fas fa-cube"></i> Modélisation</h3>
+                            <p>Blender - Modèles 3D optimisés</p>
+                        </div>
+                        <div class="pipeline-item">
+                            <h3><i class="fas fa-gamepad"></i> Développement</h3>
+                            <p>Unreal Engine - Moteur 3D</p>
+                        </div>
+                        <div class="pipeline-item">
+                            <h3><i class="fas fa-code"></i> Programmation</h3>
+                            <p>C++ - Logique de jeu</p>
+                        </div>
+                        <div class="pipeline-item">
+                            <h3><i class="fas fa-palette"></i> Intégration</h3>
+                            <p>Assets 3D optimisés</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="glass-card">
+                    <h2>🎯 Prêt à Jouer ?</h2>
+                    <p>Découvrez l'expérience Letters Cascade Challenge et testez vos compétences en formation de mots !</p>
+                    <div style="margin-top: var(--spacing-lg); text-align: center; display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
+                        <a href="prototype.html" class="btn btn-primary" style="flex: 1; min-width: 200px; text-align: center; padding: var(--spacing-md) var(--spacing-lg); font-size: 1.1rem; font-weight: 600; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);">
+                            <i class="fas fa-play"></i> Commencer le Jeu
+                        </a>
+                        <a href="GDD.html" class="btn btn-secondary" style="flex: 1; min-width: 200px; text-align: center; padding: var(--spacing-md) var(--spacing-lg); font-size: 1.1rem; font-weight: 600; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                            <i class="fas fa-info-circle"></i> En Savoir Plus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize utilities
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling to all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add hover effects to cards
+            document.querySelectorAll('.tech-card, .feature-item, .level-card, .pipeline-item').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    Utils.playSound('place', 600, 0.1);
+                });
+            });
+
+            // Add click effects to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    Utils.playSound('start', 800, 0.2);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

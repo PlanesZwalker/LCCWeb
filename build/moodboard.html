@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moodboard - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <style>
+        /* Page-specific styles for moodboard */
+        .moodboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .category-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .category-section:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .category-section h2 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .reference-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .reference-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .reference-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .reference-card h3 {
+            color: var(--gray-800);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .reference-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .inspiration-quote {
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin: var(--spacing-xl) 0;
+            padding: var(--spacing-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .featured-concept {
+            margin-top: var(--spacing-lg);
+        }
+
+        .featured-concept img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .concept-analysis h3 {
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .analysis-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .analysis-item:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .analysis-item h4 {
+            color: var(--accent-color);
+            margin-bottom: var(--spacing-sm);
+            font-size: 1rem;
+        }
+
+        .analysis-item p {
+            color: var(--gray-300);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-lg) 0;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--white);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .swatch-primary { background: var(--primary-color); }
+        .swatch-secondary { background: var(--secondary-color); }
+        .swatch-accent { background: var(--accent-color); }
+        .swatch-success { background: var(--success-color); }
+        .swatch-warning { background: var(--warning-color); }
+
+        @media (max-width: 768px) {
+            .moodboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reference-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .color-palette {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-layout">
+            <!-- Navigation Sidebar -->
+            <div class="nav-sidebar">
+                <h3>Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="moodboard.html" class="active"><i class="fas fa-palette"></i> Moodboard</a>
+                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- Header -->
+                <div class="glass-panel">
+                    <h1>🎨 Moodboard - Références Visuelles</h1>
+                    <p>Inspirations gameplay et style visuel pour Letters Cascade Challenge</p>
+                </div>
+
+                <!-- Inspiration Quote -->
+                <div class="inspiration-quote">
+                    "L'art du jeu réside dans l'équilibre parfait entre simplicité et profondeur"
+                </div>
+
+                <!-- Featured Concept Art -->
+                <div class="glass-card">
+                    <h2>🎨 Concept Art Principal</h2>
+                    <p>L'illustration qui définit l'identité visuelle de Letters Cascade Challenge</p>
+                    
+                    <div class="featured-concept">
+                        <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Concept Principal - Cascade de Lettres - KridVOID" onerror="this.src='https://via.placeholder.com/800x400/667eea/ffffff?text=Concept+Principal'">
+                        <div class="concept-analysis">
+                            <h3>🎯 Analyse du Concept</h3>
+                            <div class="analysis-grid">
+                                <div class="analysis-item">
+                                    <h4>🎭 Personnages</h4>
+                                    <p>Lettres anthropomorphiques avec expressions joyeuses et mouvements dynamiques</p>
+                                </div>
+                                <div class="analysis-item">
+                                    <h4>🌊 Environnement</h4>
+                                    <p>Cascade majestueuse avec éléments asiatiques (pagode, cerisiers)</p>
+                                </div>
+                                <div class="analysis-item">
+                                    <h4>🎨 Style Visuel</h4>
+                                    <p>Cartoon coloré avec contrastes marqués et textures riches</p>
+                                </div>
+                                <div class="analysis-item">
+                                    <h4>🎮 Gameplay</h4>
+                                    <p>Chute de lettres inspirée de Tetris dans un univers immersif</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Palette -->
+                <div class="glass-card">
+                    <h2><i class="fas fa-palette"></i> Palette de Couleurs</h2>
+                    <p>La palette professionnelle utilisée dans le projet</p>
+                    <div class="color-palette">
+                        <div class="color-swatch swatch-primary" title="Primary Color"></div>
+                        <div class="color-swatch swatch-secondary" title="Secondary Color"></div>
+                        <div class="color-swatch swatch-accent" title="Accent Color"></div>
+                        <div class="color-swatch swatch-success" title="Success Color"></div>
+                        <div class="color-swatch swatch-warning" title="Warning Color"></div>
+                    </div>
+                </div>
+
+                <!-- Moodboard Grid -->
+                <div class="moodboard-grid">
+                    <!-- Gameplay References -->
+                    <div class="category-section">
+                        <h2><i class="fas fa-gamepad"></i> Jeux de Mots & Puzzle</h2>
+                        <div class="reference-grid">
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/667eea/ffffff?text=Wordle" alt="Wordle Game">
+                                <h3>Wordle</h3>
+                                <p>Simplicité et engagement - Interface épurée, feedback visuel clair, progression quotidienne</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/764ba2/ffffff?text=Scrabble" alt="Scrabble Game">
+                                <h3>Scrabble</h3>
+                                <p>Formation de mots stratégique - Grille classique, lettres colorées, système de points</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Crossword" alt="Crossword Puzzle">
+                                <h3>Mots Croisés</h3>
+                                <p>Créativité linguistique - Grille structurée, indices, satisfaction de complétion</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Style -->
+                    <div class="category-section">
+                        <h2><i class="fas fa-paint-brush"></i> Style Visuel & Design</h2>
+                        <div class="reference-grid">
+                            <div class="reference-card">
+                                <img src="images/A_letter.png" alt="Lettre A Animée" onerror="this.src='https://via.placeholder.com/200x150/667eea/ffffff?text=Lettre+A'">
+                                <h3>Personnages de Lettres</h3>
+                                <p>Lettres anthropomorphiques avec style moderne - Chaque lettre a sa personnalité unique</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="images/Cascade Letters - 02 - Decor concept 01.png" alt="Cascade et Environnement - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/764ba2/ffffff?text=Cascade'">
+                                <h3>Environnement Cascade</h3>
+                                <p>Inspiration japonaise avec cascades, cerisiers et pagodes - Ambiance sereine et immersive</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="images/Cascade Letters - 01 - Chara TA et recherches.png" alt="Recherches de Personnages - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Recherches'">
+                                <h3>Recherches de Design</h3>
+                                <p>Esquisses et explorations de personnages - Processus créatif pour les lettres animées</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Illustration Noir et Blanc - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Illustration'">
+                                <h3>Illustration Noir et Blanc</h3>
+                                <p>Style graphique épuré avec contrastes marqués - Ambiance mystérieuse et élégante</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="images/HighresScreenshot00002.png" alt="Screenshot Haute Résolution - KridVOID" onerror="this.src='https://via.placeholder.com/200x150/667eea/ffffff?text=Screenshot'">
+                                <h3>Interface Haute Résolution</h3>
+                                <p>Détails visuels et qualité graphique pour une expérience premium</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile & Touch -->
+                    <div class="category-section">
+                        <h2><i class="fas fa-mobile-alt"></i> Mobile & Touch</h2>
+                        <div class="reference-grid">
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/667eea/ffffff?text=Mobile+Gaming" alt="Mobile Gaming">
+                                <h3>Jeux Mobile</h3>
+                                <p>Contrôles tactiles intuitifs, interface adaptée aux doigts, feedback haptique</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/764ba2/ffffff?text=Touch+Interface" alt="Touch Interface">
+                                <h3>Interface Tactile</h3>
+                                <p>Boutons larges, zones de toucher généreuses, gestes simples</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Responsive+Design" alt="Responsive Design">
+                                <h3>Design Responsive</h3>
+                                <p>Adaptation portrait/paysage, grilles flexibles, contenu redimensionnable</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gameplay & Mechanics -->
+                    <div class="category-section">
+                        <h2><i class="fas fa-cogs"></i> Gameplay & Mécaniques</h2>
+                        <div class="reference-grid">
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/667eea/ffffff?text=Progression+System" alt="Progression System">
+                                <h3>Système de Progression</h3>
+                                <p>Niveaux de difficulté, récompenses visuelles, sentiment d'accomplissement</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/764ba2/ffffff?text=Visual+Feedback" alt="Visual Feedback">
+                                <h3>Feedback Visuel</h3>
+                                <p>Animations de succès, particules, effets de victoire, réactions immédiates</p>
+                            </div>
+                            <div class="reference-card">
+                                <img src="https://via.placeholder.com/200x150/4ecdc4/ffffff?text=Accessibility" alt="Accessibility">
+                                <h3>Accessibilité</h3>
+                                <p>Contraste élevé, tailles de texte ajustables, contrôles alternatifs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Principles -->
+                <div class="glass-card">
+                    <h2><i class="fas fa-lightbulb"></i> Principes de Design</h2>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <h3><i class="fas fa-eye"></i> Clarté Visuelle</h3>
+                            <p>Interface épurée avec hiérarchie claire et feedback immédiat</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3><i class="fas fa-hand-pointer"></i> Intuitivité</h3>
+                            <p>Contrôles naturels et apprentissage progressif sans friction</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3><i class="fas fa-heart"></i> Engagement</h3>
+                            <p>Mécaniques addictives avec récompenses et progression satisfaisante</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
