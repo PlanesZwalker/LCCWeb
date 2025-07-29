@@ -1152,220 +1152,195 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // Complete 3D Game Engine for Letters Cascade Challenge
+        // Implements all functionalities from technical specifications
         class Game3D {
             constructor() {
                 console.log('🔧 Game3D constructor called');
+                
+                // Game Configuration
                 this.mode = '3d';
-                this.gridSize = 10;
-                this.score = 0;
-                this.level = 1;
-                this.wordsFound = 0;
+                this.gridSizes = [8, 10, 12];
+                this.currentGridSize = 10;
+                this.cellSize = 1.2;
+                this.gap = 0.2;
+                
+                // Game State
                 this.gameRunning = false;
                 this.paused = false;
+                this.gameOver = false;
+                this.level = 1;
+                this.score = 0;
+                this.highScore = this.loadHighScore();
+                this.combo = 0;
+                this.maxCombo = 0;
                 this.startTime = null;
-                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-                this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
-                this.completedWords = [];
-                this.currentLetter = null;
-                this.letterPosition = { x: 0, y: 0 };
-                this.gameSpeed = 1000;
-                this.gameInterval = null;
                 
-                // Three.js properties
+                // 3D Scene Components
                 this.scene = null;
                 this.camera = null;
                 this.renderer = null;
-                this.grid = [];
                 this.raycaster = null;
                 this.mouse = null;
+                
+                // Game Mechanics
+                this.grid = [];
+                this.letters = [];
+                this.letterQueue = [];
+                this.wordsFound = [];
+                this.targetWords = [];
+                this.fallingLetter = null;
+                this.fallSpeed = 1000;
+                this.fallTimer = null;
+                
+                // 3D Specific
+                this.cubes = [];
+                this.textMeshes = [];
+                this.lights = [];
+                this.particles = [];
+                
+                // Word Detection System
+                this.dictionary = this.loadDictionary();
+                this.wordDetector = new WordDetector3D(this.dictionary);
+                
+                // Scoring System
+                this.scoreManager = new ScoreManager3D();
+                
+                // Level System
+                this.levelManager = new LevelManager3D();
+                
+                // Audio System
+                this.audioManager = new AudioManager3D();
+                
+                // Particle System
+                this.particleSystem = new ParticleSystem3D();
+                
+                // Statistics
+                this.stats = {
+                    lettersPlaced: 0,
+                    wordsCompleted: 0,
+                    totalScore: 0,
+                    playTime: 0,
+                    startTime: null,
+                    mode: '3D'
+                };
                 
                 console.log('🔧 Game3D constructor completed, calling init()');
                 this.init();
             }
-
+            
+            // Initialize 3D game
             init() {
-                console.log('🚀 init() called - mode:', this.mode, 'THREE available:', typeof THREE !== 'undefined');
+                console.log('🚀 Initializing 3D game...');
                 
-                // Show loading indicator
-                const loadingIndicator = document.getElementById('loadingIndicator');
-                if (loadingIndicator) {
-                    loadingIndicator.style.display = 'flex';
-                    console.log('⏳ Loading indicator shown');
-                }
-                
-                if (this.mode === '3d' && typeof THREE !== 'undefined') {
-                    console.log('🎮 Three.js loaded, checking WebGL support...');
-                    
-                    // Check WebGL support
-                    const canvas = document.createElement('canvas');
-                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-                    
-                    if (gl) {
-                        console.log('✅ WebGL supported, creating 3D game...');
-                        this.initThreeJS();
-                    } else {
-                        console.warn('⚠️ WebGL not supported, falling back to 2D grid...');
-                        this.createGrid(); // Fallback to original 2D grid
-                    }
-                } else {
-                    console.log('📱 Using 2D grid mode...');
-                    this.createGrid(); // Use 2D grid
-                }
-                
-                console.log('🔄 Calling updateLetterQueue()');
-                this.updateLetterQueue();
-                
-                console.log('📊 Calling updateDisplay()');
-                this.updateDisplay();
-                
-                console.log('🎯 Calling setupEventListeners()');
-                this.setupEventListeners();
-                
-                if (typeof Utils !== 'undefined') {
-                    console.log('✅ Game initialized with Utils');
-                } else {
-                    console.warn('⚠️ Utils not available');
-                }
-                
-                // Hide loading indicator
-                if (loadingIndicator) {
-                    loadingIndicator.style.display = 'none';
-                    console.log('✅ Loading indicator hidden');
-                }
-                
-                console.log('🎉 init() completed successfully');
-            }
-
-            initThreeJS() {
-                console.log('🎮 initThreeJS() called');
-                
-                const container = document.getElementById('gameGrid');
-                console.log('📦 Container found:', container);
-                
-                if (!container) {
-                    console.error('❌ gameGrid container not found!');
+                // Check WebGL support
+                if (!this.checkWebGLSupport()) {
+                    console.error('❌ WebGL not supported');
+                    this.showWebGLError();
                     return;
                 }
                 
-                // Clear container and create canvas
-                container.innerHTML = '';
-                const canvas = document.createElement('canvas');
-                canvas.id = 'threejsCanvas';
-                canvas.width = 500;
-                canvas.height = 500;
-                canvas.style.border = '2px solid rgba(255, 255, 255, 0.3)';
-                canvas.style.borderRadius = '12px';
-                canvas.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
-                canvas.style.display = 'block';
-                canvas.style.margin = '0 auto';
-                container.appendChild(canvas);
+                // Initialize Three.js components
+                this.initThreeJS();
+                this.create3DGrid();
+                this.setupLighting();
+                this.setupCamera();
+                this.setupControls();
+                this.generateLetterQueue();
                 
-                console.log('🎨 Canvas created and added to container');
-
-                // Enhanced scene setup
+                // Start animation loop
+                this.animate();
+                
+                console.log('✅ 3D game initialized successfully');
+            }
+            
+            // WebGL Support Check
+            checkWebGLSupport() {
+                try {
+                    const canvas = document.createElement('canvas');
+                    return !!(window.WebGLRenderingContext && 
+                        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+                } catch (e) {
+                    return false;
+                }
+            }
+            
+            showWebGLError() {
+                const container = document.getElementById('gameGrid');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #ef4444;">
+                            <h3>❌ WebGL Not Supported</h3>
+                            <p>Your browser doesn't support WebGL. Please try a different browser or enable hardware acceleration.</p>
+                            <button onclick="location.reload()" class="btn btn-primary">Reload Page</button>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Initialize Three.js
+            initThreeJS() {
+                console.log('🎨 Initializing Three.js...');
+                
+                const container = document.getElementById('gameGrid');
+                if (!container) {
+                    console.error('❌ Game container not found');
+                    return;
+                }
+                
+                // Clear container
+                container.innerHTML = '';
+                
+                // Create scene
                 this.scene = new THREE.Scene();
                 this.scene.background = new THREE.Color(0x1a1a2e);
-                console.log('🌌 Scene created');
                 
-                // Enhanced camera with better positioning
-                this.camera = new THREE.PerspectiveCamera(75, canvas.width / canvas.height, 0.1, 1000);
+                // Create camera
+                this.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
                 this.camera.position.set(0, 0, 15);
                 this.camera.lookAt(0, 0, 0);
-                console.log('📷 Camera created and positioned');
-
-                // Enhanced renderer with better quality
+                
+                // Create renderer
                 this.renderer = new THREE.WebGLRenderer({ 
-                    canvas: canvas, 
-                    alpha: true, 
                     antialias: true,
                     powerPreference: "high-performance"
                 });
-                
-                this.renderer.setSize(canvas.width, canvas.height);
-                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.setSize(500, 500);
+                this.renderer.setPixelRatio(window.devicePixelRatio);
                 this.renderer.shadowMap.enabled = true;
                 this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-                console.log('🎨 Renderer created with enhanced settings');
-
-                // Create enhanced 3D grid
-                this.create3DGrid();
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
                 
-                // Enhanced lighting
-                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
-                this.scene.add(ambientLight);
-                console.log('💡 Ambient light added');
-                
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-                directionalLight.position.set(10, 10, 5);
-                directionalLight.castShadow = true;
-                directionalLight.shadow.mapSize.width = 2048;
-                directionalLight.shadow.mapSize.height = 2048;
-                directionalLight.shadow.camera.near = 0.5;
-                directionalLight.shadow.camera.far = 50;
-                directionalLight.shadow.camera.left = -10;
-                directionalLight.shadow.camera.right = 10;
-                directionalLight.shadow.camera.top = 10;
-                directionalLight.shadow.camera.bottom = -10;
-                this.scene.add(directionalLight);
-                console.log('💡 Directional light added');
-                
-                // Add point lights for better atmosphere
-                const pointLight1 = new THREE.PointLight(0x4ecdc4, 1, 100);
-                pointLight1.position.set(5, 5, 5);
-                this.scene.add(pointLight1);
-                
-                const pointLight2 = new THREE.PointLight(0x667eea, 1, 100);
-                pointLight2.position.set(-5, -5, 5);
-                this.scene.add(pointLight2);
-                console.log('💡 Point lights added');
-                
-                // Add fog for depth
-                this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
-                console.log('🌫️ Fog added');
+                // Add renderer to container
+                container.appendChild(this.renderer.domElement);
+                this.renderer.domElement.style.display = 'block';
+                this.renderer.domElement.style.margin = '0 auto';
                 
                 // Setup raycaster for mouse interaction
                 this.raycaster = new THREE.Raycaster();
                 this.mouse = new THREE.Vector2();
-                console.log('🎯 Raycaster setup complete');
                 
-                // Start animation loop
-                this.animate();
-                console.log('🎬 Animation loop started');
+                // Add event listeners
+                this.setupEventListeners();
                 
-                // Add mouse event listeners
-                canvas.addEventListener('click', (event) => this.onCanvasClick(event));
-                canvas.addEventListener('mousemove', (event) => this.onMouseMove(event));
-                console.log('🖱️ Mouse event listeners added');
-                
-                console.log('✅ initThreeJS() completed successfully');
+                console.log('✅ Three.js initialized');
             }
-
+            
+            // Create 3D Grid
             create3DGrid() {
                 console.log('🏗️ create3DGrid() called');
                 
+                const startX = -(this.currentGridSize * this.cellSize) / 2 + this.cellSize / 2;
+                const startZ = -(this.currentGridSize * this.cellSize) / 2 + this.cellSize / 2;
+                
                 this.grid = [];
-                const cellSize = 1.2;
-                const gap = 0.2;
-                const totalSize = this.gridSize * (cellSize + gap) - gap;
-                const startX = -totalSize / 2;
-                const startZ = -totalSize / 2;
                 
-                console.log('📐 Grid dimensions:', {
-                    cellSize: cellSize,
-                    gap: gap,
-                    totalSize: totalSize,
-                    startX: startX,
-                    startZ: startZ
-                });
-                
-                for (let row = 0; row < this.gridSize; row++) {
+                for (let row = 0; row < this.currentGridSize; row++) {
                     this.grid[row] = [];
-                    for (let col = 0; col < this.gridSize; col++) {
-                        const x = startX + col * (cellSize + gap);
-                        const z = startZ + row * (cellSize + gap);
-                        
+                    for (let col = 0; col < this.currentGridSize; col++) {
                         // Create cube geometry
-                        const geometry = new THREE.BoxGeometry(cellSize, cellSize, cellSize);
+                        const geometry = new THREE.BoxGeometry(this.cellSize, this.cellSize, this.cellSize);
                         const material = new THREE.MeshPhongMaterial({ 
                             color: 0x2a2a3e,
                             specular: 0x444444,
@@ -1373,690 +1348,537 @@
                         });
                         
                         const cube = new THREE.Mesh(geometry, material);
-                        cube.position.set(x, 0, z);
+                        cube.position.set(
+                            startX + col * (this.cellSize + this.gap),
+                            0,
+                            startZ + row * (this.cellSize + this.gap)
+                        );
+                        
+                        // Enable shadows
                         cube.castShadow = true;
                         cube.receiveShadow = true;
-                        cube.userData = { row: row, col: col, letter: null, occupied: false };
                         
-                        this.scene.add(cube);
+                        // Store user data for interaction
+                        cube.userData = {
+                            row: row,
+                            col: col,
+                            letter: null,
+                            occupied: false
+                        };
+                        
                         this.grid[row][col] = cube;
-                        
-                        console.log(`📦 Cube created at row ${row}, col ${col}, position (${x}, 0, ${z})`);
+                        this.scene.add(cube);
                     }
                 }
                 
                 console.log('✅ 3D grid created successfully');
             }
-
-            animate() {
-                requestAnimationFrame(() => this.animate());
+            
+            // Setup Lighting
+            setupLighting() {
+                // Ambient light
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
                 
-                // Enhanced animation with floating effect
-                if (this.scene) {
-                    this.scene.rotation.y += 0.002;
-                    
-                    // Add floating animation to cubes
-                    this.grid.forEach(row => {
-                        row.forEach(cell => {
-                            if (cell) {
-                                cell.position.y += Math.sin(Date.now() * 0.001 + cell.userData.row + cell.userData.col) * 0.001;
-                            }
-                        });
-                    });
-                }
+                // Directional light (sun)
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                directionalLight.position.set(10, 10, 5);
+                directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 2048;
+                directionalLight.shadow.mapSize.height = 2048;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 50;
+                directionalLight.shadow.camera.left = -20;
+                directionalLight.shadow.camera.right = 20;
+                directionalLight.shadow.camera.top = 20;
+                directionalLight.shadow.camera.bottom = -20;
+                this.scene.add(directionalLight);
                 
-                this.renderer.render(this.scene, this.camera);
+                // Point lights for atmosphere
+                const pointLight1 = new THREE.PointLight(0x4ecdc4, 1, 20);
+                pointLight1.position.set(-5, 5, 5);
+                this.scene.add(pointLight1);
+                
+                const pointLight2 = new THREE.PointLight(0x667eea, 1, 20);
+                pointLight2.position.set(5, 5, -5);
+                this.scene.add(pointLight2);
+                
+                // Add fog for depth
+                this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
             }
-
-            onCanvasClick(event) {
-                console.log('🖱️ Canvas click detected at:', event.clientX, event.clientY);
-                
-                const rect = event.target.getBoundingClientRect();
-                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-                
-                console.log('🎯 Mouse coordinates:', this.mouse.x, this.mouse.y);
-
-                this.raycaster.setFromCamera(this.mouse, this.camera);
-                const intersects = this.raycaster.intersectObjects(this.scene.children);
-                
-                console.log('🎯 Intersections found:', intersects.length);
-
-                if (intersects.length > 0) {
-                    const clickedCube = intersects[0].object;
-                    const userData = clickedCube.userData;
+            
+            // Setup Camera
+            setupCamera() {
+                this.camera.position.set(0, 0, 15);
+                this.camera.lookAt(0, 0, 0);
+            }
+            
+            // Setup Controls
+            setupControls() {
+                // Keyboard controls
+                document.addEventListener('keydown', (event) => {
+                    if (!this.gameRunning || this.paused) return;
                     
-                    console.log('🎯 Clicked cube userData:', userData);
-                    
-                    if (userData && !userData.occupied) {
-                        console.log('✅ Valid click - placing letter at row:', userData.row, 'col:', userData.col);
-                        this.placeLetter3D(userData.row, userData.col, event);
-                    } else {
-                        console.log('❌ Invalid click - cube already filled or no userData');
+                    switch(event.key) {
+                        case 'ArrowLeft':
+                            this.moveFallingLetter(-1);
+                            break;
+                        case 'ArrowRight':
+                            this.moveFallingLetter(1);
+                            break;
+                        case 'ArrowDown':
+                            this.dropFallingLetter();
+                            break;
+                        case ' ':
+                            this.rotateFallingLetter();
+                            break;
+                        case 'p':
+                        case 'P':
+                            this.togglePause();
+                            break;
+                        case 'r':
+                        case 'R':
+                            this.resetGame();
+                            break;
                     }
-                } else {
-                    console.log('❌ No intersections found');
-                }
+                });
             }
-
-            // Add hover effects for 3D cubes
-            onMouseMove(event) {
-                if (!this.raycaster || !this.mouse) {
-                    console.log('⚠️ Raycaster or mouse not initialized');
-                    return;
-                }
+            
+            // Event Listeners
+            setupEventListeners() {
+                const canvas = this.renderer.domElement;
                 
-                const rect = event.target.getBoundingClientRect();
+                // Mouse move for hover effects
+                canvas.addEventListener('mousemove', (event) => {
+                    this.onMouseMove(event);
+                });
+                
+                // Mouse click for letter placement
+                canvas.addEventListener('click', (event) => {
+                    this.onCanvasClick(event);
+                });
+            }
+            
+            // Mouse Interaction
+            onMouseMove(event) {
+                const rect = this.renderer.domElement.getBoundingClientRect();
                 this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
                 this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
+                
                 this.raycaster.setFromCamera(this.mouse, this.camera);
                 const intersects = this.raycaster.intersectObjects(this.scene.children);
-
+                
                 // Reset all cube colors
-                this.grid.forEach(row => {
-                    row.forEach(cell => {
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        const cell = this.grid[row][col];
                         if (cell && !cell.userData.occupied) {
                             cell.material.color.setHex(0x2a2a3e);
                             cell.scale.set(1, 1, 1);
                         }
-                    });
-                });
-
+                    }
+                }
+                
                 // Highlight hovered cube
                 if (intersects.length > 0) {
-                    const hoveredCube = intersects[0].object;
-                    const userData = hoveredCube.userData;
-                    
-                    if (userData && !userData.occupied) {
-                        hoveredCube.material.color.setHex(0x4ecdc4);
-                        hoveredCube.scale.set(1.1, 1.1, 1.1);
+                    const intersected = intersects[0].object;
+                    if (intersected.userData && !intersected.userData.occupied) {
+                        intersected.material.color.setHex(0x4ecdc4);
+                        intersected.scale.set(1.1, 1.1, 1.1);
                     }
                 }
             }
-
+            
+            // Canvas Click
+            onCanvasClick(event) {
+                if (!this.gameRunning || this.paused || !this.fallingLetter) return;
+                
+                const rect = this.renderer.domElement.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+                
+                if (intersects.length > 0) {
+                    const intersected = intersects[0].object;
+                    if (intersected.userData && !intersected.userData.occupied) {
+                        this.placeLetter3D(intersected.userData.row, intersected.userData.col, event);
+                    }
+                }
+            }
+            
+            // Place Letter in 3D
             placeLetter3D(row, col, event) {
                 console.log('🎯 placeLetter3D() called - row:', row, 'col:', col, 'letters remaining:', this.letters.length);
                 
-                if (this.letters.length > 0) {
-                    const letter = this.letters.shift();
-                    console.log('📝 Placing letter:', letter);
-                    
-                    // Create enhanced 3D text
-                    const textGeometry = new THREE.PlaneGeometry(0.8, 0.8);
-                    
-                    // Create canvas for better text rendering
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.width = 128;
-                    canvas.height = 128;
-                    
-                    // Create gradient background
-                    const gradient = context.createRadialGradient(64, 64, 0, 64, 64, 64);
-                    gradient.addColorStop(0, '#4ecdc4');
-                    gradient.addColorStop(1, '#667eea');
-                    context.fillStyle = gradient;
-                    context.fillRect(0, 0, 128, 128);
-                    
-                    // Add text with shadow
-                    context.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                    context.shadowBlur = 4;
-                    context.shadowOffsetX = 2;
-                    context.shadowOffsetY = 2;
-                    context.fillStyle = '#ffffff';
-                    context.font = 'bold 72px Arial';
-                    context.textAlign = 'center';
-                    context.textBaseline = 'middle';
-                    context.fillText(letter, 64, 64);
-                    
-                    const texture = new THREE.CanvasTexture(canvas);
-                    const textMaterial = new THREE.MeshBasicMaterial({ 
-                        map: texture,
-                        transparent: true,
-                        opacity: 0.95
-                    });
-                    
-                    const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-                    
-                    // Position the text with offset
-                    textMesh.position.set(
-                        (col - this.gridSize/2) * 1.4,
-                        (row - this.gridSize/2) * 1.4,
-                        0.8
-                    );
-
-                    // Add glow effect
-                    const glowGeometry = new THREE.PlaneGeometry(1.2, 1.2);
-                    const glowMaterial = new THREE.MeshBasicMaterial({
-                        color: 0x4ecdc4,
-                        transparent: true,
-                        opacity: 0.3
-                    });
-                    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
-                    glowMesh.position.copy(textMesh.position);
-                    glowMesh.position.z = 0.7;
-                    
-                    this.scene.add(glowMesh);
-                    this.scene.add(textMesh);
-                    
-                    this.grid[row][col].userData.letter = textMesh;
-                    this.grid[row][col].userData.occupied = true;
-                    
-                    console.log('✅ Letter placed successfully in 3D scene');
-                    
-                    // Enhanced animation
-                    textMesh.scale.set(0, 0, 0);
-                    glowMesh.scale.set(0, 0, 0);
-                    
-                    const animate = () => {
-                        textMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.15);
-                        glowMesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
-                        
-                        if (textMesh.scale.x < 0.95) {
-                            requestAnimationFrame(animate);
-                        } else {
-                            // Add pulse animation
-                            this.addPulseAnimation(textMesh);
-                        }
-                    };
-                    animate();
-                    
-                    // Update cube color when letter is placed
-                    const cube = this.grid[row][col];
-                    cube.material.color.setHex(0x4ecdc4);
-                    cube.material.opacity = 0.9;
-                    
-                    this.score += 10;
-                    console.log('📊 Score updated:', this.score);
-                    
-                    this.updateDisplay();
-                    this.updateLetterQueue();
-                    this.checkWordCompletion();
-                    
-                    // Enhanced particle effects
-                    if (typeof Utils !== 'undefined') {
-                        console.log('✨ Creating particle effects');
-                        Utils.createParticleEffect(
-                            event.clientX,
-                            event.clientY,
-                            8,
-                            '#4ecdc4'
-                        );
-                        Utils.playSound('place', 600, 0.15);
-                    } else {
-                        console.warn('⚠️ Utils not available for particle effects');
-                    }
-                } else {
-                    console.warn('⚠️ No letters remaining in queue');
+                if (this.letterQueue.length === 0) {
+                    this.generateLetterQueue();
                 }
+                
+                const letter = this.letterQueue.shift();
+                const cell = this.grid[row][col];
+                
+                if (!cell || cell.userData.occupied) {
+                    console.warn('⚠️ Cell already occupied or invalid');
+                    return;
+                }
+                
+                // Create 3D text
+                const canvas = document.createElement('canvas');
+                canvas.width = 128;
+                canvas.height = 128;
+                const context = canvas.getContext('2d');
+                
+                // Create gradient background
+                const gradient = context.createLinearGradient(0, 0, 128, 128);
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+                context.fillStyle = gradient;
+                context.fillRect(0, 0, 128, 128);
+                
+                // Add text shadow
+                context.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                context.shadowBlur = 4;
+                context.shadowOffsetX = 2;
+                context.shadowOffsetY = 2;
+                
+                // Draw letter
+                context.fillStyle = 'white';
+                context.font = 'bold 72px Arial';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText(letter, 64, 64);
+                
+                // Create texture
+                const texture = new THREE.CanvasTexture(canvas);
+                const textGeometry = new THREE.PlaneGeometry(0.8, 0.8);
+                const textMaterial = new THREE.MeshBasicMaterial({ 
+                    map: texture,
+                    transparent: true,
+                    alphaTest: 0.5
+                });
+                
+                const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+                textMesh.position.copy(cell.position);
+                textMesh.position.y += 0.6;
+                textMesh.rotation.x = -Math.PI / 2;
+                
+                // Add glow effect
+                const glowGeometry = new THREE.PlaneGeometry(1, 1);
+                const glowMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x4ecdc4,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                
+                const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+                glowMesh.position.copy(textMesh.position);
+                glowMesh.position.y += 0.01;
+                glowMesh.rotation.x = -Math.PI / 2;
+                
+                // Add to scene
+                this.scene.add(textMesh);
+                this.scene.add(glowMesh);
+                
+                // Update cell data
+                cell.userData.letter = textMesh;
+                cell.userData.glow = glowMesh;
+                cell.userData.occupied = true;
+                cell.userData.letterValue = letter;
+                
+                // Change cube color
+                cell.material.color.setHex(0x4ecdc4);
+                
+                // Add scale animation
+                this.addPulseAnimation(textMesh);
+                this.addPulseAnimation(glowMesh);
+                
+                // Update game state
+                this.stats.lettersPlaced++;
+                this.audioManager.playPlace();
+                this.particleSystem.createPlacementEffect3D(cell.position);
+                
+                // Check for word completion
+                this.checkWordCompletion();
+                
+                // Update display
+                this.updateDisplay();
+                
+                console.log('✅ Letter placed successfully in 3D scene');
             }
-
+            
+            // Add Pulse Animation
             addPulseAnimation(mesh) {
-                console.log('💫 Adding pulse animation to mesh');
-                const originalScale = mesh.scale.clone();
-                const pulse = () => {
-                    const scale = 1 + Math.sin(Date.now() * 0.01) * 0.05;
-                    mesh.scale.set(scale, scale, scale);
-                    requestAnimationFrame(pulse);
-                };
-                pulse();
+                const scale = { value: 1 };
+                const tween = new TWEEN.Tween(scale)
+                    .to({ value: 1.2 }, 200)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .onUpdate(() => {
+                        mesh.scale.set(scale.value, scale.value, scale.value);
+                    })
+                    .yoyo(true)
+                    .repeat(1)
+                    .start();
             }
-
-            // Enhanced victory effects for 3D mode
-            createVictoryEffect3D(word, positions) {
-                positions.forEach((pos, index) => {
-                    const cell = this.grid[pos.row][pos.col];
-                    if (cell && cell.userData.letter) {
-                        // Create explosion effect
-                        const explosionGeometry = new THREE.SphereGeometry(0.3, 8, 6);
-                        const explosionMaterial = new THREE.MeshBasicMaterial({
-                            color: 0xffd700,
-                            transparent: true,
-                            opacity: 0.8
-                        });
-                        const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
-                        explosion.position.copy(cell.userData.letter.position);
-                        explosion.position.z += 0.5;
-                        
-                        this.scene.add(explosion);
-                        
-                        // Animate explosion
-                        const animateExplosion = () => {
-                            explosion.scale.multiplyScalar(1.1);
-                            explosion.material.opacity -= 0.02;
-                            
-                            if (explosion.material.opacity > 0) {
-                                requestAnimationFrame(animateExplosion);
-                            } else {
-                                this.scene.remove(explosion);
-                            }
-                        };
-                        animateExplosion();
-                        
-                        // Pulse the letter
-                        this.addPulseAnimation(cell.userData.letter);
-                    }
-                });
-            }
-
-            createGrid() {
-                console.log('🏗️ createGrid() called - gridSize:', this.gridSize);
+            
+            // Generate Letter Queue
+            generateLetterQueue() {
+                console.log('📝 Generating 3D letter queue...');
+                this.letterQueue = [];
+                const vowels = ['A', 'E', 'I', 'O', 'U'];
+                const consonants = ['B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'];
                 
-                const grid = document.getElementById('gameGrid');
-                console.log('📦 Grid container found:', grid);
-                
-                if (!grid) {
-                    console.error('❌ gameGrid element not found!');
-                    return;
-                }
-                
-                grid.innerHTML = '';
-                
-                // Remove existing grid classes
-                grid.classList.remove('grid-8x8', 'grid-10x10', 'grid-12x12');
-                
-                // Add the correct grid class based on size
-                if (this.gridSize === 8) {
-                    grid.classList.add('grid-8x8');
-                    console.log('📐 Added grid-8x8 class');
-                } else if (this.gridSize === 10) {
-                    grid.classList.add('grid-10x10');
-                    console.log('📐 Added grid-10x10 class');
-                } else if (this.gridSize === 12) {
-                    grid.classList.add('grid-12x12');
-                    console.log('📐 Added grid-12x12 class');
-                }
-
-                for (let i = 0; i < this.gridSize * this.gridSize; i++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'grid-cell';
-                    cell.textContent = '';
-                    cell.onclick = () => this.placeLetter(cell);
-                    grid.appendChild(cell);
-                }
-                
-                console.log('✅ 2D grid created with', this.gridSize * this.gridSize, 'cells');
-            }
-
-            updateLetterQueue() {
-                console.log('🔄 updateLetterQueue() called - letters:', this.letters);
-                
-                const queue = document.getElementById('letterQueue');
-                console.log('📦 Letter queue container found:', queue);
-                
-                if (!queue) {
-                    console.error('❌ letterQueue element not found!');
-                    return;
-                }
-                
-                queue.innerHTML = '';
-                
-                this.letters.slice(0, 5).forEach((letter, index) => {
-                    const letterDiv = document.createElement('div');
-                    letterDiv.className = 'queue-letter';
-                    letterDiv.textContent = letter;
-                    queue.appendChild(letterDiv);
-                    console.log('📝 Added letter to queue:', letter, 'at position:', index);
-                });
-                
-                console.log('✅ Letter queue updated');
-            }
-
-            placeLetter(cell) {
-                console.log('🎯 placeLetter() called - cell:', cell, 'cell text:', cell.textContent);
-                
-                if (!cell.textContent && this.letters.length > 0) {
-                    const letter = this.letters.shift();
-                    cell.textContent = letter;
-                    cell.classList.add('filled');
-                    
-                    console.log('📝 Placed letter:', letter, 'in 2D grid');
-                    
-                    this.score += 10;
-                    console.log('📊 Score updated:', this.score);
-                    
-                    this.updateDisplay();
-                    this.updateLetterQueue();
-                    this.checkWordCompletion();
-                    
-                    if (typeof Utils !== 'undefined') {
-                        console.log('✨ Creating particle effects for 2D');
-                        Utils.createParticleEffect(
-                            cell.offsetLeft + cell.offsetWidth / 2,
-                            cell.offsetTop + cell.offsetHeight / 2,
-                            5,
-                            '#4ecdc4'
-                        );
-                        Utils.playSound('place', 600, 0.1);
+                // Balanced letter distribution
+                for (let i = 0; i < 10; i++) {
+                    if (Math.random() < 0.4) {
+                        this.letterQueue.push(vowels[Math.floor(Math.random() * vowels.length)]);
                     } else {
-                        console.warn('⚠️ Utils not available for 2D particle effects');
+                        this.letterQueue.push(consonants[Math.floor(Math.random() * consonants.length)]);
                     }
-                } else {
-                    console.log('❌ Cannot place letter - cell filled or no letters remaining');
                 }
-            }
-
-            checkWordCompletion() {
-                console.log('🔍 checkWordCompletion() called - mode:', this.mode);
                 
+                console.log('✅ 3D letter queue generated:', this.letterQueue);
+                this.updateLetterQueueDisplay();
+            }
+            
+            // Word Detection for 3D
+            checkWordCompletion() {
                 if (this.mode === '3d') {
                     console.log('🎮 Checking 3D word completion');
                     this.checkWordCompletion3D();
-                } else {
-                    console.log('📱 Checking 2D word completion');
-                    this.checkWordCompletion2D();
                 }
             }
-
-            checkWordCompletion2D() {
-                console.log('📱 checkWordCompletion2D() called');
-                
-                const directions = [
-                    [-1, -1], [-1, 0], [-1, 1],
-                    [0, -1],           [0, 1],
-                    [1, -1],  [1, 0],  [1, 1]
-                ];
-
-                const cells = document.querySelectorAll('.grid-cell');
-                console.log('📦 Found', cells.length, 'grid cells');
-                
-                const grid = [];
-                
-                // Convert cells to 2D grid
-                for (let row = 0; row < this.gridSize; row++) {
-                    grid[row] = [];
-                    for (let col = 0; col < this.gridSize; col++) {
-                        const index = row * this.gridSize + col;
-                        if (cells[index]) {
-                            grid[row][col] = cells[index].textContent || '';
-                        } else {
-                            grid[row][col] = '';
-                        }
-                    }
-                }
-                
-                console.log('📐 2D grid created:', grid);
-
-                // Check for words in all directions
-                for (let row = 0; row < this.gridSize; row++) {
-                    for (let col = 0; col < this.gridSize; col++) {
-                        if (grid[row][col]) {
-                            for (let [dx, dy] of directions) {
-                                const word = this.checkWordInDirection(grid, col, row, dx, dy);
-                                if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
-                                    console.log('🏆 Word completed in 2D:', word);
-                                    this.completeWord(word);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
+            
             checkWordCompletion3D() {
                 console.log('🎮 checkWordCompletion3D() called');
                 
-                const directions = [
-                    [-1, -1], [-1, 0], [-1, 1],
-                    [0, -1],           [0, 1],
-                    [1, -1],  [1, 0],  [1, 1]
-                ];
-
-                // Create grid from 3D grid data
+                // Create 2D grid from 3D grid data
                 const grid = [];
-                for (let row = 0; row < this.gridSize; row++) {
+                for (let row = 0; row < this.currentGridSize; row++) {
                     grid[row] = [];
-                    for (let col = 0; col < this.gridSize; col++) {
-                        if (this.grid[row] && this.grid[row][col] && this.grid[row][col].userData.letter) {
-                            // Extract letter from 3D mesh (simplified)
-                            grid[row][col] = this.getLetterFrom3DMesh(this.grid[row][col].userData.letter) || '';
-                        } else {
-                            grid[row][col] = '';
-                        }
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        // Extract letter from 3D mesh (simplified)
+                        grid[row][col] = this.getLetterFrom3DMesh(this.grid[row][col].userData.letter) || '';
                     }
                 }
                 
                 console.log('📐 3D grid created:', grid);
-
-                // Check for words in all directions
-                for (let row = 0; row < this.gridSize; row++) {
-                    for (let col = 0; col < this.gridSize; col++) {
-                        if (grid[row][col]) {
-                            for (let [dx, dy] of directions) {
-                                const word = this.checkWordInDirection(grid, col, row, dx, dy);
-                                if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
-                                    console.log('🏆 Word completed in 3D:', word);
-                                    this.completeWord(word);
-                                }
+                
+                // Use word detector
+                const words = this.wordDetector.scanGrid(grid);
+                console.log('📝 Words found in 3D:', words);
+                
+                if (words.length > 0) {
+                    words.forEach(word => {
+                        this.completeWord3D(word);
+                    });
+                    
+                    // Update combo
+                    this.combo += words.length;
+                    if (this.combo > this.maxCombo) {
+                        this.maxCombo = this.combo;
+                    }
+                    
+                    // Add combo bonus
+                    if (this.combo > 1) {
+                        const comboBonus = this.combo * 50;
+                        this.addScore(comboBonus);
+                        this.showComboEffect3D(comboBonus);
+                    }
+                } else {
+                    this.combo = 0;
+                }
+                
+                this.updateDisplay();
+            }
+            
+            getLetterFrom3DMesh(mesh) {
+                console.log('🔍 getLetterFrom3DMesh() called for mesh:', mesh);
+                if (!mesh || !mesh.userData) return null;
+                return mesh.userData.letterValue;
+            }
+            
+            completeWord3D(word) {
+                console.log('🏆 Word completed in 3D:', word);
+                
+                // Add word to found list
+                this.wordsFound.push(word);
+                
+                // Calculate score
+                const wordScore = word.length * 10;
+                this.addScore(wordScore);
+                
+                // Remove word from 3D grid
+                this.removeWordFrom3DGrid(word);
+                
+                // Create 3D particle effect
+                this.particleSystem.createWordCompletionEffect3D(word);
+                
+                // Play sound
+                this.audioManager.playWordComplete();
+                
+                // Check level progression
+                this.levelManager.checkLevelProgression(this.wordsFound.length);
+                
+                console.log('✅ 3D word completed:', word, 'Score:', wordScore);
+            }
+            
+            removeWordFrom3DGrid(word) {
+                // Find and remove letters of the word from 3D grid
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        const cell = this.grid[row][col];
+                        if (cell.userData.letterValue === word[0]) {
+                            // Check if this is the start of the word
+                            if (this.checkWordAt3DPosition(row, col, word)) {
+                                this.removeWordAt3DPosition(row, col, word);
+                                return;
                             }
                         }
                     }
                 }
             }
-
-            getLetterFrom3DMesh(mesh) {
-                console.log('🔍 getLetterFrom3DMesh() called for mesh:', mesh);
-                // For now, return a placeholder letter
-                // In a real implementation, you'd extract the letter from the mesh texture
-                return 'A'; // Placeholder
-            }
-
-            checkWordInDirection(grid, startCol, startRow, dx, dy) {
-                console.log('🔍 checkWordInDirection() called - startCol:', startCol, 'startRow:', startRow, 'dx:', dx, 'dy:', dy);
-                
-                let word = '';
-                let col = startCol;
-                let row = startRow;
-                
-                while (col >= 0 && col < this.gridSize && row >= 0 && row < this.gridSize) {
-                    const letter = grid[row][col];
-                    if (letter) {
-                        word += letter;
-                    } else {
-                        break;
+            
+            checkWordAt3DPosition(row, col, word) {
+                // Check horizontal
+                if (col + word.length <= this.currentGridSize) {
+                    let match = true;
+                    for (let i = 0; i < word.length; i++) {
+                        if (this.grid[row][col + i].userData.letterValue !== word[i]) {
+                            match = false;
+                            break;
+                        }
                     }
-                    col += dx;
-                    row += dy;
+                    if (match) return true;
                 }
                 
-                console.log('📝 Word found in direction:', word);
-                return word;
+                // Check vertical
+                if (row + word.length <= this.currentGridSize) {
+                    let match = true;
+                    for (let i = 0; i < word.length; i++) {
+                        if (this.grid[row + i][col].userData.letterValue !== word[i]) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match) return true;
+                }
+                
+                return false;
             }
-
-            completeWord(word) {
-                console.log('🏆 completeWord() called - word:', word);
-                
-                this.completedWords.push(word);
-                this.wordsFound++;
-                this.score += word.length * 10;
-                
-                console.log('📊 Word completion stats - wordsFound:', this.wordsFound, 'score:', this.score);
-                
-                // Add word to completed list
-                const wordList = document.getElementById('wordsFound');
-                if (wordList) {
-                    const wordItem = document.createElement('li');
-                    wordItem.textContent = word;
-                    wordItem.classList.add('completed');
-                    wordList.appendChild(wordItem);
-                    console.log('📝 Added word to completed list:', word);
+            
+            removeWordAt3DPosition(row, col, word) {
+                // Remove letters from 3D grid
+                for (let i = 0; i < word.length; i++) {
+                    const cell = this.grid[row][col + i];
+                    if (cell.userData.letter) {
+                        this.scene.remove(cell.userData.letter);
+                    }
+                    if (cell.userData.glow) {
+                        this.scene.remove(cell.userData.glow);
+                    }
+                    cell.userData.letter = null;
+                    cell.userData.glow = null;
+                    cell.userData.occupied = false;
+                    cell.userData.letterValue = null;
+                    cell.material.color.setHex(0x2a2a3e);
                 }
-                
-                this.updateDisplay();
-                
-                // Victory effects
-                if (typeof Utils !== 'undefined') {
-                    console.log('✨ Creating victory effects');
-                    Utils.createVictorySparkles();
-                    Utils.playSound('complete', 1000, 0.3);
-                }
-                
-                console.log('✅ Word completed successfully');
             }
-
-            levelUp() {
-                this.level++;
+            
+            // Scoring System
+            addScore(points) {
+                console.log('💰 Adding 3D score:', points);
+                this.score += points;
+                this.stats.totalScore += points;
                 
-                if (typeof Utils !== 'undefined') {
-                    Utils.showModal(
-                        'Niveau ' + this.level + ' !',
-                        'Félicitations ! Vous avez atteint le niveau ' + this.level + '.',
-                        [{ text: 'Continuer', action: () => this.updateDisplay() }]
-                    );
+                // Update high score
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                    this.saveHighScore();
                 }
                 
+                this.scoreManager.updateScore(this.score);
                 this.updateDisplay();
             }
-
-            selectMode(mode) {
-                console.log('🎮 selectMode() called - mode:', mode);
-                
-                // Update active button
-                document.querySelectorAll('.mode-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.dataset.mode === mode) {
-                        btn.classList.add('active');
-                        console.log('✅ Activated mode button:', btn.textContent);
-                    }
-                });
-                
-                this.mode = mode;
-                console.log('🎮 Mode changed to:', this.mode);
-                
-                // Reinitialize game with new mode
-                this.resetGame();
-                this.init();
-                
-                console.log('✅ Mode selection completed');
-            }
-
-            selectGrid(size) {
-                console.log('📐 selectGrid() called - size:', size);
-                
-                // Update active button
-                document.querySelectorAll('.grid-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (parseInt(btn.dataset.size) === size) {
-                        btn.classList.add('active');
-                        console.log('✅ Activated grid button:', btn.textContent);
-                    }
-                });
-                
-                this.gridSize = size;
-                console.log('📐 Grid size changed to:', this.gridSize);
-                
-                // Reinitialize game with new grid size
-                this.resetGame();
-                this.init();
-                
-                console.log('✅ Grid selection completed');
-            }
-
+            
+            // Game Controls
             startGame() {
-                console.log('▶️ startGame() called');
+                console.log('▶️ Starting 3D game...');
                 
-                if (!this.gameRunning) {
-                    this.gameRunning = true;
-                    this.startTime = Date.now();
-                    console.log('⏰ Game started at:', this.startTime);
-                    
-                    // Update button text
-                    const startButton = document.getElementById('startBtn');
-                    if (startButton) {
-                        startButton.innerHTML = '<i class="fas fa-pause"></i> Pause';
-                        startButton.onclick = () => this.pauseGame();
-                    }
-                    
-                    console.log('✅ Game started successfully');
-                } else {
-                    console.log('⚠️ Game already running');
-                }
+                if (this.gameRunning) return;
+                
+                this.gameRunning = true;
+                this.paused = false;
+                this.gameOver = false;
+                this.stats.startTime = Date.now();
+                this.startTime = Date.now();
+                
+                this.audioManager.playStart();
+                console.log('✅ 3D game started');
             }
-
+            
             pauseGame() {
-                console.log('⏸️ pauseGame() called');
+                console.log('⏸️ Pausing 3D game...');
                 
-                if (this.gameRunning) {
-                    this.gameRunning = false;
-                    console.log('⏰ Game paused');
-                    
-                    // Update button text
-                    const pauseButton = document.getElementById('pauseBtn');
-                    if (pauseButton) {
-                        pauseButton.innerHTML = '<i class="fas fa-play"></i> Démarrer';
-                        pauseButton.onclick = () => this.startGame();
-                    }
-                    
-                    console.log('✅ Game paused successfully');
+                if (!this.gameRunning) return;
+                
+                this.paused = !this.paused;
+                
+                if (this.paused) {
+                    this.audioManager.playPause();
                 } else {
-                    console.log('⚠️ Game not running');
+                    this.audioManager.playResume();
                 }
+                
+                this.updateDisplay();
+                console.log('✅ 3D game paused:', this.paused);
             }
-
+            
             resetGame() {
-                console.log('🔄 resetGame() called');
+                console.log('🔄 Resetting 3D game...');
                 
                 this.gameRunning = false;
                 this.paused = false;
+                this.gameOver = false;
                 this.score = 0;
                 this.level = 1;
-                this.wordsFound = 0;
-                this.startTime = null;
-                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-                this.completedWords = [];
+                this.combo = 0;
+                this.maxCombo = 0;
+                this.wordsFound = [];
+                this.fallSpeed = 1000;
                 
-                console.log('🔄 Game state reset');
-                
-                // Clear grid
-                if (this.mode === '3d') {
-                    console.log('🎮 Clearing 3D grid');
-                    this.grid.forEach(row => {
-                        row.forEach(cell => {
-                            if (cell.userData.letter) {
-                                this.scene.remove(cell.userData.letter);
-                                cell.userData.letter = null;
-                            }
-                            if (cell.userData.glow) {
-                                this.scene.remove(cell.userData.glow);
-                                cell.userData.glow = null;
-                            }
-                            cell.userData.occupied = false;
-                            cell.material.color.setHex(0x2a2a3e);
-                            cell.material.opacity = 0.8;
-                        });
-                    });
-                } else {
-                    console.log('📱 Clearing 2D grid');
-                    const cells = document.querySelectorAll('.grid-cell');
-                    cells.forEach(cell => {
-                        cell.textContent = '';
-                        cell.classList.remove('filled');
-                    });
-                }
-                
+                this.clear3DGrid();
+                this.generateLetterQueue();
                 this.updateDisplay();
-                this.updateLetterQueue();
                 
-                // Reset button text
-                const startButton = document.getElementById('startBtn');
-                if (startButton) {
-                    startButton.innerHTML = '<i class="fas fa-play"></i> Démarrer';
-                    startButton.onclick = () => this.startGame();
-                }
+                this.audioManager.playReset();
+                console.log('✅ 3D game reset');
+            }
+            
+            clear3DGrid() {
+                console.log('🎮 Clearing 3D grid');
                 
-                console.log('✅ Game reset successfully');
-            }
-
-            updateGame() {
-                // Update game logic here
-                const currentTime = Date.now();
-                if (this.startTime) {
-                    const elapsed = Math.floor((currentTime - this.startTime) / 1000);
-                    document.getElementById('timeValue').textContent = 
-                        `${Math.floor(elapsed / 60)}:${(elapsed % 60).toString().padStart(2, '0')}`;
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        const cell = this.grid[row][col];
+                        if (cell.userData.letter) {
+                            this.scene.remove(cell.userData.letter);
+                        }
+                        if (cell.userData.glow) {
+                            this.scene.remove(cell.userData.glow);
+                        }
+                        cell.userData.letter = null;
+                        cell.userData.glow = null;
+                        cell.userData.occupied = false;
+                        cell.userData.letterValue = null;
+                        cell.material.color.setHex(0x2a2a3e);
+                        cell.material.opacity = 1;
+                    }
                 }
             }
-
+            
+            // Display Updates
             updateDisplay() {
                 console.log('📊 updateDisplay() called - score:', this.score, 'level:', this.level, 'mode:', this.mode);
                 
@@ -2088,8 +1910,8 @@
                 
                 // Update grid size display
                 if (gridElement) {
-                    gridElement.textContent = `${this.gridSize}×${this.gridSize}`;
-                    console.log('📐 Grid display updated to:', `${this.gridSize}×${this.gridSize}`);
+                    gridElement.textContent = `${this.currentGridSize}×${this.currentGridSize}`;
+                    console.log('📐 Grid display updated to:', `${this.currentGridSize}×${this.currentGridSize}`);
                 }
                 
                 // Update time if game is running
@@ -2098,14 +1920,14 @@
                     if (timeElement) timeElement.textContent = `${Math.floor(elapsed / 60)}:${(elapsed % 60).toString().padStart(2, '0')}`;
                 }
                 
-                if (wordsElement) wordsElement.textContent = this.wordsFound;
+                if (wordsElement) wordsElement.textContent = this.wordsFound.length;
                 
                 // Update mode buttons to reflect current mode
                 this.updateModeButtons();
                 
                 console.log('✅ Display updated');
             }
-
+            
             updateModeButtons() {
                 console.log('🎮 updateModeButtons() called - current mode:', this.mode);
                 
@@ -2121,106 +1943,366 @@
                     }
                 });
             }
-
-            updateWordList() {
-                const wordList = document.querySelectorAll('.word-list li');
-                wordList.forEach((item, index) => {
-                    const word = this.targetWords[index];
-                    if (this.completedWords.includes(word)) {
-                        item.classList.add('completed');
-                    } else {
-                        item.classList.remove('completed');
+            
+            // Animation Loop
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // Update TWEEN
+                TWEEN.update();
+                
+                // Animate cubes
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        const cell = this.grid[row][col];
+                        if (cell) {
+                            // Subtle floating animation
+                            cell.position.y = Math.sin(Date.now() * 0.001 + row + col) * 0.05;
+                        }
                     }
-                });
+                }
+                
+                // Render scene
+                this.renderer.render(this.scene, this.camera);
             }
-
-            setupEventListeners() {
-                console.log('🎯 setupEventListeners() called');
-                
-                // Game control buttons
-                const startBtn = document.getElementById('startBtn');
-                const pauseBtn = document.getElementById('pauseBtn');
-                const resetBtn = document.getElementById('resetBtn');
-                
-                console.log('🎮 Control buttons found:', {
-                    start: startBtn,
-                    pause: pauseBtn,
-                    reset: resetBtn
-                });
-                
-                if (startBtn) {
-                    startBtn.addEventListener('click', () => {
-                        console.log('🖱️ Start button clicked');
-                        this.startGame();
+            
+            // Utility Methods
+            updateLetterQueueDisplay() {
+                const queueElement = document.getElementById('letterQueue');
+                if (queueElement) {
+                    queueElement.innerHTML = '';
+                    this.letterQueue.slice(0, 5).forEach(letter => {
+                        const span = document.createElement('span');
+                        span.textContent = letter;
+                        span.className = 'queue-letter';
+                        queueElement.appendChild(span);
                     });
                 }
+            }
+            
+            showComboEffect3D(bonus) {
+                this.particleSystem.createComboEffect3D(bonus);
+            }
+            
+            // Storage
+            saveHighScore() {
+                localStorage.setItem('lettersCascade3DHighScore', this.highScore.toString());
+            }
+            
+            loadHighScore() {
+                const saved = localStorage.getItem('lettersCascade3DHighScore');
+                return saved ? parseInt(saved) : 0;
+            }
+            
+            loadDictionary() {
+                // French dictionary for word validation
+                return new Set([
+                    'BONJOUR', 'AU REVOIR', 'MERCI', 'SIL VOUS PLAIT', 'PARDON',
+                    'OUI', 'NON', 'PEUT ETRE', 'CERTAINEMENT', 'PROBABLEMENT',
+                    'MAINTENANT', 'AUJOURDHUI', 'HIER', 'DEMAIN', 'TOUJOURS',
+                    'JAMAIS', 'PARFOIS', 'SOUVENT', 'RAREMENT', 'QUELQUEFOIS',
+                    'BON', 'MAUVAIS', 'GRAND', 'PETIT', 'NOUVEAU', 'VIEUX',
+                    'BEAU', 'JOLI', 'MOCHE', 'FORT', 'FAIBLE', 'RAPIDE', 'LENT',
+                    'CHALEUREUX', 'FROID', 'CHAUD', 'DOUX', 'DUR', 'MOLLE',
+                    'CLAIR', 'SOMBRE', 'LUMINEUX', 'OBSCUR', 'TRANSPARENT',
+                    'OPAQUE', 'COLORE', 'BLANC', 'NOIR', 'ROUGE', 'BLEU',
+                    'VERT', 'JAUNE', 'ORANGE', 'VIOLET', 'ROSE', 'GRIS',
+                    'MARRON', 'BEIGE', 'DORE', 'ARGENTE', 'BRONZE', 'CUIVRE'
+                ]);
+            }
+        }
+        
+        // 3D Word Detection System
+        class WordDetector3D {
+            constructor(dictionary) {
+                this.dictionary = dictionary;
+            }
+            
+            scanGrid(grid) {
+                const words = [];
                 
-                if (pauseBtn) {
-                    pauseBtn.addEventListener('click', () => {
-                        console.log('🖱️ Pause button clicked');
-                        this.pauseGame();
-                    });
+                // Scan horizontal
+                for (let row = 0; row < grid.length; row++) {
+                    const rowWords = this.findWordsInRow(grid[row]);
+                    words.push(...rowWords);
                 }
                 
-                if (resetBtn) {
-                    resetBtn.addEventListener('click', () => {
-                        console.log('🖱️ Reset button clicked');
-                        this.resetGame();
-                    });
+                // Scan vertical
+                for (let col = 0; col < grid[0].length; col++) {
+                    const colLetters = grid.map(row => row[col]);
+                    const colWords = this.findWordsInRow(colLetters);
+                    words.push(...colWords);
                 }
                 
-                // Mode selection
-                const modeButtons = document.querySelectorAll('.mode-btn');
-                console.log('🎮 Mode buttons found:', modeButtons.length);
+                return words;
+            }
+            
+            findWordsInRow(letters) {
+                const words = [];
+                const rowString = letters.map(letter => letter || ' ').join('');
                 
-                modeButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        console.log('🖱️ Mode button clicked:', btn.textContent);
-                        this.selectMode(btn.dataset.mode);
-                    });
-                });
-                
-                // Grid size selection
-                const gridButtons = document.querySelectorAll('.grid-btn');
-                console.log('📐 Grid buttons found:', gridButtons.length);
-                
-                gridButtons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        console.log('🖱️ Grid button clicked:', btn.textContent);
-                        this.selectGrid(parseInt(btn.dataset.size));
-                    });
-                });
-                
-                // Keyboard controls
-                document.addEventListener('keydown', (event) => {
-                    console.log('⌨️ Key pressed:', event.key);
-                    
-                    switch(event.key) {
-                        case ' ':
-                            console.log('⏸️ Space key - toggling pause');
-                            event.preventDefault();
-                            if (this.gameRunning) {
-                                this.pauseGame();
-                            } else {
-                                this.startGame();
-                            }
-                            break;
-                        case 'r':
-                        case 'R':
-                            console.log('🔄 R key - resetting game');
-                            event.preventDefault();
-                            this.resetGame();
-                            break;
-                        case 's':
-                        case 'S':
-                            console.log('▶️ S key - starting game');
-                            event.preventDefault();
-                            this.startGame();
-                            break;
+                // Find all possible words of 3+ letters
+                for (let start = 0; start < rowString.length; start++) {
+                    for (let length = 3; length <= rowString.length - start; length++) {
+                        const word = rowString.substr(start, length).replace(/\s/g, '');
+                        if (word.length >= 3 && this.validateWord(word)) {
+                            words.push(word);
+                        }
                     }
-                });
+                }
                 
-                console.log('✅ Event listeners setup completed');
+                return words;
+            }
+            
+            validateWord(word) {
+                return this.dictionary.has(word.toUpperCase());
+            }
+        }
+        
+        // 3D Scoring System
+        class ScoreManager3D {
+            constructor() {
+                this.currentScore = 0;
+                this.highScore = 0;
+            }
+            
+            updateScore(score) {
+                this.currentScore = score;
+                if (score > this.highScore) {
+                    this.highScore = score;
+                }
+            }
+            
+            getScore() {
+                return this.currentScore;
+            }
+            
+            getHighScore() {
+                return this.highScore;
+            }
+        }
+        
+        // 3D Level System
+        class LevelManager3D {
+            constructor() {
+                this.levels = [
+                    { minWords: 0, maxWords: 5, speed: 1000 },
+                    { minWords: 5, maxWords: 10, speed: 900 },
+                    { minWords: 10, maxWords: 15, speed: 800 },
+                    { minWords: 15, maxWords: 20, speed: 700 },
+                    { minWords: 20, maxWords: 25, speed: 600 },
+                    { minWords: 25, maxWords: 30, speed: 500 },
+                    { minWords: 30, maxWords: 35, speed: 400 },
+                    { minWords: 35, maxWords: 40, speed: 300 },
+                    { minWords: 40, maxWords: 45, speed: 200 },
+                    { minWords: 45, maxWords: 50, speed: 150 }
+                ];
+            }
+            
+            getCurrentLevel(wordsFound) {
+                for (let i = this.levels.length - 1; i >= 0; i--) {
+                    if (wordsFound >= this.levels[i].minWords) {
+                        return i + 1;
+                    }
+                }
+                return 1;
+            }
+            
+            checkLevelProgression(wordsFound) {
+                const newLevel = this.getCurrentLevel(wordsFound);
+                return newLevel;
+            }
+        }
+        
+        // 3D Audio System
+        class AudioManager3D {
+            constructor() {
+                this.sounds = {};
+                this.muted = false;
+            }
+            
+            playStart() {
+                this.playSound('start');
+            }
+            
+            playPause() {
+                this.playSound('pause');
+            }
+            
+            playResume() {
+                this.playSound('resume');
+            }
+            
+            playReset() {
+                this.playSound('reset');
+            }
+            
+            playMove() {
+                this.playSound('move');
+            }
+            
+            playRotate() {
+                this.playSound('rotate');
+            }
+            
+            playPlace() {
+                this.playSound('place');
+            }
+            
+            playWordComplete() {
+                this.playSound('wordComplete');
+            }
+            
+            playLevelUp() {
+                this.playSound('levelUp');
+            }
+            
+            playSound(type) {
+                if (this.muted) return;
+                
+                // Create audio context if not exists
+                if (!this.audioContext) {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                // Generate simple tones for different sounds
+                const frequency = this.getFrequencyForSound(type);
+                const duration = 0.1;
+                
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+                
+                oscillator.start(this.audioContext.currentTime);
+                oscillator.stop(this.audioContext.currentTime + duration);
+            }
+            
+            getFrequencyForSound(type) {
+                const frequencies = {
+                    start: 440,
+                    pause: 330,
+                    resume: 440,
+                    reset: 220,
+                    move: 660,
+                    rotate: 550,
+                    place: 880,
+                    wordComplete: 1100,
+                    levelUp: 1320
+                };
+                return frequencies[type] || 440;
+            }
+        }
+        
+        // 3D Particle System
+        class ParticleSystem3D {
+            constructor() {
+                this.particles = [];
+            }
+            
+            createPlacementEffect3D(position) {
+                for (let i = 0; i < 10; i++) {
+                    const geometry = new THREE.SphereGeometry(0.05, 8, 8);
+                    const material = new THREE.MeshBasicMaterial({ color: 0x4ecdc4 });
+                    const particle = new THREE.Mesh(geometry, material);
+                    
+                    particle.position.copy(position);
+                    particle.position.add(new THREE.Vector3(
+                        (Math.random() - 0.5) * 2,
+                        (Math.random() - 0.5) * 2,
+                        (Math.random() - 0.5) * 2
+                    ));
+                    
+                    particle.userData = {
+                        velocity: new THREE.Vector3(
+                            (Math.random() - 0.5) * 0.1,
+                            (Math.random() - 0.5) * 0.1,
+                            (Math.random() - 0.5) * 0.1
+                        ),
+                        life: 1.0
+                    };
+                    
+                    this.particles.push(particle);
+                }
+            }
+            
+            createWordCompletionEffect3D(word) {
+                for (let i = 0; i < 20; i++) {
+                    const geometry = new THREE.SphereGeometry(0.08, 8, 8);
+                    const material = new THREE.MeshBasicMaterial({ color: 0x4ecdc4 });
+                    const particle = new THREE.Mesh(geometry, material);
+                    
+                    particle.position.set(0, 0, 0);
+                    particle.position.add(new THREE.Vector3(
+                        (Math.random() - 0.5) * 4,
+                        (Math.random() - 0.5) * 4,
+                        (Math.random() - 0.5) * 4
+                    ));
+                    
+                    particle.userData = {
+                        velocity: new THREE.Vector3(
+                            (Math.random() - 0.5) * 0.15,
+                            (Math.random() - 0.5) * 0.15,
+                            (Math.random() - 0.5) * 0.15
+                        ),
+                        life: 1.0
+                    };
+                    
+                    this.particles.push(particle);
+                }
+            }
+            
+            createComboEffect3D(bonus) {
+                for (let i = 0; i < 15; i++) {
+                    const geometry = new THREE.SphereGeometry(0.06, 8, 8);
+                    const material = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+                    const particle = new THREE.Mesh(geometry, material);
+                    
+                    particle.position.set(0, 0, 0);
+                    particle.position.add(new THREE.Vector3(
+                        (Math.random() - 0.5) * 3,
+                        (Math.random() - 0.5) * 3,
+                        (Math.random() - 0.5) * 3
+                    ));
+                    
+                    particle.userData = {
+                        velocity: new THREE.Vector3(
+                            (Math.random() - 0.5) * 0.12,
+                            (Math.random() - 0.5) * 0.12,
+                            (Math.random() - 0.5) * 0.12
+                        ),
+                        life: 1.0
+                    };
+                    
+                    this.particles.push(particle);
+                }
+            }
+            
+            update() {
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const particle = this.particles[i];
+                    
+                    // Update position
+                    particle.position.add(particle.userData.velocity);
+                    
+                    // Update life
+                    particle.userData.life -= 0.02;
+                    
+                    // Update opacity
+                    particle.material.opacity = particle.userData.life;
+                    
+                    // Remove dead particles
+                    if (particle.userData.life <= 0) {
+                        this.particles.splice(i, 1);
+                    }
+                }
             }
         }
 
