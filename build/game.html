@@ -992,6 +992,16 @@
             }
 
             checkWordCompletion() {
+                if (this.mode === '3d') {
+                    // Handle 3D mode word completion
+                    this.checkWordCompletion3D();
+                } else {
+                    // Handle 2D mode word completion
+                    this.checkWordCompletion2D();
+                }
+            }
+
+            checkWordCompletion2D() {
                 const directions = [
                     [-1, -1], [-1, 0], [-1, 1],
                     [0, -1],           [0, 1],
@@ -1006,7 +1016,11 @@
                     grid[row] = [];
                     for (let col = 0; col < this.gridSize; col++) {
                         const index = row * this.gridSize + col;
-                        grid[row][col] = cells[index].textContent || '';
+                        if (cells[index]) {
+                            grid[row][col] = cells[index].textContent || '';
+                        } else {
+                            grid[row][col] = '';
+                        }
                     }
                 }
 
@@ -1023,6 +1037,48 @@
                         }
                     }
                 }
+            }
+
+            checkWordCompletion3D() {
+                const directions = [
+                    [-1, -1], [-1, 0], [-1, 1],
+                    [0, -1],           [0, 1],
+                    [1, -1],  [1, 0],  [1, 1]
+                ];
+
+                // Create grid from 3D grid data
+                const grid = [];
+                for (let row = 0; row < this.gridSize; row++) {
+                    grid[row] = [];
+                    for (let col = 0; col < this.gridSize; col++) {
+                        if (this.grid[row] && this.grid[row][col] && this.grid[row][col].letter) {
+                            // Extract letter from 3D mesh (simplified)
+                            grid[row][col] = this.getLetterFrom3DMesh(this.grid[row][col].letter) || '';
+                        } else {
+                            grid[row][col] = '';
+                        }
+                    }
+                }
+
+                // Check for words in all directions
+                for (let row = 0; row < this.gridSize; row++) {
+                    for (let col = 0; col < this.gridSize; col++) {
+                        if (grid[row][col]) {
+                            for (let [dx, dy] of directions) {
+                                const word = this.checkWordInDirection(grid, col, row, dx, dy);
+                                if (word && this.targetWords.includes(word) && !this.completedWords.includes(word)) {
+                                    this.completeWord(word);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            getLetterFrom3DMesh(mesh) {
+                // For now, return a placeholder letter
+                // In a real implementation, you'd extract the letter from the mesh texture
+                return 'A'; // Placeholder
             }
 
             checkWordInDirection(grid, startX, startY, dx, dy) {
