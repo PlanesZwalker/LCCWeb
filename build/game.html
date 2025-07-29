@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/shared.css">
     <script src="js/utils.js"></script>
     <style>
-        /* Enhanced 3D Game Layout - Optimized for single screen */
+        /* Enhanced 3D Game UI/UX - Professional Design */
         .page-layout {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -185,11 +185,18 @@
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
         }
 
+        /* Enhanced Game Main Area */
+        .game-main {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
         /* Enhanced Controls Section */
         .controls-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-xl);
             margin-bottom: var(--spacing-xl);
             padding: var(--spacing-xl);
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
@@ -197,26 +204,24 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .control-group h3 {
+        .controls-section h3 {
             color: var(--primary-color);
             font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: var(--spacing-md);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: var(--spacing-md);
         }
 
+        /* Enhanced Game Controls */
         .game-controls {
             display: flex;
             gap: var(--spacing-md);
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .game-controls .btn {
@@ -231,6 +236,10 @@
             min-width: 120px;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
         }
 
         .game-controls .btn::before {
@@ -261,6 +270,57 @@
             box-shadow: var(--shadow-md);
         }
 
+        /* Enhanced Configuration */
+        .configuration {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .config-group label {
+            color: var(--gray-700);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .config-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .config-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+
+        .config-btn:hover {
+            background: rgba(102, 126, 234, 0.15);
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .config-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
         /* Enhanced Game Grid Container */
         .game-grid-container {
             flex: 1;
@@ -273,6 +333,7 @@
             padding: var(--spacing-lg);
             position: relative;
             overflow: hidden;
+            min-height: 400px;
         }
 
         .game-grid-container::before {
@@ -286,43 +347,25 @@
             pointer-events: none;
         }
 
-        .grid-3d {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
         #gameGrid {
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
         }
 
-        #gameGrid canvas {
-            display: block !important;
-            margin: 0 auto !important;
-            border: 3px solid rgba(255, 255, 255, 0.4) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
-            transition: all 0.3s ease !important;
-        }
-
-        #gameGrid canvas:hover {
-            transform: scale(1.02) !important;
-            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5) !important;
+        #gameGrid:hover {
+            transform: scale(1.02);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.5);
         }
 
         /* Enhanced Game Info */
         .game-info {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--spacing-lg);
             margin-top: var(--spacing-xl);
         }
@@ -331,6 +374,7 @@
             background: rgba(255, 255, 255, 0.9);
             border-radius: var(--radius-lg);
             padding: var(--spacing-lg);
+            text-align: center;
             box-shadow: var(--shadow-md);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -343,19 +387,18 @@
         }
 
         .info-section h4 {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .info-section .value {
-            color: var(--gray-800);
-            font-size: 1.5rem;
-            font-weight: 800;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 900;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -365,22 +408,22 @@
         /* Enhanced Score Display */
         .score-display {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-xl);
             padding: var(--spacing-lg);
             margin-top: var(--spacing-lg);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(102, 126, 234, 0.2);
             text-align: center;
         }
 
         .score-display span {
-            color: var(--gray-600);
+            color: var(--gray-700);
             font-size: 1rem;
             font-weight: 600;
         }
 
         .score-display strong {
             color: var(--primary-color);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
@@ -453,11 +496,13 @@
             transition: all 0.3s ease;
             font-size: 0.95rem;
             font-weight: 500;
+            color: var(--gray-800);
         }
 
         .word-list li:hover {
             background: rgba(102, 126, 234, 0.1);
             transform: translateX(5px);
+            color: var(--primary-color);
         }
 
         .word-list li.completed {
@@ -499,7 +544,7 @@
             box-shadow: var(--shadow-lg);
         }
 
-        /* Enhanced Full Screen Styles for 3D Game */
+        /* Enhanced Full Screen Styles */
         .game-container.fullscreen {
             position: fixed !important;
             top: 0 !important;
@@ -592,7 +637,7 @@
             pointer-events: none !important;
         }
 
-        .game-container.fullscreen #gameGrid canvas {
+        .game-container.fullscreen #gameGrid {
             max-width: 90vw !important;
             max-height: 90vh !important;
             width: auto !important;
@@ -821,7 +866,7 @@
         /* Responsive Full Screen */
         @media (max-width: 1200px) {
             .game-container.fullscreen .controls-section {
-                grid-template-columns: 1fr !important;
+                flex-direction: column !important;
                 gap: 1rem !important;
             }
             
@@ -852,7 +897,7 @@
                 margin-top: 1rem !important;
             }
             
-            .game-container.fullscreen #gameGrid canvas {
+            .game-container.fullscreen #gameGrid {
                 max-width: 95vw !important;
                 max-height: 60vh !important;
             }
@@ -953,198 +998,119 @@
         </div>
 
                     <div class="game-container">
-                        <!-- Enhanced Controls Section -->
-                        <div class="controls-section">
-                            <div class="control-group">
-                                <h3><i class="fas fa-gamepad"></i> Contrôles du Jeu</h3>
+                        <div class="game-main">
+                            <!-- Enhanced Controls Section -->
+                            <div class="controls-section">
                                 <div class="game-controls">
-                                    <button id="startBtn" class="btn">
-                                        <i class="fas fa-play"></i> Démarrer
-                                    </button>
-                                    <button id="pauseBtn" class="btn">
-                                        <i class="fas fa-pause"></i> Pause
-                                    </button>
-                                    <button id="resetBtn" class="btn">
-                                        <i class="fas fa-redo"></i> Reset
-                                    </button>
-                                    <button id="fullscreenBtn" class="btn" onclick="toggleFullScreen()">
-                                        <i class="fas fa-expand"></i> Plein Écran
-                                    </button>
+                                    <h3><i class="fas fa-gamepad"></i> CONTRÔLES DU JEU</h3>
+                                    <div class="game-controls">
+                                        <button class="btn" onclick="game.startGame()">
+                                            <i class="fas fa-play"></i> Démarrer
+                                        </button>
+                                        <button class="btn" onclick="game.pauseGame()">
+                                            <i class="fas fa-pause"></i> Pause
+                                        </button>
+                                        <button class="btn" onclick="game.resetGame()">
+                                            <i class="fas fa-redo"></i> Reset
+                                        </button>
+                                        <button class="btn" onclick="game.toggleFullScreen()">
+                                            <i class="fas fa-expand"></i> Plein Écran
+                                        </button>
+                                    </div>
                                 </div>
-            </div>
-
-                            <div class="control-group">
-                                <h3><i class="fas fa-cog"></i> Configuration</h3>
-                                <div class="mode-selection">
-                                    <button class="mode-btn" data-mode="2d">
-                                        <i class="fas fa-square"></i> Mode 2D
-                                    </button>
-                                    <button class="mode-btn active" data-mode="3d">
-                                        <i class="fas fa-cube"></i> Mode 3D
-                                    </button>
-                    </div>
-                                <div class="grid-selection">
-                                    <button class="grid-btn" data-size="8x8">8×8</button>
-                                    <button class="grid-btn active" data-size="10x10">10×10</button>
-                                    <button class="grid-btn" data-size="12x12">12×12</button>
-                </div>
-                </div>
-            </div>
-
-                        <!-- Enhanced Game Grid -->
-                        <div class="game-grid-container">
-                            <div id="gameContainer" class="grid-3d">
-                                <div id="gameGrid" class="grid-cube grid-10x10">
-                                    <!-- Grid will be generated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-                        <!-- Enhanced Game Info -->
-                        <div class="game-info">
-                            <div class="info-section">
-                                <h4>Score</h4>
-                                <strong class="value" id="scoreValue">0</strong>
-            </div>
-                                    <div class="info-section">
-                                        <h4>Niveau</h4>
-                                        <strong class="value" id="levelValue">1</strong>
-            </div>
-                                    <div class="info-section">
-                                        <h4>Mode</h4>
-                                        <strong class="value" id="currentMode">3D</strong>
-            </div>
-                                    <div class="info-section">
-                                        <h4>Grille</h4>
-                                        <strong class="value" id="currentGrid">10×10</strong>
-            </div>
-                                    <div class="info-section">
-                                        <h4>Temps</h4>
-                                        <strong class="value" id="timeValue">00:00</strong>
-        </div>
-                                    <div class="info-section">
-                                        <h4>Mots</h4>
-                                        <strong class="value" id="wordsValue">0</strong>
-        </div>
-        </div>
-        </div>
-
-                            <div class="info-section">
-                                <h3><i class="fas fa-list-check"></i> Mots à compléter</h3>
-                                <div class="word-list">
-                                    <ul id="wordsFound">
-                                        <li>CHAT</li>
-                                        <li>MAISON</li>
-                                        <li>MUSIQUE</li>
-                                        <li>PLANTE</li>
-                                        <li>LUMIÈRE</li>
-            </ul>
-        </div>
-                                <div class="letter-queue">
-                                    <h4><i class="fas fa-queue"></i> Prochaines lettres</h4>
-                                    <div id="letterQueue" class="queue-display"></div>
-            </div>
-            </div>
-        </div>
-
-                        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
-                            <div class="loading-spinner"></div>
-                            Chargement du jeu...
-            </div>
-            </div>
-            </div>
-
-                <!-- Enhanced Sidebar -->
-                <div class="sidebar">
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-info-circle"></i> À propos de la Maquette 3D</h3>
-                        <p>Cette version présente le mode immersif 3D du jeu Letters Cascade Challenge.</p>
-                        <p><strong>Caractéristiques :</strong> Grille 3D multi-couches, effets visuels avancés, gameplay immersif.</p>
-                        <p><strong>Note :</strong> Interface et design uniquement - logique de jeu en développement.</p>
-            </div>
-
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-book"></i> Règles du Jeu 3D</h3>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🎯 <strong>Formation de Mots:</strong> Formez des mots de 3+ lettres en utilisant les lettres qui tombent
-                            </li>
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🏆 <strong>Score:</strong> 1 point par lettre + bonus longueur × 10
-                            </li>
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🎮 <strong>Contrôles:</strong> Flèches pour déplacer, Espace pour rotation
-                            </li>
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🌟 <strong>Bonus 3D:</strong> +50 points pour formation 3D
-                            </li>
-                        </ul>
-            </div>
-
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-mobile-alt"></i> Support Mobile 3D</h3>
-                        <div style="margin-bottom: var(--spacing-md);">
-                            <strong>📱 Portrait:</strong> Grille 120×120px, contrôles compacts, une main suffit
-            </div>
-                        <div>
-                            <strong>🔄 Paysage:</strong> Grille 100×100px, sidebar complète, deux mains recommandées
-                    </div>
-                </div>
-
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-chart-bar"></i> Progression 3D</h3>
-                        <div style="display: grid; gap: var(--spacing-sm);">
-                            <div style="padding: var(--spacing-sm); background: rgba(76, 175, 80, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #4caf50;">
-                                🟢 <strong>Facile:</strong> 8×8, 2-3s par chute, mots 3-4 lettres
+                                
+                                <div class="configuration">
+                                    <h3><i class="fas fa-cog"></i> CONFIGURATION</h3>
+                                    <div class="config-group">
+                                        <label>Mode de Jeu</label>
+                                        <div class="config-buttons">
+                                            <button class="config-btn" onclick="game.selectMode('2d')">Mode 2D</button>
+                                            <button class="config-btn active" onclick="game.selectMode('3d')">Mode 3D</button>
+                                        </div>
+                                    </div>
+                                    <div class="config-group">
+                                        <label>Taille de Grille</label>
+                                        <div class="config-buttons">
+                                            <button class="config-btn" onclick="game.selectGrid(8)">8x8</button>
+                                            <button class="config-btn active" onclick="game.selectGrid(10)">10x10</button>
+                                            <button class="config-btn" onclick="game.selectGrid(12)">12x12</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div style="padding: var(--spacing-sm); background: rgba(255, 193, 7, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #ffc107;">
-                                🟡 <strong>Moyen:</strong> 10×10, 1.5-2s par chute, mots 4-5 lettres
-                        </div>
-                            <div style="padding: var(--spacing-sm); background: rgba(255, 152, 0, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #ff9800;">
-                                🟠 <strong>Difficile:</strong> 12×12, 1-1.5s par chute, mots 5-6 lettres
-                        </div>
-                            <div style="padding: var(--spacing-sm); background: rgba(244, 67, 54, 0.1); border-radius: var(--radius-sm); border-left: 3px solid #f44336;">
-                                🔴 <strong>Expert:</strong> 12×12, 0.5-1s par chute, mots 6+ lettres
-                </div>
-            </div>
-        </div>
 
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-cube"></i> Mode 3D Avancé</h3>
-                        <ul style="list-style: none; padding: 0; margin: 0;">
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🎯 <strong>6 Directions:</strong> Horizontal, vertical, profondeur, diagonales
-                            </li>
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🏗️ <strong>3 Couches:</strong> Avant, milieu, arrière pour combos avancés
-                            </li>
-                            <li style="margin-bottom: var(--spacing-sm); padding: var(--spacing-sm); background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm);">
-                                🌟 <strong>Bonus 3D:</strong> +50 points pour formation 3D
-                            </li>
-                    </ul>
-                </div>
+                            <!-- Enhanced Game Grid Container -->
+                            <div class="game-grid-container">
+                                <div id="gameGrid">
+                                    <!-- 3D Game Canvas will be rendered here -->
+                                </div>
+                            </div>
 
-                    <!-- Enhanced Concept Images Section -->
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-palette"></i> Concepts Visuels</h3>
-                        <div class="concept-showcase">
-                            <div class="concept-showcase-item">
-                                <img src="images/Cascade Letters - 02 - Decor concept 01.png" alt="Environment Concept - KridVOID" onerror="this.src='https://via.placeholder.com/250x150/667eea/ffffff?text=Environment'">
-                                <div class="concept-info">
-                                    <h4>Environnement 3D</h4>
-                                    <p>Concepts d'environnement immersif avec cascades et éléments naturels</p>
-                </div>
-                </div>
-                            <div class="concept-showcase-item">
-                                <img src="images/HighresScreenshot00002.png" alt="High Resolution Interface - KridVOID" onerror="this.src='https://via.placeholder.com/250x150/764ba2/ffffff?text=Interface'">
-                                <div class="concept-info">
-                                    <h4>Interface Haute Résolution</h4>
-                                    <p>Détails visuels et qualité graphique pour une expérience premium</p>
-                </div>
-            </div>
+                            <!-- Enhanced Game Info -->
+                            <div class="game-info">
+                                <div class="info-section">
+                                    <h4>Score</h4>
+                                    <div class="value" id="score">0</div>
+                                </div>
+                                <div class="info-section">
+                                    <h4>Niveau</h4>
+                                    <div class="value" id="level">1</div>
+                                </div>
+                                <div class="info-section">
+                                    <h4>Mots Complétés</h4>
+                                    <div class="value" id="wordsCompleted">0</div>
+                                </div>
+                            </div>
+
+                            <!-- Enhanced Score Display -->
+                            <div class="score-display">
+                                <span>Score Total: </span>
+                                <strong id="totalScore">0</strong>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Sidebar -->
+                        <div class="sidebar">
+                            <div class="sidebar-section">
+                                <h3><i class="fas fa-list"></i> Mots à compléter</h3>
+                                <ul class="word-list" id="wordList">
+                                    <li>CHAT</li>
+                                    <li>MAISON</li>
+                                    <li>MUSIQUE</li>
+                                    <li>JARDIN</li>
+                                    <li>LIVRE</li>
+                                    <li>TABLE</li>
+                                    <li>PORTE</li>
+                                    <li>FENETRE</li>
+                                </ul>
+                            </div>
+
+                            <div class="sidebar-section">
+                                <h3><i class="fas fa-eye"></i> PROCHAINES LETTRES</h3>
+                                <div class="letter-queue">
+                                    <div class="queue-display" id="letterQueue">
+                                        <div class="queue-letter">A</div>
+                                        <div class="queue-letter">B</div>
+                                        <div class="queue-letter">C</div>
+                                        <div class="queue-letter">D</div>
+                                        <div class="queue-letter">E</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-section">
+                                <h3><i class="fas fa-trophy"></i> Progression</h3>
+                                <p><strong>Niveau :</strong> <span id="currentLevel">1</span></p>
+                                <p><strong>Score requis :</strong> <span id="requiredScore">100</span></p>
+                                <p><strong>Mots trouvés :</strong> <span id="wordsFound">0</span>/8</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        Chargement du jeu...
         </div>
-            </div>
-            </div>
             </div>
         </div>
     </div>
@@ -1882,10 +1848,10 @@
             updateDisplay() {
                 console.log('📊 updateDisplay() called - score:', this.score, 'level:', this.level, 'mode:', this.mode);
                 
-                const scoreElement = document.getElementById('scoreValue');
-                const levelElement = document.getElementById('levelValue');
+                const scoreElement = document.getElementById('score');
+                const levelElement = document.getElementById('level');
                 const timeElement = document.getElementById('timeValue');
-                const wordsElement = document.getElementById('wordsValue');
+                const wordsElement = document.getElementById('wordsCompleted');
                 const modeElement = document.getElementById('currentMode');
                 const gridElement = document.getElementById('currentGrid');
                 
