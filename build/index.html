@@ -30,14 +30,26 @@
         /* Enhanced Hero Section - Compact & Engaging */
         .hero-section {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             text-align: center;
             position: relative;
             overflow: hidden;
+            animation: heroAppear 0.8s ease-out;
+        }
+
+        @keyframes heroAppear {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-section::before {
@@ -54,8 +66,8 @@
 
         .hero-section h1 {
             color: var(--primary-color);
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 3rem;
+            font-weight: 900;
             margin-bottom: var(--spacing-md);
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
             -webkit-background-clip: text;
@@ -63,16 +75,20 @@
             background-clip: text;
             position: relative;
             z-index: 1;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
         }
 
         .hero-section p {
             color: var(--gray-600);
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1.2rem;
+            line-height: 1.7;
             font-weight: 500;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
             position: relative;
             z-index: 1;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Enhanced Action Buttons - Compact & Modern */
@@ -81,17 +97,17 @@
             gap: var(--spacing-md);
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
         }
 
         .action-btn {
-            padding: var(--spacing-md) var(--spacing-lg);
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--radius-lg);
-            transition: all 0.3s ease;
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: var(--radius-xl);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
             color: var(--gray-700);
             text-decoration: none;
             display: flex;
@@ -99,8 +115,7 @@
             gap: var(--spacing-sm);
             position: relative;
             overflow: hidden;
-            min-width: 160px;
-            justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .action-btn::before {
@@ -110,7 +125,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: left 0.6s ease;
         }
 
@@ -119,23 +134,23 @@
         }
 
         .action-btn:hover {
-            background: rgba(102, 126, 234, 0.15);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            border-color: var(--primary-color);
             color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(102, 126, 234, 0.3);
         }
 
         .action-btn.primary {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            border-color: rgba(255, 255, 255, 0.5);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
         .action-btn.primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
             background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: var(--shadow-xl);
         }
 
         /* Enhanced Features Section - Compact Grid */
@@ -701,6 +716,415 @@
             color: var(--gray-700);
             font-weight: 600;
         }
+
+        /* Enhanced Concept Principal Section */
+        .concept-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: var(--spacing-xl);
+            animation: conceptAppear 1s ease-out 0.2s both;
+        }
+
+        @keyframes conceptAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .concept-section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .concept-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+
+        .concept-image {
+            text-align: center;
+            position: relative;
+        }
+
+        .concept-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .concept-image:hover img {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .concept-image .credit {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+            margin-top: var(--spacing-sm);
+            font-style: italic;
+        }
+
+        .concept-description {
+            padding: var(--spacing-lg);
+        }
+
+        .concept-description h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .concept-description p {
+            color: var(--gray-600);
+            line-height: 1.7;
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        /* Enhanced Technology Section */
+        .technology-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: var(--spacing-xl);
+            animation: techAppear 1s ease-out 0.4s both;
+        }
+
+        @keyframes techAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .technology-section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .tech-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tech-card:hover::before {
+            opacity: 1;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--primary-color);
+        }
+
+        .tech-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: var(--spacing-md);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tech-card h3 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .tech-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Enhanced Navigation Sidebar */
+        .sidebar {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            height: fit-content;
+            position: sticky;
+            top: var(--spacing-md);
+            animation: sidebarAppear 0.8s ease-out 0.1s both;
+        }
+
+        @keyframes sidebarAppear {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border-color: var(--primary-color);
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Enhanced Footer */
+        .footer {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            animation: footerAppear 1s ease-out 0.6s both;
+        }
+
+        @keyframes footerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .sidebar {
+                position: static;
+                order: -1;
+            }
+            
+            .nav-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .concept-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .tech-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        /* Interactive Features */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -742,14 +1166,21 @@
                     </div>
                 </div>
 
-                <!-- Enhanced Concept Showcase - Moved to Top -->
-                <div class="concept-showcase">
+                <!-- Enhanced Concept Principal Section -->
+                <div class="concept-section">
                     <h2>🎨 Concept Principal</h2>
-                    <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Concept Principal - Cascade de Lettres - KridVOID" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDYwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5GPPC90ZXh0Pgo8dGV4dCB4PSI1MCUiIHk9IjYwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0ibm9ybWFsIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvbmNlcHQgUHJpbmNpcGFsPC90ZXh0Pgo8L3N2Zz4K'">
-                    <div class="image-credit">
-                        <p><strong>Illustration :</strong> Kris VOID</p>
+                    <div class="concept-content">
+                        <div class="concept-image">
+                            <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Concept Principal - Cascade de Lettres - KridVOID" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDYwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5GPPC90ZXh0Pgo8dGV4dCB4PSI1MCUiIHk9IjYwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0ibm9ybWFsIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvbmNlcHQgUHJpbmNpcGFsPC90ZXh0Pgo8L3N2Zz4K'">
+                            <div class="image-credit">
+                                <p><strong>Illustration :</strong> Kris VOID</p>
+                            </div>
+                        </div>
+                        <div class="concept-description">
+                            <h3>Une Cascade de Lettres</h3>
+                            <p>Une cascade majestueuse s'écoule au centre de l'illustration, entourée d'une végétation luxuriante. Trois lettres anthropomorphiques colorées - un 'A' rouge, un '6' rose et un 'C' orange - flottent dans l'air avec des bras et jambes stylisés. Une pagode traditionnelle japonaise se dresse en arrière-plan, créant une ambiance sereine et culturellement riche.</p>
+                        </div>
                     </div>
-                    <p>Une cascade majestueuse s'écoule au centre de l'illustration, entourée d'une végétation luxuriante. Trois lettres anthropomorphiques colorées - un 'A' rouge, un '6' rose et un 'C' orange - flottent dans l'air avec des bras et jambes stylisés. Une pagode traditionnelle japonaise se dresse en arrière-plan, créant une ambiance sereine et culturellement riche.</p>
                 </div>
 
                 <!-- Enhanced Features Section -->
@@ -775,59 +1206,22 @@
                     </div>
                 </div>
 
-                <!-- Technologies Section -->
-                <div class="glass-card">
+                <!-- Enhanced Technology Section -->
+                <div class="technology-section">
                     <h2>🚀 Technologies Utilisées</h2>
                     <div class="tech-grid">
                         <div class="tech-card">
-                            <div class="tech-logo">
-                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Unreal Engine Logo -->
-                                    <path d="M16 2L2 9v14l14 7 14-7V9L16 2z" fill="#000000"/>
-                                    <path d="M16 2L16 30" stroke="#ffffff" stroke-width="1"/>
-                                    <path d="M2 9L30 9" stroke="#ffffff" stroke-width="1"/>
-                                    <path d="M2 23L30 23" stroke="#ffffff" stroke-width="1"/>
-                                    <circle cx="16" cy="16" r="3" fill="#ffffff"/>
-                                    <!-- U letter -->
-                                    <path d="M12 8h2v12h-2z" fill="#ffffff"/>
-                                    <path d="M12 8h8v2h-8z" fill="#ffffff"/>
-                                    <path d="M18 8h2v12h-2z" fill="#ffffff"/>
-                                </svg>
-                            </div>
+                            <img src="images/unreal-engine-logo.svg" alt="Unreal Engine 5.6">
                             <h3>Unreal Engine 5.6</h3>
                             <p>Moteur de jeu 3D avancé avec graphismes immersifs et physique réaliste</p>
                         </div>
                         <div class="tech-card">
-                            <div class="tech-logo">
-                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- C++ Logo -->
-                                    <rect x="4" y="4" width="24" height="24" rx="2" fill="#00599C"/>
-                                    <rect x="8" y="8" width="16" height="16" rx="1" fill="#ffffff"/>
-                                    <text x="16" y="18" font-family="monospace" font-size="10" font-weight="bold" fill="#00599C" text-anchor="middle">C++</text>
-                                </svg>
-                            </div>
+                            <img src="images/c++-logo.svg" alt="C++ & Blueprints">
                             <h3>C++ & Blueprints</h3>
                             <p>Programmation performante et logique visuelle pour des mécaniques de jeu complexes</p>
                         </div>
                         <div class="tech-card">
-                            <div class="tech-logo">
-                                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Blender Logo -->
-                                    <circle cx="16" cy="16" r="14" fill="#F5792A"/>
-                                    <circle cx="16" cy="16" r="10" fill="#ffffff"/>
-                                    <circle cx="16" cy="16" r="6" fill="#F5792A"/>
-                                    <circle cx="16" cy="16" r="2" fill="#ffffff"/>
-                                    <!-- Blender B letter -->
-                                    <path d="M12 8h6v2h-6z" fill="#ffffff"/>
-                                    <path d="M12 8h2v16h-2z" fill="#ffffff"/>
-                                    <path d="M12 12h4v2h-4z" fill="#F5792A"/>
-                                    <path d="M12 16h4v2h-4z" fill="#F5792A"/>
-                                    <path d="M12 20h4v2h-4z" fill="#F5792A"/>
-                                    <path d="M16 12h2v2h-2z" fill="#F5792A"/>
-                                    <path d="M16 16h2v2h-2z" fill="#F5792A"/>
-                                    <path d="M16 20h2v2h-2z" fill="#F5792A"/>
-                                </svg>
-                            </div>
+                            <img src="images/blender-logo.svg" alt="Blender">
                             <h3>Blender</h3>
                             <p>Création de modèles 3D et animations pour les personnages et environnements</p>
                         </div>
@@ -919,9 +1313,57 @@
     </div>
 
     <script>
-        // Initialize utilities
+        // Enhanced Interactive Features
         document.addEventListener('DOMContentLoaded', function() {
-            // Add smooth scrolling to all links
+            console.log('🚀 Initializing enhanced homepage...');
+            
+            // Add scroll progress indicator
+            addScrollIndicator();
+            
+            // Add loading animation
+            showLoadingAnimation();
+            
+            // Add smooth scrolling for anchor links
+            addSmoothScrolling();
+            
+            // Add hover effects for cards
+            addCardHoverEffects();
+            
+            // Add parallax effect for hero section
+            addParallaxEffect();
+            
+            console.log('✅ Enhanced homepage initialized');
+        });
+
+        function addScrollIndicator() {
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.className = 'scroll-indicator';
+            scrollIndicator.innerHTML = '<div class="scroll-progress"></div>';
+            document.body.appendChild(scrollIndicator);
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.offsetHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                document.querySelector('.scroll-progress').style.width = scrollPercent + '%';
+            });
+        }
+
+        function showLoadingAnimation() {
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+            document.body.appendChild(loadingOverlay);
+            
+            setTimeout(() => {
+                loadingOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    loadingOverlay.remove();
+                }, 500);
+            }, 1000);
+        }
+
+        function addSmoothScrolling() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -934,21 +1376,65 @@
                     }
                 });
             });
+        }
 
-            // Add hover effects to cards
-            document.querySelectorAll('.tech-card, .feature-item, .level-card, .pipeline-item').forEach(card => {
+        function addCardHoverEffects() {
+            document.querySelectorAll('.tech-card, .concept-section, .technology-section').forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    Utils.playSound('place', 600, 0.1);
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
                 });
             });
+        }
 
-            // Add click effects to buttons
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    Utils.playSound('start', 800, 0.2);
+        function addParallaxEffect() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.hero-section, .concept-section, .technology-section');
+                
+                parallaxElements.forEach((element, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    element.style.transform = `translateY(${scrolled * speed}px)`;
                 });
+            });
+        }
+
+        // Enhanced button interactions
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = e.clientX - this.offsetLeft + 'px';
+                ripple.style.top = e.clientY - this.offsetTop + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
             });
         });
+
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
