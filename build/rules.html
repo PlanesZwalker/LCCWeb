@@ -286,11 +286,23 @@
             padding: var(--spacing-lg);
             border-radius: var(--border-radius);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
         }
 
         .tip-card h4 {
             margin-bottom: var(--spacing-sm);
             color: #fbbf24;
+        }
+
+        .tip-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .footer {
@@ -301,6 +313,116 @@
             backdrop-filter: blur(10px);
             border-radius: var(--border-radius-xl);
             box-shadow: var(--shadow-lg);
+        }
+
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .mode-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mode-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+
+        .mode-card p {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+
+        .mode-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mode-features li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .mode-features li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+
+        .advanced-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .game-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-info h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+        }
+
+        .game-info p {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         @media (max-width: 768px) {
@@ -559,41 +681,78 @@
         <div class="rule-section">
             <h2>🎮 Modes de Jeu</h2>
             
-            <h3>📱 Version 2D (Prototype)</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Interface classique en 2D</li>
-                <li><span class="rule-icon">✅</span> Contrôles optimisés pour mobile</li>
-                <li><span class="rule-icon">✅</span> Performance optimisée</li>
-                <li><span class="rule-icon">✅</span> Compatible tous navigateurs</li>
-            </ul>
+            <div class="mode-grid">
+                <div class="mode-card">
+                    <h3>🏆 Mode Classique</h3>
+                    <p>Le mode principal du jeu. Formez des mots, progressez à travers les niveaux et battez votre meilleur score !</p>
+                    <ul class="mode-features">
+                        <li>Progression par niveaux</li>
+                        <li>Système de score</li>
+                        <li>Mots cibles variés</li>
+                        <li>Difficulté croissante</li>
+                    </ul>
+                </div>
+                
+                <div class="mode-card">
+                    <h3>⏱️ Mode Contre la Montre</h3>
+                    <p>Défiez le temps ! Formez autant de mots que possible avant que le temps ne soit écoulé.</p>
+                    <ul class="mode-features">
+                        <li>Temps limité</li>
+                        <li>Score basé sur la vitesse</li>
+                        <li>Bonus de temps pour les mots longs</li>
+                        <li>Intensité maximale</li>
+                    </ul>
+                </div>
+                
+                <div class="mode-card">
+                    <h3>🎯 Mode Défi</h3>
+                    <p>Des défis spécifiques vous attendent ! Complétez des objectifs particuliers pour débloquer des récompenses.</p>
+                    <ul class="mode-features">
+                        <li>Objectifs variés</li>
+                        <li>Récompenses spéciales</li>
+                        <li>Défis quotidiens</li>
+                        <li>Progression unique</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-            <h3>🎨 Version 3D (Immersion)</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Rendu 3D avec Three.js</li>
-                <li><span class="rule-icon">✅</span> Effets visuels avancés</li>
-                <li><span class="rule-icon">✅</span> Contrôles caméra</li>
-                <li><span class="rule-icon">✅</span> Animations fluides</li>
-            </ul>
+        <!-- Advanced Gameplay -->
+        <div class="rule-section">
+            <h2>🚀 Gameplay Avancé</h2>
+            
+            <div class="advanced-features">
+                <div class="feature-card">
+                    <h4>🌟 Système de Progression</h4>
+                    <p>Débloquez de nouveaux contenus en progressant : nouveaux mots, effets visuels, et fonctionnalités spéciales.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🏆 Classements</h4>
+                    <p>Affrontez d'autres joueurs dans les classements mondiaux. Battez les records et devenez le meilleur !</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>🎨 Personnalisation</h4>
+                    <p>Personnalisez votre expérience avec différents thèmes visuels, effets sonores, et animations.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>📊 Statistiques</h4>
+                    <p>Suivez vos performances avec des statistiques détaillées : mots formés, temps de réaction, précision, etc.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Tips and Strategies -->
-        <div class="tips-section">
+        <div class="rule-section">
             <h2>💡 Conseils et Stratégies</h2>
+            <p>Découvrez les meilleures stratégies pour exceller dans Letters Cascade Challenge :</p>
             
             <div class="tips-grid">
                 <div class="tip-card">
                     <h4>🎯 Planification</h4>
-                    <p>Regardez les lettres à venir et planifiez vos mots à l'avance. Les mots plus longs rapportent beaucoup plus de points !</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>🔥 Combos</h4>
-                    <p>Formez des mots rapidement pour activer les bonus de combo. Plus vous êtes rapide, plus vous gagnez de points !</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>📦 Gestion de l'Espace</h4>
-                    <p>Évitez d'encombrer votre grille. Gardez de l'espace pour les mots longs qui rapportent plus de points.</p>
+                    <p>Observez les lettres qui arrivent et planifiez vos mots à l'avance. Anticipez les combinaisons possibles.</p>
                 </div>
                 
                 <div class="tip-card">
@@ -610,35 +769,17 @@
                     <h4>📚 Vocabulaire</h4>
                     <p>Connaître beaucoup de mots français vous aidera à former des mots plus longs et à gagner plus de points.</p>
                 </div>
+                
+                <div class="tip-card">
+                    <h4>🔄 Combos</h4>
+                    <p>Enchaînez les mots rapidement pour créer des combos et multiplier vos points. Plus vous êtes rapide, plus le bonus est élevé !</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>🎮 Contrôles</h4>
+                    <p>Maîtrisez les contrôles pour une précision maximale. Utilisez la souris pour placer les lettres avec précision.</p>
+                </div>
             </div>
-        </div>
-
-        <!-- Technical Requirements -->
-        <div class="rule-section">
-            <h2>⚙️ Exigences Techniques</h2>
-            
-            <h3>🌐 Navigateur</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Chrome 80+ (recommandé)</li>
-                <li><span class="rule-icon">✅</span> Firefox 75+</li>
-                <li><span class="rule-icon">✅</span> Safari 13+</li>
-                <li><span class="rule-icon">✅</span> Edge 80+</li>
-            </ul>
-
-            <h3>🎮 Version 2D</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Support HTML5 Canvas</li>
-                <li><span class="rule-icon">✅</span> JavaScript ES6+</li>
-                <li><span class="rule-icon">✅</span> Audio Web API (optionnel)</li>
-            </ul>
-
-            <h3>🎨 Version 3D</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Support WebGL</li>
-                <li><span class="rule-icon">✅</span> Three.js compatible</li>
-                <li><span class="rule-icon">✅</span> Carte graphique dédiée (recommandé)</li>
-                <li><span class="rule-icon">✅</span> 4GB RAM minimum</li>
-            </ul>
         </div>
 
         <!-- Footer -->
@@ -647,8 +788,14 @@
             <p>Maintenant que vous connaissez toutes les règles, lancez-vous dans l'aventure Letters Cascade Challenge !</p>
             
             <div class="nav-menu" style="margin-top: var(--spacing-lg);">
-                <a href="prototype.html" class="nav-link">🎮 Jouer Version 2D</a>
-                <a href="game.html" class="nav-link">🎮 Jouer Version 3D</a>
+                <a href="prototype.html" class="nav-link">🎮 Essayer Version 2D</a>
+                <a href="game.html" class="nav-link">🎮 Essayer Version 3D</a>
+                <a href="index.html" class="nav-link">🏠 Accueil</a>
+            </div>
+            
+            <div class="game-info" style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-lg);">
+                <h4>🎯 À Propos du Jeu Final</h4>
+                <p>Ces prototypes 2D et 3D servent de démonstration pour le jeu final qui sera développé avec Unreal Engine. Le gameplay final inclura des graphiques de qualité AAA, des effets visuels avancés, et une expérience immersive complète.</p>
             </div>
             
             <p style="margin-top: var(--spacing-lg); color: var(--text-secondary);">
