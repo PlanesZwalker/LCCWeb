@@ -207,75 +207,44 @@ class LettersCascadeGame {
     }
     
     completeWord(word) {
-        console.log('🎯 Word completed:', {
+        console.log('🎉 completeWord() called:', {
             word: word,
             length: word.length,
             currentScore: this.score,
             currentLevel: this.level
         });
         
-        // Calculate score based on word length
+        // Calculate points based on word length
         let points = 0;
         switch (word.length) {
             case 3: points = 10; break;
             case 4: points = 25; break;
             case 5: points = 50; break;
             case 6: points = 100; break;
-            default: points = 200; break;
+            default: points = 200; // 7+ letters
         }
         
-        console.log('📊 Word scoring:', {
+        console.log('💰 Word scoring breakdown:', {
             word: word,
             length: word.length,
             basePoints: points,
             combo: this.combo,
-            totalPoints: points * this.combo
+            finalPoints: points * this.combo
         });
         
-        // Add to words found
-        if (!this.wordsFound.includes(word)) {
-            this.wordsFound.push(word);
-            console.log('📝 Words found updated:', {
-                totalWords: this.wordsFound.length,
-                newWord: word,
-                allWords: this.wordsFound
-            });
-        }
+        // Add word to found list
+        this.wordsFound.push(word);
+        console.log('📝 Word added to found list:', {
+            word: word,
+            totalWordsFound: this.wordsFound.length,
+            targetWords: this.targetWords.length
+        });
         
-        // Add score
-        this.addScore(points);
+        // Add score with combo multiplier
+        this.addScore(points * this.combo);
         
-        // Check for level progression
-        const oldLevel = this.level;
+        // Update level
         this.updateLevel();
-        
-        if (this.level > oldLevel) {
-            console.log('📈 Level up!:', {
-                previousLevel: oldLevel,
-                newLevel: this.level,
-                wordsFound: this.wordsFound.length,
-                score: this.score
-            });
-            this.showLevelUpEffect();
-        }
-        
-        // Show completion effect
-        this.showWordCompletionNotification(word, points);
-        this.particleSystem.createWordCompletionEffect(word);
-        
-        // Update combo
-        const now = Date.now();
-        if (now - this.lastWordTime < this.comboTimeout) {
-            this.combo++;
-            console.log('🔥 Combo increased:', {
-                newCombo: this.combo,
-                timeSinceLastWord: now - this.lastWordTime
-            });
-        } else {
-            this.combo = 1;
-            console.log('🔄 Combo reset to 1');
-        }
-        this.lastWordTime = now;
         
         // Remove word from grid
         this.removeWordFromGrid(word);
@@ -283,92 +252,121 @@ class LettersCascadeGame {
         // Update display
         this.updateDisplay();
         
+        // Update progression bar
+        this.updateProgressionBar();
+        
+        // Show completion notification
+        this.showWordCompletionNotification(word, points * this.combo);
+        
+        // Combo system
+        const now = Date.now();
+        if (now - this.lastWordTime < this.comboTimeout) {
+            this.combo++;
+            console.log('🔥 Combo increased:', this.combo);
+        } else {
+            this.combo = 1;
+            console.log('🔄 Combo reset to 1');
+        }
+        this.lastWordTime = now;
+        
         console.log('✅ Word completion finished:', {
             word: word,
             finalScore: this.score,
-            finalLevel: this.level,
             combo: this.combo,
             wordsFound: this.wordsFound.length
         });
     }
     
     showWordCompletionNotification(word, score) {
-        // Create notification element
+        console.log('🎉 Word completed:', word, 'Score:', score);
+        
+        // Create enhanced notification
         const notification = document.createElement('div');
         notification.className = 'word-completion-notification';
         notification.innerHTML = `
             <div class="notification-content">
-                <h3>🎉 Mot trouvé!</h3>
-                <p class="word">${word}</p>
-                <p class="score">+${score} points</p>
+                <div class="word-display">${word}</div>
+                <div class="score-display">+${score} points</div>
+                <div class="combo-display">Combo: ${this.combo}x</div>
             </div>
         `;
         
-        // Add styles
         notification.style.cssText = `
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             padding: 2rem;
             border-radius: 1rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
             z-index: 10000;
-            animation: notificationAppear 0.5s ease-out;
+            animation: wordCompletionAppear 0.6s ease-out;
             text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 600;
+            min-width: 200px;
         `;
         
-        // Add animation styles
+        // Add CSS animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes notificationAppear {
-                from {
+            @keyframes wordCompletionAppear {
+                0% {
                     opacity: 0;
                     transform: translate(-50%, -50%) scale(0.5);
                 }
-                to {
+                50% {
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+                100% {
                     opacity: 1;
                     transform: translate(-50%, -50%) scale(1);
                 }
             }
-            .word-completion-notification .word {
+            
+            .word-display {
                 font-size: 2rem;
-                font-weight: bold;
-                margin: 1rem 0;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             }
-            .word-completion-notification .score {
-                font-size: 1.2rem;
+            
+            .score-display {
+                font-size: 1.25rem;
                 opacity: 0.9;
+                margin-bottom: 0.25rem;
+            }
+            
+            .combo-display {
+                font-size: 1rem;
+                opacity: 0.8;
+                background: rgba(255, 255, 255, 0.2);
+                padding: 0.25rem 0.75rem;
+                border-radius: 0.5rem;
+                display: inline-block;
             }
         `;
         document.head.appendChild(style);
         
         document.body.appendChild(notification);
         
-        // Remove notification after 2 seconds
+        // Enhanced particle effect
+        this.particleSystem.createWordCompletionEffect(word);
+        
+        // Play enhanced sound
+        this.audioManager.playWordComplete();
+        
+        // Remove notification after delay
         setTimeout(() => {
-            notification.style.animation = 'notificationDisappear 0.5s ease-out';
+            notification.style.animation = 'wordCompletionDisappear 0.5s ease-out';
             notification.style.animationFillMode = 'forwards';
             
-            const disappearStyle = document.createElement('style');
-            disappearStyle.textContent = `
-                @keyframes notificationDisappear {
-                    from {
-                        opacity: 1;
-                        transform: translate(-50%, -50%) scale(1);
-                    }
-                    to {
-                        opacity: 0;
-                        transform: translate(-50%, -50%) scale(0.5);
-                    }
-                }
-            `;
-            document.head.appendChild(disappearStyle);
-            
             setTimeout(() => {
-                document.body.removeChild(notification);
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
             }, 500);
         }, 2000);
     }
@@ -457,55 +455,51 @@ class LettersCascadeGame {
     
     // Level System
     updateLevel() {
-        console.log('📈 Checking level progression:', {
+        console.log('📈 updateLevel() called');
+        console.log('📊 Level progression check:', {
             currentLevel: this.level,
             wordsFound: this.wordsFound.length,
-            score: this.score
+            score: this.score,
+            targetWords: this.targetWords.length
         });
         
-        const oldLevel = this.level;
+        const previousLevel = this.level;
         
         // Level progression based on words found and score
-        if (this.wordsFound.length >= 3 && this.score >= 100) {
+        if (this.wordsFound.length >= 3 && this.score >= 150 && this.level === 1) {
             this.level = 2;
-        }
-        if (this.wordsFound.length >= 5 && this.score >= 250) {
+            console.log('🎉 Level up! Level 1 → Level 2');
+        } else if (this.wordsFound.length >= 5 && this.score >= 300 && this.level === 2) {
             this.level = 3;
-        }
-        if (this.wordsFound.length >= 7 && this.score >= 500) {
+            console.log('🎉 Level up! Level 2 → Level 3');
+        } else if (this.wordsFound.length >= 7 && this.score >= 500 && this.level === 3) {
             this.level = 4;
-        }
-        if (this.wordsFound.length >= 10 && this.score >= 1000) {
+            console.log('🎉 Level up! Level 3 → Level 4');
+        } else if (this.wordsFound.length >= 8 && this.score >= 800 && this.level === 4) {
             this.level = 5;
+            console.log('🎉 Level up! Level 4 → Level 5');
         }
         
-        if (this.level > oldLevel) {
-            console.log('🎉 Level up achieved:', {
-                previousLevel: oldLevel,
-                newLevel: this.level,
-                wordsFound: this.wordsFound.length,
-                score: this.score,
-                requirements: {
-                    level2: { words: 3, score: 100 },
-                    level3: { words: 5, score: 250 },
-                    level4: { words: 7, score: 500 },
-                    level5: { words: 10, score: 1000 }
-                }
-            });
-            
-            // Level up effects
-            this.audioManager.playLevelUp();
+        if (this.level > previousLevel) {
+            console.log('🏆 Level up achievement unlocked!');
             this.showLevelUpEffect();
-        } else {
-            console.log('📊 Level progression status:', {
-                currentLevel: this.level,
-                wordsFound: this.wordsFound.length,
-                score: this.score,
-                nextLevelRequirements: this.getNextLevelRequirements()
-            });
+            this.updateProgressionBar();
         }
         
-        this.updateLevelDisplay();
+        console.log('📊 Level progression result:', {
+            previousLevel: previousLevel,
+            newLevel: this.level,
+            levelChanged: this.level > previousLevel
+        });
+    }
+    
+    updateProgressionBar() {
+        const progressFill = document.getElementById('progressFill');
+        if (progressFill) {
+            const progress = (this.wordsFound.length / this.targetWords.length) * 100;
+            progressFill.style.width = Math.min(progress, 100) + '%';
+            console.log('📊 Progression bar updated:', progress + '%');
+        }
     }
     
     getNextLevelRequirements() {
@@ -1047,28 +1041,28 @@ class LettersCascadeGame {
     }
     
     drawEnhancedCell(x, y, letter) {
-        // Cell background with gradient
+        // Enhanced cell background with better contrast
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.85)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
+        gradient.addColorStop(1, 'rgba(248, 250, 252, 0.95)');
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Cell border
-        this.ctx.strokeStyle = 'rgba(102, 126, 234, 0.3)';
+        // Enhanced cell border with better visibility
+        this.ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
         this.ctx.lineWidth = 2;
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Letter with enhanced styling
-        this.ctx.fillStyle = '#667eea';
-        this.ctx.font = 'bold 20px Arial';
+        // Enhanced letter styling with better contrast
+        this.ctx.fillStyle = '#4f46e5';
+        this.ctx.font = 'bold 22px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
         
-        // Add text shadow
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        this.ctx.shadowBlur = 2;
+        // Enhanced text shadow for better readability
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+        this.ctx.shadowBlur = 3;
         this.ctx.shadowOffsetX = 1;
         this.ctx.shadowOffsetY = 1;
         
@@ -1101,28 +1095,31 @@ class LettersCascadeGame {
             return;
         }
         
-        // Falling letter background with gradient
+        // Enhanced falling letter background with pulsing effect
+        const time = Date.now() * 0.005;
+        const pulse = Math.sin(time) * 0.1 + 0.9;
+        
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, 'rgba(118, 75, 162, 0.9)');
-        gradient.addColorStop(1, 'rgba(102, 126, 234, 0.9)');
+        gradient.addColorStop(0, `rgba(139, 92, 246, ${0.9 * pulse})`);
+        gradient.addColorStop(1, `rgba(99, 102, 241, ${0.9 * pulse})`);
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Falling letter border with glow effect
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+        // Enhanced falling letter border with glow effect
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
         this.ctx.lineWidth = 3;
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Falling letter text
+        // Enhanced falling letter text with better contrast
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 20px Arial';
+        this.ctx.font = 'bold 22px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
         
-        // Add glow effect
-        this.ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-        this.ctx.shadowBlur = 5;
+        // Enhanced glow effect
+        this.ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+        this.ctx.shadowBlur = 8;
         this.ctx.fillText(this.fallingLetter.letter, x + this.cellSize / 2, y + this.cellSize / 2);
         
         // Reset shadow
