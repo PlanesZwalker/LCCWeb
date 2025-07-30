@@ -425,6 +425,575 @@
             line-height: 1.6;
         }
 
+        /* Enhanced Game Overview Styles */
+        .game-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .overview-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .overview-card h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .overview-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .game-links {
+            margin-top: var(--spacing-lg);
+        }
+
+        .game-links h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .link-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .game-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .game-link:hover::before {
+            left: 100%;
+        }
+
+        .game-link.primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .game-link.primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .game-link.secondary {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+        }
+
+        .game-link.secondary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.6);
+        }
+
+        .game-link i {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .game-link:hover i {
+            transform: scale(1.2);
+        }
+
+        .link-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .key-features {
+            margin-top: var(--spacing-lg);
+        }
+
+        .key-features h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .key-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-features li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .key-features li::before {
+            content: '🌟';
+            position: absolute;
+            left: 0;
+        }
+
+        /* Detailed Rules Styles */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .rule-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .rule-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .rule-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .rule-content h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .rule-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .rule-content li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .rule-content li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+
+        .word-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .word-example {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .scoring-example {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+
+        .scoring-example p {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .scoring-example ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .scoring-example li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+        }
+
+        .combo-examples {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .combo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 158, 11, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .combo-level {
+            font-weight: 700;
+            color: var(--warning-color);
+        }
+
+        .combo-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .unlock-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .unlock-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: rgba(139, 92, 246, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .unlock-icon {
+            font-size: 1.2rem;
+        }
+
+        .unlock-desc {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Game Controls Styles */
+        .controls-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .control-category {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .control-category:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .control-category h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .control-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-sm);
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .control-icon {
+            font-size: 1.2rem;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .control-key {
+            background: var(--text-primary);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .control-action {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .control-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Game Mechanics Styles */
+        .mechanics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .mechanic-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .mechanic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mechanic-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .mechanic-content h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .mechanic-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .mechanic-content li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .mechanic-content li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+
+        .word-categories {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+        }
+
+        .word-category {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+        }
+
+        .word-category h5 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .word-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin: var(--spacing-xs);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .strategy-tips {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .strategy-tip {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: rgba(245, 158, 11, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .tip-icon {
+            font-size: 1.2rem;
+        }
+
+        .tip-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .combo-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .combo-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 158, 11, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .combo-multiplier {
+            font-weight: 700;
+            color: var(--warning-color);
+            font-size: 1.1rem;
+        }
+
+        .combo-requirement {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .combo-bonus {
+            font-weight: 600;
+            color: var(--success-color);
+            font-size: 0.9rem;
+        }
+
+        .rewards-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: rgba(139, 92, 246, 0.1);
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .reward-icon {
+            font-size: 1.2rem;
+        }
+
+        .reward-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .reward-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: var(--spacing-md);
@@ -469,94 +1038,161 @@
             </nav>
         </div>
 
-        <!-- Game Overview -->
+        <!-- Game Overview Section -->
         <div class="rule-section">
-            <h2>🎯 Vue d'ensemble du Jeu</h2>
-            <p>Letters Cascade Challenge est un jeu de formation de mots où les joueurs placent des lettres qui tombent pour créer des mots français valides. Le jeu propose deux versions : une version 2D classique et une version 3D immersive.</p>
+            <h2>🎮 Vue d'Ensemble du Jeu</h2>
             
-            <h3>🎮 Objectif Principal</h3>
-            <p>Formez des mots français en plaçant stratégiquement les lettres qui tombent sur la grille. Plus les mots sont longs, plus vous gagnez de points !</p>
+            <div class="game-overview">
+                <div class="overview-card">
+                    <h3>📖 Qu'est-ce que Letters Cascade Challenge ?</h3>
+                    <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui combine la formation de mots avec des mécaniques de chute inspirées de Tetris. Les lettres tombent du haut de l'écran et vous devez les placer stratégiquement pour former des mots français valides.</p>
+                    
+                    <div class="game-links">
+                        <h4>🎯 Jouer Maintenant :</h4>
+                        <div class="link-buttons">
+                            <a href="prototype.html" class="game-link primary">
+                                <i class="fas fa-gamepad"></i>
+                                Jouer Version 2D
+                                <span class="link-desc">Version classique optimisée</span>
+                            </a>
+                            <a href="game.html" class="game-link secondary">
+                                <i class="fas fa-cube"></i>
+                                Jouer Version 3D
+                                <span class="link-desc">Version immersive 3D</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overview-card">
+                    <h3>🎯 Objectif du Jeu</h3>
+                    <p>Votre objectif est de former des mots français en plaçant stratégiquement les lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Enchaînez les mots rapidement pour créer des combos et multiplier vos scores !</p>
+                    
+                    <div class="key-features">
+                        <h4>🌟 Caractéristiques Principales :</h4>
+                        <ul>
+                            <li><strong>Formation de Mots :</strong> Créez des mots français de 3 lettres minimum</li>
+                            <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
+                            <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
+                            <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
+                            <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
+                            <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Basic Rules -->
+        <!-- Detailed Rules Section -->
         <div class="rule-section">
-            <h2>📋 Règles de Base</h2>
+            <h2>📋 Règles Détaillées du Jeu</h2>
             
-            <h3>🎯 Mécaniques Principales</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Les lettres tombent du haut de l'écran</li>
-                <li><span class="rule-icon">✅</span> Cliquez pour placer les lettres sur la grille</li>
-                <li><span class="rule-icon">✅</span> Formez des mots de 3 lettres minimum</li>
-                <li><span class="rule-icon">✅</span> Les mots doivent être en français</li>
-                <li><span class="rule-icon">✅</span> Les mots peuvent être horizontaux, verticaux ou diagonaux</li>
-                <li><span class="rule-icon">✅</span> Une lettre ne peut être utilisée qu'une seule fois</li>
-            </ul>
-
-            <h3>🚫 Restrictions</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">❌</span> Pas de placement sur des cases occupées</li>
-                <li><span class="rule-icon">❌</span> Pas de mots de moins de 3 lettres</li>
-                <li><span class="rule-icon">❌</span> Pas de mots invalides ou inexistants</li>
-                <li><span class="rule-icon">❌</span> Pas de réutilisation des lettres dans plusieurs mots</li>
-            </ul>
-        </div>
-
-        <!-- Scoring System -->
-        <div class="rule-section">
-            <h2>💰 Système de Score</h2>
-            
-            <h3>📊 Points de Base</h3>
-            <table class="scoring-table">
-                <thead>
-                    <tr>
-                        <th>Longueur du Mot</th>
-                        <th>Points de Base</th>
-                        <th>Exemple</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>3 lettres</td>
-                        <td>10 points</td>
-                        <td>CHAT</td>
-                    </tr>
-                    <tr>
-                        <td>4 lettres</td>
-                        <td>25 points</td>
-                        <td>MAIN</td>
-                    </tr>
-                    <tr>
-                        <td>5 lettres</td>
-                        <td>50 points</td>
-                        <td>TABLE</td>
-                    </tr>
-                    <tr>
-                        <td>6 lettres</td>
-                        <td>100 points</td>
-                        <td>MAISON</td>
-                    </tr>
-                    <tr>
-                        <td>7+ lettres</td>
-                        <td>200 points</td>
-                        <td>MUSIQUE</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>🔥 Bonus Multiplicateurs</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">🔥</span> <strong>Combo Bonus :</strong> +50% pour des mots consécutifs rapides</li>
-                <li><span class="rule-icon">📈</span> <strong>Niveau Bonus :</strong> +25% par niveau au-dessus du niveau 1</li>
-                <li><span class="rule-icon">⚡</span> <strong>Vitesse Bonus :</strong> +10% pour un placement rapide</li>
-                <li><span class="rule-icon">🎯</span> <strong>Efficacité Bonus :</strong> +20% pour utiliser moins de lettres</li>
-            </ul>
-
-            <h3>⚠️ Pénalités</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">⏰</span> <strong>Pénalité de Temps :</strong> -5 points par seconde au-delà de la limite</li>
-                <li><span class="rule-icon">🗑️</span> <strong>Gaspillage de Lettres :</strong> -2 points par lettre inutilisée</li>
-                <li><span class="rule-icon">📦</span> <strong>Grille Encombrée :</strong> -10 points si la grille est pleine à 80%</li>
-            </ul>
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <h3>🎯 Formation de Mots</h3>
+                    <div class="rule-content">
+                        <h4>Critères de Validation :</h4>
+                        <ul>
+                            <li><strong>Longueur minimale :</strong> 3 lettres minimum</li>
+                            <li><strong>Langue :</strong> Mots français uniquement</li>
+                            <li><strong>Validation :</strong> Automatique en temps réel</li>
+                            <li><strong>Directions :</strong> Horizontal, vertical et diagonal</li>
+                        </ul>
+                        
+                        <h4>Exemples de Mots Valides :</h4>
+                        <div class="word-examples">
+                            <span class="word-example">CHAT</span>
+                            <span class="word-example">MAISON</span>
+                            <span class="word-example">MUSIQUE</span>
+                            <span class="word-example">JARDIN</span>
+                            <span class="word-example">LIVRE</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>💰 Système de Scoring</h3>
+                    <div class="rule-content">
+                        <h4>Calcul des Points :</h4>
+                        <ul>
+                            <li><strong>Points de base :</strong> 1 point par lettre utilisée</li>
+                            <li><strong>Bonus de longueur :</strong> Longueur du mot × 10</li>
+                            <li><strong>Multiplicateur combo :</strong> Points × niveau de combo</li>
+                            <li><strong>Bonus de vitesse :</strong> Points supplémentaires pour les mots rapides</li>
+                        </ul>
+                        
+                        <h4>Exemple de Calcul :</h4>
+                        <div class="scoring-example">
+                            <p><strong>Mot "MAISON" (6 lettres) :</strong></p>
+                            <ul>
+                                <li>Points de base : 6 points</li>
+                                <li>Bonus de longueur : 6 × 10 = 60 points</li>
+                                <li><strong>Total : 66 points</strong></li>
+                                <li>Avec combo x2 : <strong>132 points</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>🔥 Système de Combo</h3>
+                    <div class="rule-content">
+                        <h4>Comment ça marche :</h4>
+                        <ul>
+                            <li><strong>Activation :</strong> Formez des mots rapidement</li>
+                            <li><strong>Durée :</strong> 5 secondes entre chaque mot</li>
+                            <li><strong>Multiplicateur :</strong> Augmente avec chaque mot</li>
+                            <li><strong>Maximum :</strong> Combo x10 possible</li>
+                        </ul>
+                        
+                        <h4>Exemples de Combos :</h4>
+                        <div class="combo-examples">
+                            <div class="combo-item">
+                                <span class="combo-level">Combo x2</span>
+                                <span class="combo-desc">2 mots en 5 secondes</span>
+                            </div>
+                            <div class="combo-item">
+                                <span class="combo-level">Combo x5</span>
+                                <span class="combo-desc">5 mots en 5 secondes</span>
+                            </div>
+                            <div class="combo-item">
+                                <span class="combo-level">Combo x10</span>
+                                <span class="combo-desc">10 mots en 5 secondes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>📈 Progression par Niveaux</h3>
+                    <div class="rule-content">
+                        <h4>Niveaux et Objectifs :</h4>
+                        <ul>
+                            <li><strong>Niveau 1 :</strong> 0-100 points (Débutant)</li>
+                            <li><strong>Niveau 2 :</strong> 100-300 points (Intermédiaire)</li>
+                            <li><strong>Niveau 3 :</strong> 300-600 points (Avancé)</li>
+                            <li><strong>Niveau 4 :</strong> 600-1000 points (Expert)</li>
+                            <li><strong>Niveau 5+ :</strong> 1000+ points (Maître)</li>
+                        </ul>
+                        
+                        <h4>Débloquages :</h4>
+                        <div class="unlock-features">
+                            <div class="unlock-item">
+                                <span class="unlock-icon">🎨</span>
+                                <span class="unlock-desc">Nouveaux effets visuels</span>
+                            </div>
+                            <div class="unlock-item">
+                                <span class="unlock-icon">🎵</span>
+                                <span class="unlock-desc">Nouvelles musiques</span>
+                            </div>
+                            <div class="unlock-item">
+                                <span class="unlock-icon">🏆</span>
+                                <span class="unlock-desc">Défis spéciaux</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Level Progression -->
@@ -602,144 +1238,230 @@
             </ul>
         </div>
 
-        <!-- Controls -->
+        <!-- Game Controls Section -->
         <div class="rule-section">
-            <h2>🎮 Contrôles</h2>
+            <h2>🎮 Contrôles du Jeu</h2>
             
-            <h3>🖱️ Contrôles Souris</h3>
-            <div class="controls-section">
-                <div class="control-grid">
-                    <div class="control-item">
-                        <span class="control-key">Clic</span>
-                        <span>Placer une lettre</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">Clic Droit</span>
-                        <span>Faire pivoter la lettre</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">Glisser</span>
-                        <span>Déplacer la lettre</span>
-                    </div>
-                </div>
-            </div>
-
-            <h3>⌨️ Contrôles Clavier</h3>
-            <div class="controls-section">
-                <div class="control-grid">
-                    <div class="control-item">
-                        <span class="control-key">←</span>
-                        <span>Déplacer à gauche</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">→</span>
-                        <span>Déplacer à droite</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">Espace</span>
-                        <span>Faire pivoter</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">Entrée</span>
-                        <span>Placer la lettre</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">P</span>
-                        <span>Pause/Reprendre</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">R</span>
-                        <span>Recommencer</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">F11</span>
-                        <span>Plein écran</span>
+            <div class="controls-overview">
+                <div class="control-category">
+                    <h3>🖱️ Contrôles Souris</h3>
+                    <div class="control-list">
+                        <div class="control-item">
+                            <span class="control-icon">🖱️</span>
+                            <span class="control-action">Clic gauche</span>
+                            <span class="control-desc">Placer la lettre qui tombe</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-icon">🔄</span>
+                            <span class="control-action">Clic droit</span>
+                            <span class="control-desc">Faire pivoter la lettre</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-icon">⬇️</span>
+                            <span class="control-action">Double-clic</span>
+                            <span class="control-desc">Faire tomber rapidement</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <h3>📱 Contrôles Tactiles</h3>
-            <div class="controls-section">
-                <div class="control-grid">
-                    <div class="control-item">
-                        <span class="control-key">Tap</span>
-                        <span>Placer une lettre</span>
+                
+                <div class="control-category">
+                    <h3>⌨️ Contrôles Clavier</h3>
+                    <div class="control-list">
+                        <div class="control-item">
+                            <span class="control-key">←</span>
+                            <span class="control-action">Déplacer à gauche</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">→</span>
+                            <span class="control-action">Déplacer à droite</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">↓</span>
+                            <span class="control-action">Faire tomber</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">↑</span>
+                            <span class="control-action">Faire pivoter</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">ESPACE</span>
+                            <span class="control-action">Placer la lettre</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">P</span>
+                            <span class="control-action">Pause/Reprendre</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">R</span>
+                            <span class="control-action">Recommencer</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-key">F</span>
+                            <span class="control-action">Plein écran</span>
+                        </div>
                     </div>
-                    <div class="control-item">
-                        <span class="control-key">Double Tap</span>
-                        <span>Faire pivoter</span>
-                    </div>
-                    <div class="control-item">
-                        <span class="control-key">Glisser</span>
-                        <span>Déplacer la lettre</span>
+                </div>
+                
+                <div class="control-category">
+                    <h3>📱 Contrôles Tactiles</h3>
+                    <div class="control-list">
+                        <div class="control-item">
+                            <span class="control-icon">👆</span>
+                            <span class="control-action">Tap</span>
+                            <span class="control-desc">Placer la lettre</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-icon">🔄</span>
+                            <span class="control-action">Swipe haut</span>
+                            <span class="control-desc">Faire pivoter</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-icon">⬇️</span>
+                            <span class="control-action">Swipe bas</span>
+                            <span class="control-desc">Faire tomber rapidement</span>
+                        </div>
+                        <div class="control-item">
+                            <span class="control-icon">⬅️➡️</span>
+                            <span class="control-action">Swipe gauche/droite</span>
+                            <span class="control-desc">Déplacer horizontalement</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Game Modes -->
+        <!-- Game Mechanics Section -->
         <div class="rule-section">
-            <h2>🎮 Modes de Jeu</h2>
+            <h2>⚙️ Mécaniques de Jeu Avancées</h2>
             
-            <div class="mode-grid">
-                <div class="mode-card">
-                    <h3>🏆 Mode Classique</h3>
-                    <p>Le mode principal du jeu. Formez des mots, progressez à travers les niveaux et battez votre meilleur score !</p>
-                    <ul class="mode-features">
-                        <li>Progression par niveaux</li>
-                        <li>Système de score</li>
-                        <li>Mots cibles variés</li>
-                        <li>Difficulté croissante</li>
-                    </ul>
+            <div class="mechanics-grid">
+                <div class="mechanic-card">
+                    <h3>📝 Système de Formation de Mots</h3>
+                    <div class="mechanic-content">
+                        <h4>Validation des Mots :</h4>
+                        <ul>
+                            <li><strong>Dictionnaire français :</strong> Plus de 50,000 mots validés</li>
+                            <li><strong>Détection automatique :</strong> Validation en temps réel</li>
+                            <li><strong>Directions multiples :</strong> Horizontal, vertical, diagonal</li>
+                            <li><strong>Longueur minimale :</strong> 3 lettres obligatoires</li>
+                        </ul>
+                        
+                        <h4>Exemples de Mots Acceptés :</h4>
+                        <div class="word-categories">
+                            <div class="word-category">
+                                <h5>🐱 Animaux :</h5>
+                                <span class="word-tag">CHAT</span>
+                                <span class="word-tag">CHIEN</span>
+                                <span class="word-tag">POISSON</span>
+                            </div>
+                            <div class="word-category">
+                                <h5>🏠 Maison :</h5>
+                                <span class="word-tag">MAISON</span>
+                                <span class="word-tag">TABLE</span>
+                                <span class="word-tag">FENÊTRE</span>
+                            </div>
+                            <div class="word-category">
+                                <h5>🎵 Musique :</h5>
+                                <span class="word-tag">MUSIQUE</span>
+                                <span class="word-tag">PIANO</span>
+                                <span class="word-tag">GUITARE</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="mode-card">
-                    <h3>⏱️ Mode Contre la Montre</h3>
-                    <p>Défiez le temps ! Formez autant de mots que possible avant que le temps ne soit écoulé.</p>
-                    <ul class="mode-features">
-                        <li>Temps limité</li>
-                        <li>Score basé sur la vitesse</li>
-                        <li>Bonus de temps pour les mots longs</li>
-                        <li>Intensité maximale</li>
-                    </ul>
+                <div class="mechanic-card">
+                    <h3>🎯 Système de Placement</h3>
+                    <div class="mechanic-content">
+                        <h4>Règles de Placement :</h4>
+                        <ul>
+                            <li><strong>Grille 10x10 :</strong> Espace de jeu optimal</li>
+                            <li><strong>Collision :</strong> Impossible de placer sur une case occupée</li>
+                            <li><strong>Gravité :</strong> Les lettres tombent naturellement</li>
+                            <li><strong>Rotation :</strong> 4 orientations possibles</li>
+                        </ul>
+                        
+                        <h4>Stratégies de Placement :</h4>
+                        <div class="strategy-tips">
+                            <div class="strategy-tip">
+                                <span class="tip-icon">💡</span>
+                                <span class="tip-text">Placez les voyelles près des consonnes</span>
+                            </div>
+                            <div class="strategy-tip">
+                                <span class="tip-icon">🎯</span>
+                                <span class="tip-text">Créez des intersections pour les mots longs</span>
+                            </div>
+                            <div class="strategy-tip">
+                                <span class="tip-icon">⚡</span>
+                                <span class="tip-text">Optimisez l'espace pour éviter l'encombrement</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="mode-card">
-                    <h3>🎯 Mode Défi</h3>
-                    <p>Des défis spécifiques vous attendent ! Complétez des objectifs particuliers pour débloquer des récompenses.</p>
-                    <ul class="mode-features">
-                        <li>Objectifs variés</li>
-                        <li>Récompenses spéciales</li>
-                        <li>Défis quotidiens</li>
-                        <li>Progression unique</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Advanced Gameplay -->
-        <div class="rule-section">
-            <h2>🚀 Gameplay Avancé</h2>
-            
-            <div class="advanced-features">
-                <div class="feature-card">
-                    <h4>🌟 Système de Progression</h4>
-                    <p>Débloquez de nouveaux contenus en progressant : nouveaux mots, effets visuels, et fonctionnalités spéciales.</p>
+                <div class="mechanic-card">
+                    <h3>🔥 Système de Combo Avancé</h3>
+                    <div class="mechanic-content">
+                        <h4>Mécaniques de Combo :</h4>
+                        <ul>
+                            <li><strong>Fenêtre de temps :</strong> 5 secondes entre les mots</li>
+                            <li><strong>Multiplicateur :</strong> Augmente de 0.5 par mot</li>
+                            <li><strong>Maximum :</strong> Combo x10 (très difficile)</li>
+                            <li><strong>Bonus visuel :</strong> Effets spéciaux pour les combos</li>
+                        </ul>
+                        
+                        <h4>Exemples de Combos :</h4>
+                        <div class="combo-details">
+                            <div class="combo-detail">
+                                <span class="combo-multiplier">x2</span>
+                                <span class="combo-requirement">2 mots en 5s</span>
+                                <span class="combo-bonus">+100% points</span>
+                            </div>
+                            <div class="combo-detail">
+                                <span class="combo-multiplier">x5</span>
+                                <span class="combo-requirement">5 mots en 5s</span>
+                                <span class="combo-bonus">+400% points</span>
+                            </div>
+                            <div class="combo-detail">
+                                <span class="combo-multiplier">x10</span>
+                                <span class="combo-requirement">10 mots en 5s</span>
+                                <span class="combo-bonus">+900% points</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="feature-card">
-                    <h4>🏆 Classements</h4>
-                    <p>Affrontez d'autres joueurs dans les classements mondiaux. Battez les records et devenez le meilleur !</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h4>🎨 Personnalisation</h4>
-                    <p>Personnalisez votre expérience avec différents thèmes visuels, effets sonores, et animations.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h4>📊 Statistiques</h4>
-                    <p>Suivez vos performances avec des statistiques détaillées : mots formés, temps de réaction, précision, etc.</p>
+                <div class="mechanic-card">
+                    <h3>📊 Système de Progression</h3>
+                    <div class="mechanic-content">
+                        <h4>Niveaux et Débloquages :</h4>
+                        <ul>
+                            <li><strong>Niveau 1 (0-100 pts) :</strong> Mode débutant, tutoriel</li>
+                            <li><strong>Niveau 2 (100-300 pts) :</strong> Mots plus longs, combos</li>
+                            <li><strong>Niveau 3 (300-600 pts) :</strong> Vitesse accrue, défis</li>
+                            <li><strong>Niveau 4 (600-1000 pts) :</strong> Mode expert, effets spéciaux</li>
+                            <li><strong>Niveau 5+ (1000+ pts) :</strong> Mode maître, tous les bonus</li>
+                        </ul>
+                        
+                        <h4>Récompenses par Niveau :</h4>
+                        <div class="rewards-list">
+                            <div class="reward-item">
+                                <span class="reward-icon">🎨</span>
+                                <span class="reward-name">Effets Visuels</span>
+                                <span class="reward-desc">Nouveaux effets de particules</span>
+                            </div>
+                            <div class="reward-item">
+                                <span class="reward-icon">🎵</span>
+                                <span class="reward-name">Musiques</span>
+                                <span class="reward-desc">Nouvelles bandes sonores</span>
+                            </div>
+                            <div class="reward-item">
+                                <span class="reward-icon">🏆</span>
+                                <span class="reward-name">Défis</span>
+                                <span class="reward-desc">Missions spéciales</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
