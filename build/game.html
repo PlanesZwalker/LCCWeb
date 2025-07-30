@@ -1126,7 +1126,7 @@
                 // Initialize Three.js components
                 this.initThreeJS();
                 this.create3DGrid();
-                this.setupLighting();
+                this.setupEnhancedLighting();
                 this.setupCamera();
                 this.setupControls();
                 this.generateLetterQueue();
@@ -1135,6 +1135,85 @@
                 this.animate();
                 
                 console.log('✅ 3D game initialized successfully');
+            }
+            
+            // Enhanced Three.js Initialization
+            initThreeJS() {
+                console.log('🎨 Initializing Three.js components...');
+                
+                // Create scene with enhanced background
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0a0a0a);
+                
+                // Add atmospheric fog
+                this.scene.fog = new THREE.Fog(0x0a0a0a, 10, 50);
+                
+                // Create enhanced camera
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.camera.position.set(0, 15, 20);
+                this.camera.lookAt(0, 0, 0);
+                
+                // Create enhanced renderer
+                this.renderer = new THREE.WebGLRenderer({ 
+                    antialias: true, 
+                    alpha: true,
+                    powerPreference: "high-performance"
+                });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
+                
+                // Add renderer to DOM
+                const container = document.getElementById('gameGrid');
+                if (container) {
+                    container.appendChild(this.renderer.domElement);
+                }
+                
+                // Setup raycaster for mouse interaction
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
+                console.log('✅ Three.js components initialized');
+            }
+            
+            // Enhanced Lighting Setup
+            setupEnhancedLighting() {
+                console.log('💡 Setting up enhanced lighting...');
+                
+                // Ambient light for overall illumination
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
+                
+                // Main directional light with shadows
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                directionalLight.position.set(10, 20, 10);
+                directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 2048;
+                directionalLight.shadow.mapSize.height = 2048;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 50;
+                directionalLight.shadow.camera.left = -10;
+                directionalLight.shadow.camera.right = 10;
+                directionalLight.shadow.camera.top = 10;
+                directionalLight.shadow.camera.bottom = -10;
+                this.scene.add(directionalLight);
+                
+                // Point light for dramatic effect
+                const pointLight = new THREE.PointLight(0x667eea, 0.8, 30);
+                pointLight.position.set(0, 15, 0);
+                this.scene.add(pointLight);
+                
+                // Spot light for focused illumination
+                const spotLight = new THREE.SpotLight(0xffffff, 0.5, 30, Math.PI / 4, 0.5);
+                spotLight.position.set(0, 20, 0);
+                spotLight.target.position.set(0, 0, 0);
+                this.scene.add(spotLight);
+                this.scene.add(spotLight.target);
+                
+                console.log('✅ Enhanced lighting setup completed');
             }
             
             // WebGL Support Check
@@ -1159,136 +1238,6 @@
                         </div>
                     `;
                 }
-            }
-            
-            // Initialize Three.js
-            initThreeJS() {
-                console.log('🎨 Initializing Three.js...');
-                
-                const container = document.getElementById('gameGrid');
-                if (!container) {
-                    console.error('❌ Game container not found');
-                    return;
-                }
-                
-                // Clear container
-                container.innerHTML = '';
-                
-                // Create scene
-                this.scene = new THREE.Scene();
-                this.scene.background = new THREE.Color(0x1a1a2e);
-                
-                // Create camera
-                this.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-                this.camera.position.set(0, 0, 15);
-                this.camera.lookAt(0, 0, 0);
-                
-                // Create renderer
-                this.renderer = new THREE.WebGLRenderer({ 
-                    antialias: true,
-                    powerPreference: "high-performance"
-                });
-                this.renderer.setSize(500, 500);
-                this.renderer.setPixelRatio(window.devicePixelRatio);
-                this.renderer.shadowMap.enabled = true;
-                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-                this.renderer.outputEncoding = THREE.sRGBEncoding;
-                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-                this.renderer.toneMappingExposure = 1.2;
-                
-                // Add renderer to container
-                container.appendChild(this.renderer.domElement);
-                this.renderer.domElement.style.display = 'block';
-                this.renderer.domElement.style.margin = '0 auto';
-                
-                // Setup raycaster for mouse interaction
-                this.raycaster = new THREE.Raycaster();
-                this.mouse = new THREE.Vector2();
-                
-                // Add event listeners
-                this.setupEventListeners();
-                
-                console.log('✅ Three.js initialized');
-            }
-            
-            // Create 3D Grid
-            create3DGrid() {
-                console.log('🏗️ create3DGrid() called');
-                
-                const startX = -(this.currentGridSize * this.cellSize) / 2 + this.cellSize / 2;
-                const startZ = -(this.currentGridSize * this.cellSize) / 2 + this.cellSize / 2;
-                
-                this.grid = [];
-                
-                for (let row = 0; row < this.currentGridSize; row++) {
-                    this.grid[row] = [];
-                    for (let col = 0; col < this.currentGridSize; col++) {
-                        // Create cube geometry
-                        const geometry = new THREE.BoxGeometry(this.cellSize, this.cellSize, this.cellSize);
-                        const material = new THREE.MeshPhongMaterial({ 
-                            color: 0x2a2a3e,
-                            specular: 0x444444,
-                            shininess: 100
-                        });
-                        
-                        const cube = new THREE.Mesh(geometry, material);
-                        cube.position.set(
-                            startX + col * (this.cellSize + this.gap),
-                            0,
-                            startZ + row * (this.cellSize + this.gap)
-                        );
-                        
-                        // Enable shadows
-                        cube.castShadow = true;
-                        cube.receiveShadow = true;
-                        
-                        // Store user data for interaction
-                        cube.userData = {
-                            row: row,
-                            col: col,
-                            letter: null,
-                            occupied: false
-                        };
-                        
-                        this.grid[row][col] = cube;
-                        this.scene.add(cube);
-                    }
-                }
-                
-                console.log('✅ 3D grid created successfully');
-            }
-            
-            // Setup Lighting
-            setupLighting() {
-                // Ambient light
-                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
-                this.scene.add(ambientLight);
-                
-                // Directional light (sun)
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
-                directionalLight.position.set(10, 10, 5);
-                directionalLight.castShadow = true;
-                directionalLight.shadow.mapSize.width = 2048;
-                directionalLight.shadow.mapSize.height = 2048;
-                directionalLight.shadow.camera.near = 0.5;
-                directionalLight.shadow.camera.far = 50;
-                directionalLight.shadow.camera.left = -20;
-                directionalLight.shadow.camera.right = 20;
-                directionalLight.shadow.camera.top = 20;
-                directionalLight.shadow.camera.bottom = -20;
-                this.scene.add(directionalLight);
-                
-                // Point lights for atmosphere
-                const pointLight1 = new THREE.PointLight(0x4ecdc4, 1, 20);
-                pointLight1.position.set(-5, 5, 5);
-                this.scene.add(pointLight1);
-                
-                const pointLight2 = new THREE.PointLight(0x667eea, 1, 20);
-                pointLight2.position.set(5, 5, -5);
-                this.scene.add(pointLight2);
-                
-                // Add fog for depth
-                this.scene.fog = new THREE.Fog(0x1a1a2e, 10, 50);
             }
             
             // Setup Camera
@@ -1828,26 +1777,114 @@
                 });
             }
             
-            // Animation Loop
+            // Enhanced Animation Loop
             animate() {
                 requestAnimationFrame(() => this.animate());
                 
-                // Update TWEEN
-                TWEEN.update();
-                
-                // Animate cubes
-                for (let row = 0; row < this.currentGridSize; row++) {
-                    for (let col = 0; col < this.currentGridSize; col++) {
-                        const cell = this.grid[row][col];
-                        if (cell) {
-                            // Subtle floating animation
-                            cell.position.y = Math.sin(Date.now() * 0.001 + row + col) * 0.05;
-                        }
-                    }
+                if (!this.gameRunning || this.paused) {
+                    this.renderer.render(this.scene, this.camera);
+                    return;
                 }
+                
+                // Enhanced camera movement
+                this.updateCamera();
+                
+                // Update falling letter
+                this.updateFallingLetter();
+                
+                // Update particles
+                this.particleSystem.update();
+                
+                // Update letter animations
+                this.updateLetterAnimations();
                 
                 // Render scene
                 this.renderer.render(this.scene, this.camera);
+            }
+            
+            // Enhanced Camera Movement
+            updateCamera() {
+                const time = Date.now() * 0.001;
+                
+                // Gentle camera movement
+                this.camera.position.x = Math.sin(time * 0.5) * 2;
+                this.camera.position.y = 15 + Math.sin(time * 0.3) * 1;
+                this.camera.position.z = 20 + Math.cos(time * 0.5) * 2;
+                
+                // Look at the center of the grid
+                this.camera.lookAt(0, 0, 0);
+            }
+            
+            // Enhanced Letter Animations
+            updateLetterAnimations() {
+                this.textMeshes.forEach(mesh => {
+                    if (mesh.userData.isFalling) {
+                        // Pulsing animation for falling letters
+                        const time = Date.now() * 0.005;
+                        const pulse = Math.sin(time) * 0.1 + 1;
+                        mesh.scale.setScalar(pulse);
+                        
+                        // Update glow effect
+                        if (mesh.userData.glowMesh) {
+                            mesh.userData.glowMesh.scale.setScalar(pulse * 1.1);
+                            mesh.userData.glowMesh.material.opacity = 0.3 * pulse;
+                        }
+                    } else {
+                        // Gentle floating animation for placed letters
+                        const time = Date.now() * 0.002;
+                        mesh.position.y = mesh.userData.originalY + Math.sin(time + mesh.userData.offset) * 0.05;
+                    }
+                });
+            }
+            
+            // Enhanced Falling Letter Update
+            updateFallingLetter() {
+                if (!this.fallingLetter) return;
+                
+                const time = Date.now() * 0.001;
+                
+                // Update falling letter position
+                this.fallingLetter.y += 0.02;
+                
+                // Check collision
+                if (this.checkCollision3D(this.fallingLetter.x, this.fallingLetter.y, this.fallingLetter.z)) {
+                    this.placeLetter3D();
+                }
+                
+                // Update visual representation
+                this.updateFallingLetterVisual();
+            }
+            
+            // Enhanced Letter Placement
+            placeLetter3D() {
+                if (!this.fallingLetter) return;
+                
+                const { x, y, z, letter } = this.fallingLetter;
+                
+                console.log('📝 Placing 3D letter:', letter, 'at position:', { x, y, z });
+                
+                // Place letter in grid
+                const gridX = Math.floor((x + this.currentGridSize * (this.cellSize + this.gap) / 2) / (this.cellSize + this.gap));
+                const gridZ = Math.floor((z + this.currentGridSize * (this.cellSize + this.gap) / 2) / (this.cellSize + this.gap));
+                
+                if (gridX >= 0 && gridX < this.currentGridSize && gridZ >= 0 && gridZ < this.currentGridSize) {
+                    this.grid[gridZ][gridX] = letter;
+                    
+                    // Create visual letter
+                    this.createLetter3D(letter, x, y, z, false);
+                    
+                    // Create placement effect
+                    this.particleSystem.createPlacementEffect3D(x, y, z);
+                    
+                    // Play sound
+                    this.audioManager.playPlace();
+                    
+                    // Check for word completion
+                    this.checkWordCompletion3D();
+                    
+                    // Create new falling letter
+                    this.createFallingLetter3D();
+                }
             }
             
             // Utility Methods
@@ -1911,6 +1948,123 @@
                     this.generateLetterQueue();
                     this.updateDisplay();
                 }
+            }
+
+            // Enhanced 3D Grid Creation
+            create3DGrid() {
+                console.log('🏗️ Creating enhanced 3D grid...');
+                
+                this.grid = [];
+                this.cubes = [];
+                
+                const gridSize = this.currentGridSize;
+                const cellSize = this.cellSize;
+                const gap = this.gap;
+                const totalSize = gridSize * (cellSize + gap) - gap;
+                const startX = -totalSize / 2;
+                const startZ = -totalSize / 2;
+                
+                // Create grid array
+                for (let row = 0; row < gridSize; row++) {
+                    this.grid[row] = [];
+                    for (let col = 0; col < gridSize; col++) {
+                        this.grid[row][col] = null;
+                    }
+                }
+                
+                // Create visual grid cells
+                for (let row = 0; row < gridSize; row++) {
+                    for (let col = 0; col < gridSize; col++) {
+                        const x = startX + col * (cellSize + gap) + cellSize / 2;
+                        const z = startZ + row * (cellSize + gap) + cellSize / 2;
+                        const y = 0;
+                        
+                        // Create enhanced cube geometry
+                        const geometry = new THREE.BoxGeometry(cellSize, 0.1, cellSize);
+                        
+                        // Create enhanced material with glass effect
+                        const material = new THREE.MeshPhongMaterial({
+                            color: 0xffffff,
+                            transparent: true,
+                            opacity: 0.3,
+                            shininess: 100,
+                            specular: 0x444444
+                        });
+                        
+                        const cube = new THREE.Mesh(geometry, material);
+                        cube.position.set(x, y, z);
+                        cube.castShadow = true;
+                        cube.receiveShadow = true;
+                        cube.userData = { row, col, type: 'grid' };
+                        
+                        this.scene.add(cube);
+                        this.cubes.push(cube);
+                    }
+                }
+                
+                console.log('✅ Enhanced 3D grid created with', this.cubes.length, 'cells');
+            }
+            
+            // Enhanced Letter Creation
+            createLetter3D(letter, x, y, z, isFalling = false) {
+                console.log('📝 Creating 3D letter:', letter, 'at position:', { x, y, z });
+                
+                // Create enhanced text geometry
+                const loader = new THREE.FontLoader();
+                const fontUrl = 'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json';
+                
+                loader.load(fontUrl, (font) => {
+                    const textGeometry = new THREE.TextGeometry(letter, {
+                        font: font,
+                        size: 0.8,
+                        height: 0.2,
+                        curveSegments: 12,
+                        bevelEnabled: true,
+                        bevelThickness: 0.03,
+                        bevelSize: 0.02,
+                        bevelOffset: 0,
+                        bevelSegments: 5
+                    });
+                    
+                    // Center the geometry
+                    textGeometry.computeBoundingBox();
+                    const centerOffset = -0.5 * (textGeometry.boundingBox.max.x - textGeometry.boundingBox.min.x);
+                    
+                    // Create enhanced material
+                    const material = new THREE.MeshPhongMaterial({
+                        color: isFalling ? 0x667eea : 0x4f46e5,
+                        transparent: true,
+                        opacity: 0.9,
+                        shininess: 80,
+                        specular: 0x222222
+                    });
+                    
+                    const textMesh = new THREE.Mesh(textGeometry, material);
+                    textMesh.position.set(x + centerOffset, y, z);
+                    textMesh.castShadow = true;
+                    textMesh.receiveShadow = true;
+                    textMesh.userData = { letter, isFalling, type: 'letter' };
+                    
+                    // Add glow effect for falling letters
+                    if (isFalling) {
+                        const glowGeometry = textGeometry.clone();
+                        const glowMaterial = new THREE.MeshBasicMaterial({
+                            color: 0x667eea,
+                            transparent: true,
+                            opacity: 0.3
+                        });
+                        const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+                        glowMesh.position.set(x + centerOffset, y, z);
+                        glowMesh.scale.setScalar(1.1);
+                        this.scene.add(glowMesh);
+                        textMesh.userData.glowMesh = glowMesh;
+                    }
+                    
+                    this.scene.add(textMesh);
+                    this.textMeshes.push(textMesh);
+                    
+                    console.log('✅ 3D letter created:', letter);
+                });
             }
         }
         
@@ -2103,86 +2257,139 @@
             }
         }
         
-        // 3D Particle System
+        // Enhanced 3D Particle System
         class ParticleSystem3D {
             constructor() {
                 this.particles = [];
+                this.scene = null;
             }
             
-            createPlacementEffect3D(position) {
-                for (let i = 0; i < 10; i++) {
-                    const geometry = new THREE.SphereGeometry(0.05, 8, 8);
-                    const material = new THREE.MeshBasicMaterial({ color: 0x4ecdc4 });
-                    const particle = new THREE.Mesh(geometry, material);
-                    
-                    particle.position.copy(position);
-                    particle.position.add(new THREE.Vector3(
-                        (Math.random() - 0.5) * 2,
-                        (Math.random() - 0.5) * 2,
-                        (Math.random() - 0.5) * 2
-                    ));
-                    
-                    particle.userData = {
-                        velocity: new THREE.Vector3(
-                            (Math.random() - 0.5) * 0.1,
-                            (Math.random() - 0.5) * 0.1,
-                            (Math.random() - 0.5) * 0.1
-                        ),
-                        life: 1.0
-                    };
-                    
-                    this.particles.push(particle);
-                }
+            setScene(scene) {
+                this.scene = scene;
             }
             
-            createWordCompletionEffect3D(word) {
+            createPlacementEffect3D(x, y, z) {
+                console.log('✨ Creating 3D placement effect at:', { x, y, z });
+                
                 for (let i = 0; i < 20; i++) {
-                    const geometry = new THREE.SphereGeometry(0.08, 8, 8);
-                    const material = new THREE.MeshBasicMaterial({ color: 0x4ecdc4 });
+                    const geometry = new THREE.SphereGeometry(0.05, 8, 8);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 0x667eea,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    
                     const particle = new THREE.Mesh(geometry, material);
+                    particle.position.set(x, y, z);
                     
-                    particle.position.set(0, 0, 0);
-                    particle.position.add(new THREE.Vector3(
-                        (Math.random() - 0.5) * 4,
-                        (Math.random() - 0.5) * 4,
-                        (Math.random() - 0.5) * 4
-                    ));
+                    // Random velocity
+                    particle.userData.velocity = new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.2,
+                        Math.random() * 0.3,
+                        (Math.random() - 0.5) * 0.2
+                    );
                     
-                    particle.userData = {
-                        velocity: new THREE.Vector3(
-                            (Math.random() - 0.5) * 0.15,
-                            (Math.random() - 0.5) * 0.15,
-                            (Math.random() - 0.5) * 0.15
-                        ),
-                        life: 1.0
-                    };
+                    particle.userData.life = 1.0;
+                    particle.userData.maxLife = 1.0;
                     
+                    this.scene.add(particle);
                     this.particles.push(particle);
                 }
             }
             
-            createComboEffect3D(bonus) {
-                for (let i = 0; i < 15; i++) {
-                    const geometry = new THREE.SphereGeometry(0.06, 8, 8);
-                    const material = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+            createWordCompletionEffect3D(word, x, y, z) {
+                console.log('🎉 Creating 3D word completion effect for:', word);
+                
+                // Create letter particles for each letter in the word
+                for (let i = 0; i < word.length; i++) {
+                    for (let j = 0; j < 10; j++) {
+                        const geometry = new THREE.SphereGeometry(0.03, 6, 6);
+                        const material = new THREE.MeshBasicMaterial({
+                            color: 0x10b981,
+                            transparent: true,
+                            opacity: 0.9
+                        });
+                        
+                        const particle = new THREE.Mesh(geometry, material);
+                        particle.position.set(x + i * 0.5, y, z);
+                        
+                        // Explosive velocity
+                        particle.userData.velocity = new THREE.Vector3(
+                            (Math.random() - 0.5) * 0.5,
+                            Math.random() * 0.8,
+                            (Math.random() - 0.5) * 0.5
+                        );
+                        
+                        particle.userData.life = 1.5;
+                        particle.userData.maxLife = 1.5;
+                        particle.userData.letter = word[i];
+                        
+                        this.scene.add(particle);
+                        this.particles.push(particle);
+                    }
+                }
+                
+                // Create celebration particles
+                for (let i = 0; i < 30; i++) {
+                    const geometry = new THREE.SphereGeometry(0.02, 4, 4);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 0xffd700,
+                        transparent: true,
+                        opacity: 1.0
+                    });
+                    
                     const particle = new THREE.Mesh(geometry, material);
+                    particle.position.set(x, y, z);
                     
+                    // Spherical explosion
+                    const angle = Math.random() * Math.PI * 2;
+                    const phi = Math.random() * Math.PI;
+                    const radius = 0.5 + Math.random() * 0.5;
+                    
+                    particle.userData.velocity = new THREE.Vector3(
+                        Math.sin(phi) * Math.cos(angle) * radius,
+                        Math.cos(phi) * radius,
+                        Math.sin(phi) * Math.sin(angle) * radius
+                    );
+                    
+                    particle.userData.life = 2.0;
+                    particle.userData.maxLife = 2.0;
+                    
+                    this.scene.add(particle);
+                    this.particles.push(particle);
+                }
+            }
+            
+            createLevelUpEffect3D() {
+                console.log('🏆 Creating 3D level up effect');
+                
+                // Create spiral effect
+                for (let i = 0; i < 50; i++) {
+                    const geometry = new THREE.SphereGeometry(0.04, 6, 6);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 0x8b5cf6,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    
+                    const particle = new THREE.Mesh(geometry, material);
                     particle.position.set(0, 0, 0);
-                    particle.position.add(new THREE.Vector3(
-                        (Math.random() - 0.5) * 3,
-                        (Math.random() - 0.5) * 3,
-                        (Math.random() - 0.5) * 3
-                    ));
                     
-                    particle.userData = {
-                        velocity: new THREE.Vector3(
-                            (Math.random() - 0.5) * 0.12,
-                            (Math.random() - 0.5) * 0.12,
-                            (Math.random() - 0.5) * 0.12
-                        ),
-                        life: 1.0
-                    };
+                    // Spiral trajectory
+                    const angle = (i / 50) * Math.PI * 4;
+                    const radius = 2 + (i / 50) * 3;
+                    const height = (i / 50) * 5;
                     
+                    particle.userData.velocity = new THREE.Vector3(
+                        Math.cos(angle) * radius * 0.1,
+                        height * 0.1,
+                        Math.sin(angle) * radius * 0.1
+                    );
+                    
+                    particle.userData.life = 3.0;
+                    particle.userData.maxLife = 3.0;
+                    
+                    this.scene.add(particle);
                     this.particles.push(particle);
                 }
             }
@@ -2195,13 +2402,17 @@
                     particle.position.add(particle.userData.velocity);
                     
                     // Update life
-                    particle.userData.life -= 0.02;
+                    particle.userData.life -= 0.016; // 60 FPS
                     
                     // Update opacity
-                    particle.material.opacity = particle.userData.life;
+                    particle.material.opacity = particle.userData.life / particle.userData.maxLife;
+                    
+                    // Update scale
+                    particle.scale.setScalar(1 + (1 - particle.userData.life / particle.userData.maxLife) * 0.5);
                     
                     // Remove dead particles
                     if (particle.userData.life <= 0) {
+                        this.scene.remove(particle);
                         this.particles.splice(i, 1);
                     }
                 }
