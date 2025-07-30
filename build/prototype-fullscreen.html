@@ -25,6 +25,7 @@
             height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            position: relative; /* Added for background effects */
         }
 
         .sidebar {
@@ -57,12 +58,149 @@
             align-items: center;
         }
 
+        /* Enhanced background with Three.js-inspired particle system */
+        .fullscreen-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        /* Three.js-inspired particle system */
+        .fullscreen-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.5), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1px 1px at 200px 60px, rgba(255, 255, 255, 0.4), transparent),
+                radial-gradient(2px 2px at 240px 20px, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1px 1px at 280px 70px, rgba(255, 255, 255, 0.5), transparent);
+            background-repeat: repeat;
+            background-size: 300px 100px;
+            animation: particleFloat 18s linear infinite;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-15px) translateX(8px); }
+            50% { transform: translateY(-8px) translateX(-8px); }
+            75% { transform: translateY(-20px) translateX(12px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-15px) translateY(-8px); }
+            50% { transform: translateX(8px) translateY(-15px); }
+            75% { transform: translateX(-8px) translateY(8px); }
+        }
+
+        /* Enhanced game canvas with Three.js-inspired glow effects */
         #gameCanvas {
-            border: 2px solid #6366f1;
-            border-radius: 12px;
-            background: #000;
-            max-width: 100%;
-            max-height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-lg);
+            box-shadow: 
+                0 0 25px rgba(99, 102, 241, 0.4),
+                0 0 50px rgba(99, 102, 241, 0.15),
+                inset 0 0 25px rgba(255, 255, 255, 0.15);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #gameCanvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+            animation: canvasShimmer 5s infinite;
+            pointer-events: none;
+        }
+
+        #gameCanvas:hover {
+            box-shadow: 
+                0 0 35px rgba(99, 102, 241, 0.6),
+                0 0 70px rgba(99, 102, 241, 0.25),
+                inset 0 0 35px rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        @keyframes canvasShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Enhanced buttons with Three.js-inspired glow effects */
+        .control-btn {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(99, 102, 241, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 6px 20px rgba(99, 102, 241, 0.4),
+                0 0 25px rgba(99, 102, 241, 0.15);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 
+                0 12px 35px rgba(99, 102, 241, 0.6),
+                0 0 40px rgba(99, 102, 241, 0.25);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 1), rgba(99, 102, 241, 0.9));
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:active {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 
+                0 6px 20px rgba(99, 102, 241, 0.5),
+                0 0 25px rgba(99, 102, 241, 0.2);
         }
 
         .game-stats {

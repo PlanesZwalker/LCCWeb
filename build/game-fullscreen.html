@@ -310,19 +310,8 @@
             init() {
                 console.log('🎮 Fullscreen 3D game initialized');
                 
-                // Initialize Three.js
-                this.scene = new THREE.Scene();
-                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                this.renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gameCanvas'), antialias: true });
-                
-                // Set renderer size
-                const container = document.getElementById('gameCanvas').parentElement;
-                const containerRect = container.getBoundingClientRect();
-                this.renderer.setSize(containerRect.width - 40, containerRect.height - 40);
-                
-                // Initialize additional components
-                this.raycaster = new THREE.Raycaster();
-                this.mouse = new THREE.Vector2();
+                // Enhanced Three.js Initialization
+                this.initThreeJS();
                 
                 // Setup scene
                 this.setupScene();
@@ -336,6 +325,57 @@
                 console.log('📐 3D Canvas size set for fullscreen:', this.renderer.domElement.width, 'x', this.renderer.domElement.height);
             }
             
+            // Enhanced Three.js Initialization
+            initThreeJS() {
+                console.log('🎨 Initializing Three.js components...');
+                
+                // Create scene with enhanced background
+                this.scene = new THREE.Scene();
+                this.scene.background = new THREE.Color(0x0a0a0a);
+                
+                // Add atmospheric fog with better parameters
+                this.scene.fog = new THREE.Fog(0x0a0a0a, 15, 60);
+                
+                // Create enhanced camera with better positioning
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.camera.position.set(0, 18, 25);
+                this.camera.lookAt(0, 0, 0);
+                
+                // Create enhanced renderer with better settings
+                this.renderer = new THREE.WebGLRenderer({ 
+                    antialias: true, 
+                    alpha: true,
+                    powerPreference: "high-performance",
+                    stencil: false,
+                    depth: true
+                });
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.4;
+                this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+                
+                // Add renderer to DOM
+                const container = document.getElementById('gameCanvas');
+                if (container) {
+                    container.appendChild(this.renderer.domElement);
+                }
+                
+                // Setup raycaster for mouse interaction
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
+                // Initialize post-processing effects
+                this.setupPostProcessing();
+                
+                // Initialize particle system
+                this.setupParticleSystem();
+                
+                console.log('✅ Three.js components initialized');
+            }
+            
             setupScene() {
                 this.scene.background = new THREE.Color(0x1a1a2e);
                 this.camera.position.set(0, 15, 15);
@@ -343,12 +383,47 @@
             }
             
             setupLights() {
-                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                console.log('💡 Setting up enhanced lighting...');
+                
+                // Ambient light for overall illumination
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
                 this.scene.add(ambientLight);
                 
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-                directionalLight.position.set(10, 10, 5);
+                // Main directional light with enhanced shadows
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                directionalLight.position.set(10, 25, 15);
+                directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 4096;
+                directionalLight.shadow.mapSize.height = 4096;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 60;
+                directionalLight.shadow.camera.left = -15;
+                directionalLight.shadow.camera.right = 15;
+                directionalLight.shadow.camera.top = 15;
+                directionalLight.shadow.camera.bottom = -15;
+                directionalLight.shadow.bias = -0.0001;
                 this.scene.add(directionalLight);
+                
+                // Point light for dramatic effect
+                const pointLight = new THREE.PointLight(0x667eea, 1.0, 40);
+                pointLight.position.set(0, 20, 0);
+                pointLight.castShadow = true;
+                this.scene.add(pointLight);
+                
+                // Spot light for focused illumination
+                const spotLight = new THREE.SpotLight(0xffffff, 0.8, 40, Math.PI / 6, 0.3);
+                spotLight.position.set(0, 30, 0);
+                spotLight.target.position.set(0, 0, 0);
+                spotLight.castShadow = true;
+                this.scene.add(spotLight);
+                this.scene.add(spotLight.target);
+                
+                // Additional rim light for depth
+                const rimLight = new THREE.DirectionalLight(0x4ecdc4, 0.6);
+                rimLight.position.set(-10, 10, -10);
+                this.scene.add(rimLight);
+                
+                console.log('✅ Enhanced lighting setup complete');
             }
             
             setupGrid() {
@@ -594,6 +669,89 @@
                 }
                 
                 this.renderer.render(this.scene, this.camera);
+            }
+
+            // Setup Post-Processing Effects
+            setupPostProcessing() {
+                console.log('🎭 Setting up post-processing effects...');
+                
+                // Import post-processing modules dynamically
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/three@0.178.0/examples/js/postprocessing/EffectComposer.js';
+                script.onload = () => {
+                    this.setupEffects();
+                };
+                document.head.appendChild(script);
+            }
+            
+            // Setup Visual Effects
+            setupEffects() {
+                try {
+                    // Create composer for post-processing
+                    this.composer = new THREE.EffectComposer(this.renderer);
+                    
+                    // Render pass
+                    const renderPass = new THREE.RenderPass(this.scene, this.camera);
+                    this.composer.addPass(renderPass);
+                    
+                    // Unreal Bloom pass for glow effect
+                    const bloomPass = new THREE.UnrealBloomPass(
+                        new THREE.Vector2(window.innerWidth, window.innerHeight),
+                        0.5,  // strength
+                        0.4,  // radius
+                        0.85  // threshold
+                    );
+                    this.composer.addPass(bloomPass);
+                    
+                    // Color correction
+                    const colorCorrectionPass = new THREE.ShaderPass(THREE.ColorCorrectionShader);
+                    colorCorrectionPass.uniforms.powRGB.value = new THREE.Vector3(1.1, 1.1, 1.1);
+                    this.composer.addPass(colorCorrectionPass);
+                    
+                    console.log('✅ Post-processing effects initialized');
+                } catch (error) {
+                    console.log('⚠️ Post-processing not available, using standard rendering');
+                    this.composer = null;
+                }
+            }
+            
+            // Setup Particle System
+            setupParticleSystem() {
+                console.log('✨ Setting up particle system...');
+                
+                // Create particle geometry
+                const particleCount = 300;
+                const particles = new THREE.BufferGeometry();
+                const positions = new Float32Array(particleCount * 3);
+                const colors = new Float32Array(particleCount * 3);
+                
+                for (let i = 0; i < particleCount * 3; i += 3) {
+                    positions[i] = (Math.random() - 0.5) * 120;
+                    positions[i + 1] = Math.random() * 60;
+                    positions[i + 2] = (Math.random() - 0.5) * 120;
+                    
+                    colors[i] = Math.random() * 0.5 + 0.5;
+                    colors[i + 1] = Math.random() * 0.5 + 0.5;
+                    colors[i + 2] = Math.random() * 0.5 + 0.5;
+                }
+                
+                particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                particles.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                
+                // Create particle material
+                const particleMaterial = new THREE.PointsMaterial({
+                    size: 0.8,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.7,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                // Create particle system
+                this.particleSystem = new THREE.Points(particles, particleMaterial);
+                this.scene.add(this.particleSystem);
+                
+                console.log('✅ Particle system initialized');
             }
         }
 
