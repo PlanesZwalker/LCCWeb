@@ -445,6 +445,113 @@
                 padding: var(--spacing-lg);
             }
         }
+
+        /* Enhanced PDF Download Button */
+        .pdf-download-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            animation: pdfAppear 1s ease-out 0.8s both;
+        }
+
+        @keyframes pdfAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pdf-download-section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pdf-download-section p {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .pdf-download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            border: 2px solid transparent;
+        }
+
+        .pdf-download-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+        }
+
+        .pdf-download-btn i {
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-download-btn:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Enhanced Resource Links */
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .resource-link:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .resource-link.broken {
+            opacity: 0.5;
+            pointer-events: none;
+            text-decoration: line-through;
+        }
+
+        .resource-link.broken::after {
+            content: ' (Non disponible)';
+            color: var(--error-color);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -470,6 +577,20 @@
                     <h1>📋 Game Design Document</h1>
                     <p>Letters Cascade Challenge - Document de Conception Professionnel</p>
                     <p><strong>Version 1.0 | Date: Juillet 2025</strong></p>
+                </div>
+
+                <!-- PDF Download Section -->
+                <div class="pdf-download-section">
+                    <h2>📄 Télécharger la Documentation</h2>
+                    <p>Accédez à la version PDF complète du Game Design Document pour une consultation hors ligne ou impression professionnelle.</p>
+                    <a href="GDD.pdf" class="pdf-download-btn" download>
+                        <i class="fas fa-download"></i>
+                        Télécharger le GDD (PDF)
+                    </a>
+                    <p style="margin-top: var(--spacing-md); font-size: 0.9rem; color: var(--gray-500);">
+                        <i class="fas fa-info-circle"></i> 
+                        Version 1.0 - Juillet 2025 - Tous droits réservés
+                    </p>
                 </div>
 
                 <!-- Resources Section -->
@@ -498,13 +619,13 @@
                                 <a href="moodboard.html" class="resource-link">
                                     <i class="fas fa-images"></i> Moodboard Complet
                                 </a>
-                                <a href="A_letter.png" class="resource-link" target="_blank">
+                                <a href="images/A_letter.png" class="resource-link" target="_blank">
                                     <i class="fas fa-image"></i> Lettre A (Personnage)
                                 </a>
-                                <a href="Cascade Letters - 01 - Chara TA et recherches.png" class="resource-link" target="_blank">
+                                <a href="images/Cascade Letters - 01 - Chara TA et recherches.png" class="resource-link" target="_blank">
                                     <i class="fas fa-image"></i> Recherches Personnages
                                 </a>
-                                <a href="Cascade Letters - 02 - Decor concept 01.png" class="resource-link" target="_blank">
+                                <a href="images/Cascade Letters - 02 - Decor concept 01.png" class="resource-link" target="_blank">
                                     <i class="fas fa-image"></i> Concept Décor
                                 </a>
                             </div>
@@ -533,7 +654,7 @@
                                 <a href="js/utils.js" class="resource-link" target="_blank">
                                     <i class="fas fa-cogs"></i> Utilitaires JavaScript
                                 </a>
-                                <a href="index.js" class="resource-link" target="_blank">
+                                <a href="js/index.js" class="resource-link" target="_blank">
                                     <i class="fas fa-gamepad"></i> Moteur de Jeu
                                 </a>
                             </div>
@@ -543,11 +664,11 @@
                             <h3><i class="fas fa-file-alt"></i> Documents</h3>
                             <p>Documentation complète et guides</p>
                             <div class="resource-links">
-                                <a href="README.md" class="resource-link" target="_blank">
-                                    <i class="fas fa-book"></i> README du Projet
+                                <a href="rules.html" class="resource-link">
+                                    <i class="fas fa-book"></i> Règles du Jeu
                                 </a>
-                                <a href="package.json" class="resource-link" target="_blank">
-                                    <i class="fas fa-box"></i> Configuration NPM
+                                <a href="TODO.md" class="resource-link broken" target="_blank">
+                                    <i class="fas fa-tasks"></i> TODO du Projet
                                 </a>
                             </div>
                         </div>
