@@ -285,97 +285,227 @@ class LettersCascadeGame {
     }
     
     showWordCompletionNotification(word, score) {
-        console.log('🎉 Word completed:', word, 'Score:', score);
+        console.log('🎉 Showing word completion notification:', { word, score });
         
-        // Create enhanced notification
+        // Create notification element with enhanced styling
         const notification = document.createElement('div');
         notification.className = 'word-completion-notification';
         notification.innerHTML = `
             <div class="notification-content">
-                <div class="word-display">${word}</div>
-                <div class="score-display">+${score} points</div>
-                <div class="combo-display">Combo: ${this.combo}x</div>
+                <div class="word-display">
+                    <span class="word-text">${word}</span>
+                    <span class="score-bonus">+${score}</span>
+                </div>
+                <div class="combo-display">
+                    <span class="combo-text">Combo x${this.combo}</span>
+                </div>
+                <div class="particle-container"></div>
             </div>
         `;
         
-        notification.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
-            z-index: 10000;
-            animation: wordCompletionAppear 0.6s ease-out;
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-weight: 600;
-            min-width: 200px;
-        `;
-        
-        // Add CSS animation
+        // Add enhanced CSS styles
         const style = document.createElement('style');
         style.textContent = `
+            .word-completion-notification {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 10000;
+                animation: wordCompletionAppear 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+            
             @keyframes wordCompletionAppear {
                 0% {
                     opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.5);
+                    transform: translate(-50%, -50%) scale(0.3) rotate(-10deg);
                 }
                 50% {
-                    transform: translate(-50%, -50%) scale(1.1);
+                    transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
                 }
                 100% {
                     opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
+                    transform: translate(-50%, -50%) scale(1) rotate(0deg);
                 }
+            }
+            
+            .notification-content {
+                background: linear-gradient(135deg, #10b981, #059669);
+                border-radius: 20px;
+                padding: 30px 40px;
+                box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                backdrop-filter: blur(20px);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .notification-content::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+                animation: pulse 2s ease-in-out infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.6; }
             }
             
             .word-display {
-                font-size: 2rem;
-                font-weight: 700;
-                margin-bottom: 0.5rem;
-                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                text-align: center;
+                margin-bottom: 15px;
             }
             
-            .score-display {
-                font-size: 1.25rem;
-                opacity: 0.9;
-                margin-bottom: 0.25rem;
+            .word-text {
+                display: block;
+                font-size: 3rem;
+                font-weight: 900;
+                color: white;
+                text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                margin-bottom: 10px;
+                animation: wordGlow 1s ease-in-out infinite alternate;
+            }
+            
+            @keyframes wordGlow {
+                from { text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
+                to { text-shadow: 0 4px 30px rgba(255, 255, 255, 0.5); }
+            }
+            
+            .score-bonus {
+                display: block;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #fbbf24;
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                animation: scoreBounce 0.6s ease-out;
+            }
+            
+            @keyframes scoreBounce {
+                0% { transform: scale(0.5); opacity: 0; }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); opacity: 1; }
             }
             
             .combo-display {
-                font-size: 1rem;
-                opacity: 0.8;
-                background: rgba(255, 255, 255, 0.2);
-                padding: 0.25rem 0.75rem;
-                border-radius: 0.5rem;
+                text-align: center;
+            }
+            
+            .combo-text {
                 display: inline-block;
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-weight: 600;
+                font-size: 1rem;
+                animation: comboPulse 1s ease-in-out infinite;
+            }
+            
+            @keyframes comboPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+            
+            .particle-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
             }
         `;
-        document.head.appendChild(style);
         
+        document.head.appendChild(style);
         document.body.appendChild(notification);
         
-        // Enhanced particle effect
-        this.particleSystem.createWordCompletionEffect(word);
+        // Create particle effects
+        this.createNotificationParticles(notification);
         
-        // Play enhanced sound
+        // Play sound effect
         this.audioManager.playWordComplete();
         
-        // Remove notification after delay
+        // Remove notification after animation
         setTimeout(() => {
-            notification.style.animation = 'wordCompletionDisappear 0.5s ease-out';
-            notification.style.animationFillMode = 'forwards';
+            notification.style.animation = 'wordCompletionDisappear 0.5s ease-out forwards';
+            
+            // Add disappear animation
+            const disappearStyle = document.createElement('style');
+            disappearStyle.textContent = `
+                @keyframes wordCompletionDisappear {
+                    to {
+                        opacity: 0;
+                        transform: translate(-50%, -50%) scale(0.8) rotate(10deg);
+                    }
+                }
+            `;
+            document.head.appendChild(disappearStyle);
             
             setTimeout(() => {
-                if (document.body.contains(notification)) {
-                    document.body.removeChild(notification);
-                }
+                document.body.removeChild(notification);
+                document.head.removeChild(style);
+                document.head.removeChild(disappearStyle);
             }, 500);
         }, 2000);
+    }
+    
+    createNotificationParticles(notification) {
+        const container = notification.querySelector('.particle-container');
+        const rect = container.getBoundingClientRect();
+        
+        // Create celebration particles
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                background: ${i % 3 === 0 ? '#fbbf24' : i % 3 === 1 ? '#ef4444' : '#8b5cf6'};
+                border-radius: 50%;
+                pointer-events: none;
+                animation: particleFloat 2s ease-out forwards;
+            `;
+            
+            // Random position
+            particle.style.left = Math.random() * rect.width + 'px';
+            particle.style.top = Math.random() * rect.height + 'px';
+            
+            // Random animation delay
+            particle.style.animationDelay = Math.random() * 0.5 + 's';
+            
+            container.appendChild(particle);
+            
+            // Add particle animation
+            const particleStyle = document.createElement('style');
+            particleStyle.textContent = `
+                @keyframes particleFloat {
+                    0% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translateY(-100px) scale(0);
+                    }
+                }
+            `;
+            document.head.appendChild(particleStyle);
+            
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+                if (particleStyle.parentNode) {
+                    particleStyle.parentNode.removeChild(particleStyle);
+                }
+            }, 2500);
+        }
     }
     
     removeWordFromGrid(word) {
@@ -1024,20 +1154,17 @@ class LettersCascadeGame {
         });
         
         // Clear canvas with enhanced background
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Draw enhanced background
         this.drawEnhancedBackground();
         
-        // Draw grid with enhanced styling
+        // Draw enhanced grid
         this.drawEnhancedGrid();
         
-        // Draw falling letter with enhanced effects
+        // Draw enhanced falling letter with VFX
         if (this.fallingLetter) {
             this.drawEnhancedFallingLetter();
         }
         
-        // Draw particles
+        // Render particle effects
         this.particleSystem.render(this.ctx);
         
         // Draw UI overlays
@@ -1048,133 +1175,176 @@ class LettersCascadeGame {
     
     drawEnhancedBackground() {
         // Create gradient background
-        const gradient = this.ctx.createLinearGradient(0, 0, this.canvas.width, this.canvas.height);
-        gradient.addColorStop(0, 'rgba(102, 126, 234, 0.1)');
-        gradient.addColorStop(1, 'rgba(118, 75, 162, 0.1)');
+        const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+        gradient.addColorStop(0, '#667eea');
+        gradient.addColorStop(1, '#764ba2');
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         
-        // Add subtle pattern
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-        this.ctx.lineWidth = 1;
-        for (let i = 0; i < this.canvas.width; i += 40) {
+        // Add animated particles in background
+        const time = Date.now() * 0.001;
+        for (let i = 0; i < 20; i++) {
+            const x = (i * 50 + time * 30) % this.canvas.width;
+            const y = (i * 30 + time * 20) % this.canvas.height;
+            const size = Math.sin(time + i) * 2 + 3;
+            const alpha = Math.sin(time + i) * 0.3 + 0.1;
+            
+            this.ctx.save();
+            this.ctx.globalAlpha = alpha;
+            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
             this.ctx.beginPath();
-            this.ctx.moveTo(i, 0);
-            this.ctx.lineTo(i, this.canvas.height);
-            this.ctx.stroke();
-        }
-        for (let i = 0; i < this.canvas.height; i += 40) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(0, i);
-            this.ctx.lineTo(this.canvas.width, i);
-            this.ctx.stroke();
+            this.ctx.arc(x, y, size, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.restore();
         }
     }
     
     drawEnhancedGrid() {
         console.log('🏗️ Drawing enhanced grid...');
-        for (let row = 0; row < this.currentGridSize; row++) {
-            for (let col = 0; col < this.currentGridSize; col++) {
-                const x = col * this.cellSize;
-                const y = row * this.cellSize;
+        
+        const gridSize = this.currentGridSize;
+        const cellSize = this.cellSize;
+        const startX = (this.canvas.width - gridSize * cellSize) / 2;
+        const startY = (this.canvas.height - gridSize * cellSize) / 2;
+        
+        // Draw grid cells with enhanced effects
+        for (let row = 0; row < gridSize; row++) {
+            for (let col = 0; col < gridSize; col++) {
+                const x = startX + col * cellSize;
+                const y = startY + row * cellSize;
+                const letter = this.grid[row][col];
                 
-                if (this.grid[row][col]) {
-                    console.log(`📝 Drawing letter '${this.grid[row][col]}' at position (${row}, ${col})`);
-                    this.drawEnhancedCell(x, y, this.grid[row][col]);
+                if (letter) {
+                    this.drawEnhancedCell(x, y, letter);
                 } else {
                     this.drawEnhancedEmptyCell(x, y);
                 }
             }
         }
-        console.log('✅ Grid drawing completed');
+        
+        console.log('✅ Enhanced grid drawn with', this.grid.flat().filter(cell => cell !== null).length, 'letters');
     }
     
     drawEnhancedCell(x, y, letter) {
-        // Enhanced cell background with better contrast
+        // Create cell background with gradient
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.98)');
-        gradient.addColorStop(1, 'rgba(248, 250, 252, 0.95)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.7)');
+        
+        // Draw cell background with shadow
+        this.ctx.save();
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.ctx.shadowBlur = 5;
+        this.ctx.shadowOffsetX = 2;
+        this.ctx.shadowOffsetY = 2;
         
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Enhanced cell border with better visibility
-        this.ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
+        this.ctx.restore();
+        
+        // Draw cell border with glow effect
+        this.ctx.strokeStyle = '#4f46e5';
         this.ctx.lineWidth = 2;
+        this.ctx.shadowColor = '#4f46e5';
+        this.ctx.shadowBlur = 10;
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Enhanced letter styling with better contrast
+        // Draw letter with enhanced styling
         this.ctx.fillStyle = '#4f46e5';
         this.ctx.font = 'bold 22px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        
-        // Enhanced text shadow for better readability
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-        this.ctx.shadowBlur = 3;
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        this.ctx.shadowBlur = 2;
         this.ctx.shadowOffsetX = 1;
         this.ctx.shadowOffsetY = 1;
         
         this.ctx.fillText(letter, x + this.cellSize / 2, y + this.cellSize / 2);
         
-        // Reset shadow
-        this.ctx.shadowColor = 'transparent';
-        this.ctx.shadowBlur = 0;
-        this.ctx.shadowOffsetX = 0;
-        this.ctx.shadowOffsetY = 0;
+        // Add subtle animation
+        const time = Date.now() * 0.002;
+        const pulse = Math.sin(time + x + y) * 0.1 + 1;
+        
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.fillStyle = '#4f46e5';
+        this.ctx.beginPath();
+        this.ctx.arc(x + this.cellSize / 2, y + this.cellSize / 2, this.cellSize * 0.3 * pulse, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
     }
     
     drawEnhancedEmptyCell(x, y) {
-        // Empty cell with subtle styling
+        // Draw subtle grid lines for empty cells
         this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
         this.ctx.lineWidth = 1;
-        this.ctx.setLineDash([5, 5]);
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
-        this.ctx.setLineDash([]);
     }
     
     drawEnhancedFallingLetter() {
         if (!this.fallingLetter) return;
         
-        const x = this.fallingLetter.x * this.cellSize;
-        const y = this.fallingLetter.y * this.cellSize;
-        
-        // Check bounds to prevent gradient errors
-        if (x < 0 || y < 0 || x >= this.canvas.width || y >= this.canvas.height) {
-            return;
-        }
-        
-        // Enhanced falling letter background with pulsing effect
+        const x = this.fallingLetter.x;
+        const y = this.fallingLetter.y;
+        const letter = this.fallingLetter.letter;
         const time = Date.now() * 0.005;
-        const pulse = Math.sin(time) * 0.1 + 0.9;
         
-        const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, `rgba(139, 92, 246, ${0.9 * pulse})`);
-        gradient.addColorStop(1, `rgba(99, 102, 241, ${0.9 * pulse})`);
+        // Create pulsing effect
+        const pulse = Math.sin(time) * 0.2 + 1;
+        const glowIntensity = Math.sin(time * 2) * 0.5 + 0.5;
+        
+        // Draw glow effect
+        this.ctx.save();
+        this.ctx.shadowColor = '#667eea';
+        this.ctx.shadowBlur = 20 * pulse;
+        this.ctx.globalAlpha = glowIntensity * 0.3;
+        
+        // Create gradient for glow
+        const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.cellSize * 0.8);
+        gradient.addColorStop(0, '#667eea');
+        gradient.addColorStop(1, 'transparent');
         
         this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, this.cellSize * 0.8 * pulse, 0, Math.PI * 2);
+        this.ctx.fill();
         
-        // Enhanced falling letter border with glow effect
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-        this.ctx.lineWidth = 3;
-        this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+        this.ctx.restore();
         
-        // Enhanced falling letter text with better contrast
+        // Draw falling letter with enhanced styling
+        this.ctx.save();
+        this.ctx.shadowColor = '#667eea';
+        this.ctx.shadowBlur = 15;
+        
+        // Create gradient for letter background
+        const letterGradient = this.ctx.createLinearGradient(x - this.cellSize/2, y - this.cellSize/2, x + this.cellSize/2, y + this.cellSize/2);
+        letterGradient.addColorStop(0, '#667eea');
+        letterGradient.addColorStop(1, '#8b5cf6');
+        
+        this.ctx.fillStyle = letterGradient;
+        this.ctx.fillRect(x - this.cellSize/2 + 2, y - this.cellSize/2 + 2, this.cellSize - 4, this.cellSize - 4);
+        
+        // Draw letter
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 22px Arial';
+        this.ctx.font = 'bold 24px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(letter, x, y);
         
-        // Enhanced glow effect
-        this.ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
-        this.ctx.shadowBlur = 8;
-        this.ctx.fillText(this.fallingLetter.letter, x + this.cellSize / 2, y + this.cellSize / 2);
+        this.ctx.restore();
         
-        // Reset shadow
-        this.ctx.shadowColor = 'transparent';
-        this.ctx.shadowBlur = 0;
+        // Add rotation animation
+        this.ctx.save();
+        this.ctx.translate(x, y);
+        this.ctx.rotate(this.fallingLetter.rotation || 0);
+        this.ctx.globalAlpha = 0.3;
+        this.ctx.fillStyle = '#667eea';
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, this.cellSize * 0.4, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
     }
     
     drawUIOverlays() {
@@ -1303,7 +1473,7 @@ class LettersCascadeGame {
     
     showComboEffect(bonus) {
         // Create combo effect
-        this.particleSystem.createComboEffect(bonus);
+        this.particleSystem.createComboEffect(bonus, this.fallingLetter.x * this.cellSize, this.fallingLetter.y * this.cellSize);
     }
     
     showLevelUpEffect() {
@@ -1555,79 +1725,252 @@ class AudioManager {
 class ParticleSystem {
     constructor() {
         this.particles = [];
+        this.effects = {
+            placement: { count: 15, color: '#667eea', size: 3, speed: 2 },
+            wordComplete: { count: 25, color: '#10b981', size: 4, speed: 3 },
+            combo: { count: 20, color: '#f59e0b', size: 3, speed: 2.5 },
+            levelUp: { count: 30, color: '#8b5cf6', size: 5, speed: 4 },
+            explosion: { count: 40, color: '#ef4444', size: 6, speed: 5 }
+        };
     }
     
     createPlacementEffect(x, y) {
-        for (let i = 0; i < 10; i++) {
-            this.particles.push({
-                x: x * 40 + 20,
-                y: y * 40 + 20,
-                vx: (Math.random() - 0.5) * 4,
-                vy: (Math.random() - 0.5) * 4,
+        console.log('✨ Creating placement effect at:', { x, y });
+        const effect = this.effects.placement;
+        
+        for (let i = 0; i < effect.count; i++) {
+            const particle = {
+                x: x + Math.random() * 40 - 20,
+                y: y + Math.random() * 40 - 20,
+                vx: (Math.random() - 0.5) * effect.speed,
+                vy: (Math.random() - 0.5) * effect.speed,
                 life: 1.0,
-                color: '#667eea'
-            });
+                maxLife: 1.0,
+                size: effect.size + Math.random() * 2,
+                color: effect.color,
+                type: 'placement',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.2
+            };
+            this.particles.push(particle);
         }
     }
     
-    createWordCompletionEffect(word) {
-        for (let i = 0; i < 20; i++) {
-            this.particles.push({
-                x: 200,
-                y: 200,
-                vx: (Math.random() - 0.5) * 6,
-                vy: (Math.random() - 0.5) * 6,
-                life: 1.0,
-                color: '#4ecdc4'
-            });
+    createWordCompletionEffect(word, x, y) {
+        console.log('🎉 Creating word completion effect for:', word);
+        const effect = this.effects.wordComplete;
+        
+        // Create letter particles for each letter in the word
+        for (let i = 0; i < word.length; i++) {
+            for (let j = 0; j < 8; j++) {
+                const particle = {
+                    x: x + i * 30 + (Math.random() - 0.5) * 20,
+                    y: y + (Math.random() - 0.5) * 20,
+                    vx: (Math.random() - 0.5) * effect.speed * 2,
+                    vy: (Math.random() - 0.5) * effect.speed * 2,
+                    life: 1.5,
+                    maxLife: 1.5,
+                    size: effect.size + Math.random() * 3,
+                    color: effect.color,
+                    type: 'wordComplete',
+                    alpha: 1.0,
+                    letter: word[i],
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.3
+                };
+                this.particles.push(particle);
+            }
         }
-    }
-    
-    createComboEffect(bonus) {
+        
+        // Create celebration particles
         for (let i = 0; i < 15; i++) {
-            this.particles.push({
-                x: 200,
-                y: 200,
-                vx: (Math.random() - 0.5) * 5,
-                vy: (Math.random() - 0.5) * 5,
-                life: 1.0,
-                color: '#fbbf24'
-            });
+            const angle = (i / 15) * Math.PI * 2;
+            const radius = 50 + Math.random() * 30;
+            
+            const particle = {
+                x: x + Math.cos(angle) * radius,
+                y: y + Math.sin(angle) * radius,
+                vx: Math.cos(angle) * effect.speed,
+                vy: Math.sin(angle) * effect.speed,
+                life: 2.0,
+                maxLife: 2.0,
+                size: effect.size + Math.random() * 2,
+                color: '#ffd700',
+                type: 'celebration',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.4
+            };
+            this.particles.push(particle);
+        }
+    }
+    
+    createComboEffect(bonus, x, y) {
+        console.log('🔥 Creating combo effect with bonus:', bonus);
+        const effect = this.effects.combo;
+        
+        for (let i = 0; i < effect.count; i++) {
+            const particle = {
+                x: x + (Math.random() - 0.5) * 100,
+                y: y + (Math.random() - 0.5) * 100,
+                vx: (Math.random() - 0.5) * effect.speed,
+                vy: (Math.random() - 0.5) * effect.speed,
+                life: 1.2,
+                maxLife: 1.2,
+                size: effect.size + Math.random() * 3,
+                color: effect.color,
+                type: 'combo',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.3,
+                text: `+${bonus}`
+            };
+            this.particles.push(particle);
         }
     }
     
     createLevelUpEffect() {
-        for (let i = 0; i < 25; i++) {
-            this.particles.push({
-                x: 200,
-                y: 200,
-                vx: (Math.random() - 0.5) * 7,
-                vy: (Math.random() - 0.5) * 7,
-                life: 1.0,
-                color: '#ef4444'
-            });
+        console.log('🏆 Creating level up effect');
+        const effect = this.effects.levelUp;
+        const centerX = this.canvas?.width / 2 || 400;
+        const centerY = this.canvas?.height / 2 || 300;
+        
+        // Create spiral effect
+        for (let i = 0; i < effect.count; i++) {
+            const angle = (i / effect.count) * Math.PI * 4;
+            const radius = 20 + (i / effect.count) * 100;
+            
+            const particle = {
+                x: centerX + Math.cos(angle) * radius,
+                y: centerY + Math.sin(angle) * radius,
+                vx: Math.cos(angle) * effect.speed,
+                vy: Math.sin(angle) * effect.speed,
+                life: 2.5,
+                maxLife: 2.5,
+                size: effect.size + Math.random() * 4,
+                color: effect.color,
+                type: 'levelUp',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.5
+            };
+            this.particles.push(particle);
+        }
+        
+        // Create explosion effect
+        for (let i = 0; i < 20; i++) {
+            const angle = (i / 20) * Math.PI * 2;
+            const speed = 3 + Math.random() * 2;
+            
+            const particle = {
+                x: centerX,
+                y: centerY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                life: 1.8,
+                maxLife: 1.8,
+                size: effect.size + Math.random() * 3,
+                color: '#ff6b6b',
+                type: 'explosion',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.4
+            };
+            this.particles.push(particle);
+        }
+    }
+    
+    createExplosionEffect(x, y, intensity = 1) {
+        console.log('💥 Creating explosion effect at:', { x, y, intensity });
+        const effect = this.effects.explosion;
+        
+        for (let i = 0; i < effect.count * intensity; i++) {
+            const angle = (i / (effect.count * intensity)) * Math.PI * 2;
+            const speed = effect.speed + Math.random() * 3;
+            
+            const particle = {
+                x: x,
+                y: y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                life: 1.5,
+                maxLife: 1.5,
+                size: effect.size + Math.random() * 4,
+                color: effect.color,
+                type: 'explosion',
+                alpha: 1.0,
+                rotation: Math.random() * Math.PI * 2,
+                rotationSpeed: (Math.random() - 0.5) * 0.6
+            };
+            this.particles.push(particle);
         }
     }
     
     render(ctx) {
+        if (!ctx) return;
+        
+        // Update and render particles
         for (let i = this.particles.length - 1; i >= 0; i--) {
             const particle = this.particles[i];
             
-            // Update particle
+            // Update position
             particle.x += particle.vx;
             particle.y += particle.vy;
-            particle.life -= 0.02;
             
-            // Draw particle
-            if (particle.life > 0) {
-                ctx.save();
-                ctx.globalAlpha = particle.life;
+            // Update life
+            particle.life -= 0.016; // 60 FPS
+            
+            // Update rotation
+            particle.rotation += particle.rotationSpeed;
+            
+            // Update alpha
+            particle.alpha = particle.life / particle.maxLife;
+            
+            // Update size (pulse effect)
+            const pulse = Math.sin(Date.now() * 0.01 + i) * 0.2 + 1;
+            const currentSize = particle.size * pulse;
+            
+            // Render particle
+            ctx.save();
+            ctx.globalAlpha = particle.alpha;
+            ctx.translate(particle.x, particle.y);
+            ctx.rotate(particle.rotation);
+            
+            // Draw particle based on type
+            if (particle.type === 'wordComplete' && particle.letter) {
+                // Draw letter particle
+                ctx.fillStyle = particle.color;
+                ctx.font = `${currentSize * 2}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(particle.letter, 0, 0);
+            } else if (particle.type === 'combo' && particle.text) {
+                // Draw combo text
+                ctx.fillStyle = particle.color;
+                ctx.font = `bold ${currentSize * 1.5}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(particle.text, 0, 0);
+            } else {
+                // Draw regular particle
                 ctx.fillStyle = particle.color;
                 ctx.beginPath();
-                ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
+                ctx.arc(0, 0, currentSize, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.restore();
-            } else {
+                
+                // Add glow effect
+                ctx.shadowColor = particle.color;
+                ctx.shadowBlur = currentSize * 2;
+                ctx.beginPath();
+                ctx.arc(0, 0, currentSize * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+            
+            // Remove dead particles
+            if (particle.life <= 0) {
                 this.particles.splice(i, 1);
             }
         }
