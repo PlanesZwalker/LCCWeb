@@ -648,6 +648,9 @@
                         <button class="btn btn-info" onclick="game3D.toggleFullScreen()" id="fullscreenBtn">
                             <i class="fas fa-expand"></i> Plein Écran
                         </button>
+                        <a href="game-fullscreen.html" class="btn btn-success">
+                            <i class="fas fa-external-link-alt"></i> Version Immersive
+                        </a>
                     </div>
                 </div>
             </div>
@@ -2585,7 +2588,7 @@
             console.log('🖥️ toggleFullScreen() called');
             
             const gameContainer = document.querySelector('.game-container');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const fullscreenBtn = document.querySelector('button[onclick="game3D.toggleFullScreen()"]');
             
             console.log('📦 Game container found:', gameContainer);
             console.log('🔘 Fullscreen button found:', fullscreenBtn);
@@ -2603,7 +2606,7 @@
             console.log('📥 enterFullScreen() called');
             
             const gameContainer = document.querySelector('.game-container');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const fullscreenBtn = document.querySelector('button[onclick="game3D.toggleFullScreen()"]');
             
             gameContainer.classList.add('fullscreen');
             fullscreenBtn.innerHTML = '<i class="fas fa-compress"></i> Sortir';
@@ -2677,7 +2680,7 @@
             console.log('📤 exitFullScreen() called');
             
             const gameContainer = document.querySelector('.game-container');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const fullscreenBtn = document.querySelector('button[onclick="game3D.toggleFullScreen()"]');
             
             gameContainer.classList.remove('fullscreen');
             fullscreenBtn.innerHTML = '<i class="fas fa-expand"></i> Plein Écran';

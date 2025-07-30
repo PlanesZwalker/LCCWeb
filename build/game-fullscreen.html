@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters Cascade Challenge - 3D Fullscreen</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <style>
+        /* Fullscreen Optimizations */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+        }
+
+        .fullscreen-container {
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            gap: 20px;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow-y: auto;
+        }
+
+        .game-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .game-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameCanvas {
+            border: 2px solid #6366f1;
+            border-radius: 12px;
+            background: #000;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .game-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .game-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .exit-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exit-fullscreen:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .word-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .word-list li {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 8px;
+            font-weight: 600;
+            color: #6366f1;
+        }
+
+        .queue-display {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .queue-letter {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #6366f1;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 1200px) {
+            .fullscreen-container {
+                grid-template-columns: 150px 1fr 150px;
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .fullscreen-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+            }
+            
+            .sidebar {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="fullscreen-container">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="section-title">
+                <i class="fas fa-list"></i> Mots à former
+            </div>
+            <ul class="word-list" id="wordList">
+                <li>CHAT</li>
+                <li>MAISON</li>
+                <li>VOITURE</li>
+                <li>ORDINATEUR</li>
+                <li>TELEPHONE</li>
+            </ul>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-area">
+            <div class="game-canvas-container">
+                <canvas id="gameCanvas"></canvas>
+                
+                <!-- Game Stats Overlay -->
+                <div class="game-stats">
+                    <div><strong>Score:</strong> <span id="score">0</span></div>
+                    <div><strong>Niveau:</strong> <span id="level">1</span></div>
+                    <div><strong>Mots complétés:</strong> <span id="wordsCompleted">0</span></div>
+                    <div><strong>Combo:</strong> <span id="combo">0</span></div>
+                </div>
+
+                <!-- Game Controls -->
+                <div class="game-controls">
+                    <button class="control-btn" onclick="startGame()">
+                        <i class="fas fa-play"></i> Démarrer
+                    </button>
+                    <button class="control-btn" onclick="resetGame()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button class="control-btn" onclick="pauseGame()">
+                        <i class="fas fa-pause"></i> Pause
+                    </button>
+                    <button class="control-btn" onclick="toggleFullScreen()">
+                        <i class="fas fa-expand"></i> Plein Écran
+                    </button>
+                </div>
+
+                <!-- Exit Fullscreen -->
+                <button class="exit-fullscreen" onclick="exitFullscreen()">
+                    <i class="fas fa-times"></i> Quitter Plein Écran
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="sidebar">
+            <div class="section-title">
+                <i class="fas fa-eye"></i> Prochaines lettres
+            </div>
+            <div class="queue-display" id="letterQueue">
+                <div class="queue-letter">E</div>
+                <div class="queue-letter">Z</div>
+                <div class="queue-letter">E</div>
+                <div class="queue-letter">W</div>
+                <div class="queue-letter">N</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game3D class for fullscreen 3D game
+        class Game3D {
+            constructor() {
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.gameRunning = false;
+                this.score = 0;
+                this.level = 1;
+                this.wordsCompleted = 0;
+                this.combo = 0;
+                this.init();
+            }
+
+            init() {
+                console.log('🎮 Fullscreen 3D game initialized');
+                
+                // Initialize Three.js
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gameCanvas'), antialias: true });
+                
+                // Set renderer size
+                const container = document.getElementById('gameCanvas').parentElement;
+                const containerRect = container.getBoundingClientRect();
+                this.renderer.setSize(containerRect.width - 40, containerRect.height - 40);
+                
+                // Setup scene
+                this.setupScene();
+                this.setupLights();
+                this.setupGrid();
+                
+                // Start render loop
+                this.animate();
+                
+                console.log('📐 3D Canvas size set for fullscreen:', this.renderer.domElement.width, 'x', this.renderer.domElement.height);
+            }
+
+            setupScene() {
+                // Add ambient light
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
+
+                // Add directional light
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(10, 10, 5);
+                this.scene.add(directionalLight);
+
+                // Add point light
+                const pointLight = new THREE.PointLight(0x6366f1, 1, 100);
+                pointLight.position.set(0, 10, 0);
+                this.scene.add(pointLight);
+
+                // Set camera position
+                this.camera.position.set(0, 5, 10);
+                this.camera.lookAt(0, 0, 0);
+            }
+
+            setupLights() {
+                // Additional lighting for better 3D effect
+                const spotLight = new THREE.SpotLight(0x8b5cf6, 1);
+                spotLight.position.set(0, 15, 0);
+                spotLight.angle = Math.PI / 4;
+                spotLight.penumbra = 0.1;
+                spotLight.decay = 2;
+                spotLight.distance = 200;
+                this.scene.add(spotLight);
+            }
+
+            setupGrid() {
+                // Create 3D grid
+                const gridHelper = new THREE.GridHelper(10, 10, 0x6366f1, 0x6366f1);
+                this.scene.add(gridHelper);
+
+                // Add some 3D letters as example
+                this.addSampleLetters();
+            }
+
+            addSampleLetters() {
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const colors = [0xf59e0b, 0x10b981, 0x3b82f6, 0x8b5cf6, 0xef4444];
+
+                letters.forEach((letter, index) => {
+                    const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+                    const material = new THREE.MeshPhongMaterial({ 
+                        color: colors[index],
+                        transparent: true,
+                        opacity: 0.9
+                    });
+                    const cube = new THREE.Mesh(geometry, material);
+                    
+                    cube.position.set((index - 2) * 2, 1, 0);
+                    cube.userData = { letter: letter };
+                    
+                    this.scene.add(cube);
+                });
+            }
+
+            animate() {
+                requestAnimationFrame(() => this.animate());
+
+                // Rotate camera slowly
+                const time = Date.now() * 0.001;
+                this.camera.position.x = Math.cos(time * 0.5) * 10;
+                this.camera.position.z = Math.sin(time * 0.5) * 10;
+                this.camera.lookAt(0, 0, 0);
+
+                // Animate letters
+                this.scene.children.forEach(child => {
+                    if (child.userData && child.userData.letter) {
+                        child.rotation.y += 0.01;
+                        child.position.y = 1 + Math.sin(time + child.position.x) * 0.2;
+                    }
+                });
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            startGame() {
+                console.log('🚀 3D game started');
+                this.gameRunning = true;
+                this.updateStats();
+            }
+
+            resetGame() {
+                console.log('🔄 3D game reset');
+                this.score = 0;
+                this.level = 1;
+                this.wordsCompleted = 0;
+                this.combo = 0;
+                this.gameRunning = false;
+                this.updateStats();
+            }
+
+            pauseGame() {
+                console.log('⏸️ 3D game paused');
+                this.gameRunning = !this.gameRunning;
+            }
+
+            updateStats() {
+                document.getElementById('score').textContent = this.score;
+                document.getElementById('level').textContent = this.level;
+                document.getElementById('wordsCompleted').textContent = this.wordsCompleted;
+                document.getElementById('combo').textContent = this.combo;
+            }
+        }
+
+        // Initialize game
+        let game3D;
+        document.addEventListener('DOMContentLoaded', function() {
+            game3D = new Game3D();
+        });
+
+        // Game control functions
+        function startGame() {
+            console.log('🚀 startGame() called from 3D fullscreen');
+            if (game3D) {
+                game3D.startGame();
+            }
+        }
+
+        function resetGame() {
+            console.log('🔄 resetGame() called from 3D fullscreen');
+            if (game3D) {
+                game3D.resetGame();
+            }
+        }
+
+        function pauseGame() {
+            console.log('⏸️ pauseGame() called from 3D fullscreen');
+            if (game3D) {
+                game3D.pauseGame();
+            }
+        }
+
+        function toggleFullScreen() {
+            console.log('🖥️ toggleFullScreen() called from 3D fullscreen');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function exitFullscreen() {
+            console.log('🚪 exitFullscreen() called');
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+            window.location.href = 'game.html';
+        }
+
+        // Handle fullscreen changes
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                window.location.href = 'game.html';
+            }
+        });
+
+        // Handle escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                exitFullscreen();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (game3D && game3D.camera && game3D.renderer) {
+                const container = document.getElementById('gameCanvas').parentElement;
+                const containerRect = container.getBoundingClientRect();
+                
+                game3D.camera.aspect = (containerRect.width - 40) / (containerRect.height - 40);
+                game3D.camera.updateProjectionMatrix();
+                game3D.renderer.setSize(containerRect.width - 40, containerRect.height - 40);
+            }
+        });
+    </script>
+</body>
+</html> 
