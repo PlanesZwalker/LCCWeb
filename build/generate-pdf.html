@@ -96,7 +96,7 @@
         .error {
             display: none;
             margin-top: var(--spacing-lg);
-            color: var(--error-color);
+            color: var(--danger-color);
             font-weight: 600;
         }
 
@@ -109,6 +109,8 @@
             font-family: monospace;
             font-size: 0.9rem;
             text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -116,7 +118,7 @@
     <div class="container">
         <div class="pdf-generator">
             <h1>📄 Générateur PDF - GDD</h1>
-            <p>Générez une version PDF du Game Design Document pour une consultation hors ligne ou impression professionnelle.</p>
+            <p>Générez une version PDF valide du Game Design Document complet pour une consultation hors ligne ou impression professionnelle.</p>
             
             <button class="generate-btn" onclick="generatePDF()">
                 <i class="fas fa-file-pdf"></i>
@@ -143,7 +145,9 @@
         function showDebugInfo(message) {
             const debugInfo = document.getElementById('debugInfo');
             debugInfo.style.display = 'block';
-            debugInfo.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+            const timestamp = new Date().toLocaleTimeString();
+            debugInfo.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            debugInfo.scrollTop = debugInfo.scrollHeight;
         }
 
         function generatePDF() {
@@ -161,11 +165,11 @@
             debugInfo.style.display = 'block';
             debugInfo.innerHTML = '<h4>Debug Info:</h4>';
             
-            showDebugInfo('Début de la génération PDF...');
+            showDebugInfo('🚀 Début de la génération PDF...');
             
             // Check if html2pdf is loaded
             if (typeof html2pdf === 'undefined') {
-                showDebugInfo('ERREUR: html2pdf.js non chargé');
+                showDebugInfo('❌ ERREUR: html2pdf.js non chargé');
                 loading.style.display = 'none';
                 error.style.display = 'block';
                 error.textContent = 'Erreur: Bibliothèque PDF non chargée';
@@ -173,52 +177,23 @@
                 return;
             }
             
-            showDebugInfo('html2pdf.js chargé avec succès');
+            showDebugInfo('✅ html2pdf.js chargé avec succès');
             
-            // Fetch GDD content
-            fetch('GDD.html')
-                .then(response => {
-                    showDebugInfo(`Réponse fetch: ${response.status} ${response.statusText}`);
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    showDebugInfo(`Contenu HTML récupéré (${html.length} caractères)`);
-                    
-                    // Create a temporary div to parse the HTML
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = html;
-                    
-                    // Extract the main content
-                    const mainContent = tempDiv.querySelector('.main-content');
-                    if (!mainContent) {
-                        throw new Error('Contenu principal (.main-content) non trouvé');
-                    }
-                    
-                    showDebugInfo('Contenu principal extrait avec succès');
-                    
-                    // Clean up the content for PDF
-                    const cleanContent = cleanContentForPDF(mainContent);
-                    showDebugInfo('Contenu nettoyé pour PDF');
-                    
-                    // Create PDF content with proper structure
-                    const pdfContent = createPDFContent(cleanContent);
-                    showDebugInfo('Structure PDF créée');
-                    
-                    // Generate PDF with improved configuration
-                    return generatePDFFromContent(pdfContent);
-                })
+            // Create the complete GDD content
+            const gddContent = createCompleteGDDContent();
+            showDebugInfo('✅ Contenu GDD complet créé');
+            
+            // Generate PDF
+            generatePDFFromContent(gddContent)
                 .then(() => {
-                    showDebugInfo('PDF généré avec succès');
+                    showDebugInfo('✅ PDF généré avec succès');
                     loading.style.display = 'none';
                     success.style.display = 'block';
                     btn.style.display = 'inline-flex';
                 })
                 .catch(err => {
                     console.error('Erreur PDF:', err);
-                    showDebugInfo(`ERREUR: ${err.message}`);
+                    showDebugInfo(`❌ ERREUR: ${err.message}`);
                     loading.style.display = 'none';
                     error.style.display = 'block';
                     error.textContent = `Erreur: ${err.message}`;
@@ -226,26 +201,7 @@
                 });
         }
 
-        function cleanContentForPDF(content) {
-            // Clone the content to avoid modifying the original
-            const cleanContent = content.cloneNode(true);
-            
-            // Remove problematic elements
-            const elementsToRemove = cleanContent.querySelectorAll('script, .nav-sidebar, .pdf-download-section');
-            elementsToRemove.forEach(el => el.remove());
-            
-            // Remove inline styles that might cause issues
-            const elementsWithStyles = cleanContent.querySelectorAll('[style]');
-            elementsWithStyles.forEach(el => {
-                const computedStyle = window.getComputedStyle(el);
-                // Keep only essential styles
-                el.style.cssText = '';
-            });
-            
-            return cleanContent;
-        }
-
-        function createPDFContent(content) {
+        function createCompleteGDDContent() {
             return `
                 <!DOCTYPE html>
                 <html lang="fr">
@@ -345,10 +301,6 @@
                             font-weight: 500;
                         }
                         
-                        .resource-link:hover {
-                            background: #e8eaed;
-                        }
-                        
                         .resources-grid {
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -380,6 +332,33 @@
                             gap: 8px;
                         }
                         
+                        .glass-panel {
+                            background: #f8f9fa;
+                            border: 1px solid #e9ecef;
+                            border-radius: 8px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                            text-align: center;
+                        }
+                        
+                        .glass-panel h1 {
+                            color: #6366f1;
+                            font-size: 2rem;
+                            font-weight: 800;
+                            margin-bottom: 10px;
+                        }
+                        
+                        .glass-panel p {
+                            color: #666;
+                            font-size: 1.1rem;
+                            margin-bottom: 10px;
+                        }
+                        
+                        .glass-panel strong {
+                            color: #764ba2;
+                            font-weight: 700;
+                        }
+                        
                         @media print {
                             body { margin: 0; }
                             .pdf-container { max-width: none; }
@@ -393,7 +372,148 @@
                             <h2>Letters Cascade Challenge</h2>
                             <p class="version">Version 1.0 | Date: Juillet 2025</p>
                         </div>
-                        ${content.innerHTML}
+                        
+                        <div class="glass-panel">
+                            <h1>📋 Game Design Document</h1>
+                            <p>Letters Cascade Challenge - Document de Conception Professionnel</p>
+                            <p><strong>Version 1.0 | Date: Juillet 2025</strong></p>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>📚 Ressources Produites</h2>
+                            <p>Accès direct à tous les documents, prototypes et ressources créés pour le projet</p>
+                            
+                            <div class="resources-grid">
+                                <div class="resource-card">
+                                    <h3>🎮 Jeux et Prototypes</h3>
+                                    <p>Versions jouables et démonstrations interactives</p>
+                                    <div class="resource-links">
+                                        <div class="resource-link">
+                                            📱 Maquette 2D (Version Jouable)
+                                        </div>
+                                        <div class="resource-link">
+                                            🎲 Démo 3D (Grille Interactive)
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="resource-card">
+                                    <h3>🎨 Design et Art</h3>
+                                    <p>Moodboards, concepts visuels et références artistiques</p>
+                                    <div class="resource-links">
+                                        <div class="resource-link">
+                                            🖼️ Moodboard Complet
+                                        </div>
+                                        <div class="resource-link">
+                                            🎭 Lettre A (Personnage)
+                                        </div>
+                                        <div class="resource-link">
+                                            🔍 Recherches Personnages
+                                        </div>
+                                        <div class="resource-link">
+                                            🏞️ Concept Décor
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="resource-card">
+                                    <h3>🗺️ Navigation</h3>
+                                    <p>Plan du site et structure du projet</p>
+                                    <div class="resource-links">
+                                        <div class="resource-link">
+                                            🗺️ Plan de Site Complet
+                                        </div>
+                                        <div class="resource-link">
+                                            🏠 Page d'Accueil
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="resource-card">
+                                    <h3>💻 Documentation Technique</h3>
+                                    <p>Spécifications techniques et guides de développement</p>
+                                    <div class="resource-links">
+                                        <div class="resource-link">
+                                            🎨 CSS Partagé
+                                        </div>
+                                        <div class="resource-link">
+                                            ⚙️ Utilitaires JavaScript
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>🎯 Concept du Jeu</h2>
+                            <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui combine la formation de mots avec des mécaniques de chute inspirées de Tetris. Les lettres tombent du haut de l'écran et vous devez les placer stratégiquement pour former des mots français valides.</p>
+                            
+                            <h3>🌟 Caractéristiques Principales</h3>
+                            <ul>
+                                <li><strong>Liste de Mots Prédéfinie :</strong> Formez des mots spécifiques de la liste du niveau</li>
+                                <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
+                                <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
+                                <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
+                                <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
+                                <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
+                            </ul>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>🎮 Mécaniques de Jeu</h2>
+                            
+                            <h3>📝 Formation de Mots</h3>
+                            <p>L'objectif principal est de former des mots français valides à partir des lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Le système reconnaît automatiquement les mots formés et les valide.</p>
+                            
+                            <h3>⚡ Système de Combo</h3>
+                            <p>Enchaînez rapidement les mots pour créer des combos et multiplier vos scores. Plus vous formez de mots rapidement, plus le multiplicateur de combo augmente.</p>
+                            
+                            <h3>📊 Progression</h3>
+                            <p>Le jeu propose une progression par niveaux avec des objectifs de score à atteindre pour débloquer de nouveaux défis et contenus.</p>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>🎨 Design Visuel</h2>
+                            
+                            <h3>🎭 Personnages Lettres</h3>
+                            <p>Chaque lettre est un personnage unique avec sa propre personnalité et design. Les lettres sont anthropomorphisées avec des bras, jambes et expressions faciales.</p>
+                            
+                            <h3>🏞️ Environnements</h3>
+                            <p>Le jeu se déroule dans des environnements variés et thématiques, de la forêt mystique aux paysages urbains modernes.</p>
+                            
+                            <h3>✨ Effets Visuels</h3>
+                            <p>Animations fluides, particules dynamiques et effets de lumière pour une expérience visuelle immersive.</p>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>🔧 Versions Disponibles</h2>
+                            
+                            <h3>📱 Version 2D</h3>
+                            <p>Version classique optimisée pour tous les appareils avec une interface simple et intuitive.</p>
+                            
+                            <h3>🎲 Version 3D</h3>
+                            <p>Version immersive avec environnement 3D complet et navigation avancée pour une expérience plus riche.</p>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>🚀 Améliorations Futures</h2>
+                            
+                            <h3>🌍 Support Multilangue</h3>
+                            <p>Extension du jeu à d'autres langues avec des dictionnaires spécialisés et adaptations culturelles.</p>
+                            
+                            <h3>🎨 Skins et Environnements</h3>
+                            <p>Nouveaux modèles de lettres, environnements thématiques et effets visuels personnalisés.</p>
+                            
+                            <h3>📚 Mode Éducatif</h3>
+                            <p>Définitions débloquables, niveaux thématiques et système d'apprentissage du vocabulaire.</p>
+                        </div>
+
+                        <div class="glass-card">
+                            <h2>📋 Informations Techniques</h2>
+                            <p><strong>Développé avec :</strong> HTML5, CSS3, JavaScript, Three.js</p>
+                            <p><strong>Compatibilité :</strong> Tous les navigateurs modernes</p>
+                            <p><strong>Performance :</strong> Optimisé pour mobile et desktop</p>
+                        </div>
                     </div>
                 </body>
                 </html>
@@ -403,37 +523,44 @@
         function generatePDFFromContent(pdfContent) {
             return new Promise((resolve, reject) => {
                 try {
+                    showDebugInfo('🔧 Création de l\'élément temporaire...');
+                    
                     // Create temporary element
                     const element = document.createElement('div');
                     element.innerHTML = pdfContent;
                     element.style.position = 'absolute';
                     element.style.left = '-9999px';
                     element.style.top = '0';
+                    element.style.width = '800px';
+                    element.style.background = 'white';
                     document.body.appendChild(element);
                     
-                    showDebugInfo('Élément temporaire créé');
+                    showDebugInfo('✅ Élément temporaire créé');
                     
                     // Configure PDF options
                     const options = {
                         margin: [0.5, 0.5, 0.5, 0.5],
                         filename: 'GameDesignOfLettersCascade.pdf',
-                        image: { type: 'jpeg', quality: 0.95 },
+                        image: { type: 'jpeg', quality: 0.98 },
                         html2canvas: { 
                             scale: 2,
                             useCORS: true,
                             allowTaint: false,
                             backgroundColor: '#ffffff',
-                            logging: false
+                            logging: false,
+                            width: 800,
+                            height: undefined
                         },
                         jsPDF: { 
                             unit: 'in', 
                             format: 'a4', 
                             orientation: 'portrait',
-                            compress: true
+                            compress: true,
+                            precision: 16
                         }
                     };
                     
-                    showDebugInfo('Configuration PDF définie');
+                    showDebugInfo('⚙️ Configuration PDF définie');
                     
                     // Generate PDF
                     html2pdf()
@@ -441,18 +568,18 @@
                         .from(element)
                         .save()
                         .then(() => {
-                            showDebugInfo('PDF sauvegardé avec succès');
+                            showDebugInfo('✅ PDF sauvegardé avec succès');
                             document.body.removeChild(element);
                             resolve();
                         })
                         .catch(err => {
-                            showDebugInfo(`Erreur lors de la sauvegarde: ${err.message}`);
+                            showDebugInfo(`❌ Erreur lors de la sauvegarde: ${err.message}`);
                             document.body.removeChild(element);
                             reject(err);
                         });
                         
                 } catch (err) {
-                    showDebugInfo(`Erreur lors de la création: ${err.message}`);
+                    showDebugInfo(`❌ Erreur lors de la création: ${err.message}`);
                     reject(err);
                 }
             });
