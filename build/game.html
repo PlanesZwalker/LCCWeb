@@ -648,12 +648,44 @@
                 this.gameRunning = false;
                 this.paused = false;
                 this.gameOver = false;
+                this.gameOverReason = '';
                 this.level = 1;
                 this.score = 0;
                 this.highScore = this.loadHighScore();
                 this.combo = 0;
                 this.maxCombo = 0;
                 this.startTime = null;
+                
+                // Game Over State
+                this.gameOverScreen = {
+                    visible: false,
+                    fadeIn: 0,
+                    showStats: false,
+                    finalStats: {
+                        totalScore: 0,
+                        wordsCompleted: 0,
+                        lettersPlaced: 0,
+                        playTime: 0,
+                        levelReached: 1,
+                        maxCombo: 1
+                    }
+                };
+                
+                // Game Over Conditions
+                this.gameOverConditions = {
+                    gridFull: false,
+                    timeLimit: false,
+                    noValidMoves: false,
+                    scoreThreshold: false
+                };
+                
+                // Game Limits
+                this.gameLimits = {
+                    maxGridFill: 0.85, // 85% grid fill triggers game over
+                    timeLimit: 300000, // 5 minutes in milliseconds
+                    minScoreForLevel: 100,
+                    maxLevel: 10
+                };
                 
                 // 3D Scene Components
                 this.scene = null;
@@ -1415,6 +1447,13 @@
                     return;
                 }
                 
+                // Check game over conditions
+                if (this.checkGameOverConditions()) {
+                    // Render game over screen
+                    this.renderGameOverScreen();
+                    return;
+                }
+                
                 // Enhanced camera movement
                 this.updateCamera();
                 
@@ -1429,6 +1468,143 @@
                 
                 // Render scene
                 this.renderer.render(this.scene, this.camera);
+            }
+            
+            // Render Game Over Screen (3D)
+            renderGameOverScreen() {
+                // Render the 3D scene first
+                this.renderer.render(this.scene, this.camera);
+                
+                // Create 2D overlay for game over screen
+                const canvas = this.renderer.domElement;
+                const ctx = canvas.getContext('2d');
+                
+                // Create overlay with fade effect
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn * 0.8;
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.restore();
+                
+                // Game Over Title
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                ctx.fillStyle = '#ff4757';
+                ctx.font = 'bold 48px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Add glow effect
+                ctx.shadowColor = '#ff4757';
+                ctx.shadowBlur = 20;
+                ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 100);
+                ctx.restore();
+                
+                // Game Over Reason
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '24px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.gameOverReason, canvas.width / 2, canvas.height / 2 - 50);
+                ctx.restore();
+                
+                // Final Stats
+                if (this.gameOverScreen.showStats) {
+                    this.renderGameOverStats(ctx, canvas);
+                }
+                
+                // Action Buttons
+                if (this.gameOverScreen.showStats) {
+                    this.renderGameOverButtons(ctx, canvas);
+                }
+            }
+            
+            renderGameOverStats(ctx, canvas) {
+                const stats = this.gameOverScreen.finalStats;
+                
+                // Stats background
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+                ctx.fillRect(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 200);
+                ctx.restore();
+                
+                // Stats title
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                ctx.fillStyle = '#667eea';
+                ctx.font = 'bold 24px Inter';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Statistiques Finales 3D', canvas.width / 2, canvas.height / 2 - 30);
+                ctx.restore();
+                
+                // Stats content
+                const statsY = canvas.height / 2;
+                const statsData = [
+                    { label: 'Score Final', value: stats.totalScore },
+                    { label: 'Mots Complétés', value: stats.wordsCompleted },
+                    { label: 'Lettres Placées', value: stats.lettersPlaced },
+                    { label: 'Temps de Jeu', value: `${Math.floor(stats.playTime / 60)}:${(stats.playTime % 60).toFixed(0).padStart(2, '0')}` },
+                    { label: 'Niveau Atteint', value: stats.levelReached },
+                    { label: 'Combo Max', value: stats.maxCombo }
+                ];
+                
+                ctx.save();
+                ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                ctx.fillStyle = '#333';
+                ctx.font = '16px Inter';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                
+                statsData.forEach((stat, index) => {
+                    const y = statsY + (index * 25);
+                    ctx.fillText(`${stat.label}: ${stat.value}`, canvas.width / 2 - 150, y);
+                });
+                ctx.restore();
+            }
+            
+            renderGameOverButtons(ctx, canvas) {
+                // Restart Button
+                const restartBtn = {
+                    x: canvas.width / 2 - 120,
+                    y: canvas.height / 2 + 100,
+                    width: 100,
+                    height: 40,
+                    text: 'Recommencer'
+                };
+                
+                // Main Menu Button
+                const menuBtn = {
+                    x: canvas.width / 2 + 20,
+                    y: canvas.height / 2 + 100,
+                    width: 100,
+                    height: 40,
+                    text: 'Menu Principal'
+                };
+                
+                // Draw buttons
+                [restartBtn, menuBtn].forEach(btn => {
+                    ctx.save();
+                    ctx.globalAlpha = this.gameOverScreen.fadeIn;
+                    
+                    // Button background
+                    ctx.fillStyle = '#667eea';
+                    ctx.fillRect(btn.x, btn.y, btn.width, btn.height);
+                    
+                    // Button text
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '14px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(btn.text, btn.x + btn.width / 2, btn.y + btn.height / 2);
+                    ctx.restore();
+                });
+                
+                // Store button positions for click handling
+                this.gameOverButtons = { restartBtn, menuBtn };
             }
             
             // Enhanced Camera Movement
@@ -2075,6 +2251,207 @@
                 
                 // Return mapped letter or original if no mapping
                 return letterMap[letter] || letter;
+            }
+
+            // Game Over Detection and Handling (3D)
+            checkGameOverConditions() {
+                console.log('🔍 Checking 3D game over conditions...');
+                
+                // Check if grid is too full
+                const filledCells = this.letters.length;
+                const totalCells = this.currentGridSize * this.currentGridSize;
+                const fillPercentage = filledCells / totalCells;
+                
+                if (fillPercentage >= this.gameLimits.maxGridFill) {
+                    console.log('❌ 3D Game Over: Grid too full');
+                    this.triggerGameOver('Grid trop plein !', 'gridFull');
+                    return true;
+                }
+                
+                // Check time limit
+                if (this.stats.startTime) {
+                    const currentTime = Date.now();
+                    const elapsedTime = currentTime - this.stats.startTime;
+                    
+                    if (elapsedTime >= this.gameLimits.timeLimit) {
+                        console.log('❌ 3D Game Over: Time limit reached');
+                        this.triggerGameOver('Temps écoulé !', 'timeLimit');
+                        return true;
+                    }
+                }
+                
+                // Check if no valid moves are possible
+                if (this.checkNoValidMoves()) {
+                    console.log('❌ 3D Game Over: No valid moves');
+                    this.triggerGameOver('Aucun mouvement possible !', 'noValidMoves');
+                    return true;
+                }
+                
+                // Check score threshold for level progression
+                if (this.score < this.gameLimits.minScoreForLevel && this.level > 1) {
+                    console.log('❌ 3D Game Over: Score too low for level');
+                    this.triggerGameOver('Score insuffisant !', 'scoreThreshold');
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            checkNoValidMoves() {
+                // Check if there's space for the falling letter
+                if (!this.fallingLetter) return false;
+                
+                // Check if the falling letter can be placed anywhere
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        if (!this.checkCollision(col, row)) {
+                            return false; // Found a valid position
+                        }
+                    }
+                }
+                
+                return true; // No valid positions found
+            }
+            
+            triggerGameOver(reason, condition) {
+                console.log('🎯 Triggering 3D Game Over:', reason);
+                
+                this.gameOver = true;
+                this.gameOverReason = reason;
+                this.gameOverConditions[condition] = true;
+                
+                // Stop game loop
+                this.stopFallTimer();
+                this.gameRunning = false;
+                
+                // Calculate final stats
+                this.calculateFinalStats();
+                
+                // Show game over screen
+                this.showGameOverScreen();
+                
+                // Play game over sound
+                this.audioManager.playGameOver();
+                
+                // Save high score if applicable
+                if (this.score > this.highScore) {
+                    this.highScore = this.score;
+                    this.saveHighScore();
+                    this.showNewHighScoreNotification();
+                }
+                
+                // Create game over particles
+                this.particleSystem.createGameOverEffect();
+            }
+            
+            calculateFinalStats() {
+                const currentTime = Date.now();
+                const playTime = this.stats.startTime ? 
+                    (currentTime - this.stats.startTime) / 1000 : 0;
+                
+                this.gameOverScreen.finalStats = {
+                    totalScore: this.score,
+                    wordsCompleted: this.wordsFound.length,
+                    lettersPlaced: this.stats.lettersPlaced,
+                    playTime: playTime,
+                    levelReached: this.level,
+                    maxCombo: this.maxCombo
+                };
+                
+                console.log('📊 3D Final Stats:', this.gameOverScreen.finalStats);
+            }
+            
+            showGameOverScreen() {
+                console.log('🎮 Showing 3D Game Over Screen');
+                this.gameOverScreen.visible = true;
+                this.gameOverScreen.fadeIn = 0;
+                this.gameOverScreen.showStats = false;
+                
+                // Animate the game over screen
+                this.animateGameOverScreen();
+            }
+            
+            animateGameOverScreen() {
+                const animate = () => {
+                    if (!this.gameOverScreen.visible) return;
+                    
+                    // Fade in animation
+                    if (this.gameOverScreen.fadeIn < 1) {
+                        this.gameOverScreen.fadeIn += 0.02;
+                    } else {
+                        // Show stats after fade in
+                        if (!this.gameOverScreen.showStats) {
+                            this.gameOverScreen.showStats = true;
+                        }
+                    }
+                    
+                    requestAnimationFrame(animate);
+                };
+                
+                animate();
+            }
+            
+            showNewHighScoreNotification() {
+                const notification = document.createElement('div');
+                notification.className = 'high-score-notification';
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <h3>🏆 Nouveau Record 3D !</h3>
+                        <p>Score: ${this.score}</p>
+                        <p>Félicitations !</p>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after 5 seconds
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 5000);
+            }
+            
+            restartGame() {
+                console.log('🔄 Restarting 3D Game');
+                
+                // Reset game state
+                this.gameOver = false;
+                this.gameOverReason = '';
+                this.gameOverScreen.visible = false;
+                this.gameOverScreen.fadeIn = 0;
+                this.gameOverScreen.showStats = false;
+                
+                // Reset game conditions
+                Object.keys(this.gameOverConditions).forEach(key => {
+                    this.gameOverConditions[key] = false;
+                });
+                
+                // Reset game data
+                this.score = 0;
+                this.level = 1;
+                this.combo = 0;
+                this.maxCombo = 0;
+                this.wordsFound = [];
+                this.letters = [];
+                this.letterQueue = [];
+                this.fallingLetter = null;
+                
+                // Reset stats
+                this.stats = {
+                    lettersPlaced: 0,
+                    wordsCompleted: 0,
+                    totalScore: 0,
+                    playTime: 0,
+                    startTime: null,
+                    mode: '3D'
+                };
+                
+                // Reset balancing
+                this.applyBalancing();
+                
+                // Start new game
+                this.startGame();
             }
         }
         

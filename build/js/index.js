@@ -14,9 +14,25 @@ class LettersCascadeGame {
         this.gameRunning = false;
         this.paused = false;
         this.gameOver = false;
+        this.gameOverReason = '';
         this.level = 1;
         this.score = 0;
         this.highScore = this.loadHighScore();
+        
+        // Game Over State
+        this.gameOverScreen = {
+            visible: false,
+            fadeIn: 0,
+            showStats: false,
+            finalStats: {
+                totalScore: 0,
+                wordsCompleted: 0,
+                lettersPlaced: 0,
+                playTime: 0,
+                levelReached: 1,
+                maxCombo: 1
+            }
+        };
         
         // Game Mechanics
         this.letters = [];
@@ -26,6 +42,22 @@ class LettersCascadeGame {
         this.fallingLetter = null;
         this.fallSpeed = 1000; // milliseconds
         this.fallTimer = null;
+        
+        // Game Over Conditions
+        this.gameOverConditions = {
+            gridFull: false,
+            timeLimit: false,
+            noValidMoves: false,
+            scoreThreshold: false
+        };
+        
+        // Game Limits
+        this.gameLimits = {
+            maxGridFill: 0.85, // 85% grid fill triggers game over
+            timeLimit: 300000, // 5 minutes in milliseconds
+            minScoreForLevel: 100,
+            maxLevel: 10
+        };
         
         // 🎯 INTELLIGENT BALANCING SYSTEM
         this.balancingSystem = {
@@ -59,6 +91,7 @@ class LettersCascadeGame {
         
         // Scoring System
         this.combo = 1;
+        this.maxCombo = 1;
         this.lastWordTime = 0;
         this.comboTimeout = 5000; // 5 seconds for combo
         
@@ -68,7 +101,8 @@ class LettersCascadeGame {
             wordsCompleted: 0,
             totalScore: 0,
             playTime: 0,
-            startTime: null
+            startTime: null,
+            gameStartTime: null
         };
         
         // Systems
@@ -1319,7 +1353,7 @@ class LettersCascadeGame {
     }
     
     gameLoop() {
-        if (!this.gameRunning) return;
+        if (!this.gameRunning || this.paused) return;
         
         this.render();
         this.updateLevel();
@@ -1387,6 +1421,11 @@ class LettersCascadeGame {
         
         // Draw UI overlays
         this.drawUIOverlays();
+        
+        // Draw game over screen if active
+        if (this.gameOverScreen.visible) {
+            this.drawGameOverScreen();
+        }
         
         console.log('✅ Frame rendered successfully with', lettersInGrid, 'letters in grid');
     }
@@ -1980,6 +2019,373 @@ class LettersCascadeGame {
             this.hintCells = [];
         }, 3000);
     }
+    
+    // Game Over Detection and Handling
+    checkGameOverConditions() {
+        console.log('🔍 Checking game over conditions...');
+        
+        // Check if grid is too full
+        const filledCells = this.letters.length;
+        const totalCells = this.currentGridSize * this.currentGridSize;
+        const fillPercentage = filledCells / totalCells;
+        
+        if (fillPercentage >= this.gameLimits.maxGridFill) {
+            console.log('❌ Game Over: Grid too full');
+            this.triggerGameOver('Grid trop plein !', 'gridFull');
+            return true;
+        }
+        
+        // Check time limit
+        if (this.stats.gameStartTime) {
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - this.stats.gameStartTime;
+            
+            if (elapsedTime >= this.gameLimits.timeLimit) {
+                console.log('❌ Game Over: Time limit reached');
+                this.triggerGameOver('Temps écoulé !', 'timeLimit');
+                return true;
+            }
+        }
+        
+        // Check if no valid moves are possible
+        if (this.checkNoValidMoves()) {
+            console.log('❌ Game Over: No valid moves');
+            this.triggerGameOver('Aucun mouvement possible !', 'noValidMoves');
+            return true;
+        }
+        
+        // Check score threshold for level progression
+        if (this.score < this.gameLimits.minScoreForLevel && this.level > 1) {
+            console.log('❌ Game Over: Score too low for level');
+            this.triggerGameOver('Score insuffisant !', 'scoreThreshold');
+            return true;
+        }
+        
+        return false;
+    }
+    
+    checkNoValidMoves() {
+        // Check if there's space for the falling letter
+        if (!this.fallingLetter) return false;
+        
+        // Check if the falling letter can be placed anywhere
+        for (let row = 0; row < this.currentGridSize; row++) {
+            for (let col = 0; col < this.currentGridSize; col++) {
+                if (!this.checkCollision(col, row)) {
+                    return false; // Found a valid position
+                }
+            }
+        }
+        
+        return true; // No valid positions found
+    }
+    
+    triggerGameOver(reason, condition) {
+        console.log('🎯 Triggering Game Over:', reason);
+        
+        this.gameOver = true;
+        this.gameOverReason = reason;
+        this.gameOverConditions[condition] = true;
+        
+        // Stop game loop
+        this.stopFallTimer();
+        this.gameRunning = false;
+        
+        // Calculate final stats
+        this.calculateFinalStats();
+        
+        // Show game over screen
+        this.showGameOverScreen();
+        
+        // Play game over sound
+        this.audioManager.playGameOver();
+        
+        // Save high score if applicable
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            this.saveHighScore();
+            this.showNewHighScoreNotification();
+        }
+        
+        // Create game over particles
+        this.particleSystem.createGameOverEffect();
+    }
+    
+    calculateFinalStats() {
+        const currentTime = Date.now();
+        const playTime = this.stats.gameStartTime ? 
+            (currentTime - this.stats.gameStartTime) / 1000 : 0;
+        
+        this.gameOverScreen.finalStats = {
+            totalScore: this.score,
+            wordsCompleted: this.wordsFound.length,
+            lettersPlaced: this.stats.lettersPlaced,
+            playTime: playTime,
+            levelReached: this.level,
+            maxCombo: this.maxCombo
+        };
+        
+        console.log('📊 Final Stats:', this.gameOverScreen.finalStats);
+    }
+    
+    showGameOverScreen() {
+        console.log('🎮 Showing Game Over Screen');
+        this.gameOverScreen.visible = true;
+        this.gameOverScreen.fadeIn = 0;
+        this.gameOverScreen.showStats = false;
+        
+        // Animate the game over screen
+        this.animateGameOverScreen();
+    }
+    
+    animateGameOverScreen() {
+        const animate = () => {
+            if (!this.gameOverScreen.visible) return;
+            
+            // Fade in animation
+            if (this.gameOverScreen.fadeIn < 1) {
+                this.gameOverScreen.fadeIn += 0.02;
+            } else {
+                // Show stats after fade in
+                if (!this.gameOverScreen.showStats) {
+                    this.gameOverScreen.showStats = true;
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        };
+        
+        animate();
+    }
+    
+    showNewHighScoreNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'high-score-notification';
+        notification.innerHTML = `
+            <div class="notification-content">
+                <h3>🏆 Nouveau Record !</h3>
+                <p>Score: ${this.score}</p>
+                <p>Félicitations !</p>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 5000);
+    }
+    
+    restartGame() {
+        console.log('🔄 Restarting Game');
+        
+        // Reset game state
+        this.gameOver = false;
+        this.gameOverReason = '';
+        this.gameOverScreen.visible = false;
+        this.gameOverScreen.fadeIn = 0;
+        this.gameOverScreen.showStats = false;
+        
+        // Reset game conditions
+        Object.keys(this.gameOverConditions).forEach(key => {
+            this.gameOverConditions[key] = false;
+        });
+        
+        // Reset game data
+        this.score = 0;
+        this.level = 1;
+        this.combo = 1;
+        this.maxCombo = 1;
+        this.wordsFound = [];
+        this.letters = [];
+        this.letterQueue = [];
+        this.fallingLetter = null;
+        
+        // Reset stats
+        this.stats = {
+            lettersPlaced: 0,
+            wordsCompleted: 0,
+            totalScore: 0,
+            playTime: 0,
+            startTime: null,
+            gameStartTime: null
+        };
+        
+        // Reset balancing
+        this.applyBalancing();
+        
+        // Start new game
+        this.startGame();
+    }
+    
+    // Enhanced game loop with game over checks
+    gameLoop() {
+        if (!this.gameRunning || this.paused) return;
+        
+        // Update game time
+        if (this.stats.gameStartTime) {
+            this.stats.playTime = (Date.now() - this.stats.gameStartTime) / 1000;
+        }
+        
+        // Check game over conditions
+        if (this.checkGameOverConditions()) {
+            return; // Game over, stop the loop
+        }
+        
+        // Update falling letter
+        this.updateFallingLetter();
+        
+        // Update particles
+        this.particleSystem.update();
+        
+        // Render everything
+        this.render();
+        
+        // Continue loop
+        requestAnimationFrame(() => this.gameLoop());
+    }
+    
+    drawGameOverScreen() {
+        const ctx = this.ctx;
+        const canvas = this.canvas;
+        
+        // Create overlay with fade effect
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn * 0.8;
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+        
+        // Game Over Title
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn;
+        ctx.fillStyle = '#ff4757';
+        ctx.font = 'bold 48px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // Add glow effect
+        ctx.shadowColor = '#ff4757';
+        ctx.shadowBlur = 20;
+        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 100);
+        ctx.restore();
+        
+        // Game Over Reason
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '24px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.gameOverReason, canvas.width / 2, canvas.height / 2 - 50);
+        ctx.restore();
+        
+        // Final Stats
+        if (this.gameOverScreen.showStats) {
+            this.drawGameOverStats();
+        }
+        
+        // Action Buttons
+        if (this.gameOverScreen.showStats) {
+            this.drawGameOverButtons();
+        }
+    }
+    
+    drawGameOverStats() {
+        const ctx = this.ctx;
+        const canvas = this.canvas;
+        const stats = this.gameOverScreen.finalStats;
+        
+        // Stats background
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+        ctx.roundRect(canvas.width / 2 - 200, canvas.height / 2 - 50, 400, 200, 20);
+        ctx.fill();
+        ctx.restore();
+        
+        // Stats title
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn;
+        ctx.fillStyle = '#667eea';
+        ctx.font = 'bold 24px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Statistiques Finales', canvas.width / 2, canvas.height / 2 - 30);
+        ctx.restore();
+        
+        // Stats content
+        const statsY = canvas.height / 2;
+        const statsData = [
+            { label: 'Score Final', value: stats.totalScore },
+            { label: 'Mots Complétés', value: stats.wordsCompleted },
+            { label: 'Lettres Placées', value: stats.lettersPlaced },
+            { label: 'Temps de Jeu', value: `${Math.floor(stats.playTime / 60)}:${(stats.playTime % 60).toFixed(0).padStart(2, '0')}` },
+            { label: 'Niveau Atteint', value: stats.levelReached },
+            { label: 'Combo Max', value: stats.maxCombo }
+        ];
+        
+        ctx.save();
+        ctx.globalAlpha = this.gameOverScreen.fadeIn;
+        ctx.fillStyle = '#333';
+        ctx.font = '16px Inter';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        
+        statsData.forEach((stat, index) => {
+            const y = statsY + (index * 25);
+            ctx.fillText(`${stat.label}: ${stat.value}`, canvas.width / 2 - 150, y);
+        });
+        ctx.restore();
+    }
+    
+    drawGameOverButtons() {
+        const ctx = this.ctx;
+        const canvas = this.canvas;
+        
+        // Restart Button
+        const restartBtn = {
+            x: canvas.width / 2 - 120,
+            y: canvas.height / 2 + 100,
+            width: 100,
+            height: 40,
+            text: 'Recommencer'
+        };
+        
+        // Main Menu Button
+        const menuBtn = {
+            x: canvas.width / 2 + 20,
+            y: canvas.height / 2 + 100,
+            width: 100,
+            height: 40,
+            text: 'Menu Principal'
+        };
+        
+        // Draw buttons
+        [restartBtn, menuBtn].forEach(btn => {
+            ctx.save();
+            ctx.globalAlpha = this.gameOverScreen.fadeIn;
+            
+            // Button background
+            ctx.fillStyle = '#667eea';
+            ctx.roundRect(btn.x, btn.y, btn.width, btn.height, 10);
+            ctx.fill();
+            
+            // Button text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Inter';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(btn.text, btn.x + btn.width / 2, btn.y + btn.height / 2);
+            ctx.restore();
+        });
+        
+        // Store button positions for click handling
+        this.gameOverButtons = { restartBtn, menuBtn };
+    }
 }
 
 // Word Detection System
@@ -2127,32 +2533,37 @@ class AudioManager {
         this.playSound('levelUp');
     }
     
+    playGameOver() {
+        this.playSound('gameOver');
+    }
+    
     playSound(type) {
-        if (this.muted) return;
-        
-        // Create audio context if not exists
-        if (!this.audioContext) {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        try {
+            const audioContext = this.audioContext;
+            if (!audioContext) return;
+            
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            const frequency = this.getFrequencyForSound(type);
+            const duration = this.getDurationForSound(type);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+            
+            console.log(`🔊 Playing sound: ${type} (${frequency}Hz, ${duration}s)`);
+        } catch (error) {
+            console.warn('⚠️ Audio playback failed:', error);
         }
-        
-        // Generate simple tones for different sounds
-        const frequency = this.getFrequencyForSound(type);
-        const duration = 0.1;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
-        oscillator.type = 'sine';
-        
-        gainNode.gain.setValueAtTime(0.1, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
-        
-        oscillator.start(this.audioContext.currentTime);
-        oscillator.stop(this.audioContext.currentTime + duration);
     }
     
     getFrequencyForSound(type) {
@@ -2165,9 +2576,26 @@ class AudioManager {
             rotate: 550,
             place: 880,
             wordComplete: 1100,
-            levelUp: 1320
+            levelUp: 1320,
+            gameOver: 1500
         };
         return frequencies[type] || 440;
+    }
+    
+    getDurationForSound(type) {
+        const durations = {
+            start: 0.3,
+            pause: 0.2,
+            resume: 0.2,
+            reset: 0.4,
+            move: 0.1,
+            rotate: 0.1,
+            place: 0.2,
+            wordComplete: 0.5,
+            levelUp: 0.8,
+            gameOver: 1.0
+        };
+        return durations[type] || 0.2;
     }
 }
 
@@ -2281,78 +2709,105 @@ class ParticleSystem {
     }
     
     createLevelUpEffect() {
-        console.log('🏆 Creating level up effect');
-        const effect = this.effects.levelUp;
-        const centerX = this.canvas?.width / 2 || 400;
-        const centerY = this.canvas?.height / 2 || 300;
+        console.log('🌟 Creating level up effect');
         
-        // Create spiral effect
-        for (let i = 0; i < effect.count; i++) {
-            const angle = (i / effect.count) * Math.PI * 4;
-            const radius = 20 + (i / effect.count) * 100;
-            
-            const particle = {
-                x: centerX + Math.cos(angle) * radius,
-                y: centerY + Math.sin(angle) * radius,
-                vx: Math.cos(angle) * effect.speed,
-                vy: Math.sin(angle) * effect.speed,
-                life: 2.5,
-                maxLife: 2.5,
-                size: effect.size + Math.random() * 4,
-                color: effect.color,
-                type: 'levelUp',
-                alpha: 1.0,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.5
-            };
-            this.particles.push(particle);
+        // Create multiple particle bursts
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                this.createParticleBurst(
+                    Math.random() * this.canvas.width,
+                    Math.random() * this.canvas.height,
+                    20,
+                    ['#ffd700', '#ffed4e', '#fff200'],
+                    2.0
+                );
+            }, i * 100);
         }
         
-        // Create explosion effect
-        for (let i = 0; i < 20; i++) {
-            const angle = (i / 20) * Math.PI * 2;
-            const speed = 3 + Math.random() * 2;
-            
-            const particle = {
-                x: centerX,
-                y: centerY,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                life: 1.8,
-                maxLife: 1.8,
-                size: effect.size + Math.random() * 3,
-                color: '#ff6b6b',
-                type: 'explosion',
-                alpha: 1.0,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.4
-            };
-            this.particles.push(particle);
+        // Create central explosion
+        this.createParticleBurst(
+            this.canvas.width / 2,
+            this.canvas.height / 2,
+            30,
+            ['#667eea', '#764ba2', '#4ecdc4'],
+            3.0
+        );
+    }
+    
+    createGameOverEffect() {
+        console.log('💀 Creating game over effect');
+        
+        // Create dark particles spreading from center
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2;
+        
+        // Create multiple dark particle bursts
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                this.createParticleBurst(
+                    centerX + (Math.random() - 0.5) * 200,
+                    centerY + (Math.random() - 0.5) * 200,
+                    15,
+                    ['#ff4757', '#ff3838', '#ff3838'],
+                    1.5
+                );
+            }, i * 150);
+        }
+        
+        // Create central dark explosion
+        this.createParticleBurst(
+            centerX,
+            centerY,
+            25,
+            ['#2c2c54', '#40407a', '#706fd3'],
+            2.5
+        );
+        
+        // Create falling particles
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                this.createFallingParticle(
+                    Math.random() * this.canvas.width,
+                    -10,
+                    ['#ff4757', '#ff3838', '#c44569']
+                );
+            }, i * 50);
         }
     }
     
-    createExplosionEffect(x, y, intensity = 1) {
-        console.log('💥 Creating explosion effect at:', { x, y, intensity });
-        const effect = this.effects.explosion;
+    createFallingParticle(x, y, colors) {
+        const particle = {
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 2,
+            vy: Math.random() * 3 + 2,
+            life: 1.0,
+            maxLife: 3.0,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            size: Math.random() * 4 + 2,
+            type: 'falling'
+        };
         
-        for (let i = 0; i < effect.count * intensity; i++) {
-            const angle = (i / (effect.count * intensity)) * Math.PI * 2;
-            const speed = effect.speed + Math.random() * 3;
+        this.particles.push(particle);
+    }
+    
+    createParticleBurst(x, y, count, colors, intensity = 1.0) {
+        for (let i = 0; i < count; i++) {
+            const angle = (Math.PI * 2 * i) / count;
+            const speed = Math.random() * 3 + 2;
             
             const particle = {
                 x: x,
                 y: y,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed,
-                life: 1.5,
-                maxLife: 1.5,
-                size: effect.size + Math.random() * 4,
-                color: effect.color,
-                type: 'explosion',
-                alpha: 1.0,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.6
+                vx: Math.cos(angle) * speed * intensity,
+                vy: Math.sin(angle) * speed * intensity,
+                life: 1.0,
+                maxLife: 2.0 + Math.random() * 2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                size: Math.random() * 6 + 3,
+                type: 'burst'
             };
+            
             this.particles.push(particle);
         }
     }
