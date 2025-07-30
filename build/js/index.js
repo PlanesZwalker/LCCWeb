@@ -109,6 +109,9 @@ class LettersCascadeGame {
         this.particleSystem = new ParticleSystem();
         this.audioManager = new AudioManager();
         
+        // Input handling
+        this.keys = {};
+        
         // Apply initial balancing
         this.applyBalancing();
         
@@ -981,6 +984,35 @@ class LettersCascadeGame {
                 }
             }
         });
+    }
+    
+    toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log('Error attempting to enable fullscreen:', err);
+            });
+        } else {
+            document.exitFullscreen().catch(err => {
+                console.log('Error attempting to exit fullscreen:', err);
+            });
+        }
+    }
+    
+    togglePause() {
+        if (this.paused) {
+            this.resumeGame();
+        } else {
+            this.pauseGame();
+        }
+    }
+    
+    resumeGame() {
+        if (this.paused) {
+            this.paused = false;
+            this.startFallTimer();
+            this.hidePauseNotification();
+            console.log('▶️ Game resumed');
+        }
     }
     
     // Falling Letter System
@@ -2648,6 +2680,10 @@ class AudioManager {
         this.playSound('place');
     }
     
+    playDrop() {
+        this.playSound('drop');
+    }
+    
     playWordComplete() {
         this.playSound('wordComplete');
     }
@@ -2698,6 +2734,7 @@ class AudioManager {
             move: 660,
             rotate: 550,
             place: 880,
+            drop: 770,
             wordComplete: 1100,
             levelUp: 1320,
             gameOver: 1500
@@ -2714,6 +2751,7 @@ class AudioManager {
             move: 0.1,
             rotate: 0.1,
             place: 0.2,
+            drop: 0.15,
             wordComplete: 0.5,
             levelUp: 0.8,
             gameOver: 1.0
