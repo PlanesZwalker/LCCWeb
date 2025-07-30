@@ -826,8 +826,15 @@ class LettersCascadeGame {
     }
     
     drawEnhancedFallingLetter() {
+        if (!this.fallingLetter) return;
+        
         const x = this.fallingLetter.x * this.cellSize;
         const y = this.fallingLetter.y * this.cellSize;
+        
+        // Check bounds to prevent gradient errors
+        if (x < 0 || y < 0 || x >= this.canvas.width || y >= this.canvas.height) {
+            return;
+        }
         
         // Falling letter background with gradient
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
@@ -896,14 +903,14 @@ class LettersCascadeGame {
     }
     
     updateScoreDisplay() {
-        const scoreElement = document.getElementById('scoreValue');
+        const scoreElement = document.getElementById('scoreDisplay');
         if (scoreElement) {
             scoreElement.textContent = this.score;
         }
     }
     
     updateLevelDisplay() {
-        const levelElement = document.getElementById('levelValue');
+        const levelElement = document.getElementById('levelDisplay');
         if (levelElement) {
             levelElement.textContent = this.level;
         }
@@ -915,32 +922,33 @@ class LettersCascadeGame {
         if (wordListElement) {
             wordListElement.innerHTML = '';
             
-            // Add some initial words for demonstration
-            if (this.wordsFound.length === 0) {
-                const demoWords = ['CHAT', 'MAISON', 'MUSIQUE'];
-                demoWords.forEach(word => {
-                    const li = document.createElement('li');
-                    li.textContent = word;
-                    li.className = 'demo-word';
-                    wordListElement.appendChild(li);
-                });
-            } else {
-                this.wordsFound.forEach(word => {
-                    const li = document.createElement('li');
-                    li.textContent = word;
-                    li.className = 'completed';
-                    wordListElement.appendChild(li);
-                });
-            }
-            console.log('✅ Word list updated with', wordListElement.children.length, 'items');
+            // Add target words for the game
+            const targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
+            targetWords.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word;
+                li.className = this.wordsFound.includes(word) ? 'completed' : 'demo-word';
+                wordListElement.appendChild(li);
+            });
+            console.log('✅ Word list updated with', targetWords.length, 'items');
         } else {
             console.error('❌ Word list element not found');
         }
+        
+        // Update progression display
+        const currentLevelElement = document.getElementById('currentLevel');
+        const targetScoreElement = document.getElementById('targetScore');
+        const wordsFoundElement = document.getElementById('wordsFound');
+        
+        if (currentLevelElement) currentLevelElement.textContent = this.level;
+        if (targetScoreElement) targetScoreElement.textContent = this.level * 100;
+        if (wordsFoundElement) wordsFoundElement.textContent = this.wordsFound.length;
+    }
     }
     
     updateLetterQueueDisplay() {
         console.log('📝 updateLetterQueueDisplay() called - letterQueue:', this.letterQueue);
-        const queueElement = document.getElementById('letterQueue');
+        const queueElement = document.getElementById('letterPreview');
         if (queueElement) {
             queueElement.innerHTML = '';
             
@@ -950,10 +958,10 @@ class LettersCascadeGame {
             }
             
             this.letterQueue.slice(0, 5).forEach(letter => {
-                const span = document.createElement('span');
-                span.textContent = letter;
-                span.className = 'queue-letter';
-                queueElement.appendChild(span);
+                const li = document.createElement('li');
+                li.textContent = letter;
+                li.className = 'queue-letter';
+                queueElement.appendChild(li);
             });
             console.log('✅ Letter queue updated with', queueElement.children.length, 'letters');
         } else {
