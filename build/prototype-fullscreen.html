@@ -303,13 +303,19 @@
             console.log('🚪 exitFullscreen() called');
             try {
                 if (document.fullscreenElement) {
-                    document.exitFullscreen();
+                    document.exitFullscreen().then(() => {
+                        console.log('✅ Successfully exited fullscreen');
+                        window.location.href = 'prototype.html';
+                    }).catch(err => {
+                        console.log('⚠️ Error exiting fullscreen:', err);
+                        window.location.href = 'prototype.html';
+                    });
                 } else {
-                    // If not in fullscreen, just redirect
+                    console.log('ℹ️ Not in fullscreen mode, redirecting to prototype.html');
                     window.location.href = 'prototype.html';
                 }
             } catch (error) {
-                console.log('⚠️ Error exiting fullscreen:', error);
+                console.log('⚠️ Error in exitFullscreen:', error);
                 // Fallback: just redirect
                 window.location.href = 'prototype.html';
             }
