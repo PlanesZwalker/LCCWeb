@@ -102,6 +102,12 @@ class LettersCascadeGame {
         // Initial display update
         this.updateDisplay();
         
+        // Test letter placement to verify rendering
+        this.testLetterPlacement();
+        
+        // Create initial falling letter
+        this.createFallingLetter();
+        
         // Start the game loop immediately
         this.startGameLoop();
         
@@ -110,7 +116,8 @@ class LettersCascadeGame {
             gridCreated: !!this.grid,
             letterQueueLength: this.letterQueue.length,
             targetWordsCount: this.targetWords.length,
-            dictionarySize: this.dictionary.size
+            dictionarySize: this.dictionary.size,
+            fallingLetter: this.fallingLetter ? this.fallingLetter.letter : 'none'
         });
     }
     
@@ -640,11 +647,15 @@ class LettersCascadeGame {
         console.log('✅ Falling letter created:', {
             letter: letter,
             position: { x: x, y: y },
-            queueRemaining: this.letterQueue.length
+            queueRemaining: this.letterQueue.length,
+            gridState: this.grid[y][x]
         });
         
         // Update letter queue display
         this.updateLetterQueueDisplay();
+        
+        // Force a render to show the falling letter
+        this.render();
     }
     
     moveFallingLetter(direction) {
@@ -726,7 +737,8 @@ class LettersCascadeGame {
         console.log('✅ Letter placed successfully:', {
             letter: letter,
             position: { x: x, y: y },
-            gridState: this.grid[y][x]
+            gridState: this.grid[y][x],
+            totalLettersInGrid: this.grid.flat().filter(cell => cell !== null).length
         });
         
         // Update statistics
@@ -747,6 +759,9 @@ class LettersCascadeGame {
         // Update display
         this.updateDisplay();
         
+        // Force a render to ensure letters are visible
+        this.render();
+        
         console.log('📊 Grid state after placement:', {
             totalLetters: this.grid.flat().filter(cell => cell !== null).length,
             gridSnapshot: this.grid.map(row => row.map(cell => cell || '.').join('')).join('\n')
@@ -755,31 +770,39 @@ class LettersCascadeGame {
     
     // Enhanced Game State Management
     startGame() {
-        console.log('▶️ startGame() called');
-        console.log('🎮 Game state before start:', {
-            running: this.gameRunning,
+        console.log('🚀 startGame() called');
+        console.log('📊 Game state before start:', {
+            gameRunning: this.gameRunning,
             paused: this.paused,
-            level: this.level,
-            score: this.score,
-            wordsFound: this.wordsFound.length
+            fallingLetter: this.fallingLetter,
+            gridLetters: this.grid.flat().filter(cell => cell !== null).length
         });
         
         this.gameRunning = true;
         this.paused = false;
-        this.stats.startTime = Date.now();
         
-        console.log('📊 Game started with stats:', {
-            startTime: this.stats.startTime,
-            level: this.level,
-            targetWords: this.targetWords.length,
-            letterQueueLength: this.letterQueue.length
-        });
+        // Ensure we have a falling letter
+        if (!this.fallingLetter) {
+            console.log('📝 Creating initial falling letter...');
+            this.createFallingLetter();
+        }
         
-        this.createFallingLetter();
+        // Start the fall timer
         this.startFallTimer();
+        
+        // Show start notification
         this.showGameStartNotification();
         
+        // Force initial render
+        this.render();
+        
         console.log('✅ Game started successfully');
+        console.log('📊 Game state after start:', {
+            gameRunning: this.gameRunning,
+            paused: this.paused,
+            fallingLetter: this.fallingLetter,
+            gridLetters: this.grid.flat().filter(cell => cell !== null).length
+        });
     }
     
     showGameStartNotification() {
@@ -957,6 +980,29 @@ class LettersCascadeGame {
         requestAnimationFrame(() => this.gameLoop());
     }
     
+    // Test function to manually place letters
+    testLetterPlacement() {
+        console.log('🧪 Testing letter placement...');
+        
+        // Place some test letters
+        this.grid[0][0] = 'A';
+        this.grid[0][1] = 'B';
+        this.grid[0][2] = 'C';
+        this.grid[1][0] = 'D';
+        this.grid[1][1] = 'E';
+        this.grid[1][2] = 'F';
+        
+        console.log('📝 Test letters placed:', {
+            gridState: this.grid.map(row => row.map(cell => cell || '.').join('')).join('\n'),
+            totalLetters: this.grid.flat().filter(cell => cell !== null).length
+        });
+        
+        // Force render
+        this.render();
+        
+        console.log('✅ Test letter placement completed');
+    }
+    
     // Enhanced Rendering
     render() {
         if (!this.ctx) {
@@ -964,13 +1010,17 @@ class LettersCascadeGame {
             return;
         }
         
+        // Count letters in grid before rendering
+        const lettersInGrid = this.grid.flat().filter(cell => cell !== null).length;
+        
         console.log('🎨 Rendering frame:', {
             canvasWidth: this.canvas.width,
             canvasHeight: this.canvas.height,
             gridSize: this.currentGridSize,
             cellSize: this.cellSize,
             fallingLetter: this.fallingLetter ? this.fallingLetter.letter : 'none',
-            gridCells: this.grid.flat().filter(cell => cell !== null).length
+            gridCells: lettersInGrid,
+            gridState: this.grid.map(row => row.map(cell => cell || '.').join('')).join('\n')
         });
         
         // Clear canvas with enhanced background
@@ -993,7 +1043,7 @@ class LettersCascadeGame {
         // Draw UI overlays
         this.drawUIOverlays();
         
-        console.log('✅ Frame rendered successfully');
+        console.log('✅ Frame rendered successfully with', lettersInGrid, 'letters in grid');
     }
     
     drawEnhancedBackground() {
