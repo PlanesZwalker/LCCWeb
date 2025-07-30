@@ -1018,133 +1018,41 @@
             
             console.log('✅ LettersCascadeGame class found');
             
-            // Initialize utilities
-            if (typeof Utils !== 'undefined') {
-                console.log('✅ Utils loaded successfully');
-                
-                // Add sound effects to buttons
-                const buttons = document.querySelectorAll('.btn');
-                console.log('🎮 Found', buttons.length, 'buttons for sound effects');
-                
-                buttons.forEach((btn, index) => {
-                    btn.addEventListener('click', function() {
-                        console.log('🖱️ Button clicked:', btn.textContent, 'index:', index);
-                        Utils.playSound('start', 800, 0.2);
-                    });
-                });
-
-                // Add particle effects to completed words
-                const wordListItems = document.querySelectorAll('.word-list li');
-                console.log('📝 Found', wordListItems.length, 'word list items for particle effects');
-                
-                wordListItems.forEach((word, index) => {
-                    word.addEventListener('click', function() {
-                        console.log('🖱️ Word clicked:', word.textContent, 'index:', index);
-                        if (this.classList.contains('completed')) {
-                            console.log('✨ Creating particle effect for completed word:', word.textContent);
-                            Utils.createParticleEffect(
-                                this.offsetLeft + this.offsetWidth / 2,
-                                this.offsetTop + this.offsetHeight / 2,
-                                10,
-                                '#4ecdc4'
-                            );
-                        } else {
-                            console.log('⚠️ Word not completed yet:', word.textContent);
-                        }
-                    });
-                });
-            } else {
-                console.warn('⚠️ Utils not loaded - sound and particle effects disabled');
-            }
-
-            // Initialize 2D Game
-            console.log('🎮 Creating LettersCascadeGame instance...');
-            
-            // Check if canvas exists before creating game
-            const canvas = document.getElementById('gameCanvas');
-            if (!canvas) {
-                console.error('❌ Canvas element not found! Cannot initialize game.');
-                return;
-            }
-            console.log('✅ Canvas element found:', canvas);
-            
+            // Initialize the game
             try {
                 window.game = new LettersCascadeGame();
-                // Initialize the game after creation
-                if (window.game && typeof window.game.init === 'function') {
-                    window.game.init();
-                    console.log('✅ Game initialization completed');
-                } else {
-                    console.error('❌ Game init method not available');
-                }
-                console.log('✅ 2D Game initialized successfully');
+                console.log('🎮 Game instance created:', window.game);
+                
+                // Initialize the game
+                window.game.init();
+                console.log('✅ Game initialized successfully');
+                
+                // Test game methods
+                console.log('🧪 Testing game methods...');
+                console.log('startGame method:', typeof window.game.startGame);
+                console.log('resetGame method:', typeof window.game.resetGame);
+                console.log('pauseGame method:', typeof window.game.pauseGame);
+                
+                // Add click event listeners for better debugging
+                document.querySelectorAll('.game-controls button').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        console.log('🖱️ Button clicked:', this.textContent.trim());
+                        console.log('Game instance available:', !!window.game);
+                    });
+                });
+                
             } catch (error) {
                 console.error('❌ Error initializing game:', error);
-                return;
-            }
-            
-            // Check game state
-            console.log('📊 Game state after initialization:', {
-                game: window.game,
-                hasGame: !!window.game,
-                gameType: typeof window.game,
-                canvas: window.game.canvas,
-                ctx: window.game.ctx
-            });
-            
-            // Check DOM elements
-            const gameElements = {
-                gameCanvas: document.getElementById('gameCanvas'),
-                scoreDisplay: document.getElementById('scoreDisplay'),
-                levelDisplay: document.getElementById('levelDisplay'),
-                wordsCompleted: document.getElementById('wordsCompleted'),
-                wordList: document.getElementById('wordList'),
-                letterPreview: document.getElementById('letterPreview'),
-                currentLevel: document.getElementById('currentLevel'),
-                targetScore: document.getElementById('targetScore'),
-                wordsFound: document.getElementById('wordsFound')
-            };
-            
-            console.log('📦 DOM elements found:', gameElements);
-            
-            // Check for missing elements
-            Object.entries(gameElements).forEach(([name, element]) => {
-                if (!element) {
-                    console.error('❌ Missing DOM element:', name);
-                } else {
-                    console.log('✅ Found DOM element:', name);
-                }
-            });
-            
-            // Additional game checks
-            if (window.game) {
-                console.log('🎯 Game properties check:', {
-                    gridSize: window.game.gridSize,
-                    cellSize: window.game.cellSize,
-                    canvas: window.game.canvas,
-                    ctx: window.game.ctx,
-                    gameRunning: window.game.gameRunning,
-                    targetWords: window.game.targetWords
-                });
             }
         });
         
-        // Add debugging for game control functions
+        // Global functions for button onclick handlers
         function startGame() {
-            console.log('▶️ startGame() called from prototype.html');
+            console.log('🎮 startGame() called from prototype.html');
             if (window.game && typeof window.game.startGame === 'function') {
                 window.game.startGame();
             } else {
                 console.error('❌ Game instance or startGame method not available');
-            }
-        }
-        
-        function pauseGame() {
-            console.log('⏸️ pauseGame() called from prototype.html');
-            if (window.game && typeof window.game.pauseGame === 'function') {
-                window.game.pauseGame();
-            } else {
-                console.error('❌ Game instance or pauseGame method not available');
             }
         }
         
@@ -1154,6 +1062,15 @@
                 window.game.resetGame();
             } else {
                 console.error('❌ Game instance or resetGame method not available');
+            }
+        }
+        
+        function pauseGame() {
+            console.log('⏸️ pauseGame() called from prototype.html');
+            if (window.game && typeof window.game.pauseGame === 'function') {
+                window.game.pauseGame();
+            } else {
+                console.error('❌ Game instance or pauseGame method not available');
             }
         }
         
