@@ -27,6 +27,36 @@ class LettersCascadeGame {
         this.fallSpeed = 1000; // milliseconds
         this.fallTimer = null;
         
+        // 🎯 INTELLIGENT BALANCING SYSTEM
+        this.balancingSystem = {
+            // Letter Distribution based on target words
+            letterFrequency: this.calculateLetterFrequency(),
+            
+            // Dynamic speed adjustment
+            baseFallSpeed: 1000,
+            minFallSpeed: 600,
+            maxFallSpeed: 2000,
+            speedMultiplier: 1.0,
+            
+            // Grid size optimization
+            optimalGridSize: 10,
+            gridSizeAdjustment: 0,
+            
+            // Word difficulty scaling
+            wordDifficulty: {
+                easy: ['CHAT', 'LIVRE', 'TABLE'],
+                medium: ['MAISON', 'JARDIN', 'PORTE'],
+                hard: ['MUSIQUE', 'FENÊTRE']
+            },
+            
+            // Level progression balance
+            levelBalance: {
+                lettersPerLevel: 3,
+                speedIncrease: 0.1,
+                complexityIncrease: 0.15
+            }
+        };
+        
         // Scoring System
         this.combo = 1;
         this.lastWordTime = 0;
@@ -45,12 +75,17 @@ class LettersCascadeGame {
         this.particleSystem = new ParticleSystem();
         this.audioManager = new AudioManager();
         
+        // Apply initial balancing
+        this.applyBalancing();
+        
         console.log('📊 Initial game state:', {
             gridSize: this.currentGridSize,
             cellSize: this.cellSize,
             level: this.level,
             score: this.score,
-            targetWords: this.targetWords.length
+            targetWords: this.targetWords.length,
+            fallSpeed: this.fallSpeed,
+            letterFrequency: this.balancingSystem.letterFrequency
         });
     }
     
@@ -119,6 +154,221 @@ class LettersCascadeGame {
             dictionarySize: this.dictionary.size,
             fallingLetter: this.fallingLetter ? this.fallingLetter.letter : 'none'
         });
+    }
+    
+    // 🎯 INTELLIGENT BALANCING METHODS
+    
+    calculateLetterFrequency() {
+        console.log('📊 Calculating letter frequency for target words...');
+        
+        const frequency = {};
+        const allLetters = this.targetWords.join('').split('');
+        
+        // Count letter frequency
+        allLetters.forEach(letter => {
+            frequency[letter] = (frequency[letter] || 0) + 1;
+        });
+        
+        // Calculate percentages
+        const totalLetters = allLetters.length;
+        Object.keys(frequency).forEach(letter => {
+            frequency[letter] = {
+                count: frequency[letter],
+                percentage: (frequency[letter] / totalLetters) * 100,
+                priority: frequency[letter] / totalLetters
+            };
+        });
+        
+        console.log('📈 Letter frequency calculated:', frequency);
+        return frequency;
+    }
+    
+    applyBalancing() {
+        console.log('⚖️ Applying intelligent game balancing...');
+        
+        // 1. Adjust fall speed based on level and complexity
+        this.adjustFallSpeed();
+        
+        // 2. Optimize grid size for current words
+        this.optimizeGridSize();
+        
+        // 3. Generate balanced letter queue
+        this.generateBalancedLetterQueue();
+        
+        // 4. Update target words based on level
+        this.updateTargetWords();
+        
+        console.log('✅ Balancing applied:', {
+            fallSpeed: this.fallSpeed,
+            gridSize: this.currentGridSize,
+            targetWords: this.targetWords,
+            queueLength: this.letterQueue.length
+        });
+    }
+    
+    adjustFallSpeed() {
+        const baseSpeed = this.balancingSystem.baseFallSpeed;
+        const levelMultiplier = 1 + (this.level - 1) * this.balancingSystem.levelBalance.speedIncrease;
+        const complexityMultiplier = this.calculateComplexityMultiplier();
+        
+        this.fallSpeed = Math.max(
+            this.balancingSystem.minFallSpeed,
+            Math.min(
+                this.balancingSystem.maxFallSpeed,
+                baseSpeed * levelMultiplier * complexityMultiplier
+            )
+        );
+        
+        console.log('⚡ Fall speed adjusted:', {
+            level: this.level,
+            baseSpeed: baseSpeed,
+            levelMultiplier: levelMultiplier,
+            complexityMultiplier: complexityMultiplier,
+            finalSpeed: this.fallSpeed
+        });
+    }
+    
+    calculateComplexityMultiplier() {
+        const avgWordLength = this.targetWords.reduce((sum, word) => sum + word.length, 0) / this.targetWords.length;
+        const complexityScore = avgWordLength / 5; // Normalize to 5-letter words
+        
+        // More complex words = slower speed for better control
+        return Math.max(0.8, Math.min(1.2, 1.1 - (complexityScore - 1) * 0.1));
+    }
+    
+    optimizeGridSize() {
+        const maxWordLength = Math.max(...this.targetWords.map(word => word.length));
+        const avgWordLength = this.targetWords.reduce((sum, word) => sum + word.length, 0) / this.targetWords.length;
+        
+        // Calculate optimal grid size based on word lengths
+        let optimalSize = Math.max(8, Math.min(12, Math.ceil(maxWordLength * 1.5)));
+        
+        // Adjust for number of words
+        if (this.targetWords.length > 6) {
+            optimalSize = Math.min(optimalSize + 1, 12);
+        }
+        
+        // Ensure grid size is in available options
+        if (!this.gridSizes.includes(optimalSize)) {
+            optimalSize = this.gridSizes.reduce((prev, curr) => 
+                Math.abs(curr - optimalSize) < Math.abs(prev - optimalSize) ? curr : prev
+            );
+        }
+        
+        this.currentGridSize = optimalSize;
+        this.cellSize = Math.floor(400 / optimalSize); // Adjust cell size for grid
+        
+        console.log('📐 Grid size optimized:', {
+            maxWordLength: maxWordLength,
+            avgWordLength: avgWordLength,
+            wordCount: this.targetWords.length,
+            optimalSize: optimalSize,
+            cellSize: this.cellSize
+        });
+    }
+    
+    generateBalancedLetterQueue() {
+        console.log('🎲 Generating balanced letter queue...');
+        
+        this.letterQueue = [];
+        const frequency = this.balancingSystem.letterFrequency;
+        const targetQueueSize = 15; // Optimal queue size
+        
+        // Create weighted letter pool
+        const letterPool = [];
+        Object.keys(frequency).forEach(letter => {
+            const weight = Math.ceil(frequency[letter].priority * 100);
+            for (let i = 0; i < weight; i++) {
+                letterPool.push(letter);
+            }
+        });
+        
+        // Add some common letters for variety
+        const commonLetters = ['A', 'E', 'I', 'O', 'U', 'R', 'S', 'T', 'N', 'L'];
+        commonLetters.forEach(letter => {
+            if (!frequency[letter]) {
+                for (let i = 0; i < 5; i++) {
+                    letterPool.push(letter);
+                }
+            }
+        });
+        
+        // Generate balanced queue
+        for (let i = 0; i < targetQueueSize; i++) {
+            const randomIndex = Math.floor(Math.random() * letterPool.length);
+            this.letterQueue.push(letterPool[randomIndex]);
+        }
+        
+        console.log('📋 Balanced letter queue generated:', {
+            queueLength: this.letterQueue.length,
+            uniqueLetters: [...new Set(this.letterQueue)].length,
+            nextLetters: this.letterQueue.slice(0, 5)
+        });
+    }
+    
+    updateTargetWords() {
+        console.log('📝 Updating target words for level', this.level);
+        
+        const difficulty = this.getDifficultyForLevel();
+        const wordCount = Math.min(3 + Math.floor(this.level / 2), 8);
+        
+        // Select words based on difficulty and level
+        let selectedWords = [];
+        
+        if (difficulty === 'easy') {
+            selectedWords = [...this.balancingSystem.wordDifficulty.easy];
+        } else if (difficulty === 'medium') {
+            selectedWords = [
+                ...this.balancingSystem.wordDifficulty.easy,
+                ...this.balancingSystem.wordDifficulty.medium
+            ];
+        } else {
+            selectedWords = [
+                ...this.balancingSystem.wordDifficulty.easy,
+                ...this.balancingSystem.wordDifficulty.medium,
+                ...this.balancingSystem.wordDifficulty.hard
+            ];
+        }
+        
+        // Shuffle and select appropriate number
+        selectedWords = this.shuffleArray(selectedWords).slice(0, wordCount);
+        
+        this.targetWords = selectedWords;
+        
+        console.log('🎯 Target words updated:', {
+            level: this.level,
+            difficulty: difficulty,
+            wordCount: this.targetWords.length,
+            words: this.targetWords
+        });
+    }
+    
+    getDifficultyForLevel() {
+        if (this.level <= 3) return 'easy';
+        if (this.level <= 6) return 'medium';
+        return 'hard';
+    }
+    
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+    
+    // Update balancing when level changes
+    updateBalancingForLevel() {
+        console.log('🔄 Updating balancing for level', this.level);
+        
+        this.applyBalancing();
+        
+        // Update display
+        this.updateDisplay();
+        
+        // Show level up effect
+        this.showLevelUpEffect();
     }
     
     startGameLoop() {
@@ -602,22 +852,17 @@ class LettersCascadeGame {
         
         const previousLevel = this.level;
         
-        // Level progression based on words found and score
-        if (this.wordsFound.length >= 3 && this.score >= 150 && this.level === 1) {
-            this.level = 2;
-            console.log('🎉 Level up! Level 1 → Level 2');
-        } else if (this.wordsFound.length >= 5 && this.score >= 300 && this.level === 2) {
-            this.level = 3;
-            console.log('🎉 Level up! Level 2 → Level 3');
-        } else if (this.wordsFound.length >= 7 && this.score >= 500 && this.level === 3) {
-            this.level = 4;
-            console.log('🎉 Level up! Level 3 → Level 4');
-        } else if (this.wordsFound.length >= 8 && this.score >= 800 && this.level === 4) {
-            this.level = 5;
-            console.log('🎉 Level up! Level 4 → Level 5');
-        }
+        // Intelligent level progression based on performance
+        const wordsNeeded = this.level * 2; // 2 words per level
+        const scoreNeeded = this.level * 100; // 100 points per level
         
-        if (this.level > previousLevel) {
+        if (this.wordsFound.length >= wordsNeeded && this.score >= scoreNeeded) {
+            this.level++;
+            console.log('🎉 Level up! Level', previousLevel, '→ Level', this.level);
+            
+            // Apply intelligent balancing for new level
+            this.updateBalancingForLevel();
+            
             console.log('🏆 Level up achievement unlocked!');
             this.showLevelUpEffect();
             this.updateProgressionBar();
@@ -626,7 +871,11 @@ class LettersCascadeGame {
         console.log('📊 Level progression result:', {
             previousLevel: previousLevel,
             newLevel: this.level,
-            levelChanged: this.level > previousLevel
+            levelChanged: this.level > previousLevel,
+            wordsNeeded: wordsNeeded,
+            scoreNeeded: scoreNeeded,
+            currentWords: this.wordsFound.length,
+            currentScore: this.score
         });
     }
     
