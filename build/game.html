@@ -641,18 +641,49 @@
             setupPostProcessing() {
                 console.log('🎭 Setting up post-processing effects...');
                 
-                // Import post-processing modules dynamically
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/three@0.178.0/examples/js/postprocessing/EffectComposer.js';
-                script.onload = () => {
-                    this.setupEffects();
+                // Try multiple CDN sources for EffectComposer
+                const cdnSources = [
+                    'https://unpkg.com/three@0.178.0/examples/js/postprocessing/EffectComposer.js',
+                    'https://cdn.jsdelivr.net/npm/three@0.178.0/examples/js/postprocessing/EffectComposer.js',
+                    'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.178.0/examples/js/postprocessing/EffectComposer.js'
+                ];
+                
+                let currentSourceIndex = 0;
+                
+                const tryLoadEffectComposer = () => {
+                    if (currentSourceIndex >= cdnSources.length) {
+                        console.log('⚠️ EffectComposer not available, using standard rendering');
+                        this.composer = null;
+                        return;
+                    }
+                    
+                    const script = document.createElement('script');
+                    script.src = cdnSources[currentSourceIndex];
+                    script.onload = () => {
+                        console.log('✅ EffectComposer loaded from:', cdnSources[currentSourceIndex]);
+                        this.setupEffects();
+                    };
+                    script.onerror = () => {
+                        console.log('❌ Failed to load EffectComposer from:', cdnSources[currentSourceIndex]);
+                        currentSourceIndex++;
+                        tryLoadEffectComposer();
+                    };
+                    document.head.appendChild(script);
                 };
-                document.head.appendChild(script);
+                
+                tryLoadEffectComposer();
             }
             
             // Setup Visual Effects
             setupEffects() {
                 try {
+                    // Check if EffectComposer is available
+                    if (typeof THREE.EffectComposer === 'undefined') {
+                        console.log('⚠️ EffectComposer not available, using standard rendering');
+                        this.composer = null;
+                        return;
+                    }
+                    
                     // Create composer for post-processing
                     this.composer = new THREE.EffectComposer(this.renderer);
                     
@@ -660,23 +691,35 @@
                     const renderPass = new THREE.RenderPass(this.scene, this.camera);
                     this.composer.addPass(renderPass);
                     
-                    // Unreal Bloom pass for glow effect
-                    const bloomPass = new THREE.UnrealBloomPass(
-                        new THREE.Vector2(window.innerWidth, window.innerHeight),
-                        0.5,  // strength
-                        0.4,  // radius
-                        0.85  // threshold
-                    );
-                    this.composer.addPass(bloomPass);
+                    // Try to add bloom effect if available
+                    try {
+                        const bloomPass = new THREE.UnrealBloomPass(
+                            new THREE.Vector2(window.innerWidth, window.innerHeight),
+                            0.5,  // strength
+                            0.4,  // radius
+                            0.85  // threshold
+                        );
+                        this.composer.addPass(bloomPass);
+                        console.log('✅ Bloom effect added');
+                    } catch (bloomError) {
+                        console.log('⚠️ Bloom effect not available:', bloomError.message);
+                    }
                     
-                    // Color correction
-                    const colorCorrectionPass = new THREE.ShaderPass(THREE.ColorCorrectionShader);
-                    colorCorrectionPass.uniforms.powRGB.value = new THREE.Vector3(1.1, 1.1, 1.1);
-                    this.composer.addPass(colorCorrectionPass);
+                    // Try to add color correction if available
+                    try {
+                        if (THREE.ColorCorrectionShader) {
+                            const colorCorrectionPass = new THREE.ShaderPass(THREE.ColorCorrectionShader);
+                            colorCorrectionPass.uniforms.powRGB.value = new THREE.Vector3(1.1, 1.1, 1.1);
+                            this.composer.addPass(colorCorrectionPass);
+                            console.log('✅ Color correction added');
+                        }
+                    } catch (colorError) {
+                        console.log('⚠️ Color correction not available:', colorError.message);
+                    }
                     
                     console.log('✅ Post-processing effects initialized');
                 } catch (error) {
-                    console.log('⚠️ Post-processing not available, using standard rendering');
+                    console.log('⚠️ Post-processing not available, using standard rendering:', error.message);
                     this.composer = null;
                 }
             }
