@@ -519,6 +519,54 @@
             transform: scale(1.2);
         }
 
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--gray-500), var(--gray-600));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.4);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 15px 35px rgba(66, 133, 244, 0.6);
+            background: linear-gradient(135deg, #34a853, #4285f4);
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover i {
+            transform: scale(1.2);
+        }
+
         /* Enhanced Resource Links */
         .resource-link {
             display: inline-flex;
@@ -577,6 +625,17 @@
                     <h1>📋 Game Design Document</h1>
                     <p>Letters Cascade Challenge - Document de Conception Professionnel</p>
                     <p><strong>Version 1.0 | Date: Juillet 2025</strong></p>
+                    
+                    <div class="action-buttons">
+                        <a href="create-gdd-docs.html" class="action-btn primary">
+                            <i class="fab fa-google"></i>
+                            Créer Google Docs
+                        </a>
+                        <a href="generate-pdf.html" class="action-btn">
+                            <i class="fas fa-file-pdf"></i>
+                            Télécharger PDF
+                        </a>
+                    </div>
                 </div>
 
                 <!-- PDF Download Section -->
