@@ -1020,6 +1020,49 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .future-features h4 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .future-features ul {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .future-features li {
+            margin-bottom: var(--spacing-xs);
+            padding-left: var(--spacing-sm);
+        }
+
+        .word-list-example {
+            background: rgba(102, 126, 234, 0.1);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .word-list-example p {
+            margin-bottom: var(--spacing-sm);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .note {
+            font-style: italic;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-top: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--warning-color);
+        }
     </style>
 </head>
 <body>
@@ -1076,17 +1119,46 @@
                 
                 <div class="overview-card">
                     <h3>🎯 Objectif du Jeu</h3>
-                    <p>Votre objectif est de former des mots français en plaçant stratégiquement les lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Enchaînez les mots rapidement pour créer des combos et multiplier vos scores !</p>
+                    <p>Votre objectif est de former des mots français <strong>d'une liste prédéfinie</strong> en plaçant stratégiquement les lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Enchaînez les mots rapidement pour créer des combos et multiplier vos scores !</p>
                     
                     <div class="key-features">
                         <h4>🌟 Caractéristiques Principales :</h4>
                         <ul>
-                            <li><strong>Formation de Mots :</strong> Créez des mots français de 3 lettres minimum</li>
+                            <li><strong>Liste de Mots Prédéfinie :</strong> Formez des mots spécifiques de la liste du niveau</li>
                             <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
                             <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
                             <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
                             <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
                             <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="overview-card">
+                    <h3>🚀 Améliorations Futures</h3>
+                    <p>Le jeu évoluera vers une expérience encore plus riche avec de nouvelles fonctionnalités et contenus débloquables.</p>
+                    
+                    <div class="future-features">
+                        <h4>🌍 Multilangue :</h4>
+                        <ul>
+                            <li><strong>Support Multi-langues :</strong> Français, Anglais, Espagnol, Allemand, etc.</li>
+                            <li><strong>Dictionnaires Spécialisés :</strong> Vocabulaire technique, scientifique, littéraire</li>
+                            <li><strong>Adaptation Culturelle :</strong> Mots et expressions spécifiques à chaque culture</li>
+                        </ul>
+                        
+                        <h4>🎨 Skins et Environnements :</h4>
+                        <ul>
+                            <li><strong>Modèles de Lettres :</strong> Styles variés (classique, moderne, fantasy, sci-fi)</li>
+                            <li><strong>Environnements Thématiques :</strong> Forêt, ville, espace, océan, montagne</li>
+                            <li><strong>Effets Visuels Personnalisés :</strong> Particules, animations et transitions uniques</li>
+                        </ul>
+                        
+                        <h4>📚 Définitions et Thématiques :</h4>
+                        <ul>
+                            <li><strong>Définitions Débloquables :</strong> Découvrez le sens des mots formés</li>
+                            <li><strong>Thématiques Spéciales :</strong> Niveaux dédiés (nature, technologie, art, histoire)</li>
+                            <li><strong>Mode Éducatif :</strong> Apprentissage du vocabulaire avec explications</li>
+                            <li><strong>Collections :</strong> Débloquez des séries de mots par thème</li>
                         </ul>
                     </div>
                 </div>
@@ -1103,19 +1175,24 @@
                     <div class="rule-content">
                         <h4>Critères de Validation :</h4>
                         <ul>
+                            <li><strong>Liste Prédéfinie :</strong> Seuls les mots de la liste du niveau sont valides</li>
                             <li><strong>Longueur minimale :</strong> 3 lettres minimum</li>
                             <li><strong>Langue :</strong> Mots français uniquement</li>
                             <li><strong>Validation :</strong> Automatique en temps réel</li>
                             <li><strong>Directions :</strong> Horizontal, vertical et diagonal</li>
                         </ul>
                         
-                        <h4>Exemples de Mots Valides :</h4>
-                        <div class="word-examples">
-                            <span class="word-example">CHAT</span>
-                            <span class="word-example">MAISON</span>
-                            <span class="word-example">MUSIQUE</span>
-                            <span class="word-example">JARDIN</span>
-                            <span class="word-example">LIVRE</span>
+                        <h4>Exemple de Liste de Niveau :</h4>
+                        <div class="word-list-example">
+                            <p><strong>Niveau 1 - Mots à former :</strong></p>
+                            <div class="word-examples">
+                                <span class="word-example">CHAT</span>
+                                <span class="word-example">MAISON</span>
+                                <span class="word-example">MUSIQUE</span>
+                                <span class="word-example">JARDIN</span>
+                                <span class="word-example">LIVRE</span>
+                            </div>
+                            <p class="note">Note : Seuls ces mots spécifiques seront acceptés pour valider le niveau.</p>
                         </div>
                     </div>
                 </div>
