@@ -1189,743 +1189,753 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>📋 Règles du Jeu</h1>
-            <p>Letters Cascade Challenge - Guide complet des règles et mécaniques de jeu</p>
-            
-            <nav class="nav-menu">
-                <a href="index.html" class="nav-link">🏠 Accueil</a>
-                <a href="prototype.html" class="nav-link">🎮 Version 2D</a>
-                <a href="game.html" class="nav-link">🎮 Version 3D</a>
-                <a href="GDD.html" class="nav-link">📄 GDD</a>
-                <a href="moodboard.html" class="nav-link">🎨 Références</a>
-            </nav>
-        </div>
+        <div class="page-layout single-column">
+            <!-- Enhanced Navigation Sidebar -->
+            <div class="nav-sidebar">
+                <h3>📊 Navigation</h3>
+                <div class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
+                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
+                    <a href="rules.html" class="active"><i class="fas fa-book"></i> Règles</a>
+                    <a href="moodboard.html"><i class="fas fa-palette"></i> Références</a>
+                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                </div>
+            </div>
 
-        <!-- Game Overview Section -->
-        <div class="rule-section">
-            <h2>🎮 Vue d'Ensemble du Jeu</h2>
-            
-            <div class="game-overview">
-                <div class="overview-card">
-                    <h3>📖 Qu'est-ce que Letters Cascade Challenge ?</h3>
-                    <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui combine la formation de mots avec des mécaniques de chute inspirées de Tetris. Les lettres tombent du haut de l'écran et vous devez les placer stratégiquement pour former des mots français valides.</p>
+            <div class="main-content">
+                <!-- Header -->
+                <div class="glass-panel">
+                    <h1>📋 Règles du Jeu</h1>
+                    <p>Letters Cascade Challenge - Guide complet des règles et mécaniques de jeu</p>
+                </div>
+
+                <!-- Game Overview Section -->
+                <div class="rule-section">
+                    <h2>🎮 Vue d'Ensemble du Jeu</h2>
                     
-                    <div class="game-links">
-                        <h4>🎯 Jouer Maintenant :</h4>
-                        <div class="link-buttons">
-                            <a href="prototype.html" class="game-link primary">
-                                <i class="fas fa-gamepad"></i>
-                                Jouer Version 2D
-                                <span class="link-desc">Version classique optimisée</span>
-                            </a>
-                            <a href="prototype-fullscreen.html" class="game-link primary">
-                                <i class="fas fa-expand"></i>
-                                2D Plein Écran
-                                <span class="link-desc">Version immersive optimisée</span>
-                            </a>
-                            <a href="game.html" class="game-link secondary">
-                                <i class="fas fa-cube"></i>
-                                Jouer Version 3D
-                                <span class="link-desc">Version immersive 3D</span>
-                            </a>
-                            <a href="game-fullscreen.html" class="game-link secondary">
-                                <i class="fas fa-expand"></i>
-                                3D Plein Écran
-                                <span class="link-desc">Version 3D immersive optimisée</span>
-                            </a>
+                    <div class="game-overview">
+                        <div class="overview-card">
+                            <h3>📖 Qu'est-ce que Letters Cascade Challenge ?</h3>
+                            <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui combine la formation de mots avec des mécaniques de chute inspirées de Tetris. Les lettres tombent du haut de l'écran et vous devez les placer stratégiquement pour former des mots français valides.</p>
+                            
+                            <div class="game-links">
+                                <h4>🎯 Jouer Maintenant :</h4>
+                                <div class="link-buttons">
+                                    <a href="prototype.html" class="game-link primary">
+                                        <i class="fas fa-gamepad"></i>
+                                        Jouer Version 2D
+                                        <span class="link-desc">Version classique optimisée</span>
+                                    </a>
+                                    <a href="prototype-fullscreen.html" class="game-link primary">
+                                        <i class="fas fa-expand"></i>
+                                        2D Plein Écran
+                                        <span class="link-desc">Version immersive optimisée</span>
+                                    </a>
+                                    <a href="game.html" class="game-link secondary">
+                                        <i class="fas fa-cube"></i>
+                                        Jouer Version 3D
+                                        <span class="link-desc">Version immersive 3D</span>
+                                    </a>
+                                    <a href="game-fullscreen.html" class="game-link secondary">
+                                        <i class="fas fa-expand"></i>
+                                        3D Plein Écran
+                                        <span class="link-desc">Version 3D immersive optimisée</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <h3>🎯 Objectif du Jeu</h3>
+                            <p>Votre objectif est de former des mots français <strong>d'une liste prédéfinie</strong> en plaçant stratégiquement les lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Enchaînez les mots rapidement pour créer des combos et multiplier vos scores !</p>
+                            
+                            <div class="key-features">
+                                <h4>🌟 Caractéristiques Principales :</h4>
+                                <ul>
+                                    <li><strong>Liste de Mots Prédéfinie :</strong> Formez des mots spécifiques de la liste du niveau</li>
+                                    <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
+                                    <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
+                                    <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
+                                    <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
+                                    <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="overview-card">
+                            <h3>🚀 Améliorations Futures</h3>
+                            <p>Le jeu évoluera vers une expérience encore plus riche avec de nouvelles fonctionnalités et contenus débloquables.</p>
+                            
+                            <div class="future-features">
+                                <h4>🌍 Multilangue :</h4>
+                                <ul>
+                                    <li><strong>Support Multi-langues :</strong> Français, Anglais, Espagnol, Allemand, etc.</li>
+                                    <li><strong>Dictionnaires Spécialisés :</strong> Vocabulaire technique, scientifique, littéraire</li>
+                                    <li><strong>Adaptation Culturelle :</strong> Mots et expressions spécifiques à chaque culture</li>
+                                </ul>
+                                
+                                <h4>🎨 Skins et Environnements :</h4>
+                                <ul>
+                                    <li><strong>Modèles de Lettres :</strong> Styles variés (classique, moderne, fantasy, sci-fi)</li>
+                                    <li><strong>Environnements Thématiques :</strong> Forêt, ville, espace, océan, montagne</li>
+                                    <li><strong>Effets Visuels Personnalisés :</strong> Particules, animations et transitions uniques</li>
+                                </ul>
+                                
+                                <h4>📚 Définitions et Thématiques :</h4>
+                                <ul>
+                                    <li><strong>Définitions Débloquables :</strong> Découvrez le sens des mots formés</li>
+                                    <li><strong>Thématiques Spéciales :</strong> Niveaux dédiés (nature, technologie, art, histoire)</li>
+                                    <li><strong>Mode Éducatif :</strong> Apprentissage du vocabulaire avec explications</li>
+                                    <li><strong>Collections :</strong> Débloquez des séries de mots par thème</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="overview-card">
-                    <h3>🎯 Objectif du Jeu</h3>
-                    <p>Votre objectif est de former des mots français <strong>d'une liste prédéfinie</strong> en plaçant stratégiquement les lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Enchaînez les mots rapidement pour créer des combos et multiplier vos scores !</p>
+
+                <!-- Version-Specific Rules Section -->
+                <div class="rule-section">
+                    <h2>🎮 Règles par Version</h2>
                     
-                    <div class="key-features">
-                        <h4>🌟 Caractéristiques Principales :</h4>
-                        <ul>
-                            <li><strong>Liste de Mots Prédéfinie :</strong> Formez des mots spécifiques de la liste du niveau</li>
-                            <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
-                            <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
-                            <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
-                            <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
-                            <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
-                        </ul>
+                    <div class="version-comparison">
+                        <div class="version-card">
+                            <h3>📱 Version 2D - Règles Classiques</h3>
+                            <div class="version-content">
+                                <h4>🎯 Caractéristiques Spécifiques :</h4>
+                                <ul>
+                                    <li><strong>Interface :</strong> Grille 2D classique avec vue de dessus</li>
+                                    <li><strong>Contrôles :</strong> Souris et clavier optimisés</li>
+                                    <li><strong>Performance :</strong> Compatible tous appareils</li>
+                                    <li><strong>Accessibilité :</strong> Idéal pour débutants</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Spécifiques 2D :</h4>
+                                <ul>
+                                    <li><strong>Grille :</strong> 10x10 cases fixes</li>
+                                    <li><strong>Lettres :</strong> Affichage 2D simple</li>
+                                    <li><strong>Placement :</strong> Clic direct sur la grille</li>
+                                    <li><strong>Rotation :</strong> Clic droit pour pivoter</li>
+                                    <li><strong>Vitesse :</strong> Chute progressive constante</li>
+                                    <li><strong>Effets :</strong> Animations 2D et particules</li>
+                                </ul>
+                                
+                                <h4>�� Contrôles 2D :</h4>
+                                <ul>
+                                    <li><strong>Souris :</strong> Clic gauche pour placer, clic droit pour pivoter</li>
+                                    <li><strong>Clavier :</strong> Flèches pour déplacer, ESPACE pour placer</li>
+                                    <li><strong>Raccourcis :</strong> P pour pause, R pour recommencer</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="version-card">
+                            <h3>🎲 Version 3D - Règles Immersives</h3>
+                            <div class="version-content">
+                                <h4>🎯 Caractéristiques Spécifiques :</h4>
+                                <ul>
+                                    <li><strong>Interface :</strong> Environnement 3D immersif</li>
+                                    <li><strong>Contrôles :</strong> Navigation 3D avancée</li>
+                                    <li><strong>Performance :</strong> Requiert carte graphique dédiée</li>
+                                    <li><strong>Expérience :</strong> Immersion totale</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Spécifiques 3D :</h4>
+                                <ul>
+                                    <li><strong>Grille :</strong> Grille 3D avec profondeur</li>
+                                    <li><strong>Lettres :</strong> Modèles 3D détaillés</li>
+                                    <li><strong>Placement :</strong> Navigation 3D avec caméra</li>
+                                    <li><strong>Rotation :</strong> Rotation 3D complète</li>
+                                    <li><strong>Vitesse :</strong> Chute réaliste avec physique</li>
+                                    <li><strong>Effets :</strong> Effets 3D et éclairage dynamique</li>
+                                </ul>
+                                
+                                <h4>🎮 Contrôles 3D :</h4>
+                                <ul>
+                                    <li><strong>Souris :</strong> Navigation caméra + placement</li>
+                                    <li><strong>Clavier :</strong> WASD pour déplacer, Q/E pour rotation</li>
+                                    <li><strong>Caméra :</strong> Clic droit pour orienter la vue</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="overview-card">
-                    <h3>🚀 Améliorations Futures</h3>
-                    <p>Le jeu évoluera vers une expérience encore plus riche avec de nouvelles fonctionnalités et contenus débloquables.</p>
+                <!-- Complexity Levels Section -->
+                <div class="rule-section">
+                    <h2>🧠 Niveaux de Complexité</h2>
                     
-                    <div class="future-features">
-                        <h4>🌍 Multilangue :</h4>
-                        <ul>
-                            <li><strong>Support Multi-langues :</strong> Français, Anglais, Espagnol, Allemand, etc.</li>
-                            <li><strong>Dictionnaires Spécialisés :</strong> Vocabulaire technique, scientifique, littéraire</li>
-                            <li><strong>Adaptation Culturelle :</strong> Mots et expressions spécifiques à chaque culture</li>
-                        </ul>
+                    <div class="complexity-levels">
+                        <div class="complexity-card">
+                            <h3>�� Niveau Enfant (4-8 ans)</h3>
+                            <div class="complexity-content">
+                                <h4>🎯 Objectifs Pédagogiques :</h4>
+                                <ul>
+                                    <li><strong>Apprentissage :</strong> Reconnaissance des lettres</li>
+                                    <li><strong>Développement :</strong> Coordination œil-main</li>
+                                    <li><strong>Motivation :</strong> Récompenses visuelles</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Adaptées :</h4>
+                                <ul>
+                                    <li><strong>Mots :</strong> 3-4 lettres maximum</li>
+                                    <li><strong>Vitesse :</strong> Chute très lente</li>
+                                    <li><strong>Grille :</strong> 6x6 cases</li>
+                                    <li><strong>Contrôles :</strong> Interface tactile simplifiée</li>
+                                    <li><strong>Feedback :</strong> Sons et animations encourageants</li>
+                                    <li><strong>Thèmes :</strong> Animaux, couleurs, formes</li>
+                                </ul>
+                                
+                                <h4>🎮 Exemples de Mots :</h4>
+                                <div class="word-examples">
+                                    <span class="word-example">CHAT</span>
+                                    <span class="word-example">CHIEN</span>
+                                    <span class="word-example">MAIN</span>
+                                    <span class="word-example">PIED</span>
+                                </div>
+                            </div>
+                        </div>
                         
-                        <h4>🎨 Skins et Environnements :</h4>
-                        <ul>
-                            <li><strong>Modèles de Lettres :</strong> Styles variés (classique, moderne, fantasy, sci-fi)</li>
-                            <li><strong>Environnements Thématiques :</strong> Forêt, ville, espace, océan, montagne</li>
-                            <li><strong>Effets Visuels Personnalisés :</strong> Particules, animations et transitions uniques</li>
-                        </ul>
+                        <div class="complexity-card">
+                            <h3>�� Niveau Junior (8-12 ans)</h3>
+                            <div class="complexity-content">
+                                <h4>🎯 Objectifs Pédagogiques :</h4>
+                                <ul>
+                                    <li><strong>Apprentissage :</strong> Formation de mots simples</li>
+                                    <li><strong>Développement :</strong> Stratégie de base</li>
+                                    <li><strong>Motivation :</strong> Progression par niveaux</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Adaptées :</h4>
+                                <ul>
+                                    <li><strong>Mots :</strong> 4-6 lettres</li>
+                                    <li><strong>Vitesse :</strong> Chute modérée</li>
+                                    <li><strong>Grille :</strong> 8x8 cases</li>
+                                    <li><strong>Contrôles :</strong> Souris et clavier basiques</li>
+                                    <li><strong>Feedback :</strong> Points et combos simples</li>
+                                    <li><strong>Thèmes :</strong> Famille, école, loisirs</li>
+                                </ul>
+                                
+                                <h4>🎮 Exemples de Mots :</h4>
+                                <div class="word-examples">
+                                    <span class="word-example">MAISON</span>
+                                    <span class="word-example">JARDIN</span>
+                                    <span class="word-example">LIVRE</span>
+                                    <span class="word-example">TABLE</span>
+                                </div>
+                            </div>
+                        </div>
                         
-                        <h4>📚 Définitions et Thématiques :</h4>
-                        <ul>
-                            <li><strong>Définitions Débloquables :</strong> Découvrez le sens des mots formés</li>
-                            <li><strong>Thématiques Spéciales :</strong> Niveaux dédiés (nature, technologie, art, histoire)</li>
-                            <li><strong>Mode Éducatif :</strong> Apprentissage du vocabulaire avec explications</li>
-                            <li><strong>Collections :</strong> Débloquez des séries de mots par thème</li>
-                        </ul>
+                        <div class="complexity-card">
+                            <h3>👨‍🎓 Niveau Adolescent (12-16 ans)</h3>
+                            <div class="complexity-content">
+                                <h4>🎯 Objectifs Pédagogiques :</h4>
+                                <ul>
+                                    <li><strong>Apprentissage :</strong> Vocabulaire enrichi</li>
+                                    <li><strong>Développement :</strong> Stratégie avancée</li>
+                                    <li><strong>Motivation :</strong> Défis et compétition</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Adaptées :</h4>
+                                <ul>
+                                    <li><strong>Mots :</strong> 5-8 lettres</li>
+                                    <li><strong>Vitesse :</strong> Chute rapide</li>
+                                    <li><strong>Grille :</strong> 10x10 cases</li>
+                                    <li><strong>Contrôles :</strong> Tous les contrôles disponibles</li>
+                                    <li><strong>Feedback :</strong> Système de combo complet</li>
+                                    <li><strong>Thèmes :</strong> Technologie, sports, culture</li>
+                                </ul>
+                                
+                                <h4>🎮 Exemples de Mots :</h4>
+                                <div class="word-examples">
+                                    <span class="word-example">MUSIQUE</span>
+                                    <span class="word-example">ORDINATEUR</span>
+                                    <span class="word-example">BASKETBALL</span>
+                                    <span class="word-example">CINÉMA</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="complexity-card">
+                            <h3>👨‍💼 Niveau Adulte (16+ ans)</h3>
+                            <div class="complexity-content">
+                                <h4>🎯 Objectifs Pédagogiques :</h4>
+                                <ul>
+                                    <li><strong>Apprentissage :</strong> Vocabulaire spécialisé</li>
+                                    <li><strong>Développement :</strong> Optimisation et efficacité</li>
+                                    <li><strong>Motivation :</strong> Performance et records</li>
+                                </ul>
+                                
+                                <h4>📋 Règles Adaptées :</h4>
+                                <ul>
+                                    <li><strong>Mots :</strong> 6+ lettres, mots complexes</li>
+                                    <li><strong>Vitesse :</strong> Chute très rapide</li>
+                                    <li><strong>Grille :</strong> 12x12 cases</li>
+                                    <li><strong>Contrôles :</strong> Raccourcis avancés</li>
+                                    <li><strong>Feedback :</strong> Statistiques détaillées</li>
+                                    <li><strong>Thèmes :</strong> Professionnel, académique, culturel</li>
+                                </ul>
+                                
+                                <h4>🎮 Exemples de Mots :</h4>
+                                <div class="word-examples">
+                                    <span class="word-example">PHILOSOPHIE</span>
+                                    <span class="word-example">TECHNOLOGIE</span>
+                                    <span class="word-example">LITTÉRATURE</span>
+                                    <span class="word-example">ARCHITECTURE</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Detailed Rules Section -->
+                <div class="rule-section">
+                    <h2>📋 Règles Détaillées du Jeu</h2>
+                    
+                    <div class="rules-grid">
+                        <div class="rule-card">
+                            <h3>🎯 Formation de Mots</h3>
+                            <div class="rule-content">
+                                <h4>Critères de Validation :</h4>
+                                <ul>
+                                    <li><strong>Liste Prédéfinie :</strong> Seuls les mots de la liste du niveau sont valides</li>
+                                    <li><strong>Longueur minimale :</strong> 3 lettres minimum</li>
+                                    <li><strong>Langue :</strong> Mots français uniquement</li>
+                                    <li><strong>Validation :</strong> Automatique en temps réel</li>
+                                    <li><strong>Directions :</strong> Horizontal, vertical et diagonal</li>
+                                </ul>
+                                
+                                <h4>Exemple de Liste de Niveau :</h4>
+                                <div class="word-list-example">
+                                    <p><strong>Niveau 1 - Mots à former :</strong></p>
+                                    <div class="word-examples">
+                                        <span class="word-example">CHAT</span>
+                                        <span class="word-example">MAISON</span>
+                                        <span class="word-example">MUSIQUE</span>
+                                        <span class="word-example">JARDIN</span>
+                                        <span class="word-example">LIVRE</span>
+                                    </div>
+                                    <p class="note">Note : Seuls ces mots spécifiques seront acceptés pour valider le niveau.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-card">
+                            <h3>💰 Système de Scoring</h3>
+                            <div class="rule-content">
+                                <h4>Calcul des Points :</h4>
+                                <ul>
+                                    <li><strong>Points de base :</strong> 1 point par lettre utilisée</li>
+                                    <li><strong>Bonus de longueur :</strong> Longueur du mot × 10</li>
+                                    <li><strong>Multiplicateur combo :</strong> Points × niveau de combo</li>
+                                    <li><strong>Bonus de vitesse :</strong> Points supplémentaires pour les mots rapides</li>
+                                </ul>
+                                
+                                <h4>Exemple de Calcul :</h4>
+                                <div class="scoring-example">
+                                    <p><strong>Mot "MAISON" (6 lettres) :</strong></p>
+                                    <ul>
+                                        <li>Points de base : 6 points</li>
+                                        <li>Bonus de longueur : 6 × 10 = 60 points</li>
+                                        <li><strong>Total : 66 points</strong></li>
+                                        <li>Avec combo x2 : <strong>132 points</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-card">
+                            <h3>🔥 Système de Combo</h3>
+                            <div class="rule-content">
+                                <h4>Comment ça marche :</h4>
+                                <ul>
+                                    <li><strong>Activation :</strong> Formez des mots rapidement</li>
+                                    <li><strong>Durée :</strong> 5 secondes entre chaque mot</li>
+                                    <li><strong>Multiplicateur :</strong> Augmente avec chaque mot</li>
+                                    <li><strong>Maximum :</strong> Combo x10 possible</li>
+                                </ul>
+                                
+                                <h4>Exemples de Combos :</h4>
+                                <div class="combo-examples">
+                                    <div class="combo-item">
+                                        <span class="combo-level">Combo x2</span>
+                                        <span class="combo-desc">2 mots en 5 secondes</span>
+                                    </div>
+                                    <div class="combo-item">
+                                        <span class="combo-level">Combo x5</span>
+                                        <span class="combo-desc">5 mots en 5 secondes</span>
+                                    </div>
+                                    <div class="combo-item">
+                                        <span class="combo-level">Combo x10</span>
+                                        <span class="combo-desc">10 mots en 5 secondes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rule-card">
+                            <h3>📈 Progression par Niveaux</h3>
+                            <div class="rule-content">
+                                <h4>Niveaux et Objectifs :</h4>
+                                <ul>
+                                    <li><strong>Niveau 1 :</strong> 0-100 points (Débutant)</li>
+                                    <li><strong>Niveau 2 :</strong> 100-300 points (Intermédiaire)</li>
+                                    <li><strong>Niveau 3 :</strong> 300-600 points (Avancé)</li>
+                                    <li><strong>Niveau 4 :</strong> 600-1000 points (Expert)</li>
+                                    <li><strong>Niveau 5+ :</strong> 1000+ points (Maître)</li>
+                                </ul>
+                                
+                                <h4>Débloquages :</h4>
+                                <div class="unlock-features">
+                                    <div class="unlock-item">
+                                        <span class="unlock-icon">🎨</span>
+                                        <span class="unlock-desc">Nouveaux effets visuels</span>
+                                    </div>
+                                    <div class="unlock-item">
+                                        <span class="unlock-icon">🎵</span>
+                                        <span class="unlock-desc">Nouvelles musiques</span>
+                                    </div>
+                                    <div class="unlock-item">
+                                        <span class="unlock-icon">🏆</span>
+                                        <span class="unlock-desc">Défis spéciaux</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level Progression -->
+                <div class="rule-section">
+                    <h2>📈 Progression des Niveaux</h2>
+                    
+                    <div class="level-requirements">
+                        <div class="level-card">
+                            <h4>Niveau 1</h4>
+                            <p>3 mots, 100 points</p>
+                            <p>Temps : 2 minutes</p>
+                        </div>
+                        <div class="level-card">
+                            <h4>Niveau 2</h4>
+                            <p>5 mots, 250 points</p>
+                            <p>Temps : 3 minutes</p>
+                        </div>
+                        <div class="level-card">
+                            <h4>Niveau 3</h4>
+                            <p>7 mots, 500 points</p>
+                            <p>Temps : 4 minutes</p>
+                        </div>
+                        <div class="level-card">
+                            <h4>Niveau 4</h4>
+                            <p>10 mots, 1000 points</p>
+                            <p>Temps : 5 minutes</p>
+                        </div>
+                    </div>
+
+                    <h3>🏆 Conditions de Victoire</h3>
+                    <ul class="rule-list">
+                        <li><span class="rule-icon">✅</span> Atteindre le nombre de mots requis</li>
+                        <li><span class="rule-icon">✅</span> Atteindre le score minimum</li>
+                        <li><span class="rule-icon">✅</span> Respecter la limite de temps</li>
+                    </ul>
+
+                    <h3>�� Conditions de Défaite</h3>
+                    <ul class="rule-list">
+                        <li><span class="rule-icon">❌</span> Dépasser la limite de temps</li>
+                        <li><span class="rule-icon">❌</span> Grille pleine à 80%</li>
+                        <li><span class="rule-icon">❌</span> Score trop bas</li>
+                        <li><span class="rule-icon">❌</span> Aucun mouvement possible</li>
+                    </ul>
+                </div>
+
+                <!-- Game Controls Section -->
+                <div class="rule-section">
+                    <h2>🎮 Contrôles du Jeu</h2>
+                    
+                    <div class="controls-overview">
+                        <div class="control-category">
+                            <h3>🖱️ Contrôles Souris</h3>
+                            <div class="control-list">
+                                <div class="control-item">
+                                    <span class="control-icon">🖱️</span>
+                                    <span class="control-action">Clic gauche</span>
+                                    <span class="control-desc">Placer la lettre qui tombe</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-icon">🔄</span>
+                                    <span class="control-action">Clic droit</span>
+                                    <span class="control-desc">Faire pivoter la lettre</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-icon">⬇️</span>
+                                    <span class="control-action">Double-clic</span>
+                                    <span class="control-desc">Faire tomber rapidement</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-category">
+                            <h3>⌨️ Contrôles Clavier</h3>
+                            <div class="control-list">
+                                <div class="control-item">
+                                    <span class="control-key">←</span>
+                                    <span class="control-action">Déplacer à gauche</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">→</span>
+                                    <span class="control-action">Déplacer à droite</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">↓</span>
+                                    <span class="control-action">Faire tomber</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">↑</span>
+                                    <span class="control-action">Faire pivoter</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">ESPACE</span>
+                                    <span class="control-action">Placer la lettre</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">P</span>
+                                    <span class="control-action">Pause/Reprendre</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">R</span>
+                                    <span class="control-action">Recommencer</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-key">F</span>
+                                    <span class="control-action">Plein écran</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-category">
+                            <h3>📱 Contrôles Tactiles</h3>
+                            <div class="control-list">
+                                <div class="control-item">
+                                    <span class="control-icon">👆</span>
+                                    <span class="control-action">Tap</span>
+                                    <span class="control-desc">Placer la lettre</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-icon">🔄</span>
+                                    <span class="control-action">Swipe haut</span>
+                                    <span class="control-desc">Faire pivoter</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-icon">⬇️</span>
+                                    <span class="control-action">Swipe bas</span>
+                                    <span class="control-desc">Faire tomber rapidement</span>
+                                </div>
+                                <div class="control-item">
+                                    <span class="control-icon">⬅️➡️</span>
+                                    <span class="control-action">Swipe gauche/droite</span>
+                                    <span class="control-desc">Déplacer horizontalement</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Mechanics Section -->
+                <div class="rule-section">
+                    <h2>⚙️ Mécaniques de Jeu Avancées</h2>
+                    
+                    <div class="mechanics-grid">
+                        <div class="mechanic-card">
+                            <h3>📝 Système de Formation de Mots</h3>
+                            <div class="mechanic-content">
+                                <h4>Validation des Mots :</h4>
+                                <ul>
+                                    <li><strong>Dictionnaire français :</strong> Plus de 50,000 mots validés</li>
+                                    <li><strong>Détection automatique :</strong> Validation en temps réel</li>
+                                    <li><strong>Directions multiples :</strong> Horizontal, vertical, diagonal</li>
+                                    <li><strong>Longueur minimale :</strong> 3 lettres obligatoires</li>
+                                </ul>
+                                
+                                <h4>Exemples de Mots Acceptés :</h4>
+                                <div class="word-categories">
+                                    <div class="word-category">
+                                        <h5>🐱 Animaux :</h5>
+                                        <span class="word-tag">CHAT</span>
+                                        <span class="word-tag">CHIEN</span>
+                                        <span class="word-tag">POISSON</span>
+                                    </div>
+                                    <div class="word-category">
+                                        <h5>🏠 Maison :</h5>
+                                        <span class="word-tag">MAISON</span>
+                                        <span class="word-tag">TABLE</span>
+                                        <span class="word-tag">FENÊTRE</span>
+                                    </div>
+                                    <div class="word-category">
+                                        <h5>🎵 Musique :</h5>
+                                        <span class="word-tag">MUSIQUE</span>
+                                        <span class="word-tag">PIANO</span>
+                                        <span class="word-tag">GUITARE</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mechanic-card">
+                            <h3>🎯 Système de Placement</h3>
+                            <div class="mechanic-content">
+                                <h4>Règles de Placement :</h4>
+                                <ul>
+                                    <li><strong>Grille 10x10 :</strong> Espace de jeu optimal</li>
+                                    <li><strong>Collision :</strong> Impossible de placer sur une case occupée</li>
+                                    <li><strong>Gravité :</strong> Les lettres tombent naturellement</li>
+                                    <li><strong>Rotation :</strong> 4 orientations possibles</li>
+                                </ul>
+                                
+                                <h4>Stratégies de Placement :</h4>
+                                <div class="strategy-tips">
+                                    <div class="strategy-tip">
+                                        <span class="tip-icon">💡</span>
+                                        <span class="tip-text">Placez les voyelles près des consonnes</span>
+                                    </div>
+                                    <div class="strategy-tip">
+                                        <span class="tip-icon">🎯</span>
+                                        <span class="tip-text">Créez des intersections pour les mots longs</span>
+                                    </div>
+                                    <div class="strategy-tip">
+                                        <span class="tip-icon">⚡</span>
+                                        <span class="tip-text">Optimisez l'espace pour éviter l'encombrement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mechanic-card">
+                            <h3>🔥 Système de Combo Avancé</h3>
+                            <div class="mechanic-content">
+                                <h4>Mécaniques de Combo :</h4>
+                                <ul>
+                                    <li><strong>Fenêtre de temps :</strong> 5 secondes entre les mots</li>
+                                    <li><strong>Multiplicateur :</strong> Augmente de 0.5 par mot</li>
+                                    <li><strong>Maximum :</strong> Combo x10 (très difficile)</li>
+                                    <li><strong>Bonus visuel :</strong> Effets spéciaux pour les combos</li>
+                                </ul>
+                                
+                                <h4>Exemples de Combos :</h4>
+                                <div class="combo-details">
+                                    <div class="combo-detail">
+                                        <span class="combo-multiplier">x2</span>
+                                        <span class="combo-requirement">2 mots en 5s</span>
+                                        <span class="combo-bonus">+100% points</span>
+                                    </div>
+                                    <div class="combo-detail">
+                                        <span class="combo-multiplier">x5</span>
+                                        <span class="combo-requirement">5 mots en 5s</span>
+                                        <span class="combo-bonus">+400% points</span>
+                                    </div>
+                                    <div class="combo-detail">
+                                        <span class="combo-multiplier">x10</span>
+                                        <span class="combo-requirement">10 mots en 5s</span>
+                                        <span class="combo-bonus">+900% points</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mechanic-card">
+                            <h3>📊 Système de Progression</h3>
+                            <div class="mechanic-content">
+                                <h4>Niveaux et Débloquages :</h4>
+                                <ul>
+                                    <li><strong>Niveau 1 (0-100 pts) :</strong> Mode débutant, tutoriel</li>
+                                    <li><strong>Niveau 2 (100-300 pts) :</strong> Mots plus longs, combos</li>
+                                    <li><strong>Niveau 3 (300-600 pts) :</strong> Vitesse accrue, défis</li>
+                                    <li><strong>Niveau 4 (600-1000 pts) :</strong> Mode expert, effets spéciaux</li>
+                                    <li><strong>Niveau 5+ (1000+ pts) :</strong> Mode maître, tous les bonus</li>
+                                </ul>
+                                
+                                <h4>Récompenses par Niveau :</h4>
+                                <div class="rewards-list">
+                                    <div class="reward-item">
+                                        <span class="reward-icon">🎨</span>
+                                        <span class="reward-name">Effets Visuels</span>
+                                        <span class="reward-desc">Nouveaux effets de particules</span>
+                                    </div>
+                                    <div class="reward-item">
+                                        <span class="reward-icon">🎵</span>
+                                        <span class="reward-name">Musiques</span>
+                                        <span class="reward-desc">Nouvelles bandes sonores</span>
+                                    </div>
+                                    <div class="reward-item">
+                                        <span class="reward-icon">🏆</span>
+                                        <span class="reward-name">Défis</span>
+                                        <span class="reward-desc">Missions spéciales</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips and Strategies -->
+                <div class="rule-section">
+                    <h2>💡 Conseils et Stratégies</h2>
+                    <p>Découvrez les meilleures stratégies pour exceller dans Letters Cascade Challenge :</p>
+                    
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h4>🎯 Planification</h4>
+                            <p>Observez les lettres qui arrivent et planifiez vos mots à l'avance. Anticipez les combinaisons possibles.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h4>⚡ Vitesse</h4>
+                            <p>Plus vous placez les lettres rapidement, plus vous gagnez de bonus. Mais attention à ne pas faire d'erreurs !</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h4>🎯 Efficacité</h4>
+                            <p>Utilisez chaque lettre de manière optimale. Évitez de gaspiller des lettres pour des mots courts.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h4>📚 Vocabulaire</h4>
+                            <p>Connaître beaucoup de mots français vous aidera à former des mots plus longs et à gagner plus de points.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h4>🔄 Combos</h4>
+                            <p>Enchaînez les mots rapidement pour créer des combos et multiplier vos points. Plus vous êtes rapide, plus le bonus est élevé !</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h4>🎮 Contrôles</h4>
+                            <p>Maîtrisez les contrôles pour une précision maximale. Utilisez la souris pour placer les lettres avec précision.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <h3>🎮 Prêt à Jouer ?</h3>
+                    <p>Maintenant que vous connaissez toutes les règles, lancez-vous dans l'aventure Letters Cascade Challenge !</p>
+                    
+                    <div class="nav-menu" style="margin-top: var(--spacing-lg);">
+                        <a href="prototype.html" class="nav-link">🎮 Essayer Version 2D</a>
+                        <a href="game.html" class="nav-link">🎮 Essayer Version 3D</a>
+                        <a href="index.html" class="nav-link">🏠 Accueil</a>
+                    </div>
+                    
+                    <div class="game-info" style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-lg);">
+                        <h4>🎯 À Propos du Jeu Final</h4>
+                        <p>Ces prototypes 2D et 3D servent de démonstration pour le jeu final qui sera développé avec Unreal Engine. Le gameplay final inclura des graphiques de qualité AAA, des effets visuels avancés, et une expérience immersive complète.</p>
+                    </div>
+                    
+                    <p style="margin-top: var(--spacing-lg); color: var(--text-secondary);">
+                        <strong>Bonne chance et amusez-vous bien !</strong> 🍀
+                    </p>
                 </div>
             </div>
-        </div>
-
-        <!-- Version-Specific Rules Section -->
-        <div class="rule-section">
-            <h2>🎮 Règles par Version</h2>
-            
-            <div class="version-comparison">
-                <div class="version-card">
-                    <h3>📱 Version 2D - Règles Classiques</h3>
-                    <div class="version-content">
-                        <h4>🎯 Caractéristiques Spécifiques :</h4>
-                        <ul>
-                            <li><strong>Interface :</strong> Grille 2D classique avec vue de dessus</li>
-                            <li><strong>Contrôles :</strong> Souris et clavier optimisés</li>
-                            <li><strong>Performance :</strong> Compatible tous appareils</li>
-                            <li><strong>Accessibilité :</strong> Idéal pour débutants</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Spécifiques 2D :</h4>
-                        <ul>
-                            <li><strong>Grille :</strong> 10x10 cases fixes</li>
-                            <li><strong>Lettres :</strong> Affichage 2D simple</li>
-                            <li><strong>Placement :</strong> Clic direct sur la grille</li>
-                            <li><strong>Rotation :</strong> Clic droit pour pivoter</li>
-                            <li><strong>Vitesse :</strong> Chute progressive constante</li>
-                            <li><strong>Effets :</strong> Animations 2D et particules</li>
-                        </ul>
-                        
-                        <h4>🎮 Contrôles 2D :</h4>
-                        <ul>
-                            <li><strong>Souris :</strong> Clic gauche pour placer, clic droit pour pivoter</li>
-                            <li><strong>Clavier :</strong> Flèches pour déplacer, ESPACE pour placer</li>
-                            <li><strong>Raccourcis :</strong> P pour pause, R pour recommencer</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="version-card">
-                    <h3>🎲 Version 3D - Règles Immersives</h3>
-                    <div class="version-content">
-                        <h4>🎯 Caractéristiques Spécifiques :</h4>
-                        <ul>
-                            <li><strong>Interface :</strong> Environnement 3D immersif</li>
-                            <li><strong>Contrôles :</strong> Navigation 3D avancée</li>
-                            <li><strong>Performance :</strong> Requiert carte graphique dédiée</li>
-                            <li><strong>Expérience :</strong> Immersion totale</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Spécifiques 3D :</h4>
-                        <ul>
-                            <li><strong>Grille :</strong> Grille 3D avec profondeur</li>
-                            <li><strong>Lettres :</strong> Modèles 3D détaillés</li>
-                            <li><strong>Placement :</strong> Navigation 3D avec caméra</li>
-                            <li><strong>Rotation :</strong> Rotation 3D complète</li>
-                            <li><strong>Vitesse :</strong> Chute réaliste avec physique</li>
-                            <li><strong>Effets :</strong> Effets 3D et éclairage dynamique</li>
-                        </ul>
-                        
-                        <h4>🎮 Contrôles 3D :</h4>
-                        <ul>
-                            <li><strong>Souris :</strong> Navigation caméra + placement</li>
-                            <li><strong>Clavier :</strong> WASD pour déplacer, Q/E pour rotation</li>
-                            <li><strong>Caméra :</strong> Clic droit pour orienter la vue</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Complexity Levels Section -->
-        <div class="rule-section">
-            <h2>🧠 Niveaux de Complexité</h2>
-            
-            <div class="complexity-levels">
-                <div class="complexity-card">
-                    <h3>👶 Niveau Enfant (4-8 ans)</h3>
-                    <div class="complexity-content">
-                        <h4>🎯 Objectifs Pédagogiques :</h4>
-                        <ul>
-                            <li><strong>Apprentissage :</strong> Reconnaissance des lettres</li>
-                            <li><strong>Développement :</strong> Coordination œil-main</li>
-                            <li><strong>Motivation :</strong> Récompenses visuelles</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Adaptées :</h4>
-                        <ul>
-                            <li><strong>Mots :</strong> 3-4 lettres maximum</li>
-                            <li><strong>Vitesse :</strong> Chute très lente</li>
-                            <li><strong>Grille :</strong> 6x6 cases</li>
-                            <li><strong>Contrôles :</strong> Interface tactile simplifiée</li>
-                            <li><strong>Feedback :</strong> Sons et animations encourageants</li>
-                            <li><strong>Thèmes :</strong> Animaux, couleurs, formes</li>
-                        </ul>
-                        
-                        <h4>🎮 Exemples de Mots :</h4>
-                        <div class="word-examples">
-                            <span class="word-example">CHAT</span>
-                            <span class="word-example">CHIEN</span>
-                            <span class="word-example">MAIN</span>
-                            <span class="word-example">PIED</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="complexity-card">
-                    <h3>🧒 Niveau Junior (8-12 ans)</h3>
-                    <div class="complexity-content">
-                        <h4>🎯 Objectifs Pédagogiques :</h4>
-                        <ul>
-                            <li><strong>Apprentissage :</strong> Formation de mots simples</li>
-                            <li><strong>Développement :</strong> Stratégie de base</li>
-                            <li><strong>Motivation :</strong> Progression par niveaux</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Adaptées :</h4>
-                        <ul>
-                            <li><strong>Mots :</strong> 4-6 lettres</li>
-                            <li><strong>Vitesse :</strong> Chute modérée</li>
-                            <li><strong>Grille :</strong> 8x8 cases</li>
-                            <li><strong>Contrôles :</strong> Souris et clavier basiques</li>
-                            <li><strong>Feedback :</strong> Points et combos simples</li>
-                            <li><strong>Thèmes :</strong> Famille, école, loisirs</li>
-                        </ul>
-                        
-                        <h4>🎮 Exemples de Mots :</h4>
-                        <div class="word-examples">
-                            <span class="word-example">MAISON</span>
-                            <span class="word-example">JARDIN</span>
-                            <span class="word-example">LIVRE</span>
-                            <span class="word-example">TABLE</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="complexity-card">
-                    <h3>👨‍🎓 Niveau Adolescent (12-16 ans)</h3>
-                    <div class="complexity-content">
-                        <h4>🎯 Objectifs Pédagogiques :</h4>
-                        <ul>
-                            <li><strong>Apprentissage :</strong> Vocabulaire enrichi</li>
-                            <li><strong>Développement :</strong> Stratégie avancée</li>
-                            <li><strong>Motivation :</strong> Défis et compétition</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Adaptées :</h4>
-                        <ul>
-                            <li><strong>Mots :</strong> 5-8 lettres</li>
-                            <li><strong>Vitesse :</strong> Chute rapide</li>
-                            <li><strong>Grille :</strong> 10x10 cases</li>
-                            <li><strong>Contrôles :</strong> Tous les contrôles disponibles</li>
-                            <li><strong>Feedback :</strong> Système de combo complet</li>
-                            <li><strong>Thèmes :</strong> Technologie, sports, culture</li>
-                        </ul>
-                        
-                        <h4>🎮 Exemples de Mots :</h4>
-                        <div class="word-examples">
-                            <span class="word-example">MUSIQUE</span>
-                            <span class="word-example">ORDINATEUR</span>
-                            <span class="word-example">BASKETBALL</span>
-                            <span class="word-example">CINÉMA</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="complexity-card">
-                    <h3>👨‍💼 Niveau Adulte (16+ ans)</h3>
-                    <div class="complexity-content">
-                        <h4>🎯 Objectifs Pédagogiques :</h4>
-                        <ul>
-                            <li><strong>Apprentissage :</strong> Vocabulaire spécialisé</li>
-                            <li><strong>Développement :</strong> Optimisation et efficacité</li>
-                            <li><strong>Motivation :</strong> Performance et records</li>
-                        </ul>
-                        
-                        <h4>📋 Règles Adaptées :</h4>
-                        <ul>
-                            <li><strong>Mots :</strong> 6+ lettres, mots complexes</li>
-                            <li><strong>Vitesse :</strong> Chute très rapide</li>
-                            <li><strong>Grille :</strong> 12x12 cases</li>
-                            <li><strong>Contrôles :</strong> Raccourcis avancés</li>
-                            <li><strong>Feedback :</strong> Statistiques détaillées</li>
-                            <li><strong>Thèmes :</strong> Professionnel, académique, culturel</li>
-                        </ul>
-                        
-                        <h4>🎮 Exemples de Mots :</h4>
-                        <div class="word-examples">
-                            <span class="word-example">PHILOSOPHIE</span>
-                            <span class="word-example">TECHNOLOGIE</span>
-                            <span class="word-example">LITTÉRATURE</span>
-                            <span class="word-example">ARCHITECTURE</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Detailed Rules Section -->
-        <div class="rule-section">
-            <h2>📋 Règles Détaillées du Jeu</h2>
-            
-            <div class="rules-grid">
-                <div class="rule-card">
-                    <h3>🎯 Formation de Mots</h3>
-                    <div class="rule-content">
-                        <h4>Critères de Validation :</h4>
-                        <ul>
-                            <li><strong>Liste Prédéfinie :</strong> Seuls les mots de la liste du niveau sont valides</li>
-                            <li><strong>Longueur minimale :</strong> 3 lettres minimum</li>
-                            <li><strong>Langue :</strong> Mots français uniquement</li>
-                            <li><strong>Validation :</strong> Automatique en temps réel</li>
-                            <li><strong>Directions :</strong> Horizontal, vertical et diagonal</li>
-                        </ul>
-                        
-                        <h4>Exemple de Liste de Niveau :</h4>
-                        <div class="word-list-example">
-                            <p><strong>Niveau 1 - Mots à former :</strong></p>
-                            <div class="word-examples">
-                                <span class="word-example">CHAT</span>
-                                <span class="word-example">MAISON</span>
-                                <span class="word-example">MUSIQUE</span>
-                                <span class="word-example">JARDIN</span>
-                                <span class="word-example">LIVRE</span>
-                            </div>
-                            <p class="note">Note : Seuls ces mots spécifiques seront acceptés pour valider le niveau.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="rule-card">
-                    <h3>💰 Système de Scoring</h3>
-                    <div class="rule-content">
-                        <h4>Calcul des Points :</h4>
-                        <ul>
-                            <li><strong>Points de base :</strong> 1 point par lettre utilisée</li>
-                            <li><strong>Bonus de longueur :</strong> Longueur du mot × 10</li>
-                            <li><strong>Multiplicateur combo :</strong> Points × niveau de combo</li>
-                            <li><strong>Bonus de vitesse :</strong> Points supplémentaires pour les mots rapides</li>
-                        </ul>
-                        
-                        <h4>Exemple de Calcul :</h4>
-                        <div class="scoring-example">
-                            <p><strong>Mot "MAISON" (6 lettres) :</strong></p>
-                            <ul>
-                                <li>Points de base : 6 points</li>
-                                <li>Bonus de longueur : 6 × 10 = 60 points</li>
-                                <li><strong>Total : 66 points</strong></li>
-                                <li>Avec combo x2 : <strong>132 points</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="rule-card">
-                    <h3>🔥 Système de Combo</h3>
-                    <div class="rule-content">
-                        <h4>Comment ça marche :</h4>
-                        <ul>
-                            <li><strong>Activation :</strong> Formez des mots rapidement</li>
-                            <li><strong>Durée :</strong> 5 secondes entre chaque mot</li>
-                            <li><strong>Multiplicateur :</strong> Augmente avec chaque mot</li>
-                            <li><strong>Maximum :</strong> Combo x10 possible</li>
-                        </ul>
-                        
-                        <h4>Exemples de Combos :</h4>
-                        <div class="combo-examples">
-                            <div class="combo-item">
-                                <span class="combo-level">Combo x2</span>
-                                <span class="combo-desc">2 mots en 5 secondes</span>
-                            </div>
-                            <div class="combo-item">
-                                <span class="combo-level">Combo x5</span>
-                                <span class="combo-desc">5 mots en 5 secondes</span>
-                            </div>
-                            <div class="combo-item">
-                                <span class="combo-level">Combo x10</span>
-                                <span class="combo-desc">10 mots en 5 secondes</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="rule-card">
-                    <h3>📈 Progression par Niveaux</h3>
-                    <div class="rule-content">
-                        <h4>Niveaux et Objectifs :</h4>
-                        <ul>
-                            <li><strong>Niveau 1 :</strong> 0-100 points (Débutant)</li>
-                            <li><strong>Niveau 2 :</strong> 100-300 points (Intermédiaire)</li>
-                            <li><strong>Niveau 3 :</strong> 300-600 points (Avancé)</li>
-                            <li><strong>Niveau 4 :</strong> 600-1000 points (Expert)</li>
-                            <li><strong>Niveau 5+ :</strong> 1000+ points (Maître)</li>
-                        </ul>
-                        
-                        <h4>Débloquages :</h4>
-                        <div class="unlock-features">
-                            <div class="unlock-item">
-                                <span class="unlock-icon">🎨</span>
-                                <span class="unlock-desc">Nouveaux effets visuels</span>
-                            </div>
-                            <div class="unlock-item">
-                                <span class="unlock-icon">🎵</span>
-                                <span class="unlock-desc">Nouvelles musiques</span>
-                            </div>
-                            <div class="unlock-item">
-                                <span class="unlock-icon">🏆</span>
-                                <span class="unlock-desc">Défis spéciaux</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Level Progression -->
-        <div class="rule-section">
-            <h2>📈 Progression des Niveaux</h2>
-            
-            <div class="level-requirements">
-                <div class="level-card">
-                    <h4>Niveau 1</h4>
-                    <p>3 mots, 100 points</p>
-                    <p>Temps : 2 minutes</p>
-                </div>
-                <div class="level-card">
-                    <h4>Niveau 2</h4>
-                    <p>5 mots, 250 points</p>
-                    <p>Temps : 3 minutes</p>
-                </div>
-                <div class="level-card">
-                    <h4>Niveau 3</h4>
-                    <p>7 mots, 500 points</p>
-                    <p>Temps : 4 minutes</p>
-                </div>
-                <div class="level-card">
-                    <h4>Niveau 4</h4>
-                    <p>10 mots, 1000 points</p>
-                    <p>Temps : 5 minutes</p>
-                </div>
-            </div>
-
-            <h3>🏆 Conditions de Victoire</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">✅</span> Atteindre le nombre de mots requis</li>
-                <li><span class="rule-icon">✅</span> Atteindre le score minimum</li>
-                <li><span class="rule-icon">✅</span> Respecter la limite de temps</li>
-            </ul>
-
-            <h3>💀 Conditions de Défaite</h3>
-            <ul class="rule-list">
-                <li><span class="rule-icon">❌</span> Dépasser la limite de temps</li>
-                <li><span class="rule-icon">❌</span> Grille pleine à 80%</li>
-                <li><span class="rule-icon">❌</span> Score trop bas</li>
-                <li><span class="rule-icon">❌</span> Aucun mouvement possible</li>
-            </ul>
-        </div>
-
-        <!-- Game Controls Section -->
-        <div class="rule-section">
-            <h2>🎮 Contrôles du Jeu</h2>
-            
-            <div class="controls-overview">
-                <div class="control-category">
-                    <h3>🖱️ Contrôles Souris</h3>
-                    <div class="control-list">
-                        <div class="control-item">
-                            <span class="control-icon">🖱️</span>
-                            <span class="control-action">Clic gauche</span>
-                            <span class="control-desc">Placer la lettre qui tombe</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-icon">🔄</span>
-                            <span class="control-action">Clic droit</span>
-                            <span class="control-desc">Faire pivoter la lettre</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-icon">⬇️</span>
-                            <span class="control-action">Double-clic</span>
-                            <span class="control-desc">Faire tomber rapidement</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="control-category">
-                    <h3>⌨️ Contrôles Clavier</h3>
-                    <div class="control-list">
-                        <div class="control-item">
-                            <span class="control-key">←</span>
-                            <span class="control-action">Déplacer à gauche</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">→</span>
-                            <span class="control-action">Déplacer à droite</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">↓</span>
-                            <span class="control-action">Faire tomber</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">↑</span>
-                            <span class="control-action">Faire pivoter</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">ESPACE</span>
-                            <span class="control-action">Placer la lettre</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">P</span>
-                            <span class="control-action">Pause/Reprendre</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">R</span>
-                            <span class="control-action">Recommencer</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-key">F</span>
-                            <span class="control-action">Plein écran</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="control-category">
-                    <h3>📱 Contrôles Tactiles</h3>
-                    <div class="control-list">
-                        <div class="control-item">
-                            <span class="control-icon">👆</span>
-                            <span class="control-action">Tap</span>
-                            <span class="control-desc">Placer la lettre</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-icon">🔄</span>
-                            <span class="control-action">Swipe haut</span>
-                            <span class="control-desc">Faire pivoter</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-icon">⬇️</span>
-                            <span class="control-action">Swipe bas</span>
-                            <span class="control-desc">Faire tomber rapidement</span>
-                        </div>
-                        <div class="control-item">
-                            <span class="control-icon">⬅️➡️</span>
-                            <span class="control-action">Swipe gauche/droite</span>
-                            <span class="control-desc">Déplacer horizontalement</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Game Mechanics Section -->
-        <div class="rule-section">
-            <h2>⚙️ Mécaniques de Jeu Avancées</h2>
-            
-            <div class="mechanics-grid">
-                <div class="mechanic-card">
-                    <h3>📝 Système de Formation de Mots</h3>
-                    <div class="mechanic-content">
-                        <h4>Validation des Mots :</h4>
-                        <ul>
-                            <li><strong>Dictionnaire français :</strong> Plus de 50,000 mots validés</li>
-                            <li><strong>Détection automatique :</strong> Validation en temps réel</li>
-                            <li><strong>Directions multiples :</strong> Horizontal, vertical, diagonal</li>
-                            <li><strong>Longueur minimale :</strong> 3 lettres obligatoires</li>
-                        </ul>
-                        
-                        <h4>Exemples de Mots Acceptés :</h4>
-                        <div class="word-categories">
-                            <div class="word-category">
-                                <h5>🐱 Animaux :</h5>
-                                <span class="word-tag">CHAT</span>
-                                <span class="word-tag">CHIEN</span>
-                                <span class="word-tag">POISSON</span>
-                            </div>
-                            <div class="word-category">
-                                <h5>🏠 Maison :</h5>
-                                <span class="word-tag">MAISON</span>
-                                <span class="word-tag">TABLE</span>
-                                <span class="word-tag">FENÊTRE</span>
-                            </div>
-                            <div class="word-category">
-                                <h5>🎵 Musique :</h5>
-                                <span class="word-tag">MUSIQUE</span>
-                                <span class="word-tag">PIANO</span>
-                                <span class="word-tag">GUITARE</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mechanic-card">
-                    <h3>🎯 Système de Placement</h3>
-                    <div class="mechanic-content">
-                        <h4>Règles de Placement :</h4>
-                        <ul>
-                            <li><strong>Grille 10x10 :</strong> Espace de jeu optimal</li>
-                            <li><strong>Collision :</strong> Impossible de placer sur une case occupée</li>
-                            <li><strong>Gravité :</strong> Les lettres tombent naturellement</li>
-                            <li><strong>Rotation :</strong> 4 orientations possibles</li>
-                        </ul>
-                        
-                        <h4>Stratégies de Placement :</h4>
-                        <div class="strategy-tips">
-                            <div class="strategy-tip">
-                                <span class="tip-icon">💡</span>
-                                <span class="tip-text">Placez les voyelles près des consonnes</span>
-                            </div>
-                            <div class="strategy-tip">
-                                <span class="tip-icon">🎯</span>
-                                <span class="tip-text">Créez des intersections pour les mots longs</span>
-                            </div>
-                            <div class="strategy-tip">
-                                <span class="tip-icon">⚡</span>
-                                <span class="tip-text">Optimisez l'espace pour éviter l'encombrement</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mechanic-card">
-                    <h3>🔥 Système de Combo Avancé</h3>
-                    <div class="mechanic-content">
-                        <h4>Mécaniques de Combo :</h4>
-                        <ul>
-                            <li><strong>Fenêtre de temps :</strong> 5 secondes entre les mots</li>
-                            <li><strong>Multiplicateur :</strong> Augmente de 0.5 par mot</li>
-                            <li><strong>Maximum :</strong> Combo x10 (très difficile)</li>
-                            <li><strong>Bonus visuel :</strong> Effets spéciaux pour les combos</li>
-                        </ul>
-                        
-                        <h4>Exemples de Combos :</h4>
-                        <div class="combo-details">
-                            <div class="combo-detail">
-                                <span class="combo-multiplier">x2</span>
-                                <span class="combo-requirement">2 mots en 5s</span>
-                                <span class="combo-bonus">+100% points</span>
-                            </div>
-                            <div class="combo-detail">
-                                <span class="combo-multiplier">x5</span>
-                                <span class="combo-requirement">5 mots en 5s</span>
-                                <span class="combo-bonus">+400% points</span>
-                            </div>
-                            <div class="combo-detail">
-                                <span class="combo-multiplier">x10</span>
-                                <span class="combo-requirement">10 mots en 5s</span>
-                                <span class="combo-bonus">+900% points</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mechanic-card">
-                    <h3>📊 Système de Progression</h3>
-                    <div class="mechanic-content">
-                        <h4>Niveaux et Débloquages :</h4>
-                        <ul>
-                            <li><strong>Niveau 1 (0-100 pts) :</strong> Mode débutant, tutoriel</li>
-                            <li><strong>Niveau 2 (100-300 pts) :</strong> Mots plus longs, combos</li>
-                            <li><strong>Niveau 3 (300-600 pts) :</strong> Vitesse accrue, défis</li>
-                            <li><strong>Niveau 4 (600-1000 pts) :</strong> Mode expert, effets spéciaux</li>
-                            <li><strong>Niveau 5+ (1000+ pts) :</strong> Mode maître, tous les bonus</li>
-                        </ul>
-                        
-                        <h4>Récompenses par Niveau :</h4>
-                        <div class="rewards-list">
-                            <div class="reward-item">
-                                <span class="reward-icon">🎨</span>
-                                <span class="reward-name">Effets Visuels</span>
-                                <span class="reward-desc">Nouveaux effets de particules</span>
-                            </div>
-                            <div class="reward-item">
-                                <span class="reward-icon">🎵</span>
-                                <span class="reward-name">Musiques</span>
-                                <span class="reward-desc">Nouvelles bandes sonores</span>
-                            </div>
-                            <div class="reward-item">
-                                <span class="reward-icon">🏆</span>
-                                <span class="reward-name">Défis</span>
-                                <span class="reward-desc">Missions spéciales</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tips and Strategies -->
-        <div class="rule-section">
-            <h2>💡 Conseils et Stratégies</h2>
-            <p>Découvrez les meilleures stratégies pour exceller dans Letters Cascade Challenge :</p>
-            
-            <div class="tips-grid">
-                <div class="tip-card">
-                    <h4>🎯 Planification</h4>
-                    <p>Observez les lettres qui arrivent et planifiez vos mots à l'avance. Anticipez les combinaisons possibles.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>⚡ Vitesse</h4>
-                    <p>Plus vous placez les lettres rapidement, plus vous gagnez de bonus. Mais attention à ne pas faire d'erreurs !</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>🎯 Efficacité</h4>
-                    <p>Utilisez chaque lettre de manière optimale. Évitez de gaspiller des lettres pour des mots courts.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>📚 Vocabulaire</h4>
-                    <p>Connaître beaucoup de mots français vous aidera à former des mots plus longs et à gagner plus de points.</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>🔄 Combos</h4>
-                    <p>Enchaînez les mots rapidement pour créer des combos et multiplier vos points. Plus vous êtes rapide, plus le bonus est élevé !</p>
-                </div>
-                
-                <div class="tip-card">
-                    <h4>🎮 Contrôles</h4>
-                    <p>Maîtrisez les contrôles pour une précision maximale. Utilisez la souris pour placer les lettres avec précision.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <h3>🎮 Prêt à Jouer ?</h3>
-            <p>Maintenant que vous connaissez toutes les règles, lancez-vous dans l'aventure Letters Cascade Challenge !</p>
-            
-            <div class="nav-menu" style="margin-top: var(--spacing-lg);">
-                <a href="prototype.html" class="nav-link">🎮 Essayer Version 2D</a>
-                <a href="game.html" class="nav-link">🎮 Essayer Version 3D</a>
-                <a href="index.html" class="nav-link">🏠 Accueil</a>
-            </div>
-            
-            <div class="game-info" style="margin-top: var(--spacing-lg); padding: var(--spacing-lg); background: rgba(255, 255, 255, 0.1); border-radius: var(--border-radius-lg);">
-                <h4>🎯 À Propos du Jeu Final</h4>
-                <p>Ces prototypes 2D et 3D servent de démonstration pour le jeu final qui sera développé avec Unreal Engine. Le gameplay final inclura des graphiques de qualité AAA, des effets visuels avancés, et une expérience immersive complète.</p>
-            </div>
-            
-            <p style="margin-top: var(--spacing-lg); color: var(--text-secondary);">
-                <strong>Bonne chance et amusez-vous bien !</strong> 🍀
-            </p>
         </div>
     </div>
 
