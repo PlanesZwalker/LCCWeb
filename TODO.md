@@ -198,330 +198,307 @@ class Game3D {
 initThreeJS() {
     // Scene setup
     this.scene = new THREE.Scene();
-    
-    // Camera setup
-    this.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    this.camera.position.set(0, 0, 15);
-    
-    // Renderer setup
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    
-    // Raycaster for mouse interaction
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2();
 }
 ```
 
 #### **2. 3D Grid System**
+- **Cube Creation**: 3D cubes for each grid position
+- **Text Rendering**: 3D text meshes for letters
+- **Lighting**: Dynamic lighting for visual appeal
+- **Camera Controls**: Mouse/touch camera movement
+
+#### **3. 3D Interaction**
+- **Raycasting**: Mouse click detection on 3D objects
+- **Hover Effects**: Visual feedback on cube hover
+- **Placement**: 3D letter placement with animations
+- **Particle Effects**: 3D particle systems for effects
+
+---
+
+## 🏆 **Scoring Rules & Win/Lose Conditions**
+
+### 📊 **Scoring System**
+
+#### **Base Points**
+- **3-letter word**: 10 points
+- **4-letter word**: 25 points
+- **5-letter word**: 50 points
+- **6-letter word**: 100 points
+- **7+ letter word**: 200 points
+
+#### **Bonus Multipliers**
+- **Combo Bonus**: +50% for consecutive words
+- **Level Bonus**: +25% per level above 1
+- **Speed Bonus**: +10% for quick placement
+- **Efficiency Bonus**: +20% for using fewer letters
+
+#### **Penalties**
+- **Time Penalty**: -5 points per second over time limit
+- **Letter Waste**: -2 points per unused letter
+- **Grid Clutter**: -10 points if grid is 80% full
+
+### 🎯 **Win Conditions**
+
+#### **Level Completion**
+- **Level 1**: Complete 3 words, reach 100 points
+- **Level 2**: Complete 5 words, reach 250 points
+- **Level 3**: Complete 7 words, reach 500 points
+- **Level 4**: Complete 10 words, reach 1000 points
+
+#### **Achievement System**
+- **Word Master**: Complete all target words in a level
+- **Speed Demon**: Complete level under time limit
+- **Efficiency Expert**: Use minimal letters to complete words
+- **Combo King**: Achieve 5+ word combo
+
+### 💀 **Lose Conditions**
+
+#### **Game Over Triggers**
+- **Time Limit**: Exceed level time limit (varies by level)
+- **Grid Full**: No more space for letters (80% capacity)
+- **No Valid Moves**: No possible word formations
+- **Score Too Low**: Fall below minimum score threshold
+
+#### **Level-Specific Limits**
+- **Level 1**: 2 minutes, minimum 50 points
+- **Level 2**: 3 minutes, minimum 150 points
+- **Level 3**: 4 minutes, minimum 300 points
+- **Level 4**: 5 minutes, minimum 600 points
+
+---
+
+## 🔍 **Debugging Console Logs**
+
+### 📝 **Enhanced Logging System**
+
+#### **Game State Logging**
 ```javascript
-create3DGrid() {
-    // Creates 3D cubes for each grid position
-    // Each cube represents a cell
-    // Text meshes for letters
-    // Proper spacing and positioning
-}
+// Constructor logging
+console.log('🎮 LettersCascadeGame constructor called');
+console.log('📊 Initial game state:', {
+    gridSize: this.currentGridSize,
+    cellSize: this.cellSize,
+    level: this.level,
+    score: this.score
+});
+
+// Game initialization
+console.log('🚀 Initializing LettersCascadeGame...');
+console.log('✅ LettersCascadeGame initialized successfully');
 ```
 
-#### **3. 3D Letter Management**
-- **3D Cubes**: Physical representation of grid cells
-- **Text Meshes**: 3D text for letters
-- **Material System**: Different materials for different states
-- **Animation**: Smooth transitions and movements
-
-#### **4. 3D Word Detection**
+#### **Letter Management Logging**
 ```javascript
-class WordDetector3D {
-    scanGrid(grid) {
-        // Same logic as 2D but adapted for 3D grid
-        // Checks all directions in 3D space
-    }
-}
+// Letter queue generation
+console.log('📝 Generating letter queue...');
+console.log('✅ Letter queue generated:', this.letterQueue);
+
+// Letter placement
+console.log('📝 Created falling letter:', this.fallingLetter.letter);
+console.log('✅ Letter placed:', letter, 'at', x, y);
+console.log('📊 Grid state after placement:', this.grid);
 ```
 
-#### **5. 3D Scoring System**
+#### **Word Detection Logging**
 ```javascript
-class ScoreManager3D {
-    updateScore(score) {
-        // Enhanced scoring with 3D bonuses
-        // Depth-based scoring
-        // 3D combo system
-    }
-}
+// Word completion
+console.log('🔍 Checking word completion...');
+console.log('📝 Words found:', this.wordsFound);
+console.log('✅ Word completed:', word, 'Score:', score);
+console.log('📊 Updated score:', this.score);
 ```
 
-### 🎨 **3D Visual Features**
-
-#### **1. Lighting System**
+#### **Scoring System Logging**
 ```javascript
-setupLighting() {
-    // Ambient light for overall illumination
-    // Directional light for shadows
-    // Point lights for dramatic effects
-    // Dynamic lighting changes
-}
+// Score updates
+console.log('💰 Score update:', {
+    previousScore: oldScore,
+    pointsEarned: points,
+    newScore: this.score,
+    wordLength: word.length,
+    combo: this.combo
+});
+
+// Level progression
+console.log('📈 Level progression:', {
+    previousLevel: oldLevel,
+    newLevel: this.level,
+    wordsFound: this.wordsFound.length,
+    targetWords: this.targetWords.length
+});
 ```
 
-#### **2. Camera System**
+#### **Game Flow Logging**
 ```javascript
-setupCamera() {
-    // Isometric view for grid visibility
-    // Smooth camera movements
-    // Zoom functionality
-    // Rotation controls
-}
+// Game start
+console.log('▶️ startGame() called');
+console.log('🎮 Game state:', {
+    running: this.gameRunning,
+    paused: this.paused,
+    level: this.level,
+    score: this.score
+});
+
+// Game pause/resume
+console.log('⏸️ pauseGame() called');
+console.log('▶️ resumeGame() called');
+
+// Game reset
+console.log('🔄 resetGame() called');
+console.log('📊 Reset game state:', {
+    score: this.score,
+    level: this.level,
+    wordsFound: this.wordsFound.length
+});
 ```
 
-#### **3. 3D Animation System**
+#### **Error Handling Logging**
 ```javascript
-class ParticleSystem3D {
-    createPlacementEffect(x, y, z) {
-        // 3D particle explosions
-        // Spatial audio positioning
-        // Depth-based effects
-    }
-    
-    createWordCompletionEffect(word) {
-        // 3D celebration effects
-        // Multi-layered particle systems
-        // Spatial sound effects
-    }
-}
+// Element not found errors
+console.error('❌ Letter queue element not found');
+console.error('❌ Word list element not found');
+console.error('❌ Score display element not found');
+
+// Canvas errors
+console.error('❌ Canvas context error:', error);
+console.error('❌ Gradient creation error:', error);
+
+// Game logic errors
+console.error('❌ Invalid letter placement:', {x, y, letter});
+console.error('❌ Word validation failed:', word);
 ```
 
-#### **4. 3D Audio System**
+#### **Performance Logging**
 ```javascript
-class AudioManager3D {
-    playStart() { /* 3D positioned audio */ }
-    playPlace() { /* Spatial sound effects */ }
-    playWordComplete() { /* 3D celebration audio */ }
-}
-```
+// Frame rate monitoring
+console.log('📊 Frame rate:', fps);
+console.log('📊 Render time:', renderTime, 'ms');
 
-### 🎮 **3D Controls**
-
-#### **1. Mouse Controls**
-- **Click**: Place letter
-- **Drag**: Move letter
-- **Right Click**: Rotate letter
-- **Scroll**: Zoom camera
-
-#### **2. Keyboard Controls**
-- **Arrow Keys**: Move letter
-- **Space**: Rotate letter
-- **Enter**: Place letter
-- **P**: Pause/Resume
-- **R**: Reset game
-- **F11**: Full screen toggle
-
-#### **3. Touch Controls**
-- **Tap**: Place letter
-- **Swipe**: Move letter
-- **Pinch**: Zoom camera
-- **Double Tap**: Rotate letter
-
-### 📊 **3D Game Statistics**
-```javascript
-this.stats = {
-    lettersPlaced: 0,
-    wordsCompleted: 0,
-    totalScore: 0,
-    playTime: 0,
-    startTime: null,
-    mode: '3D'
-};
+// Memory usage
+console.log('📊 Memory usage:', memoryUsage);
+console.log('📊 Active particles:', this.particleSystem.particles.length);
 ```
 
 ---
 
-## 🔄 **Shared Features Between Versions**
+## 🎮 **Game Commands & Rules**
 
-### 🎯 **Core Gameplay Loop**
+### 🎯 **Game Commands**
 
-#### **1. Game Initialization**
+#### **Start Game**
 ```javascript
-// Both versions follow similar initialization
-1. Create grid
-2. Generate letter queue
-3. Setup controls
-4. Initialize scoring
-5. Start game loop
-```
-
-#### **2. Main Game Loop**
-```javascript
-gameLoop() {
-    // Update falling letter position
-    // Check for collisions
-    // Handle user input
-    // Update display
-    // Check for word completion
-    // Update score and level
-    // Request next frame
+startGame() {
+    console.log('▶️ startGame() called');
+    this.gameRunning = true;
+    this.stats.startTime = Date.now();
+    this.createFallingLetter();
+    this.startFallTimer();
+    console.log('✅ Game started successfully');
 }
 ```
 
-#### **3. Word Completion Process**
+#### **Pause Game**
 ```javascript
-checkWordCompletion() {
-    // Scan grid for words
-    // Validate against dictionary
-    // Remove completed words
-    // Award points
-    // Update level
-    // Show effects
+pauseGame() {
+    console.log('⏸️ pauseGame() called');
+    this.paused = !this.paused;
+    if (this.paused) {
+        this.stopFallTimer();
+        console.log('⏸️ Game paused');
+    } else {
+        this.startFallTimer();
+        console.log('▶️ Game resumed');
+    }
 }
 ```
 
-### 🎨 **Shared Visual Elements**
-
-#### **1. UI Components**
-- **Score Display**: Real-time score updates
-- **Level Display**: Current level indicator
-- **Word List**: Completed words display
-- **Letter Queue**: Upcoming letters
-- **Game Controls**: Start, pause, reset buttons
-
-#### **2. Effects System**
-- **Particle Effects**: Letter placement, word completion
-- **Sound Effects**: Game actions, achievements
-- **Visual Feedback**: Hover effects, animations
-- **Notifications**: Game state changes
-
-### 📱 **Responsive Design**
-
-#### **1. Mobile Optimization**
-- **Touch Controls**: Intuitive touch interactions
-- **Responsive Layout**: Adapts to screen size
-- **Performance**: Optimized for mobile devices
-- **Accessibility**: Screen reader support
-
-#### **2. Full Screen Support**
+#### **Reset Game**
 ```javascript
-toggleFullScreen() {
-    // Enter/exit full screen mode
-    // Adjust canvas size
-    // Update camera/viewport
-    // Handle keyboard shortcuts
+resetGame() {
+    console.log('🔄 resetGame() called');
+    this.gameRunning = false;
+    this.paused = false;
+    this.score = 0;
+    this.level = 1;
+    this.wordsFound = [];
+    this.grid = this.createGrid();
+    this.generateLetterQueue();
+    console.log('✅ Game reset successfully');
 }
 ```
+
+### 📋 **Game Rules**
+
+#### **Letter Placement Rules**
+1. **Valid Position**: Letters can only be placed in empty cells
+2. **Grid Boundaries**: Letters must stay within grid bounds
+3. **No Overlap**: Letters cannot overlap with existing letters
+4. **Sequential Placement**: Letters must be placed in order from queue
+
+#### **Word Formation Rules**
+1. **Minimum Length**: Words must be at least 3 letters long
+2. **Valid Dictionary**: Words must exist in French dictionary
+3. **Direction**: Words can be horizontal, vertical, or diagonal
+4. **No Reuse**: Letters cannot be used in multiple words simultaneously
+
+#### **Scoring Rules**
+1. **Base Points**: Points based on word length
+2. **Bonus Multipliers**: Combo, level, and efficiency bonuses
+3. **Penalties**: Time penalties and letter waste penalties
+4. **Level Progression**: Score thresholds for level advancement
+
+#### **Win/Lose Rules**
+1. **Win**: Complete target words and reach score threshold
+2. **Lose**: Exceed time limit or grid becomes too full
+3. **Level Up**: Achieve level requirements
+4. **Game Over**: Fail to meet minimum requirements
 
 ---
 
-## 🚀 **Technical Implementation Details**
+## 🔧 **Debugging Checklist**
 
-### 🎯 **Performance Optimizations**
+### ✅ **Essential Console Logs**
+- [ ] Game initialization logging
+- [ ] Letter placement tracking
+- [ ] Word detection logging
+- [ ] Score calculation details
+- [ ] Level progression tracking
+- [ ] Error handling and recovery
+- [ ] Performance monitoring
+- [ ] User interaction logging
 
-#### **1. Rendering Optimization**
-- **Canvas Optimization**: Efficient 2D rendering
-- **Three.js Optimization**: Efficient 3D rendering
-- **Memory Management**: Proper cleanup and disposal
-- **Frame Rate Control**: Consistent 60fps performance
-
-#### **2. Game State Management**
-```javascript
-// Efficient state updates
-// Minimal DOM manipulation
-// Optimized collision detection
-// Efficient word scanning algorithms
-```
-
-### 🔧 **Error Handling**
-
-#### **1. WebGL Support**
-```javascript
-checkWebGLSupport() {
-    // Check for WebGL availability
-    // Fallback for unsupported browsers
-    // Graceful degradation
-}
-```
-
-#### **2. Game State Recovery**
-```javascript
-// Save game state
-// Restore from saved state
-// Handle unexpected errors
-// Graceful error recovery
-```
+### ✅ **Common Issues to Monitor**
+- [ ] Element not found errors
+- [ ] Canvas rendering issues
+- [ ] Word validation problems
+- [ ] Score calculation errors
+- [ ] Level progression bugs
+- [ ] Timer synchronization issues
+- [ ] Memory leaks
+- [ ] Performance bottlenecks
 
 ---
 
-## 📋 **TODO Items for Game Enhancement**
+## 📈 **Performance Monitoring**
 
-### 🎯 **2D Version Improvements**
+### 🎯 **Key Metrics**
+- **Frame Rate**: Target 60 FPS
+- **Memory Usage**: Monitor for leaks
+- **Render Time**: Keep under 16ms
+- **Event Response**: Under 100ms
+- **Word Detection**: Under 50ms per check
 
-#### **High Priority**
-- [ ] **Enhanced Letter Distribution**: Better balance for target words
-- [ ] **Improved Word Detection**: More efficient scanning algorithms
-- [ ] **Better Touch Controls**: More responsive mobile interactions
-- [ ] **Performance Optimization**: Reduce frame drops on mobile
-
-#### **Medium Priority**
-- [ ] **Additional Game Modes**: Time attack, puzzle mode
-- [ ] **Enhanced Visual Effects**: More particle effects and animations
-- [ ] **Sound System**: More diverse audio feedback
-- [ ] **Accessibility**: Better screen reader support
-
-#### **Low Priority**
-- [ ] **Multiplayer Support**: Local multiplayer functionality
-- [ ] **Custom Themes**: Different visual themes
-- [ ] **Achievement System**: Unlockable achievements
-- [ ] **Statistics Tracking**: Detailed game statistics
-
-### 🎯 **3D Version Improvements**
-
-#### **High Priority**
-- [ ] **3D Performance**: Optimize Three.js rendering
-- [ ] **Better Camera Controls**: Smoother camera movements
-- [ ] **Enhanced 3D Effects**: More dramatic visual effects
-- [ ] **Improved 3D Interaction**: Better mouse/touch controls
-
-#### **Medium Priority**
-- [ ] **3D Audio**: Spatial audio positioning
-- [ ] **Advanced Lighting**: Dynamic lighting effects
-- [ ] **3D Animations**: More complex 3D animations
-- [ ] **VR Support**: Basic VR compatibility
-
-#### **Low Priority**
-- [ ] **3D Multiplayer**: 3D multiplayer functionality
-- [ ] **Custom 3D Models**: User-created 3D models
-- [ ] **Advanced Shaders**: Custom shader effects
-- [ ] **3D Export**: Export 3D scenes
-
-### 🔧 **Technical Improvements**
-
-#### **High Priority**
-- [ ] **Code Refactoring**: Better code organization
-- [ ] **Error Handling**: More robust error handling
-- [ ] **Testing**: Comprehensive game testing
-- [ ] **Documentation**: Better code documentation
-
-#### **Medium Priority**
-- [ ] **Build System**: Automated build process
-- [ ] **Deployment**: Streamlined deployment process
-- [ ] **Monitoring**: Game performance monitoring
-- [ ] **Analytics**: Player behavior analytics
+### 🔍 **Debugging Tools**
+- **Browser DevTools**: Console, Performance, Memory tabs
+- **Custom Logging**: Comprehensive console.log system
+- **Error Tracking**: Try-catch blocks with detailed logging
+- **State Monitoring**: Regular state snapshots
+- **Performance Profiling**: Frame rate and timing analysis
 
 ---
 
-## 🎮 **Game Flow Summary**
-
-### **2D Version Flow**
-1. **Initialize** → Create grid and letter queue
-2. **Start Game** → Begin falling letter mechanics
-3. **Player Input** → Move, rotate, place letters
-4. **Word Detection** → Scan for completed words
-5. **Score Update** → Award points and update level
-6. **Visual Feedback** → Show effects and animations
-7. **Continue** → Repeat until game over
-
-### **3D Version Flow**
-1. **Initialize** → Setup Three.js scene and 3D grid
-2. **Start Game** → Begin 3D falling letter mechanics
-3. **Player Input** → 3D mouse/touch interactions
-4. **Word Detection** → 3D word scanning
-5. **Score Update** → 3D scoring with bonuses
-6. **Visual Feedback** → 3D effects and animations
-7. **Continue** → Repeat until game over
-
-Both versions provide engaging word formation gameplay with distinct visual and interaction experiences! 🎯✨ 
+*Last Updated: December 2024*
+*Version: 2.0*
+*Status: Active Development* 

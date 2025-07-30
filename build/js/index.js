@@ -5,12 +5,10 @@ class LettersCascadeGame {
     constructor() {
         console.log('🎮 LettersCascadeGame constructor called');
         
-        // Game Configuration
+        // Grid Configuration
         this.gridSizes = [8, 10, 12];
         this.currentGridSize = 10;
         this.cellSize = 40;
-        this.canvas = null;
-        this.ctx = null;
         
         // Game State
         this.gameRunning = false;
@@ -19,19 +17,63 @@ class LettersCascadeGame {
         this.level = 1;
         this.score = 0;
         this.highScore = this.loadHighScore();
-        this.combo = 0;
-        this.maxCombo = 0;
         
         // Game Mechanics
         this.letters = [];
         this.letterQueue = [];
         this.wordsFound = [];
-        this.targetWords = [];
+        this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
         this.fallingLetter = null;
         this.fallSpeed = 1000; // milliseconds
         this.fallTimer = null;
         
-        // Initialize grid immediately
+        // Scoring System
+        this.combo = 1;
+        this.lastWordTime = 0;
+        this.comboTimeout = 5000; // 5 seconds for combo
+        
+        // Statistics
+        this.stats = {
+            lettersPlaced: 0,
+            wordsCompleted: 0,
+            totalScore: 0,
+            playTime: 0,
+            startTime: null
+        };
+        
+        // Systems
+        this.particleSystem = new ParticleSystem();
+        this.audioManager = new AudioManager();
+        
+        console.log('📊 Initial game state:', {
+            gridSize: this.currentGridSize,
+            cellSize: this.cellSize,
+            level: this.level,
+            score: this.score,
+            targetWords: this.targetWords.length
+        });
+    }
+    
+    // Initialize game
+    init() {
+        console.log('🚀 Initializing LettersCascadeGame...');
+        
+        // Initialize canvas
+        this.canvas = document.getElementById('gameCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        
+        if (!this.canvas || !this.ctx) {
+            console.error('❌ Canvas initialization failed');
+            return;
+        }
+        
+        console.log('✅ Canvas initialized:', {
+            width: this.canvas.width,
+            height: this.canvas.height,
+            context: this.ctx
+        });
+        
+        // Initialize grid
         this.createGrid();
         
         // Word Detection System
@@ -48,43 +90,22 @@ class LettersCascadeGame {
         this.keys = {};
         this.setupControls();
         
-        // Audio System
-        this.audioManager = new AudioManager();
-        
-        // Particle System
-        this.particleSystem = new ParticleSystem();
-        
-        // Statistics
-        this.stats = {
-            lettersPlaced: 0,
-            wordsCompleted: 0,
-            totalScore: 0,
-            playTime: 0,
-            startTime: null
-        };
-        
-        console.log('✅ LettersCascadeGame constructor completed');
-    }
-    
-    // Initialize game
-    init() {
-        console.log('🚀 Initializing LettersCascadeGame...');
-        
-        this.canvas = document.getElementById('gameCanvas');
-        if (!this.canvas) {
-            console.error('❌ Canvas element not found');
-            return;
-        }
-        
-        this.ctx = this.canvas.getContext('2d');
-        this.resizeCanvas();
-        
-        // Initialize game systems
+        // Generate initial letter queue
         this.generateLetterQueue();
-        this.updateDisplay();
+        
+        // Setup event listeners
         this.setupEventListeners();
         
+        // Initial display update
+        this.updateDisplay();
+        
         console.log('✅ LettersCascadeGame initialized successfully');
+        console.log('📊 Game ready state:', {
+            gridCreated: !!this.grid,
+            letterQueueLength: this.letterQueue.length,
+            targetWordsCount: this.targetWords.length,
+            dictionarySize: this.dictionary.size
+        });
     }
     
     // Grid System
@@ -165,34 +186,89 @@ class LettersCascadeGame {
     }
     
     completeWord(word) {
-        console.log('🏆 Completing word:', word);
+        console.log('🎯 Word completed:', {
+            word: word,
+            length: word.length,
+            currentScore: this.score,
+            currentLevel: this.level
+        });
         
-        // Add word to found list
-        this.wordsFound.push(word);
+        // Calculate score based on word length
+        let points = 0;
+        switch (word.length) {
+            case 3: points = 10; break;
+            case 4: points = 25; break;
+            case 5: points = 50; break;
+            case 6: points = 100; break;
+            default: points = 200; break;
+        }
         
-        // Calculate score with enhanced bonuses
-        const baseScore = word.length * 10;
-        const lengthBonus = word.length >= 6 ? 50 : 0; // Bonus for long words
-        const wordScore = baseScore + lengthBonus;
+        console.log('📊 Word scoring:', {
+            word: word,
+            length: word.length,
+            basePoints: points,
+            combo: this.combo,
+            totalPoints: points * this.combo
+        });
         
-        this.addScore(wordScore);
+        // Add to words found
+        if (!this.wordsFound.includes(word)) {
+            this.wordsFound.push(word);
+            console.log('📝 Words found updated:', {
+                totalWords: this.wordsFound.length,
+                newWord: word,
+                allWords: this.wordsFound
+            });
+        }
         
-        // Remove word from grid with enhanced animation
-        this.removeWordFromGrid(word);
+        // Add score
+        this.addScore(points);
         
-        // Create enhanced particle effect
+        // Check for level progression
+        const oldLevel = this.level;
+        this.updateLevel();
+        
+        if (this.level > oldLevel) {
+            console.log('📈 Level up!:', {
+                previousLevel: oldLevel,
+                newLevel: this.level,
+                wordsFound: this.wordsFound.length,
+                score: this.score
+            });
+            this.showLevelUpEffect();
+        }
+        
+        // Show completion effect
+        this.showWordCompletionNotification(word, points);
         this.particleSystem.createWordCompletionEffect(word);
         
-        // Play sound
-        this.audioManager.playWordComplete();
+        // Update combo
+        const now = Date.now();
+        if (now - this.lastWordTime < this.comboTimeout) {
+            this.combo++;
+            console.log('🔥 Combo increased:', {
+                newCombo: this.combo,
+                timeSinceLastWord: now - this.lastWordTime
+            });
+        } else {
+            this.combo = 1;
+            console.log('🔄 Combo reset to 1');
+        }
+        this.lastWordTime = now;
         
-        // Check level progression
-        this.levelManager.checkLevelProgression(this.wordsFound.length);
+        // Remove word from grid
+        this.removeWordFromGrid(word);
         
-        // Show word completion notification
-        this.showWordCompletionNotification(word, wordScore);
+        // Update display
+        this.updateDisplay();
         
-        console.log('✅ Word completed:', word, 'Score:', wordScore);
+        console.log('✅ Word completion finished:', {
+            word: word,
+            finalScore: this.score,
+            finalLevel: this.level,
+            combo: this.combo,
+            wordsFound: this.wordsFound.length
+        });
     }
     
     showWordCompletionNotification(word, score) {
@@ -328,29 +404,99 @@ class LettersCascadeGame {
     
     // Scoring System
     addScore(points) {
-        console.log('💰 Adding score:', points);
-        this.score += points;
-        this.stats.totalScore += points;
+        console.log('💰 Score update:', {
+            previousScore: this.score,
+            pointsEarned: points,
+            combo: this.combo,
+            level: this.level
+        });
         
-        // Update high score
+        const oldScore = this.score;
+        this.score += points * this.combo;
+        
+        console.log('✅ Score updated:', {
+            oldScore: oldScore,
+            newScore: this.score,
+            pointsAdded: points * this.combo,
+            comboMultiplier: this.combo
+        });
+        
+        // Update high score if needed
         if (this.score > this.highScore) {
+            console.log('🏆 New high score!:', {
+                previousHigh: this.highScore,
+                newHigh: this.score
+            });
             this.highScore = this.score;
             this.saveHighScore();
         }
         
-        this.scoreManager.updateScore(this.score);
-        this.updateDisplay();
+        this.updateScoreDisplay();
     }
     
     // Level System
     updateLevel() {
-        const newLevel = this.levelManager.getCurrentLevel(this.wordsFound.length);
-        if (newLevel !== this.level) {
-            this.level = newLevel;
-            this.fallSpeed = Math.max(200, 1000 - (this.level - 1) * 100);
+        console.log('📈 Checking level progression:', {
+            currentLevel: this.level,
+            wordsFound: this.wordsFound.length,
+            score: this.score
+        });
+        
+        const oldLevel = this.level;
+        
+        // Level progression based on words found and score
+        if (this.wordsFound.length >= 3 && this.score >= 100) {
+            this.level = 2;
+        }
+        if (this.wordsFound.length >= 5 && this.score >= 250) {
+            this.level = 3;
+        }
+        if (this.wordsFound.length >= 7 && this.score >= 500) {
+            this.level = 4;
+        }
+        if (this.wordsFound.length >= 10 && this.score >= 1000) {
+            this.level = 5;
+        }
+        
+        if (this.level > oldLevel) {
+            console.log('🎉 Level up achieved:', {
+                previousLevel: oldLevel,
+                newLevel: this.level,
+                wordsFound: this.wordsFound.length,
+                score: this.score,
+                requirements: {
+                    level2: { words: 3, score: 100 },
+                    level3: { words: 5, score: 250 },
+                    level4: { words: 7, score: 500 },
+                    level5: { words: 10, score: 1000 }
+                }
+            });
+            
+            // Level up effects
             this.audioManager.playLevelUp();
             this.showLevelUpEffect();
+        } else {
+            console.log('📊 Level progression status:', {
+                currentLevel: this.level,
+                wordsFound: this.wordsFound.length,
+                score: this.score,
+                nextLevelRequirements: this.getNextLevelRequirements()
+            });
         }
+        
+        this.updateLevelDisplay();
+    }
+    
+    getNextLevelRequirements() {
+        const requirements = {
+            1: { words: 3, score: 100 },
+            2: { words: 5, score: 250 },
+            3: { words: 7, score: 500 },
+            4: { words: 10, score: 1000 },
+            5: { words: 15, score: 2000 }
+        };
+        
+        return requirements[this.level] || { words: 'MAX', score: 'MAX' };
     }
     
     // Enhanced Game Controls
@@ -545,22 +691,31 @@ class LettersCascadeGame {
     
     // Enhanced Game State Management
     startGame() {
-        console.log('▶️ Starting enhanced game...');
-        
-        if (this.gameRunning) return;
+        console.log('▶️ startGame() called');
+        console.log('🎮 Game state before start:', {
+            running: this.gameRunning,
+            paused: this.paused,
+            level: this.level,
+            score: this.score,
+            wordsFound: this.wordsFound.length
+        });
         
         this.gameRunning = true;
         this.paused = false;
-        this.gameOver = false;
         this.stats.startTime = Date.now();
+        
+        console.log('📊 Game started with stats:', {
+            startTime: this.stats.startTime,
+            level: this.level,
+            targetWords: this.targetWords.length,
+            letterQueueLength: this.letterQueue.length
+        });
         
         this.createFallingLetter();
         this.startFallTimer();
-        this.gameLoop();
-        
-        this.audioManager.playStart();
         this.showGameStartNotification();
-        console.log('✅ Enhanced game started');
+        
+        console.log('✅ Game started successfully');
     }
     
     showGameStartNotification() {
@@ -602,24 +757,25 @@ class LettersCascadeGame {
     }
     
     pauseGame() {
-        console.log('⏸️ Pausing enhanced game...');
-        
-        if (!this.gameRunning) return;
+        console.log('⏸️ pauseGame() called');
+        console.log('📊 Pause state:', {
+            wasRunning: this.gameRunning,
+            wasPaused: this.paused,
+            currentScore: this.score,
+            playTime: this.stats.playTime
+        });
         
         this.paused = !this.paused;
         
         if (this.paused) {
             this.stopFallTimer();
-            this.audioManager.playPause();
             this.showPauseNotification();
+            console.log('⏸️ Game paused');
         } else {
             this.startFallTimer();
-            this.audioManager.playResume();
             this.hidePauseNotification();
+            console.log('▶️ Game resumed');
         }
-        
-        this.updateDisplay();
-        console.log('✅ Enhanced game paused:', this.paused);
     }
     
     showPauseNotification() {
@@ -657,27 +813,49 @@ class LettersCascadeGame {
     }
     
     resetGame() {
-        console.log('🔄 Resetting enhanced game...');
+        console.log('🔄 resetGame() called');
+        console.log('📊 Game state before reset:', {
+            score: this.score,
+            level: this.level,
+            wordsFound: this.wordsFound.length,
+            playTime: this.stats.playTime
+        });
         
         this.gameRunning = false;
         this.paused = false;
-        this.gameOver = false;
         this.score = 0;
         this.level = 1;
-        this.combo = 0;
-        this.maxCombo = 0;
         this.wordsFound = [];
-        this.fallingLetter = null;
-        this.fallSpeed = 1000;
+        this.combo = 1;
+        this.lastWordTime = 0;
         
-        this.stopFallTimer();
-        this.createGrid();
+        // Reset statistics
+        this.stats = {
+            lettersPlaced: 0,
+            wordsCompleted: 0,
+            totalScore: 0,
+            playTime: 0,
+            startTime: null
+        };
+        
+        // Reset grid and letter queue
+        this.grid = this.createGrid();
         this.generateLetterQueue();
+        this.fallingLetter = null;
+        
+        // Stop timers
+        this.stopFallTimer();
+        
+        // Update display
         this.updateDisplay();
         
-        this.audioManager.playReset();
-        this.hidePauseNotification();
-        console.log('✅ Enhanced game reset');
+        console.log('✅ Game reset successfully');
+        console.log('📊 Reset game state:', {
+            score: this.score,
+            level: this.level,
+            wordsFound: this.wordsFound.length,
+            letterQueueLength: this.letterQueue.length
+        });
     }
     
     startFallTimer() {
@@ -943,7 +1121,6 @@ class LettersCascadeGame {
         if (currentLevelElement) currentLevelElement.textContent = this.level;
         if (targetScoreElement) targetScoreElement.textContent = this.level * 100;
         if (wordsFoundElement) wordsFoundElement.textContent = this.wordsFound.length;
-    }
     }
     
     updateLetterQueueDisplay() {
