@@ -6,45 +6,59 @@
     <title>🧪 Test Page - Letters Cascade Challenge</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/shared.css">
     <style>
-        /* Enhanced Test Page Styles */
-        .test-dashboard {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
         .test-header {
             text-align: center;
-            margin-bottom: var(--spacing-2xl);
+            margin-bottom: 40px;
         }
 
         .test-header h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
-            margin-bottom: var(--spacing-sm);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 10px;
         }
 
         .test-header p {
-            color: var(--gray-600);
-            font-size: 1.1rem;
+            color: #666;
+            font-size: 1.2rem;
             font-weight: 500;
         }
 
         /* Test Controls */
         .test-controls {
             display: flex;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-2xl);
+            gap: 15px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -52,23 +66,24 @@
         .test-btn {
             display: inline-flex;
             align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md) var(--spacing-xl);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            gap: 10px;
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
             border: none;
-            border-radius: var(--radius-lg);
+            border-radius: 12px;
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            text-decoration: none;
         }
 
         .test-btn:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
         }
 
         .test-btn:disabled {
@@ -80,36 +95,36 @@
         /* Test Results Grid */
         .test-results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: var(--spacing-2xl);
-            margin-bottom: var(--spacing-2xl);
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
         .test-summary-card {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.3s ease;
         }
 
         .test-summary-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-xl);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .test-summary-header {
             display: flex;
             align-items: center;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-lg);
-            padding-bottom: var(--spacing-md);
-            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.1);
         }
 
         .test-summary-header h3 {
-            color: var(--primary-color);
+            color: #6366f1;
             font-size: 1.5rem;
             font-weight: 800;
             margin: 0;
@@ -117,97 +132,97 @@
 
         .test-summary-header i {
             font-size: 2rem;
-            color: var(--secondary-color);
+            color: #8b5cf6;
         }
 
         /* Progress Bars */
         .progress-container {
-            margin: var(--spacing-lg) 0;
+            margin: 20px 0;
         }
 
         .progress-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--spacing-sm);
+            margin-bottom: 8px;
         }
 
         .progress-label {
             font-weight: 600;
-            color: var(--gray-700);
+            color: #555;
             font-size: 0.9rem;
         }
 
         .progress-value {
             font-weight: 700;
-            color: var(--primary-color);
+            color: #6366f1;
         }
 
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: var(--radius-sm);
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 4px;
             overflow: hidden;
-            margin-top: var(--spacing-xs);
+            margin-top: 5px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
-            border-radius: var(--radius-sm);
+            background: linear-gradient(90deg, #10b981, #6366f1);
+            border-radius: 4px;
             transition: width 0.5s ease;
         }
 
         /* Test Details */
         .test-details {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: var(--spacing-2xl);
+            margin-bottom: 40px;
         }
 
         .test-details h3 {
-            color: var(--primary-color);
+            color: #6366f1;
             font-size: 1.5rem;
             font-weight: 800;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 10px;
         }
 
         .test-categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-lg);
+            gap: 20px;
         }
 
         .test-category {
             background: rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-lg);
-            border-left: 4px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #6366f1;
         }
 
         .test-category h4 {
-            color: var(--primary-color);
+            color: #6366f1;
             font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: var(--spacing-md);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: 10px;
         }
 
         .test-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--spacing-sm) 0;
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
         }
 
         .test-item:last-child {
@@ -216,24 +231,24 @@
 
         .test-name {
             font-weight: 500;
-            color: var(--gray-700);
+            color: #555;
             font-size: 0.9rem;
         }
 
         .test-status {
             display: flex;
             align-items: center;
-            gap: var(--spacing-xs);
+            gap: 5px;
             font-weight: 600;
             font-size: 0.8rem;
         }
 
         .status-passed {
-            color: var(--success-color);
+            color: #10b981;
         }
 
         .status-failed {
-            color: var(--error-color);
+            color: #ef4444;
         }
 
         .status-icon {
@@ -243,21 +258,22 @@
         /* Console Output */
         .console-section {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 40px;
         }
 
         .console-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 20px;
         }
 
         .console-header h3 {
-            color: var(--primary-color);
+            color: #6366f1;
             font-size: 1.3rem;
             font-weight: 700;
             margin: 0;
@@ -265,15 +281,15 @@
 
         .console-controls {
             display: flex;
-            gap: var(--spacing-sm);
+            gap: 10px;
         }
 
         .console-btn {
-            padding: var(--spacing-xs) var(--spacing-sm);
-            background: var(--primary-color);
+            padding: 8px 15px;
+            background: #6366f1;
             color: white;
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: 8px;
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
@@ -281,15 +297,15 @@
         }
 
         .console-btn:hover {
-            background: var(--secondary-color);
+            background: #8b5cf6;
             transform: translateY(-1px);
         }
 
         .console-output {
             background: #1f2937;
             color: #f9fafb;
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-md);
+            padding: 20px;
+            border-radius: 12px;
             font-family: 'Courier New', monospace;
             font-size: 0.875rem;
             max-height: 400px;
@@ -301,25 +317,25 @@
         /* Game Canvas */
         .game-canvas-section {
             background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .game-canvas-section h3 {
-            color: var(--primary-color);
+            color: #6366f1;
             font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: var(--spacing-lg);
+            margin-bottom: 20px;
         }
 
         #gameCanvas {
             width: 100%;
             max-width: 600px;
             height: 400px;
-            border: 2px solid var(--primary-color);
-            border-radius: var(--radius-md);
+            border: 2px solid #6366f1;
+            border-radius: 12px;
             background: #000;
             display: block;
             margin: 0 auto;
@@ -327,6 +343,14 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .test-header h1 {
+                font-size: 2rem;
+            }
+            
             .test-controls {
                 flex-direction: column;
                 align-items: center;
@@ -339,147 +363,103 @@
             .test-categories {
                 grid-template-columns: 1fr;
             }
+            
+            .console-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="test-dashboard">
-            <!-- Header -->
-            <div class="test-header">
-                <h1>🧪 Test Page</h1>
-                <p>Letters Cascade Challenge - Comprehensive Testing & Validation</p>
-            </div>
+        <!-- Header -->
+        <div class="test-header">
+            <h1>🧪 Test Page</h1>
+            <p>Letters Cascade Challenge - Comprehensive Testing & Validation</p>
+        </div>
 
-            <!-- Test Controls -->
-            <div class="test-controls">
-                <button class="test-btn" onclick="runAllTests()">
-                    <i class="fas fa-rocket"></i> Run All Tests
-                </button>
-                <button class="test-btn" onclick="run2DTests()">
-                    <i class="fas fa-gamepad"></i> Run 2D Tests
-                </button>
-                <button class="test-btn" onclick="run3DTests()">
-                    <i class="fas fa-cube"></i> Run 3D Tests
-                </button>
-                <button class="test-btn" onclick="runSimpleTests()">
-                    <i class="fas fa-vial"></i> Run Simple Tests
-                </button>
-                <button class="test-btn" onclick="clearConsole()">
-                    <i class="fas fa-trash"></i> Clear Console
-                </button>
-            </div>
+        <!-- Test Controls -->
+        <div class="test-controls">
+            <button class="test-btn" onclick="runAllTests()">
+                <i class="fas fa-rocket"></i> Run All Tests
+            </button>
+            <button class="test-btn" onclick="run2DTests()">
+                <i class="fas fa-gamepad"></i> Run 2D Tests
+            </button>
+            <button class="test-btn" onclick="run3DTests()">
+                <i class="fas fa-cube"></i> Run 3D Tests
+            </button>
+            <button class="test-btn" onclick="runSimpleTests()">
+                <i class="fas fa-vial"></i> Run Simple Tests
+            </button>
+            <button class="test-btn" onclick="clearConsole()">
+                <i class="fas fa-trash"></i> Clear Console
+            </button>
+        </div>
 
-            <!-- Test Results Grid -->
-            <div class="test-results-grid">
-                <!-- 2D Game Tests Summary -->
-                <div class="test-summary-card">
-                    <div class="test-summary-header">
-                        <i class="fas fa-gamepad"></i>
-                        <h3>2D Game Tests</h3>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Total Tests</span>
-                            <span class="progress-value">11</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 90.9%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Passed</span>
-                            <span class="progress-value" style="color: var(--success-color);">10</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 90.9%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Failed</span>
-                            <span class="progress-value" style="color: var(--error-color);">1</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 9.1%; background: linear-gradient(90deg, var(--error-color), #ef4444);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Success Rate</span>
-                            <span class="progress-value" style="color: var(--success-color);">90.9%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 90.9%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3D Game Tests Summary -->
-                <div class="test-summary-card">
-                    <div class="test-summary-header">
-                        <i class="fas fa-cube"></i>
-                        <h3>3D Game Tests</h3>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Total Tests</span>
-                            <span class="progress-value">12</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Passed</span>
-                            <span class="progress-value" style="color: var(--success-color);">11</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 91.7%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Failed</span>
-                            <span class="progress-value" style="color: var(--error-color);">1</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 8.3%; background: linear-gradient(90deg, var(--error-color), #ef4444);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="progress-container">
-                        <div class="progress-item">
-                            <span class="progress-label">Success Rate</span>
-                            <span class="progress-value" style="color: var(--success-color);">91.7%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 91.7%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Overall Summary -->
+        <!-- Test Results Grid -->
+        <div class="test-results-grid">
+            <!-- 2D Game Tests Summary -->
             <div class="test-summary-card">
                 <div class="test-summary-header">
-                    <i class="fas fa-trophy"></i>
-                    <h3>Overall Summary</h3>
+                    <i class="fas fa-gamepad"></i>
+                    <h3>2D Game Tests</h3>
                 </div>
                 
                 <div class="progress-container">
                     <div class="progress-item">
                         <span class="progress-label">Total Tests</span>
-                        <span class="progress-value">23</span>
+                        <span class="progress-value">11</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90.9%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <span class="progress-label">Passed</span>
+                        <span class="progress-value" style="color: #10b981;">10</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90.9%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <span class="progress-label">Failed</span>
+                        <span class="progress-value" style="color: #ef4444;">1</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 9.1%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <span class="progress-label">Success Rate</span>
+                        <span class="progress-value" style="color: #10b981;">90.9%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90.9%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Game Tests Summary -->
+            <div class="test-summary-card">
+                <div class="test-summary-header">
+                    <i class="fas fa-cube"></i>
+                    <h3>3D Game Tests</h3>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-item">
+                        <span class="progress-label">Total Tests</span>
+                        <span class="progress-value">12</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 100%"></div>
@@ -489,226 +469,275 @@
                 <div class="progress-container">
                     <div class="progress-item">
                         <span class="progress-label">Passed</span>
-                        <span class="progress-value" style="color: var(--success-color);">21</span>
+                        <span class="progress-value" style="color: #10b981;">11</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 91.3%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
+                        <div class="progress-fill" style="width: 91.7%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
                     </div>
                 </div>
                 
                 <div class="progress-container">
                     <div class="progress-item">
                         <span class="progress-label">Failed</span>
-                        <span class="progress-value" style="color: var(--error-color);">2</span>
+                        <span class="progress-value" style="color: #ef4444;">1</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 8.7%; background: linear-gradient(90deg, var(--error-color), #ef4444);"></div>
+                        <div class="progress-fill" style="width: 8.3%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
                     </div>
                 </div>
                 
                 <div class="progress-container">
                     <div class="progress-item">
-                        <span class="progress-label">Overall Success Rate</span>
-                        <span class="progress-value" style="color: var(--success-color);">91.3%</span>
+                        <span class="progress-label">Success Rate</span>
+                        <span class="progress-value" style="color: #10b981;">91.7%</span>
                     </div>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 91.3%; background: linear-gradient(90deg, var(--success-color), #22c55e);"></div>
+                        <div class="progress-fill" style="width: 91.7%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Test Details -->
-            <div class="test-details">
-                <h3><i class="fas fa-list-check"></i> Test Details</h3>
-                
-                <div class="test-categories">
-                    <!-- 2D Game Test Details -->
-                    <div class="test-category">
-                        <h4><i class="fas fa-gamepad"></i> 2D Game Tests</h4>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Game Initialization</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Grid System</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Letter Management</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Word Detection</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Scoring System</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Level Progression</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Game Controls</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Visual Effects</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Audio System</span>
-                            <span class="test-status status-failed">
-                                <i class="fas fa-times status-icon"></i> FAILED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Performance</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Error Handling</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
+        <!-- Overall Summary -->
+        <div class="test-summary-card">
+            <div class="test-summary-header">
+                <i class="fas fa-trophy"></i>
+                <h3>Overall Summary</h3>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-item">
+                    <span class="progress-label">Total Tests</span>
+                    <span class="progress-value">23</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-item">
+                    <span class="progress-label">Passed</span>
+                    <span class="progress-value" style="color: #10b981;">21</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 91.3%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-item">
+                    <span class="progress-label">Failed</span>
+                    <span class="progress-value" style="color: #ef4444;">2</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 8.7%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-item">
+                    <span class="progress-label">Overall Success Rate</span>
+                    <span class="progress-value" style="color: #10b981;">91.3%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 91.3%; background: linear-gradient(90deg, #10b981, #22c55e);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Details -->
+        <div class="test-details">
+            <h3><i class="fas fa-list-check"></i> Test Details</h3>
+            
+            <div class="test-categories">
+                <!-- 2D Game Test Details -->
+                <div class="test-category">
+                    <h4><i class="fas fa-gamepad"></i> 2D Game Tests</h4>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Game Initialization</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
                     </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Grid System</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Letter Management</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Word Detection</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Scoring System</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Level Progression</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Game Controls</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Visual Effects</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Audio System</span>
+                        <span class="test-status status-failed">
+                            <i class="fas fa-times status-icon"></i> FAILED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Performance</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Error Handling</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                </div>
 
-                    <!-- 3D Game Test Details -->
-                    <div class="test-category">
-                        <h4><i class="fas fa-cube"></i> 3D Game Tests</h4>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Game Initialization</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">Three.js Integration</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Grid System</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Letter Management</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Word Detection</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Scoring System</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Level Progression</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Game Controls</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Visual Effects</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Audio System</span>
-                            <span class="test-status status-failed">
-                                <i class="fas fa-times status-icon"></i> FAILED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Performance</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
-                        
-                        <div class="test-item">
-                            <span class="test-name">3D Error Handling</span>
-                            <span class="test-status status-passed">
-                                <i class="fas fa-check status-icon"></i> PASSED
-                            </span>
-                        </div>
+                <!-- 3D Game Test Details -->
+                <div class="test-category">
+                    <h4><i class="fas fa-cube"></i> 3D Game Tests</h4>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Game Initialization</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">Three.js Integration</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Grid System</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Letter Management</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Word Detection</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Scoring System</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Level Progression</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Game Controls</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Visual Effects</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Audio System</span>
+                        <span class="test-status status-failed">
+                            <i class="fas fa-times status-icon"></i> FAILED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Performance</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
+                    </div>
+                    
+                    <div class="test-item">
+                        <span class="test-name">3D Error Handling</span>
+                        <span class="test-status status-passed">
+                            <i class="fas fa-check status-icon"></i> PASSED
+                        </span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Console Output -->
-            <div class="console-section">
-                <div class="console-header">
-                    <h3><i class="fas fa-terminal"></i> Console Output</h3>
-                    <div class="console-controls">
-                        <button class="console-btn" onclick="clearConsole()">
-                            <i class="fas fa-trash"></i> Clear
-                        </button>
-                        <button class="console-btn" onclick="exportResults()">
-                            <i class="fas fa-download"></i> Export
-                        </button>
-                    </div>
+        <!-- Console Output -->
+        <div class="console-section">
+            <div class="console-header">
+                <h3><i class="fas fa-terminal"></i> Console Output</h3>
+                <div class="console-controls">
+                    <button class="console-btn" onclick="clearConsole()">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                    <button class="console-btn" onclick="exportResults()">
+                        <i class="fas fa-download"></i> Export
+                    </button>
                 </div>
-                <div class="console-output" id="consoleOutput">
+            </div>
+            <div class="console-output" id="consoleOutput">
 🧪 Test Results
 
 Comprehensive test results for Letters Cascade Challenge - 2D & 3D Game Versions
@@ -737,14 +766,13 @@ Comprehensive test results for Letters Cascade Challenge - 2D & 3D Game Versions
 
 ✅ All tests completed successfully!
 🎉 Overall: 21/23 tests passed (91.3% success rate)
-                </div>
             </div>
+        </div>
 
-            <!-- Game Canvas -->
-            <div class="game-canvas-section">
-                <h3><i class="fas fa-gamepad"></i> Game Canvas</h3>
-                <canvas id="gameCanvas"></canvas>
-            </div>
+        <!-- Game Canvas -->
+        <div class="game-canvas-section">
+            <h3><i class="fas fa-gamepad"></i> Game Canvas</h3>
+            <canvas id="gameCanvas"></canvas>
         </div>
     </div>
 
