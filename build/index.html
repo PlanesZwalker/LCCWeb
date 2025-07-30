@@ -10,6 +10,23 @@
     <link rel="stylesheet" href="css/shared.css">
     <script src="js/utils.js"></script>
     <style>
+        /* Background VFX Canvas */
+        #backgroundCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Ensure content is above background */
+        .page-layout {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Enhanced Main Page Layout - Ultra Compact */
         .page-layout {
             display: grid;
@@ -1168,6 +1185,9 @@
     </style>
 </head>
 <body>
+    <!-- Background VFX Canvas -->
+    <canvas id="backgroundCanvas"></canvas>
+    
     <div class="container">
         <div class="page-layout">
             <!-- Navigation Sidebar -->
@@ -1484,6 +1504,176 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Background VFX System - Falling Letters & Particles
+        class BackgroundVFX {
+            constructor() {
+                this.canvas = document.getElementById('backgroundCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.fallingLetters = [];
+                this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                this.colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'];
+                
+                this.resize();
+                this.init();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            init() {
+                // Create initial particles
+                for (let i = 0; i < 50; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 3 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        opacity: Math.random() * 0.5 + 0.2,
+                        color: this.colors[Math.floor(Math.random() * this.colors.length)]
+                    });
+                }
+
+                // Create initial falling letters
+                for (let i = 0; i < 15; i++) {
+                    this.createFallingLetter();
+                }
+            }
+
+            createFallingLetter() {
+                const letter = this.letters[Math.floor(Math.random() * this.letters.length)];
+                const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                
+                this.fallingLetters.push({
+                    x: Math.random() * this.canvas.width,
+                    y: -50,
+                    letter: letter,
+                    size: Math.random() * 20 + 15,
+                    speed: Math.random() * 2 + 1,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: (Math.random() - 0.5) * 4,
+                    color: color,
+                    opacity: Math.random() * 0.7 + 0.3,
+                    pulse: 0,
+                    pulseSpeed: Math.random() * 0.1 + 0.05
+                });
+            }
+
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    particle.opacity += (Math.random() - 0.5) * 0.01;
+
+                    // Wrap around screen
+                    if (particle.x < 0) particle.x = this.canvas.width;
+                    if (particle.x > this.canvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = this.canvas.height;
+                    if (particle.y > this.canvas.height) particle.y = 0;
+
+                    // Keep opacity in bounds
+                    particle.opacity = Math.max(0.1, Math.min(0.8, particle.opacity));
+                });
+            }
+
+            updateFallingLetters() {
+                this.fallingLetters.forEach((letter, index) => {
+                    letter.y += letter.speed;
+                    letter.rotation += letter.rotationSpeed;
+                    letter.pulse += letter.pulseSpeed;
+                    letter.opacity += (Math.random() - 0.5) * 0.01;
+                    letter.opacity = Math.max(0.2, Math.min(0.8, letter.opacity));
+
+                    // Remove letters that fall off screen
+                    if (letter.y > this.canvas.height + 50) {
+                        this.fallingLetters.splice(index, 1);
+                        this.createFallingLetter();
+                    }
+                });
+
+                // Occasionally add new letters
+                if (Math.random() < 0.02) {
+                    this.createFallingLetter();
+                }
+            }
+
+            drawParticles() {
+                this.particles.forEach(particle => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = particle.opacity;
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+
+            drawFallingLetters() {
+                this.fallingLetters.forEach(letter => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = letter.opacity;
+                    this.ctx.translate(letter.x, letter.y);
+                    this.ctx.rotate(letter.rotation * Math.PI / 180);
+                    
+                    // Add glow effect
+                    this.ctx.shadowColor = letter.color;
+                    this.ctx.shadowBlur = 10 + Math.sin(letter.pulse) * 5;
+                    
+                    // Draw letter with gradient
+                    const gradient = this.ctx.createLinearGradient(-letter.size/2, -letter.size/2, letter.size/2, letter.size/2);
+                    gradient.addColorStop(0, letter.color);
+                    gradient.addColorStop(1, this.adjustColor(letter.color, -30));
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.font = `bold ${letter.size}px "Segoe UI", Arial, sans-serif`;
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(letter.letter, 0, 0);
+                    
+                    this.ctx.restore();
+                });
+            }
+
+            adjustColor(color, amount) {
+                const hex = color.replace('#', '');
+                const num = parseInt(hex, 16);
+                const r = Math.max(0, Math.min(255, (num >> 16) + amount));
+                const g = Math.max(0, Math.min(255, ((num >> 8) & 0x00FF) + amount));
+                const b = Math.max(0, Math.min(255, (num & 0x0000FF) + amount));
+                return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
+            }
+
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw gradient background
+                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+                gradient.addColorStop(0, '#667eea');
+                gradient.addColorStop(1, '#764ba2');
+                this.ctx.fillStyle = gradient;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.updateParticles();
+                this.updateFallingLetters();
+                this.drawParticles();
+                this.drawFallingLetters();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize background VFX
+        document.addEventListener('DOMContentLoaded', () => {
+            new BackgroundVFX();
+        });
     </script>
 </body>
 </html>
