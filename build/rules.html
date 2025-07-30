@@ -1063,6 +1063,128 @@
             border-radius: var(--radius-sm);
             border-left: 3px solid var(--warning-color);
         }
+
+        /* Version-Specific Rules Styles */
+        .version-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .version-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .version-card h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .version-content h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .version-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .version-content li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .version-content li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+
+        /* Complexity Levels Styles */
+        .complexity-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-lg);
+        }
+
+        .complexity-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .complexity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .complexity-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .complexity-content h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .complexity-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .complexity-content li {
+            padding: var(--spacing-xs) 0;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: var(--spacing-lg);
+        }
+
+        .complexity-content li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
     </style>
 </head>
 <body>
@@ -1160,6 +1282,200 @@
                             <li><strong>Mode Éducatif :</strong> Apprentissage du vocabulaire avec explications</li>
                             <li><strong>Collections :</strong> Débloquez des séries de mots par thème</li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version-Specific Rules Section -->
+        <div class="rule-section">
+            <h2>🎮 Règles par Version</h2>
+            
+            <div class="version-comparison">
+                <div class="version-card">
+                    <h3>📱 Version 2D - Règles Classiques</h3>
+                    <div class="version-content">
+                        <h4>🎯 Caractéristiques Spécifiques :</h4>
+                        <ul>
+                            <li><strong>Interface :</strong> Grille 2D classique avec vue de dessus</li>
+                            <li><strong>Contrôles :</strong> Souris et clavier optimisés</li>
+                            <li><strong>Performance :</strong> Compatible tous appareils</li>
+                            <li><strong>Accessibilité :</strong> Idéal pour débutants</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Spécifiques 2D :</h4>
+                        <ul>
+                            <li><strong>Grille :</strong> 10x10 cases fixes</li>
+                            <li><strong>Lettres :</strong> Affichage 2D simple</li>
+                            <li><strong>Placement :</strong> Clic direct sur la grille</li>
+                            <li><strong>Rotation :</strong> Clic droit pour pivoter</li>
+                            <li><strong>Vitesse :</strong> Chute progressive constante</li>
+                            <li><strong>Effets :</strong> Animations 2D et particules</li>
+                        </ul>
+                        
+                        <h4>🎮 Contrôles 2D :</h4>
+                        <ul>
+                            <li><strong>Souris :</strong> Clic gauche pour placer, clic droit pour pivoter</li>
+                            <li><strong>Clavier :</strong> Flèches pour déplacer, ESPACE pour placer</li>
+                            <li><strong>Raccourcis :</strong> P pour pause, R pour recommencer</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="version-card">
+                    <h3>🎲 Version 3D - Règles Immersives</h3>
+                    <div class="version-content">
+                        <h4>🎯 Caractéristiques Spécifiques :</h4>
+                        <ul>
+                            <li><strong>Interface :</strong> Environnement 3D immersif</li>
+                            <li><strong>Contrôles :</strong> Navigation 3D avancée</li>
+                            <li><strong>Performance :</strong> Requiert carte graphique dédiée</li>
+                            <li><strong>Expérience :</strong> Immersion totale</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Spécifiques 3D :</h4>
+                        <ul>
+                            <li><strong>Grille :</strong> Grille 3D avec profondeur</li>
+                            <li><strong>Lettres :</strong> Modèles 3D détaillés</li>
+                            <li><strong>Placement :</strong> Navigation 3D avec caméra</li>
+                            <li><strong>Rotation :</strong> Rotation 3D complète</li>
+                            <li><strong>Vitesse :</strong> Chute réaliste avec physique</li>
+                            <li><strong>Effets :</strong> Effets 3D et éclairage dynamique</li>
+                        </ul>
+                        
+                        <h4>🎮 Contrôles 3D :</h4>
+                        <ul>
+                            <li><strong>Souris :</strong> Navigation caméra + placement</li>
+                            <li><strong>Clavier :</strong> WASD pour déplacer, Q/E pour rotation</li>
+                            <li><strong>Caméra :</strong> Clic droit pour orienter la vue</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complexity Levels Section -->
+        <div class="rule-section">
+            <h2>🧠 Niveaux de Complexité</h2>
+            
+            <div class="complexity-levels">
+                <div class="complexity-card">
+                    <h3>👶 Niveau Enfant (4-8 ans)</h3>
+                    <div class="complexity-content">
+                        <h4>🎯 Objectifs Pédagogiques :</h4>
+                        <ul>
+                            <li><strong>Apprentissage :</strong> Reconnaissance des lettres</li>
+                            <li><strong>Développement :</strong> Coordination œil-main</li>
+                            <li><strong>Motivation :</strong> Récompenses visuelles</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Adaptées :</h4>
+                        <ul>
+                            <li><strong>Mots :</strong> 3-4 lettres maximum</li>
+                            <li><strong>Vitesse :</strong> Chute très lente</li>
+                            <li><strong>Grille :</strong> 6x6 cases</li>
+                            <li><strong>Contrôles :</strong> Interface tactile simplifiée</li>
+                            <li><strong>Feedback :</strong> Sons et animations encourageants</li>
+                            <li><strong>Thèmes :</strong> Animaux, couleurs, formes</li>
+                        </ul>
+                        
+                        <h4>🎮 Exemples de Mots :</h4>
+                        <div class="word-examples">
+                            <span class="word-example">CHAT</span>
+                            <span class="word-example">CHIEN</span>
+                            <span class="word-example">MAIN</span>
+                            <span class="word-example">PIED</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complexity-card">
+                    <h3>🧒 Niveau Junior (8-12 ans)</h3>
+                    <div class="complexity-content">
+                        <h4>🎯 Objectifs Pédagogiques :</h4>
+                        <ul>
+                            <li><strong>Apprentissage :</strong> Formation de mots simples</li>
+                            <li><strong>Développement :</strong> Stratégie de base</li>
+                            <li><strong>Motivation :</strong> Progression par niveaux</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Adaptées :</h4>
+                        <ul>
+                            <li><strong>Mots :</strong> 4-6 lettres</li>
+                            <li><strong>Vitesse :</strong> Chute modérée</li>
+                            <li><strong>Grille :</strong> 8x8 cases</li>
+                            <li><strong>Contrôles :</strong> Souris et clavier basiques</li>
+                            <li><strong>Feedback :</strong> Points et combos simples</li>
+                            <li><strong>Thèmes :</strong> Famille, école, loisirs</li>
+                        </ul>
+                        
+                        <h4>🎮 Exemples de Mots :</h4>
+                        <div class="word-examples">
+                            <span class="word-example">MAISON</span>
+                            <span class="word-example">JARDIN</span>
+                            <span class="word-example">LIVRE</span>
+                            <span class="word-example">TABLE</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complexity-card">
+                    <h3>👨‍🎓 Niveau Adolescent (12-16 ans)</h3>
+                    <div class="complexity-content">
+                        <h4>🎯 Objectifs Pédagogiques :</h4>
+                        <ul>
+                            <li><strong>Apprentissage :</strong> Vocabulaire enrichi</li>
+                            <li><strong>Développement :</strong> Stratégie avancée</li>
+                            <li><strong>Motivation :</strong> Défis et compétition</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Adaptées :</h4>
+                        <ul>
+                            <li><strong>Mots :</strong> 5-8 lettres</li>
+                            <li><strong>Vitesse :</strong> Chute rapide</li>
+                            <li><strong>Grille :</strong> 10x10 cases</li>
+                            <li><strong>Contrôles :</strong> Tous les contrôles disponibles</li>
+                            <li><strong>Feedback :</strong> Système de combo complet</li>
+                            <li><strong>Thèmes :</strong> Technologie, sports, culture</li>
+                        </ul>
+                        
+                        <h4>🎮 Exemples de Mots :</h4>
+                        <div class="word-examples">
+                            <span class="word-example">MUSIQUE</span>
+                            <span class="word-example">ORDINATEUR</span>
+                            <span class="word-example">BASKETBALL</span>
+                            <span class="word-example">CINÉMA</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complexity-card">
+                    <h3>👨‍💼 Niveau Adulte (16+ ans)</h3>
+                    <div class="complexity-content">
+                        <h4>🎯 Objectifs Pédagogiques :</h4>
+                        <ul>
+                            <li><strong>Apprentissage :</strong> Vocabulaire spécialisé</li>
+                            <li><strong>Développement :</strong> Optimisation et efficacité</li>
+                            <li><strong>Motivation :</strong> Performance et records</li>
+                        </ul>
+                        
+                        <h4>📋 Règles Adaptées :</h4>
+                        <ul>
+                            <li><strong>Mots :</strong> 6+ lettres, mots complexes</li>
+                            <li><strong>Vitesse :</strong> Chute très rapide</li>
+                            <li><strong>Grille :</strong> 12x12 cases</li>
+                            <li><strong>Contrôles :</strong> Raccourcis avancés</li>
+                            <li><strong>Feedback :</strong> Statistiques détaillées</li>
+                            <li><strong>Thèmes :</strong> Professionnel, académique, culturel</li>
+                        </ul>
+                        
+                        <h4>🎮 Exemples de Mots :</h4>
+                        <div class="word-examples">
+                            <span class="word-example">PHILOSOPHIE</span>
+                            <span class="word-example">TECHNOLOGIE</span>
+                            <span class="word-example">LITTÉRATURE</span>
+                            <span class="word-example">ARCHITECTURE</span>
+                        </div>
                     </div>
                 </div>
             </div>
