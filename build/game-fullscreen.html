@@ -264,14 +264,46 @@
         // Game3D class for fullscreen 3D game
         class Game3D {
             constructor() {
+                console.log('🎮 Fullscreen 3D game initialized');
+                
+                // Game Configuration
+                this.mode = '3d';
+                this.gridSizes = [8, 10, 12];
+                this.currentGridSize = 10;
+                this.cellSize = 1.2;
+                this.gap = 0.2;
+                
+                // Game State
+                this.gameRunning = false;
+                this.paused = false;
+                this.gameOver = false;
+                this.level = 1;
+                this.score = 0;
+                this.combo = 0;
+                this.maxCombo = 0;
+                this.startTime = null;
+                
+                // Game Mechanics
+                this.grid = [];
+                this.letters = [];
+                this.letterQueue = [];
+                this.wordsFound = [];
+                this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
+                this.fallingLetter = null;
+                this.fallingLetterPosition = { row: 0, col: 0 };
+                this.fallSpeed = 1000;
+                this.fallTimer = null;
+                
+                // 3D Scene Components
                 this.scene = null;
                 this.camera = null;
                 this.renderer = null;
-                this.gameRunning = false;
-                this.score = 0;
-                this.level = 1;
+                this.raycaster = null;
+                this.mouse = null;
+                
+                // Statistics
                 this.wordsCompleted = 0;
-                this.combo = 0;
+                
                 this.init();
             }
 
@@ -288,116 +320,263 @@
                 const containerRect = container.getBoundingClientRect();
                 this.renderer.setSize(containerRect.width - 40, containerRect.height - 40);
                 
+                // Initialize additional components
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2();
+                
                 // Setup scene
                 this.setupScene();
                 this.setupLights();
                 this.setupGrid();
+                this.setupControls();
                 
                 // Start render loop
                 this.animate();
                 
                 console.log('📐 3D Canvas size set for fullscreen:', this.renderer.domElement.width, 'x', this.renderer.domElement.height);
             }
-
+            
             setupScene() {
-                // Add ambient light
+                this.scene.background = new THREE.Color(0x1a1a2e);
+                this.camera.position.set(0, 15, 15);
+                this.camera.lookAt(0, 0, 0);
+            }
+            
+            setupLights() {
                 const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
                 this.scene.add(ambientLight);
-
-                // Add directional light
+                
                 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
                 directionalLight.position.set(10, 10, 5);
                 this.scene.add(directionalLight);
-
-                // Add point light
-                const pointLight = new THREE.PointLight(0x6366f1, 1, 100);
-                pointLight.position.set(0, 10, 0);
-                this.scene.add(pointLight);
-
-                // Set camera position
-                this.camera.position.set(0, 5, 10);
-                this.camera.lookAt(0, 0, 0);
             }
-
-            setupLights() {
-                // Additional lighting for better 3D effect
-                const spotLight = new THREE.SpotLight(0x8b5cf6, 1);
-                spotLight.position.set(0, 15, 0);
-                spotLight.angle = Math.PI / 4;
-                spotLight.penumbra = 0.1;
-                spotLight.decay = 2;
-                spotLight.distance = 200;
-                this.scene.add(spotLight);
-            }
-
+            
             setupGrid() {
-                // Create 3D grid
-                const gridHelper = new THREE.GridHelper(10, 10, 0x6366f1, 0x6366f1);
-                this.scene.add(gridHelper);
-
-                // Add some 3D letters as example
-                this.addSampleLetters();
+                console.log('📐 Setting up 3D grid for fullscreen');
+                
+                // Create grid
+                for (let row = 0; row < this.currentGridSize; row++) {
+                    this.grid[row] = [];
+                    for (let col = 0; col < this.currentGridSize; col++) {
+                        const geometry = new THREE.BoxGeometry(this.cellSize, this.cellSize, this.cellSize);
+                        const material = new THREE.MeshLambertMaterial({ 
+                            color: 0x2a2a3e,
+                            transparent: true,
+                            opacity: 0.8
+                        });
+                        
+                        const cube = new THREE.Mesh(geometry, material);
+                        cube.position.set(
+                            (col - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                            (row - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                            0
+                        );
+                        
+                        cube.userData = {
+                            row: row,
+                            col: col,
+                            occupied: false,
+                            letter: null,
+                            letterValue: null
+                        };
+                        
+                        this.grid[row][col] = cube;
+                        this.scene.add(cube);
+                    }
+                }
             }
-
-            addSampleLetters() {
-                const letters = ['A', 'B', 'C', 'D', 'E'];
-                const colors = [0xf59e0b, 0x10b981, 0x3b82f6, 0x8b5cf6, 0xef4444];
-
-                letters.forEach((letter, index) => {
-                    const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
-                    const material = new THREE.MeshPhongMaterial({ 
-                        color: colors[index],
-                        transparent: true,
-                        opacity: 0.9
-                    });
-                    const cube = new THREE.Mesh(geometry, material);
+            
+            setupControls() {
+                // Keyboard controls
+                document.addEventListener('keydown', (event) => {
+                    if (!this.gameRunning || this.paused) return;
                     
-                    cube.position.set((index - 2) * 2, 1, 0);
-                    cube.userData = { letter: letter };
-                    
-                    this.scene.add(cube);
-                });
-            }
-
-            animate() {
-                requestAnimationFrame(() => this.animate());
-
-                // Rotate camera slowly
-                const time = Date.now() * 0.001;
-                this.camera.position.x = Math.cos(time * 0.5) * 10;
-                this.camera.position.z = Math.sin(time * 0.5) * 10;
-                this.camera.lookAt(0, 0, 0);
-
-                // Animate letters
-                this.scene.children.forEach(child => {
-                    if (child.userData && child.userData.letter) {
-                        child.rotation.y += 0.01;
-                        child.position.y = 1 + Math.sin(time + child.position.x) * 0.2;
+                    switch(event.key) {
+                        case 'ArrowLeft':
+                            this.moveFallingLetter(-1);
+                            break;
+                        case 'ArrowRight':
+                            this.moveFallingLetter(1);
+                            break;
+                        case 'ArrowDown':
+                            this.dropFallingLetter();
+                            break;
+                        case ' ':
+                            this.rotateFallingLetter();
+                            break;
+                        case 'p':
+                        case 'P':
+                            this.togglePause();
+                            break;
+                        case 'r':
+                        case 'R':
+                            this.resetGame();
+                            break;
                     }
                 });
-
-                this.renderer.render(this.scene, this.camera);
+                
+                // Mouse controls
+                const canvas = this.renderer.domElement;
+                canvas.addEventListener('click', (event) => {
+                    this.onCanvasClick(event);
+                });
             }
-
-            startGame() {
-                console.log('🚀 3D game started');
-                this.gameRunning = true;
+            
+            // Add missing methods
+            moveFallingLetter(direction) {
+                console.log('⬅️➡️ moveFallingLetter() called - direction:', direction);
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot move falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Calculate new position
+                const newCol = this.fallingLetterPosition.col + direction;
+                
+                // Check bounds
+                if (newCol < 0 || newCol >= this.currentGridSize) {
+                    console.log('❌ Cannot move - out of bounds');
+                    return;
+                }
+                
+                // Check if target position is occupied
+                if (this.grid[this.fallingLetterPosition.row][newCol].userData.occupied) {
+                    console.log('❌ Cannot move - target position occupied');
+                    return;
+                }
+                
+                // Update position
+                this.fallingLetterPosition.col = newCol;
+                
+                // Update 3D position
+                this.fallingLetter.position.x = (newCol - this.currentGridSize / 2 + 0.5) * this.cellSize;
+                
+                console.log('✅ Falling letter moved to column:', newCol);
+            }
+            
+            dropFallingLetter() {
+                console.log('⬇️ dropFallingLetter() called');
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot drop falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Find the lowest available position
+                let targetRow = this.fallingLetterPosition.row;
+                
+                for (let row = this.fallingLetterPosition.row + 1; row < this.currentGridSize; row++) {
+                    if (this.grid[row][this.fallingLetterPosition.col].userData.occupied) {
+                        break;
+                    }
+                    targetRow = row;
+                }
+                
+                // Place the letter at the target position
+                this.placeLetter3D(targetRow, this.fallingLetterPosition.col);
+                
+                console.log('✅ Falling letter dropped at row:', targetRow);
+            }
+            
+            rotateFallingLetter() {
+                console.log('🔄 rotateFallingLetter() called');
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot rotate falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Rotate the letter 90 degrees around Y axis
+                this.fallingLetter.rotation.y += Math.PI / 2;
+                
+                console.log('✅ Falling letter rotated');
+            }
+            
+            togglePause() {
+                console.log('⏸️ togglePause() called');
+                this.pauseGame();
+            }
+            
+            placeLetter3D(row, col) {
+                console.log('🎯 placeLetter3D() called - row:', row, 'col:', col);
+                
+                if (this.grid[row][col].userData.occupied) {
+                    console.log('❌ Position already occupied');
+                    return;
+                }
+                
+                // Create letter geometry
+                const letterGeometry = new THREE.BoxGeometry(this.cellSize * 0.8, this.cellSize * 0.8, this.cellSize * 0.8);
+                const letterMaterial = new THREE.MeshLambertMaterial({ color: 0x4ecdc4 });
+                const letter = new THREE.Mesh(letterGeometry, letterMaterial);
+                
+                letter.position.set(
+                    (col - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                    (row - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                    0
+                );
+                
+                // Mark position as occupied
+                this.grid[row][col].userData.occupied = true;
+                this.grid[row][col].userData.letter = letter;
+                this.grid[row][col].userData.letterValue = 'A'; // Placeholder
+                
+                this.scene.add(letter);
+                
+                // Add score
+                this.addScore(10);
+                
+                console.log('✅ Letter placed at row:', row, 'col:', col);
+            }
+            
+            onCanvasClick(event) {
+                if (!this.gameRunning || this.paused) return;
+                
+                const rect = this.renderer.domElement.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+                const intersects = this.raycaster.intersectObjects(this.scene.children);
+                
+                if (intersects.length > 0) {
+                    const intersected = intersects[0].object;
+                    if (intersected.userData && !intersected.userData.occupied) {
+                        this.placeLetter3D(intersected.userData.row, intersected.userData.col);
+                    }
+                }
+            }
+            
+            addScore(points) {
+                this.score += points;
                 this.updateStats();
             }
-
+            
+            startGame() {
+                console.log('▶️ Starting 3D fullscreen game...');
+                this.gameRunning = true;
+                this.paused = false;
+                this.startTime = Date.now();
+                console.log('✅ 3D fullscreen game started');
+            }
+            
             resetGame() {
-                console.log('🔄 3D game reset');
+                console.log('🔄 Resetting 3D fullscreen game...');
+                this.gameRunning = false;
+                this.paused = false;
                 this.score = 0;
                 this.level = 1;
-                this.wordsCompleted = 0;
                 this.combo = 0;
-                this.gameRunning = false;
+                this.maxCombo = 0;
+                this.wordsCompleted = 0;
                 this.updateStats();
+                console.log('✅ 3D fullscreen game reset');
             }
 
             pauseGame() {
-                console.log('⏸️ 3D game paused');
-                this.gameRunning = !this.gameRunning;
+                console.log('⏸️ 3D fullscreen game paused');
+                this.paused = !this.paused;
             }
 
             updateStats() {
@@ -405,6 +584,16 @@
                 document.getElementById('level').textContent = this.level;
                 document.getElementById('wordsCompleted').textContent = this.wordsCompleted;
                 document.getElementById('combo').textContent = this.combo;
+            }
+            
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                if (this.gameRunning && !this.paused) {
+                    // Game logic here
+                }
+                
+                this.renderer.render(this.scene, this.camera);
             }
         }
 
@@ -449,13 +638,19 @@
             console.log('🚪 exitFullscreen() called');
             try {
                 if (document.fullscreenElement) {
-                    document.exitFullscreen();
+                    document.exitFullscreen().then(() => {
+                        console.log('✅ Successfully exited fullscreen');
+                        window.location.href = 'game.html';
+                    }).catch(err => {
+                        console.log('⚠️ Error exiting fullscreen:', err);
+                        window.location.href = 'game.html';
+                    });
                 } else {
-                    // If not in fullscreen, just redirect
+                    console.log('ℹ️ Not in fullscreen mode, redirecting to game.html');
                     window.location.href = 'game.html';
                 }
             } catch (error) {
-                console.log('⚠️ Error exiting fullscreen:', error);
+                console.log('⚠️ Error in exitFullscreen:', error);
                 // Fallback: just redirect
                 window.location.href = 'game.html';
             }
