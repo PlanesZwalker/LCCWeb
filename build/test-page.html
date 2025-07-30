@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Page - Letters Cascade Challenge</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .test-section {
+            background: #f9fafb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        .test-section h2 {
+            color: #6366f1;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .test-btn {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .console-output {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.875rem;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 1rem;
+        }
+
+        .results-summary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .result-card h4 {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .result-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Test Page</h1>
+            <p>Letters Cascade Challenge - Comprehensive Testing</p>
+        </div>
+
+        <div class="test-controls">
+            <button class="test-btn" onclick="runAllTests()">🚀 Run All Tests</button>
+            <button class="test-btn" onclick="run2DTests()">🎯 Run 2D Tests</button>
+            <button class="test-btn" onclick="run3DTests()">🎨 Run 3D Tests</button>
+            <button class="test-btn" onclick="runSimpleTests()">🧪 Run Simple Tests</button>
+            <button class="test-btn" onclick="clearConsole()">🗑️ Clear Console</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Test Results</h2>
+            <div id="results-summary" class="results-summary" style="display: none;">
+                <h3>📈 Test Summary</h3>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <h4>Total Tests</h4>
+                        <div class="number" id="total-tests">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Passed</h4>
+                        <div class="number" id="passed-tests">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Failed</h4>
+                        <div class="number" id="failed-tests">0</div>
+                    </div>
+                    <div class="result-card">
+                        <h4>Success Rate</h4>
+                        <div class="number" id="success-rate">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>📝 Console Output</h2>
+            <div id="console-output" class="console-output"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎮 Game Canvas</h2>
+            <div style="text-align: center;">
+                <canvas id="gameCanvas" width="400" height="400" style="border: 2px solid #6366f1; border-radius: 0.5rem; background: #f9fafb;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Three.js for 3D tests -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Load game scripts -->
+    <script src="js/index.js"></script>
+    
+    <!-- Load test scripts -->
+    <script src="../tests/run-tests.js"></script>
+    <script src="../tests/2d-game-tests.js"></script>
+    <script src="../tests/3d-game-tests.js"></script>
+    <script src="../tests/test-runner.js"></script>
+
+    <script>
+        // Global variables
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0
+        };
+
+        // Console output capture
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        const consoleOutput = document.getElementById('console-output');
+
+        function captureConsole() {
+            console.log = function(...args) {
+                originalConsoleLog.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ');
+                consoleOutput.textContent += message + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+
+            console.error = function(...args) {
+                originalConsoleError.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ');
+                consoleOutput.textContent += '❌ ' + message + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+
+            console.warn = function(...args) {
+                originalConsoleWarn.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ');
+                consoleOutput.textContent += '⚠️ ' + message + '\n';
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            };
+        }
+
+        // Initialize console capture
+        captureConsole();
+
+        // Run all tests
+        async function runAllTests() {
+            consoleOutput.textContent = '';
+            console.log('🧪 Starting comprehensive test suite...');
+            
+            try {
+                // Run simple tests first
+                await runSimpleTests();
+                
+                // Run 2D tests
+                await run2DTests();
+                
+                // Run 3D tests
+                await run3DTests();
+                
+                updateResultsSummary();
+                
+            } catch (error) {
+                console.error('❌ Error running tests:', error);
+            }
+        }
+
+        // Run 2D tests
+        async function run2DTests() {
+            console.log('\n🎯 Running 2D Game Tests...');
+            
+            try {
+                const test2D = new Game2DTests();
+                await test2D.runAllTests();
+                
+                testResults.total += test2D.testResults.total;
+                testResults.passed += test2D.testResults.passed;
+                testResults.failed += test2D.testResults.failed;
+                
+            } catch (error) {
+                console.error('❌ Error running 2D tests:', error);
+                testResults.failed++;
+            }
+        }
+
+        // Run 3D tests
+        async function run3DTests() {
+            console.log('\n🎨 Running 3D Game Tests...');
+            
+            try {
+                const test3D = new Game3DTests();
+                await test3D.runAllTests();
+                
+                testResults.total += test3D.testResults.total;
+                testResults.passed += test3D.testResults.passed;
+                testResults.failed += test3D.testResults.failed;
+                
+            } catch (error) {
+                console.error('❌ Error running 3D tests:', error);
+                testResults.failed++;
+            }
+        }
+
+        // Run simple tests
+        async function runSimpleTests() {
+            console.log('\n🧪 Running Simple Tests...');
+            
+            try {
+                const simpleRunner = new SimpleTestRunner();
+                await simpleRunner.runAllTests();
+                
+                // Extract results from simple runner
+                const simpleResults = simpleRunner.results.overall;
+                testResults.total += simpleResults.total;
+                testResults.passed += simpleResults.passed;
+                testResults.failed += simpleResults.failed;
+                
+            } catch (error) {
+                console.error('❌ Error running simple tests:', error);
+                testResults.failed++;
+            }
+        }
+
+        // Update results summary
+        function updateResultsSummary() {
+            const successRate = testResults.total > 0 ? ((testResults.passed / testResults.total) * 100).toFixed(1) : 0;
+            
+            document.getElementById('total-tests').textContent = testResults.total;
+            document.getElementById('passed-tests').textContent = testResults.passed;
+            document.getElementById('failed-tests').textContent = testResults.failed;
+            document.getElementById('success-rate').textContent = successRate + '%';
+            
+            document.getElementById('results-summary').style.display = 'block';
+            
+            console.log('\n📊 Test Summary:');
+            console.log(`   Total: ${testResults.total}`);
+            console.log(`   Passed: ${testResults.passed}`);
+            console.log(`   Failed: ${testResults.failed}`);
+            console.log(`   Success Rate: ${successRate}%`);
+        }
+
+        // Clear console
+        function clearConsole() {
+            consoleOutput.textContent = '';
+            testResults = { total: 0, passed: 0, failed: 0 };
+            document.getElementById('results-summary').style.display = 'none';
+        }
+
+        // Initialize game when page loads
+        window.addEventListener('load', function() {
+            console.log('🚀 Test page loaded');
+            console.log('📋 Available test functions:');
+            console.log('   - runAllTests()');
+            console.log('   - run2DTests()');
+            console.log('   - run3DTests()');
+            console.log('   - runSimpleTests()');
+            
+            // Initialize game
+            try {
+                const game = new LettersCascadeGame();
+                game.init();
+                console.log('✅ Game initialized successfully');
+            } catch (error) {
+                console.error('❌ Error initializing game:', error);
+            }
+        });
+    </script>
+</body>
+</html> 
