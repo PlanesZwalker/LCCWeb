@@ -132,14 +132,89 @@
             100% { transform: translateX(100%); }
         }
 
+        /* Enhanced animations inspired by Three.js techniques */
         @keyframes slideInFromTop {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-30px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        /* Enhanced shimmer effect with Three.js inspiration */
+        @keyframes shimmer {
+            0% { 
+                transform: translateX(-100%) skewX(-15deg);
+                opacity: 0;
+            }
+            50% { 
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateX(200%) skewX(-15deg);
+                opacity: 0;
+            }
+        }
+
+        /* Three.js-inspired pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        /* Enhanced glow animation */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 20px rgba(99, 102, 241, 0.3),
+                    0 0 40px rgba(99, 102, 241, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 30px rgba(99, 102, 241, 0.5),
+                    0 0 60px rgba(99, 102, 241, 0.2);
             }
         }
 
@@ -654,45 +729,192 @@
 
     <script src="js/index.js"></script>
     <script>
-        // Initialize 2D game when page loads
+        // Enhanced game initialization with Three.js-inspired effects
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 DOM Content Loaded - Initializing 2D game...');
+            console.log('🎮 2D game initialized with Three.js-inspired effects');
             
-            // Check if index.js is loaded
-            if (typeof LettersCascadeGame === 'undefined') {
-                console.error('❌ LettersCascadeGame class not found! Check if index.js is loaded properly.');
-                return;
-            }
-            
-            console.log('✅ LettersCascadeGame class found');
-            
-            // Initialize the game
-            try {
+            // Initialize game
+            if (typeof LettersCascadeGame !== 'undefined') {
                 window.game = new LettersCascadeGame();
-                console.log('🎮 Game instance created:', window.game);
-                
-                // Initialize the game
                 window.game.init();
-                console.log('✅ Game initialized successfully');
                 
-                // Test game methods
-                console.log('🧪 Testing game methods...');
-                console.log('startGame method:', typeof window.game.startGame);
-                console.log('resetGame method:', typeof window.game.resetGame);
-                console.log('pauseGame method:', typeof window.game.pauseGame);
+                // Add Three.js-inspired dynamic effects
+                setupDynamicEffects();
                 
-                // Add click event listeners for better debugging
-                document.querySelectorAll('.game-controls button').forEach(button => {
-                    button.addEventListener('click', function(e) {
-                        console.log('🖱️ Button clicked:', this.textContent.trim());
-                        console.log('Game instance available:', !!window.game);
-                    });
-                });
+                // Add interactive particle system
+                setupInteractiveParticles();
                 
-            } catch (error) {
-                console.error('❌ Error initializing game:', error);
+                // Add dynamic lighting effects
+                setupDynamicLighting();
             }
         });
+
+        // Three.js-inspired dynamic effects
+        function setupDynamicEffects() {
+            console.log('✨ Setting up dynamic effects...');
+            
+            // Add mouse tracking for dynamic effects
+            document.addEventListener('mousemove', function(e) {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                // Update background gradients based on mouse position
+                document.documentElement.style.setProperty('--mouse-x', mouseX);
+                document.documentElement.style.setProperty('--mouse-y', mouseY);
+                
+                // Add subtle parallax effect to particles
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach((particle, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+            
+            // Add keyboard interaction for dynamic effects
+            document.addEventListener('keydown', function(e) {
+                if (e.key === ' ') {
+                    // Spacebar triggers particle burst
+                    createParticleBurst();
+                }
+            });
+        }
+
+        // Interactive particle system
+        function setupInteractiveParticles() {
+            console.log('✨ Setting up interactive particles...');
+            
+            const container = document.querySelector('.page-layout');
+            if (!container) return;
+            
+            // Create floating particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.cssText = `
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(255, 255, 255, 0.6);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    left: ${Math.random() * 100}%;
+                    top: ${Math.random() * 100}%;
+                    animation: float ${5 + Math.random() * 10}s infinite linear;
+                    z-index: 1;
+                `;
+                container.appendChild(particle);
+            }
+        }
+
+        // Dynamic lighting effects
+        function setupDynamicLighting() {
+            console.log('💡 Setting up dynamic lighting...');
+            
+            // Add CSS custom properties for dynamic lighting
+            document.documentElement.style.setProperty('--light-intensity', '1');
+            document.documentElement.style.setProperty('--light-color', 'rgba(99, 102, 241, 0.3)');
+            
+            // Animate lighting based on time
+            setInterval(() => {
+                const time = Date.now() * 0.001;
+                const intensity = 0.5 + Math.sin(time) * 0.3;
+                const hue = (time * 50) % 360;
+                
+                document.documentElement.style.setProperty('--light-intensity', intensity);
+                document.documentElement.style.setProperty('--light-color', `hsla(${hue}, 70%, 60%, 0.3)`);
+            }, 50);
+        }
+
+        // Particle burst effect
+        function createParticleBurst() {
+            console.log('✨ Creating particle burst...');
+            
+            const container = document.querySelector('.game-container');
+            if (!container) return;
+            
+            for (let i = 0; i < 10; i++) {
+                const burst = document.createElement('div');
+                burst.className = 'burst-particle';
+                burst.style.cssText = `
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    background: linear-gradient(45deg, #4ecdc4, #667eea);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    animation: burst ${1 + Math.random()}s ease-out forwards;
+                    z-index: 10;
+                `;
+                container.appendChild(burst);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (burst.parentNode) {
+                        burst.parentNode.removeChild(burst);
+                    }
+                }, 2000);
+            }
+        }
+
+        // Add CSS for new animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0px) translateX(0px);
+                    opacity: 0.6;
+                }
+                25% {
+                    transform: translateY(-20px) translateX(10px);
+                    opacity: 1;
+                }
+                50% {
+                    transform: translateY(-10px) translateX(-10px);
+                    opacity: 0.8;
+                }
+                75% {
+                    transform: translateY(-30px) translateX(5px);
+                    opacity: 0.9;
+                }
+            }
+            
+            @keyframes burst {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(1) translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px);
+                    opacity: 0;
+                }
+            }
+            
+            .game-container {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .game-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                    var(--light-color) 0%, transparent 50%);
+                opacity: var(--light-intensity, 1);
+                pointer-events: none;
+                z-index: 0;
+                transition: all 0.1s ease;
+            }
+        `;
+        document.head.appendChild(style);
         
         // Global functions for button onclick handlers
         function startGame() {

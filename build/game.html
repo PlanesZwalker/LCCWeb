@@ -1404,36 +1404,93 @@
                 });
             }
             
-            // Enhanced Animation Loop
+            // Enhanced animation loop with modern Three.js techniques
             animate() {
                 requestAnimationFrame(() => this.animate());
                 
-                if (!this.gameRunning || this.paused) {
+                if (this.gameRunning && !this.paused) {
+                    // Update game logic
+                    this.updateGameLogic();
+                }
+                
+                // Animate particle system
+                if (this.particleSystem) {
+                    this.particleSystem.rotation.y += 0.001;
+                    this.particleSystem.rotation.x += 0.0005;
+                }
+                
+                // Use modern renderer with post-processing if available
+                if (this.composer) {
+                    this.composer.render();
+                } else {
                     this.renderer.render(this.scene, this.camera);
-                    return;
+                }
+            }
+            
+            // Enhanced game logic update
+            updateGameLogic() {
+                // Update falling letter animation
+                if (this.fallingLetter) {
+                    this.fallingLetter.position.y -= 0.05;
+                    
+                    // Add subtle rotation for visual appeal
+                    this.fallingLetter.rotation.y += 0.02;
+                    this.fallingLetter.rotation.x += 0.01;
                 }
                 
-                // Check game over conditions
-                if (this.checkGameOverConditions()) {
-                    // Render game over screen
-                    this.renderGameOverScreen();
-                    return;
+                // Update lighting for dynamic effects
+                if (this.scene.children) {
+                    this.scene.children.forEach(child => {
+                        if (child.type === 'DirectionalLight') {
+                            child.position.x = Math.sin(Date.now() * 0.001) * 2;
+                            child.position.z = Math.cos(Date.now() * 0.001) * 2;
+                        }
+                    });
                 }
+            }
+            
+            // Enhanced letter creation with better materials
+            createLetter3D(letter, row, col) {
+                console.log('🎯 createLetter3D() called - letter:', letter, 'row:', row, 'col:', col);
                 
-                // Enhanced camera movement
-                this.updateCamera();
+                // Create enhanced geometry with better proportions
+                const letterGeometry = new THREE.BoxGeometry(this.cellSize * 0.9, this.cellSize * 0.9, this.cellSize * 0.9);
                 
-                // Update falling letter
-                this.updateFallingLetter();
+                // Create enhanced material with better visual properties
+                const letterMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x4ecdc4,
+                    transparent: true,
+                    opacity: 0.9,
+                    emissive: 0x1a1a1a,
+                    emissiveIntensity: 0.1
+                });
                 
-                // Update particles
-                this.particleSystem.update();
+                const letterMesh = new THREE.Mesh(letterGeometry, letterMaterial);
                 
-                // Update letter animations
-                this.updateLetterAnimations();
+                // Position the letter
+                letterMesh.position.set(
+                    (col - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                    (row - this.currentGridSize / 2 + 0.5) * this.cellSize,
+                    0
+                );
                 
-                // Render scene
-                this.renderer.render(this.scene, this.camera);
+                // Add subtle animation
+                letterMesh.userData.originalY = letterMesh.position.y;
+                letterMesh.userData.animationTime = 0;
+                
+                // Enable shadows
+                letterMesh.castShadow = true;
+                letterMesh.receiveShadow = true;
+                
+                this.scene.add(letterMesh);
+                
+                // Store letter data
+                this.grid[row][col].userData.occupied = true;
+                this.grid[row][col].userData.letter = letterMesh;
+                this.grid[row][col].userData.letterValue = letter;
+                
+                console.log('✅ Letter created at position:', row, col);
+                return letterMesh;
             }
             
             // Render Game Over Screen (3D)
