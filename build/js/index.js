@@ -1776,7 +1776,7 @@ class LettersCascadeGame {
         if (wordListElement) {
             wordListElement.innerHTML = '';
             
-            // Add target words for the game
+            // Demo word list for display
             const targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
             targetWords.forEach(word => {
                 const li = document.createElement('li');
@@ -1786,7 +1786,8 @@ class LettersCascadeGame {
             });
             console.log('✅ Word list updated with', targetWords.length, 'items');
         } else {
-            console.error('❌ Word list element not found');
+            // Element not found - this is expected with the new layout
+            console.log('ℹ️ Word list element not found - using new layout without word list display');
         }
         
         // Update progression display
@@ -1797,6 +1798,11 @@ class LettersCascadeGame {
         if (currentLevelElement) currentLevelElement.textContent = this.level;
         if (targetScoreElement) targetScoreElement.textContent = this.level * 100;
         if (wordsFoundElement) wordsFoundElement.textContent = this.wordsFound.length;
+        
+        // Log if elements are missing (expected with new layout)
+        if (!currentLevelElement || !targetScoreElement || !wordsFoundElement) {
+            console.log('ℹ️ Some progression elements not found - using new layout without detailed progression display');
+        }
     }
     
     updateLetterQueueDisplay() {
@@ -1819,7 +1825,8 @@ class LettersCascadeGame {
             });
             console.log('✅ Letter queue updated with', queueElement.children.length, 'letters');
         } else {
-            console.error('❌ Letter queue element not found');
+            // Element not found - this is expected with the new layout
+            console.log('ℹ️ Letter queue element not found - using new layout without letter preview display');
         }
     }
     
