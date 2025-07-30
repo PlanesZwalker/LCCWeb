@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Règles du Jeu - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-accent: #f3f4f6;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --border-radius: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            --border-radius-xl: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .rule-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .rule-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .rule-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .rule-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
+        }
+
+        .rule-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rule-list li {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+        }
+
+        .rule-list li:last-child {
+            border-bottom: none;
+        }
+
+        .rule-icon {
+            color: var(--success-color);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        .scoring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .scoring-table th,
+        .scoring-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scoring-table th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-weight: 600;
+        }
+
+        .scoring-table tr:nth-child(even) {
+            background-color: var(--bg-accent);
+        }
+
+        .level-requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .level-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .level-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .controls-section {
+            background: var(--bg-accent);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            margin: var(--spacing-lg) 0;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .control-key {
+            background: var(--text-primary);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-family: monospace;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: var(--spacing-xl);
+            border-radius: var(--border-radius-xl);
+            margin: var(--spacing-xl) 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tips-section h2 {
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tip-card h4 {
+            margin-bottom: var(--spacing-sm);
+            color: #fbbf24;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding: var(--spacing-xl);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .level-requirements {
+                grid-template-columns: 1fr;
+            }
+
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 Règles du Jeu</h1>
+            <p>Letters Cascade Challenge - Guide complet des règles et mécaniques de jeu</p>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link">🏠 Accueil</a>
+                <a href="prototype.html" class="nav-link">🎮 Version 2D</a>
+                <a href="game.html" class="nav-link">🎮 Version 3D</a>
+                <a href="GDD.html" class="nav-link">📄 GDD</a>
+                <a href="moodboard.html" class="nav-link">🎨 Références</a>
+            </nav>
+        </div>
+
+        <!-- Game Overview -->
+        <div class="rule-section">
+            <h2>🎯 Vue d'ensemble du Jeu</h2>
+            <p>Letters Cascade Challenge est un jeu de formation de mots où les joueurs placent des lettres qui tombent pour créer des mots français valides. Le jeu propose deux versions : une version 2D classique et une version 3D immersive.</p>
+            
+            <h3>🎮 Objectif Principal</h3>
+            <p>Formez des mots français en plaçant stratégiquement les lettres qui tombent sur la grille. Plus les mots sont longs, plus vous gagnez de points !</p>
+        </div>
+
+        <!-- Basic Rules -->
+        <div class="rule-section">
+            <h2>📋 Règles de Base</h2>
+            
+            <h3>🎯 Mécaniques Principales</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Les lettres tombent du haut de l'écran</li>
+                <li><span class="rule-icon">✅</span> Cliquez pour placer les lettres sur la grille</li>
+                <li><span class="rule-icon">✅</span> Formez des mots de 3 lettres minimum</li>
+                <li><span class="rule-icon">✅</span> Les mots doivent être en français</li>
+                <li><span class="rule-icon">✅</span> Les mots peuvent être horizontaux, verticaux ou diagonaux</li>
+                <li><span class="rule-icon">✅</span> Une lettre ne peut être utilisée qu'une seule fois</li>
+            </ul>
+
+            <h3>🚫 Restrictions</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">❌</span> Pas de placement sur des cases occupées</li>
+                <li><span class="rule-icon">❌</span> Pas de mots de moins de 3 lettres</li>
+                <li><span class="rule-icon">❌</span> Pas de mots invalides ou inexistants</li>
+                <li><span class="rule-icon">❌</span> Pas de réutilisation des lettres dans plusieurs mots</li>
+            </ul>
+        </div>
+
+        <!-- Scoring System -->
+        <div class="rule-section">
+            <h2>💰 Système de Score</h2>
+            
+            <h3>📊 Points de Base</h3>
+            <table class="scoring-table">
+                <thead>
+                    <tr>
+                        <th>Longueur du Mot</th>
+                        <th>Points de Base</th>
+                        <th>Exemple</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3 lettres</td>
+                        <td>10 points</td>
+                        <td>CHAT</td>
+                    </tr>
+                    <tr>
+                        <td>4 lettres</td>
+                        <td>25 points</td>
+                        <td>MAIN</td>
+                    </tr>
+                    <tr>
+                        <td>5 lettres</td>
+                        <td>50 points</td>
+                        <td>TABLE</td>
+                    </tr>
+                    <tr>
+                        <td>6 lettres</td>
+                        <td>100 points</td>
+                        <td>MAISON</td>
+                    </tr>
+                    <tr>
+                        <td>7+ lettres</td>
+                        <td>200 points</td>
+                        <td>MUSIQUE</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔥 Bonus Multiplicateurs</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">🔥</span> <strong>Combo Bonus :</strong> +50% pour des mots consécutifs rapides</li>
+                <li><span class="rule-icon">📈</span> <strong>Niveau Bonus :</strong> +25% par niveau au-dessus du niveau 1</li>
+                <li><span class="rule-icon">⚡</span> <strong>Vitesse Bonus :</strong> +10% pour un placement rapide</li>
+                <li><span class="rule-icon">🎯</span> <strong>Efficacité Bonus :</strong> +20% pour utiliser moins de lettres</li>
+            </ul>
+
+            <h3>⚠️ Pénalités</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">⏰</span> <strong>Pénalité de Temps :</strong> -5 points par seconde au-delà de la limite</li>
+                <li><span class="rule-icon">🗑️</span> <strong>Gaspillage de Lettres :</strong> -2 points par lettre inutilisée</li>
+                <li><span class="rule-icon">📦</span> <strong>Grille Encombrée :</strong> -10 points si la grille est pleine à 80%</li>
+            </ul>
+        </div>
+
+        <!-- Level Progression -->
+        <div class="rule-section">
+            <h2>📈 Progression des Niveaux</h2>
+            
+            <div class="level-requirements">
+                <div class="level-card">
+                    <h4>Niveau 1</h4>
+                    <p>3 mots, 100 points</p>
+                    <p>Temps : 2 minutes</p>
+                </div>
+                <div class="level-card">
+                    <h4>Niveau 2</h4>
+                    <p>5 mots, 250 points</p>
+                    <p>Temps : 3 minutes</p>
+                </div>
+                <div class="level-card">
+                    <h4>Niveau 3</h4>
+                    <p>7 mots, 500 points</p>
+                    <p>Temps : 4 minutes</p>
+                </div>
+                <div class="level-card">
+                    <h4>Niveau 4</h4>
+                    <p>10 mots, 1000 points</p>
+                    <p>Temps : 5 minutes</p>
+                </div>
+            </div>
+
+            <h3>🏆 Conditions de Victoire</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Atteindre le nombre de mots requis</li>
+                <li><span class="rule-icon">✅</span> Atteindre le score minimum</li>
+                <li><span class="rule-icon">✅</span> Respecter la limite de temps</li>
+            </ul>
+
+            <h3>💀 Conditions de Défaite</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">❌</span> Dépasser la limite de temps</li>
+                <li><span class="rule-icon">❌</span> Grille pleine à 80%</li>
+                <li><span class="rule-icon">❌</span> Score trop bas</li>
+                <li><span class="rule-icon">❌</span> Aucun mouvement possible</li>
+            </ul>
+        </div>
+
+        <!-- Controls -->
+        <div class="rule-section">
+            <h2>🎮 Contrôles</h2>
+            
+            <h3>🖱️ Contrôles Souris</h3>
+            <div class="controls-section">
+                <div class="control-grid">
+                    <div class="control-item">
+                        <span class="control-key">Clic</span>
+                        <span>Placer une lettre</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Clic Droit</span>
+                        <span>Faire pivoter la lettre</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Glisser</span>
+                        <span>Déplacer la lettre</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>⌨️ Contrôles Clavier</h3>
+            <div class="controls-section">
+                <div class="control-grid">
+                    <div class="control-item">
+                        <span class="control-key">←</span>
+                        <span>Déplacer à gauche</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">→</span>
+                        <span>Déplacer à droite</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Espace</span>
+                        <span>Faire pivoter</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Entrée</span>
+                        <span>Placer la lettre</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">P</span>
+                        <span>Pause/Reprendre</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">R</span>
+                        <span>Recommencer</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">F11</span>
+                        <span>Plein écran</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>📱 Contrôles Tactiles</h3>
+            <div class="controls-section">
+                <div class="control-grid">
+                    <div class="control-item">
+                        <span class="control-key">Tap</span>
+                        <span>Placer une lettre</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Double Tap</span>
+                        <span>Faire pivoter</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">Glisser</span>
+                        <span>Déplacer la lettre</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Modes -->
+        <div class="rule-section">
+            <h2>🎮 Modes de Jeu</h2>
+            
+            <h3>📱 Version 2D (Prototype)</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Interface classique en 2D</li>
+                <li><span class="rule-icon">✅</span> Contrôles optimisés pour mobile</li>
+                <li><span class="rule-icon">✅</span> Performance optimisée</li>
+                <li><span class="rule-icon">✅</span> Compatible tous navigateurs</li>
+            </ul>
+
+            <h3>🎨 Version 3D (Immersion)</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Rendu 3D avec Three.js</li>
+                <li><span class="rule-icon">✅</span> Effets visuels avancés</li>
+                <li><span class="rule-icon">✅</span> Contrôles caméra</li>
+                <li><span class="rule-icon">✅</span> Animations fluides</li>
+            </ul>
+        </div>
+
+        <!-- Tips and Strategies -->
+        <div class="tips-section">
+            <h2>💡 Conseils et Stratégies</h2>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>🎯 Planification</h4>
+                    <p>Regardez les lettres à venir et planifiez vos mots à l'avance. Les mots plus longs rapportent beaucoup plus de points !</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>🔥 Combos</h4>
+                    <p>Formez des mots rapidement pour activer les bonus de combo. Plus vous êtes rapide, plus vous gagnez de points !</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>📦 Gestion de l'Espace</h4>
+                    <p>Évitez d'encombrer votre grille. Gardez de l'espace pour les mots longs qui rapportent plus de points.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>⚡ Vitesse</h4>
+                    <p>Plus vous placez les lettres rapidement, plus vous gagnez de bonus. Mais attention à ne pas faire d'erreurs !</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>🎯 Efficacité</h4>
+                    <p>Utilisez chaque lettre de manière optimale. Évitez de gaspiller des lettres pour des mots courts.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>📚 Vocabulaire</h4>
+                    <p>Connaître beaucoup de mots français vous aidera à former des mots plus longs et à gagner plus de points.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Requirements -->
+        <div class="rule-section">
+            <h2>⚙️ Exigences Techniques</h2>
+            
+            <h3>🌐 Navigateur</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Chrome 80+ (recommandé)</li>
+                <li><span class="rule-icon">✅</span> Firefox 75+</li>
+                <li><span class="rule-icon">✅</span> Safari 13+</li>
+                <li><span class="rule-icon">✅</span> Edge 80+</li>
+            </ul>
+
+            <h3>🎮 Version 2D</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Support HTML5 Canvas</li>
+                <li><span class="rule-icon">✅</span> JavaScript ES6+</li>
+                <li><span class="rule-icon">✅</span> Audio Web API (optionnel)</li>
+            </ul>
+
+            <h3>🎨 Version 3D</h3>
+            <ul class="rule-list">
+                <li><span class="rule-icon">✅</span> Support WebGL</li>
+                <li><span class="rule-icon">✅</span> Three.js compatible</li>
+                <li><span class="rule-icon">✅</span> Carte graphique dédiée (recommandé)</li>
+                <li><span class="rule-icon">✅</span> 4GB RAM minimum</li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>🎮 Prêt à Jouer ?</h3>
+            <p>Maintenant que vous connaissez toutes les règles, lancez-vous dans l'aventure Letters Cascade Challenge !</p>
+            
+            <div class="nav-menu" style="margin-top: var(--spacing-lg);">
+                <a href="prototype.html" class="nav-link">🎮 Jouer Version 2D</a>
+                <a href="game.html" class="nav-link">🎮 Jouer Version 3D</a>
+            </div>
+            
+            <p style="margin-top: var(--spacing-lg); color: var(--text-secondary);">
+                <strong>Bonne chance et amusez-vous bien !</strong> 🍀
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects for rule sections
+        document.querySelectorAll('.rule-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            section.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in-out';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html> 
