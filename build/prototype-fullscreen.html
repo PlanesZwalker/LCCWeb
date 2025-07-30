@@ -301,10 +301,18 @@
 
         function exitFullscreen() {
             console.log('🚪 exitFullscreen() called');
-            if (document.fullscreenElement) {
-                document.exitFullscreen();
+            try {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    // If not in fullscreen, just redirect
+                    window.location.href = 'prototype.html';
+                }
+            } catch (error) {
+                console.log('⚠️ Error exiting fullscreen:', error);
+                // Fallback: just redirect
+                window.location.href = 'prototype.html';
             }
-            window.location.href = 'prototype.html';
         }
 
         // Handle fullscreen changes

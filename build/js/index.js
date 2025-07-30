@@ -2403,7 +2403,7 @@ class LettersCascadeGame {
         ctx.restore();
         
         // Stats content with better layout
-        const statsY = canvas.height / 2 + 20;
+        const statsContentY = canvas.height / 2 + 20;
         const statsData = [
             { label: '🎯 Score Final', value: stats.totalScore, color: '#667eea' },
             { label: '📝 Mots Complétés', value: stats.wordsCompleted, color: '#764ba2' },
@@ -2420,7 +2420,7 @@ class LettersCascadeGame {
         ctx.textBaseline = 'middle';
         
         statsData.forEach((stat, index) => {
-            const y = statsY + (index * 35);
+            const y = statsContentY + (index * 35);
             const x = canvas.width / 2 - 180;
             
             // Label with color
