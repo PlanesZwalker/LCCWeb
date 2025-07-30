@@ -1,4 +1,4 @@
-// Complete Game Engine for Letters Cascade Challenge
+﻿// Complete Game Engine for Letters Cascade Challenge
 // Implements all functionalities from technical specifications
 
 class LettersCascadeGame {

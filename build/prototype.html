@@ -13,7 +13,7 @@
         /* ENHANCED LAYOUT - BEAUTIFUL AND ORGANIZED */
         .page-layout {
             display: grid;
-            grid-template-columns: 180px 1fr;
+            grid-template-columns: 220px 1fr;
             gap: var(--spacing-md);
             height: 100vh;
             max-width: 1400px;
@@ -255,6 +255,8 @@
             height: fit-content;
             position: sticky;
             top: var(--spacing-md);
+            min-width: 200px;
+            width: 200px;
         }
 
         .nav-sidebar h3 {
@@ -287,6 +289,15 @@
             font-weight: 500;
             position: relative;
             overflow: hidden;
+            white-space: nowrap;
+            min-width: 0;
+            flex-shrink: 0;
+        }
+
+        .nav-links a i {
+            flex-shrink: 0;
+            width: 16px;
+            text-align: center;
         }
 
         .nav-links a::before {
