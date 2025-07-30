@@ -127,67 +127,51 @@ class LettersCascadeGame {
     init() {
         console.log('🚀 Initializing LettersCascadeGame...');
         
-        // Initialize canvas
-        this.canvas = document.getElementById('gameCanvas');
-        this.ctx = this.canvas.getContext('2d');
-        
-        if (!this.canvas || !this.ctx) {
-            console.error('❌ Canvas initialization failed');
-            return;
+        try {
+            // Initialize canvas
+            this.canvas = document.getElementById('gameCanvas');
+            this.ctx = this.canvas.getContext('2d');
+            
+            if (!this.canvas || !this.ctx) {
+                console.error('❌ Canvas initialization failed');
+                return;
+            }
+            
+            // Resize canvas to proper dimensions
+            this.resizeCanvas();
+            
+            console.log('✅ Canvas initialized:', {
+                width: this.canvas.width,
+                height: this.canvas.height,
+                context: this.ctx
+            });
+            
+            // Initialize grid
+            this.createGrid();
+            
+            // Initialize letter queue
+            this.generateLetterQueue();
+            
+            // Initialize word detector
+            this.wordDetector = new WordDetector(this.targetWords);
+            
+            // Setup controls
+            this.setupControls();
+            
+            // Setup event listeners
+            this.setupEventListeners();
+            
+            // Load dictionary
+            this.loadDictionary();
+            
+            // Initial render
+            this.render();
+            
+            console.log('✅ Game initialization completed successfully');
+            
+        } catch (error) {
+            console.error('❌ Error during game initialization:', error);
         }
-        
-        // Resize canvas to proper dimensions
-        this.resizeCanvas();
-        
-        console.log('✅ Canvas initialized:', {
-            width: this.canvas.width,
-            height: this.canvas.height,
-            context: this.ctx
-        });
-        
-        // Initialize grid
-        this.createGrid();
-        
-        // Word Detection System
-        this.dictionary = this.loadDictionary();
-        this.wordDetector = new WordDetector(this.dictionary);
-        
-        // Scoring System
-        this.scoreManager = new ScoreManager();
-        
-        // Level System
-        this.levelManager = new LevelManager();
-        
-        // Controls
-        this.keys = {};
-        this.setupControls();
-        
-        // Generate initial letter queue
-        this.generateLetterQueue();
-        
-        // Setup event listeners
-        this.setupEventListeners();
-        
-        // Initial display update
-        this.updateDisplay();
-        
-        // Test letter placement to verify rendering
-        this.testLetterPlacement();
-        
-        // Create initial falling letter
-        this.createFallingLetter();
-        
-        // Start the game loop immediately
-        this.startGameLoop();
-        
-        console.log('✅ LettersCascadeGame initialized successfully');
-        console.log('📊 Game ready state:', {
-            gridCreated: !!this.grid,
-            letterQueueLength: this.letterQueue.length,
-            targetWordsCount: this.targetWords.length,
-            dictionarySize: this.dictionary.size,
-            fallingLetter: this.fallingLetter ? this.fallingLetter.letter : 'none'
-        });
     }
     
     // 🎯 INTELLIGENT BALANCING METHODS
@@ -1153,11 +1137,25 @@ class LettersCascadeGame {
     // Enhanced Game State Management
     startGame() {
         console.log('🚀 startGame() called');
+        
+        // Ensure grid is initialized
+        if (!this.grid) {
+            console.log('🏗️ Grid not initialized, creating grid...');
+            this.createGrid();
+        }
+        
+        // Ensure letter queue is initialized
+        if (!this.letterQueue || this.letterQueue.length === 0) {
+            console.log('📝 Letter queue not initialized, generating queue...');
+            this.generateLetterQueue();
+        }
+        
         console.log('📊 Game state before start:', {
             gameRunning: this.gameRunning,
             paused: this.paused,
             fallingLetter: this.fallingLetter,
-            gridLetters: this.grid.flat().filter(cell => cell !== null).length
+            gridSize: this.grid ? this.grid.length : 'undefined',
+            gridLetters: this.grid ? this.grid.flat().filter(cell => cell !== null).length : 0
         });
         
         this.gameRunning = true;
