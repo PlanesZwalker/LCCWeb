@@ -13,12 +13,12 @@
         /* ENHANCED LAYOUT - BEAUTIFUL AND ORGANIZED */
         .page-layout {
             display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: var(--spacing-md);
+            grid-template-columns: 250px 1fr;
+            gap: var(--spacing-lg);
             height: 100vh;
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: var(--spacing-md);
+            padding: var(--spacing-lg);
             overflow: hidden;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             position: relative;
@@ -79,7 +79,7 @@
         .main-content {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-md);
+            gap: var(--spacing-lg);
             height: 100vh;
             overflow: hidden;
             position: relative;
@@ -90,7 +90,7 @@
         .game-header {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
             border-radius: var(--radius-xl);
-            padding: var(--spacing-lg);
+            padding: var(--spacing-xl);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.4);
@@ -98,7 +98,7 @@
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-            height: 70px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,17 +220,16 @@
 
         .game-header h1 {
             color: var(--primary-color);
-            font-size: 1.6rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 800;
             margin: 0;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             position: relative;
             z-index: 1;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            letter-spacing: 0.5px;
         }
 
         .game-header p {
@@ -239,16 +238,16 @@
 
         /* ENHANCED GAME CONTAINER */
         .game-container {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
             border-radius: var(--radius-xl);
             padding: var(--spacing-xl);
-            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
-            height: calc(100vh - 140px);
+            grid-template-rows: auto 1fr auto;
+            gap: var(--spacing-xl);
+            height: calc(100vh - 120px);
             position: relative;
             overflow: hidden;
             flex: 1;
@@ -277,36 +276,30 @@
             }
         }
 
-        /* ENHANCED GAME STATS - BEAUTIFUL CARDS */
+        /* ENHANCED GAME STATS */
         .game-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-md);
+            gap: var(--spacing-lg);
             padding: var(--spacing-lg);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
             border-radius: var(--radius-xl);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            position: absolute;
-            top: var(--spacing-lg);
-            left: var(--spacing-lg);
-            right: var(--spacing-lg);
-            z-index: 10;
-            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(20px);
             animation: slideInFromTop 0.8s ease-out 0.4s both;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
             border-radius: var(--radius-lg);
-            padding: var(--spacing-md);
+            padding: var(--spacing-lg);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
 
         .stat-card::before {
@@ -325,8 +318,8 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .stat-card::after {
@@ -341,11 +334,9 @@
         }
 
         .stat-value {
-            font-size: 2.2rem;
-            font-weight: 900;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: var(--primary-color);
-            margin-bottom: var(--spacing-xs);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -353,11 +344,57 @@
         }
 
         .stat-label {
-            font-size: 0.875rem;
-            font-weight: 700;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: var(--gray-600);
+            margin-bottom: var(--spacing-sm);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ENHANCED GAME CANVAS AREA */
+        .game-canvas-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            min-height: 400px;
+        }
+
+        .canvas-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .canvas-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-align: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* ENHANCED GAME CONTROLS */
+        .game-controls {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(20px);
+            animation: slideInFromBottom 0.8s ease-out 0.6s both;
         }
 
         /* ENHANCED GAME CANVAS - Three.js-inspired styling */
@@ -503,20 +540,21 @@
                 0 0 30px rgba(34, 197, 94, 0.2);
         }
 
-        /* ENHANCED SIDEBAR */
+        /* ENHANCED SIDEBAR - BETTER LAYOUT */
         .nav-sidebar {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
             border-radius: var(--radius-xl);
-            padding: var(--spacing-lg);
+            padding: var(--spacing-xl);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            height: fit-content;
-            position: sticky;
-            top: var(--spacing-md);
-            min-width: 200px;
-            width: 200px;
-            animation: slideInFromLeft 0.8s ease-out both;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            height: calc(100vh - 2 * var(--spacing-lg));
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromLeft 0.8s ease-out;
         }
 
         .nav-sidebar::before {
@@ -530,62 +568,42 @@
             border-radius: var(--radius-xl) var(--radius-xl) 0 0;
         }
 
-        @keyframes slideInFromLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .nav-sidebar h3 {
+        .sidebar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: var(--primary-color);
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-lg);
             text-align: center;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid rgba(99, 102, 241, 0.2);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: 0.5px;
         }
 
         .nav-links {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-sm);
+            gap: var(--spacing-md);
+            flex: 1;
         }
 
         .nav-links a {
             display: flex;
             align-items: center;
-            gap: var(--spacing-sm);
+            gap: var(--spacing-md);
             padding: var(--spacing-md) var(--spacing-lg);
-            color: var(--gray-600);
-            text-decoration: none;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
             border-radius: var(--radius-lg);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: var(--gray-700);
             font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
-            white-space: nowrap;
-            min-width: 0;
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-links a i {
-            flex-shrink: 0;
-            width: 18px;
-            text-align: center;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
         }
 
         .nav-links a::before {
@@ -595,56 +613,79 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(118, 75, 162, 0.1));
+            color: var(--primary-color);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
         }
 
         .nav-links a:hover::before {
             left: 100%;
         }
 
-        .nav-links a:hover {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        .nav-links a.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(118, 75, 162, 0.15));
             color: var(--primary-color);
-            transform: translateX(8px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .nav-links a i {
+            font-size: 1.1rem;
+            min-width: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover i {
             transform: scale(1.2);
-            color: var(--primary-color);
         }
 
-        .nav-links a.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-            transform: translateX(8px);
-        }
-
-        .nav-links a.active i {
-            color: white;
-            transform: scale(1.2);
-        }
-
-        /* RESPONSIVE DESIGN */
+        /* Responsive improvements */
         @media (max-width: 1200px) {
             .page-layout {
-                grid-template-columns: 160px 1fr;
-                gap: var(--spacing-sm);
-                padding: var(--spacing-sm);
+                grid-template-columns: 220px 1fr;
+                gap: var(--spacing-md);
+                padding: var(--spacing-md);
+            }
+            
+            .game-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-md);
+            }
+            
+            .game-controls {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-md);
             }
         }
 
         @media (max-width: 768px) {
             .page-layout {
                 grid-template-columns: 1fr;
-                gap: var(--spacing-sm);
+                grid-template-rows: auto 1fr;
+                gap: var(--spacing-md);
             }
             
             .nav-sidebar {
-                order: 2;
-                position: static;
+                height: auto;
+                padding: var(--spacing-md);
+            }
+            
+            .nav-links {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: var(--spacing-sm);
+            }
+            
+            .nav-links a {
+                white-space: nowrap;
+                min-width: 120px;
             }
             
             .game-stats {
@@ -652,7 +693,7 @@
             }
             
             .game-controls {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -661,69 +702,99 @@
     <div class="container">
         <div class="page-layout">
             <!-- Navigation Sidebar -->
-            <div class="nav-sidebar">
-                <h3>Navigation</h3>
+            <nav class="nav-sidebar">
+                <h3 class="sidebar-title">Navigation</h3>
                 <div class="nav-links">
-                    <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
-                    <a href="prototype.html" class="active"><i class="fas fa-flask"></i> Maquette 2D</a>
-                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
-                    <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
-                    <a href="rules.html"><i class="fas fa-book"></i> Règles</a>
-                    <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
-                    <a href="sitemap.html"><i class="fas fa-sitemap"></i> Plan de Site</a>
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        Accueil
+                    </a>
+                    <a href="prototype.html" class="active">
+                        <i class="fas fa-drafting-compass"></i>
+                        Maquette 2D
+                    </a>
+                    <a href="game.html">
+                        <i class="fas fa-cube"></i>
+                        Maquette 3D
+                    </a>
+                    <a href="GDD.html">
+                        <i class="fas fa-file-alt"></i>
+                        Documental
+                    </a>
+                    <a href="rules.html">
+                        <i class="fas fa-book"></i>
+                        Règles
+                    </a>
+                    <a href="moodboard.html">
+                        <i class="fas fa-palette"></i>
+                        Moodboard
+                    </a>
+                    <a href="sitemap.html">
+                        <i class="fas fa-sitemap"></i>
+                        Plan de Site
+                    </a>
                 </div>
-            </div>
+            </nav>
 
-            <div class="main-content">
+            <!-- Main Content -->
+            <main class="main-content">
                 <!-- Game Header -->
-                <div class="game-header">
-                    <h1>🎮 Maquette 2D - Letters Cascade Challenge</h1>
-                </div>
+                <header class="game-header">
+                    <h1><i class="fas fa-gamepad"></i> Maquette 2D - Letters Cascade Challenge</h1>
+                </header>
 
                 <!-- Game Container -->
                 <div class="game-container">
-                    <!-- Game Stats Overlay -->
+                    <!-- Game Stats -->
                     <div class="game-stats">
                         <div class="stat-card">
-                            <div class="stat-value" id="scoreDisplay">0</div>
                             <div class="stat-label">Score</div>
+                            <div class="stat-value" id="score">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="levelDisplay">1</div>
                             <div class="stat-label">Niveau</div>
+                            <div class="stat-value" id="level">1</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="wordsCompleted">0</div>
                             <div class="stat-label">Mots Complétés</div>
+                            <div class="stat-value" id="wordsCompleted">0</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="comboDisplay">0</div>
                             <div class="stat-label">Combo</div>
+                            <div class="stat-value" id="combo">0</div>
                         </div>
                     </div>
 
-                    <!-- Game Canvas Container -->
-                    <div class="game-canvas-container">
-                        <canvas id="gameCanvas" width="600" height="600"></canvas>
+                    <!-- Game Canvas Area -->
+                    <div class="game-canvas-area">
+                        <div class="canvas-container">
+                            <div class="canvas-label">Zone de Jeu</div>
+                            <canvas id="gameCanvas" width="600" height="600"></canvas>
+                            <div class="canvas-info">0/3 mots</div>
+                        </div>
                     </div>
 
                     <!-- Game Controls -->
                     <div class="game-controls">
-                        <button class="btn btn-primary" onclick="startGame()">
-                            <i class="fas fa-play"></i> Démarrer
+                        <button class="control-btn btn-primary" onclick="startGame()">
+                            <i class="fas fa-play"></i>
+                            Démarrer
                         </button>
-                        <button class="btn btn-secondary" onclick="resetGame()">
-                            <i class="fas fa-redo"></i> Reset
+                        <button class="control-btn btn-secondary" onclick="resetGame()">
+                            <i class="fas fa-redo"></i>
+                            Reset
                         </button>
-                        <button class="btn btn-warning" onclick="pauseGame()">
-                            <i class="fas fa-pause"></i> Pause
+                        <button class="control-btn btn-warning" onclick="pauseGame()">
+                            <i class="fas fa-pause"></i>
+                            Pause
                         </button>
-                        <a href="prototype-fullscreen.html" class="btn btn-success">
-                            <i class="fas fa-external-link-alt"></i> Version Immersive
-                        </a>
+                        <button class="control-btn btn-success" onclick="window.open('prototype-fullscreen.html', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                            Version Immersive
+                        </button>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
 
