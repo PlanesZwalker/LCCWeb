@@ -661,6 +661,286 @@
             color: white;
             box-shadow: var(--shadow-md);
         }
+
+        /* New styles for hero section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.8s ease-out;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        .hero-section h1 {
+            color: var(--primary-color);
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section p {
+            color: var(--gray-600);
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+        }
+
+        .action-btn.primary:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        }
+
+        /* New styles for concept-section and features-section */
+        .concept-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .concept-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .concept-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+            pointer-events: none;
+        }
+
+        .concept-section h2 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-section p {
+            color: var(--gray-600);
+            font-size: 1.3rem;
+            line-height: 1.8;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .concept-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2xl);
+        }
+
+        .concept-description {
+            flex: 1;
+            padding-right: var(--spacing-lg);
+            border-right: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .concept-description h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-description p {
+            color: var(--gray-700);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .feature-card:hover::after {
+            left: 100%;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card p {
+            color: var(--gray-700);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .feature-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .feature-card li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--gray-700);
+            font-size: 1rem;
+        }
+
+        .feature-card li strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -683,463 +963,110 @@
             </div>
 
             <div class="main-content">
-                <!-- Enhanced Header -->
-                <div class="market-header">
-                    <h1>🎮 Références de Jeux - Letters Cascade Challenge</h1>
-                    <p>Analyse des jeux de référence qui inspirent notre projet et définissent les standards du marché</p>
+                <!-- Enhanced Hero Section -->
+                <div class="hero-section">
+                    <h1>🎨 Références de Jeux</h1>
+                    <p>Découvrez notre étude de marché complète et les références qui ont inspiré Letters Cascade Challenge, des classiques du puzzle aux innovations modernes.</p>
+                    
+                    <div class="action-buttons">
+                        <a href="prototype.html" class="action-btn primary">
+                            <i class="fas fa-gamepad"></i>
+                            Jouer en 2D
+                        </a>
+                        <a href="game.html" class="action-btn">
+                            <i class="fas fa-cube"></i>
+                            Jouer en 3D
+                        </a>
+                        <a href="rules.html" class="action-btn">
+                            <i class="fas fa-book"></i>
+                            Règles du Jeu
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Enhanced Concept Art Showcase -->
-                <div class="concept-showcase">
-                    <h2>🎨 Concept Principal</h2>
-                    <img src="images/Cascade Letters - 03 - Illu - bdnoires.png" alt="Concept Principal - Cascade de Lettres - KridVOID" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDYwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMzAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjQ4IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7wn5GPPC90ZXh0Pgo8dGV4dCB4PSI1MCUiIHk9IjYwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjI0IiBmb250LXdlaWdodD0ibm9ybWFsIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkNvbmNlcHQgUHJpbmNpcGFsPC90ZXh0Pgo8L3N2Zz4K'">
-                    <div class="image-credit">
-                        <p><strong>Illustration :</strong> Kris VOID</p>
-                    </div>
-                    <h3>Identité Visuelle Unique</h3>
-                    <p>Une cascade majestueuse s'écoule au centre de l'illustration, entourée d'une végétation luxuriante. Trois lettres anthropomorphiques colorées - un 'A' rouge, un '6' rose et un 'C' orange - flottent dans l'air avec des bras et jambes stylisés. Une pagode traditionnelle japonaise se dresse en arrière-plan, créant une ambiance sereine et culturellement riche.</p>
-                </div>
-
-                <!-- Enhanced Reference Games Grid -->
-                <div class="game-reference-grid">
-                    <!-- Wordle Analysis -->
-                    <div class="game-reference-card">
-                        <div class="game-reference-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Wordle_196_example.svg/1200px-Wordle_196_example.svg.png" alt="Wordle" class="game-reference-logo">
-                            <div class="game-reference-title">
-                                <h3>
-                                    <i class="fas fa-wordpress"></i>
-                                    <a href="https://en.wikipedia.org/wiki/Wordle" target="_blank" class="game-reference-link">
-                                        Wordle - Leader du Marché
-                                        <span class="wikipedia-badge">📖 Wikipédia</span>
-                                    </a>
-                                </h3>
-                                <p>Jeu de devinettes de mots quotidien - Succès viral mondial</p>
-                            </div>
-                        </div>
-
-                        <!-- Wordle Screenshots -->
-                        <div class="game-screenshots">
-                            <h4><i class="fas fa-images"></i> Captures d'Écran</h4>
-                            <div class="screenshots-grid">
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Wordle_196_example.svg/1200px-Wordle_196_example.svg.png" alt="Wordle Interface">
-                                    <div class="screenshot-caption">Interface principale</div>
-                                </div>
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Wordle_196_example_2.svg/1200px-Wordle_196_example_2.svg.png" alt="Wordle Gameplay">
-                                    <div class="screenshot-caption">Gameplay avec feedback</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Wordle Rules Analysis -->
-                        <div class="game-rules-comparison">
-                            <h4><i class="fas fa-list-check"></i> Règles et Comparaison</h4>
-                            <table class="rules-table">
-                                <thead>
-                                    <tr>
-                                        <th>Aspect</th>
-                                        <th>Wordle</th>
-                                        <th>Letters Cascade</th>
-                                        <th>Différence</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Objectif</strong></td>
-                                        <td>Devinette d'un mot en 6 essais</td>
-                                        <td>Formation de mots multiples</td>
-                                        <td>Plus de flexibilité</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Feedback</strong></td>
-                                        <td>Couleurs (vert/jaune/gris)</td>
-                                        <td>Animation + son</td>
-                                        <td>Plus immersif</td>
-                                    </tr>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Progression</strong></td>
-                                        <td>Quotidienne (1 mot/jour)</td>
-                                        <td>Niveaux continus</td>
-                                        <td>Plus d'engagement</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Interface</strong></td>
-                                        <td>Minimaliste</td>
-                                        <td>Glass-morphism 2D/3D</td>
-                                        <td>Plus moderne</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Wordle Features -->
-                        <div class="game-features-analysis">
-                            <h4><i class="fas fa-star"></i> Points Forts à Adapter</h4>
-                            <div class="features-grid">
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-check-circle"></i> Simplicité</h4>
-                                    <p>Interface épurée et règles claires - Facile à comprendre</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-share-alt"></i> Partage Social</h4>
-                                    <p>Partage viral avec codes couleur - Engagement communautaire</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-calendar"></i> Engagement Quotidien</h4>
-                                    <p>Contenu renouvelé quotidiennement - Habitude de jeu</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-lightbulb"></i> Feedback Immédiat</h4>
-                                    <p>Gratification instantanée - Progression claire</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Scrabble Analysis -->
-                    <div class="game-reference-card">
-                        <div class="game-reference-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Scrabble_logo.svg/1200px-Scrabble_logo.svg.png" alt="Scrabble" class="game-reference-logo">
-                            <div class="game-reference-title">
-                                <h3>
-                                    <i class="fas fa-scrabble"></i>
-                                    <a href="https://en.wikipedia.org/wiki/Scrabble" target="_blank" class="game-reference-link">
-                                        Scrabble - Référence Classique
-                                        <span class="wikipedia-badge">📖 Wikipédia</span>
-                                    </a>
-                                </h3>
-                                <p>Jeu de formation de mots stratégique - Référence historique</p>
-                            </div>
-                        </div>
-
-                        <!-- Scrabble Screenshots -->
-                        <div class="game-screenshots">
-                            <h4><i class="fas fa-images"></i> Captures d'Écran</h4>
-                            <div class="screenshots-grid">
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Scrabble_logo.svg/1200px-Scrabble_logo.svg.png" alt="Scrabble Board">
-                                    <div class="screenshot-caption">Plateau de jeu</div>
-                                </div>
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Scrabble_game_in_progress.jpg/1200px-Scrabble_game_in_progress.jpg" alt="Scrabble Gameplay">
-                                    <div class="screenshot-caption">Partie en cours</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Scrabble Rules Analysis -->
-                        <div class="game-rules-comparison">
-                            <h4><i class="fas fa-list-check"></i> Règles et Comparaison</h4>
-                            <table class="rules-table">
-                                <thead>
-                                    <tr>
-                                        <th>Aspect</th>
-                                        <th>Scrabble</th>
-                                        <th>Letters Cascade</th>
-                                        <th>Différence</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Placement</strong></td>
-                                        <td>Grille 15x15 fixe</td>
-                                        <td>Grille dynamique 2D/3D</td>
-                                        <td>Plus flexible</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Lettres</strong></td>
-                                        <td>Distribution fixe</td>
-                                        <td>Chute aléatoire</td>
-                                        <td>Plus dynamique</td>
-                                    </tr>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Scoring</strong></td>
-                                        <td>Points par lettre</td>
-                                        <td>Combo + bonus</td>
-                                        <td>Plus engageant</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Mode</strong></td>
-                                        <td>Multi-joueurs</td>
-                                        <td>Solo + social</td>
-                                        <td>Plus accessible</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Scrabble Features -->
-                        <div class="game-features-analysis">
-                            <h4><i class="fas fa-star"></i> Points Forts à Adapter</h4>
-                            <div class="features-grid">
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-chess"></i> Stratégie</h4>
-                                    <p>Placement intelligent et planification - Défi intellectuel</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-trophy"></i> Compétition</h4>
-                                    <p>Système de points équilibré - Motivation continue</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-brain"></i> Apprentissage</h4>
-                                    <p>Développement cognitif et linguistique - Valeur éducative</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-users"></i> Social</h4>
-                                    <p>Compétition sociale et partage - Engagement communautaire</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tetris Analysis -->
-                    <div class="game-reference-card">
-                        <div class="game-reference-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Tetris_logo.svg/1200px-Tetris_logo.svg.png" alt="Tetris" class="game-reference-logo">
-                            <div class="game-reference-title">
-                                <h3>
-                                    <i class="fas fa-cubes"></i>
-                                    <a href="https://en.wikipedia.org/wiki/Tetris" target="_blank" class="game-reference-link">
-                                        Tetris - Mécanique de Chute
-                                        <span class="wikipedia-badge">📖 Wikipédia</span>
-                                    </a>
-                                </h3>
-                                <p>Jeu de puzzle avec chute de pièces - Mécanique addictive</p>
-                            </div>
-                        </div>
-
-                        <!-- Tetris Screenshots -->
-                        <div class="game-screenshots">
-                            <h4><i class="fas fa-images"></i> Captures d'Écran</h4>
-                            <div class="screenshots-grid">
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Tetris_logo.svg/1200px-Tetris_logo.svg.png" alt="Tetris Gameplay">
-                                    <div class="screenshot-caption">Gameplay classique</div>
-                                </div>
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Tetris_gameplay.jpg/1200px-Tetris_gameplay.jpg" alt="Tetris Modern">
-                                    <div class="screenshot-caption">Version moderne</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tetris Rules Analysis -->
-                        <div class="game-rules-comparison">
-                            <h4><i class="fas fa-list-check"></i> Règles et Comparaison</h4>
-                            <table class="rules-table">
-                                <thead>
-                                    <tr>
-                                        <th>Aspect</th>
-                                        <th>Tetris</th>
-                                        <th>Letters Cascade</th>
-                                        <th>Différence</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Mécanique</strong></td>
-                                        <td>Chute de pièces</td>
-                                        <td>Chute de lettres</td>
-                                        <td>Concept similaire</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Objectif</strong></td>
-                                        <td>Lignes complètes</td>
-                                        <td>Mots formés</td>
-                                        <td>Plus linguistique</td>
-                                    </tr>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Vitesse</strong></td>
-                                        <td>Augmentation progressive</td>
-                                        <td>Adaptation dynamique</td>
-                                        <td>Plus intelligent</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Feedback</strong></td>
-                                        <td>Lignes qui disparaissent</td>
-                                        <td>Mots qui s'illuminent</td>
-                                        <td>Plus satisfaisant</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Tetris Features -->
-                        <div class="game-features-analysis">
-                            <h4><i class="fas fa-star"></i> Points Forts à Adapter</h4>
-                            <div class="features-grid">
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-arrow-down"></i> Chute Contrôlée</h4>
-                                    <p>Physique réaliste et contrôles fluides - Sensation naturelle</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-chart-line"></i> Progression</h4>
-                                    <p>Difficulté progressive et équilibrée - Engagement long terme</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-eye"></i> Feedback Visuel</h4>
-                                    <p>Gratification immédiate et claire - Satisfaction instantanée</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-cog"></i> Mécanique Simple</h4>
-                                    <p>Règles simples mais profondes - Accessibilité universelle</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Candy Crush Analysis -->
-                    <div class="game-reference-card">
-                        <div class="game-reference-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Candy_Crush_Saga_logo.svg/1200px-Candy_Crush_Saga_logo.svg.png" alt="Candy Crush" class="game-reference-logo">
-                            <div class="game-reference-title">
-                                <h3>
-                                    <i class="fas fa-mobile-alt"></i>
-                                    <a href="https://en.wikipedia.org/wiki/Candy_Crush_Saga" target="_blank" class="game-reference-link">
-                                        Candy Crush - Match-3 Mobile
-                                        <span class="wikipedia-badge">📖 Wikipédia</span>
-                                    </a>
-                                </h3>
-                                <p>Jeu mobile de match-3 - Référence freemium</p>
-                            </div>
-                        </div>
-
-                        <!-- Candy Crush Screenshots -->
-                        <div class="game-screenshots">
-                            <h4><i class="fas fa-images"></i> Captures d'Écran</h4>
-                            <div class="screenshots-grid">
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Candy_Crush_Saga_logo.svg/1200px-Candy_Crush_Saga_logo.svg.png" alt="Candy Crush Interface">
-                                    <div class="screenshot-caption">Interface mobile</div>
-                                </div>
-                                <div class="screenshot-item">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Candy_Crush_gameplay.jpg/1200px-Candy_Crush_gameplay.jpg" alt="Candy Crush Gameplay">
-                                    <div class="screenshot-caption">Gameplay match-3</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Candy Crush Rules Analysis -->
-                        <div class="game-rules-comparison">
-                            <h4><i class="fas fa-list-check"></i> Règles et Comparaison</h4>
-                            <table class="rules-table">
-                                <thead>
-                                    <tr>
-                                        <th>Aspect</th>
-                                        <th>Candy Crush</th>
-                                        <th>Letters Cascade</th>
-                                        <th>Différence</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Interface</strong></td>
-                                        <td>Mobile optimisé</td>
-                                        <td>Responsive 2D/3D</td>
-                                        <td>Plus polyvalent</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Mécanique</strong></td>
-                                        <td>Match-3</td>
-                                        <td>Formation de mots</td>
-                                        <td>Plus éducatif</td>
-                                    </tr>
-                                    <tr class="comparison-highlight">
-                                        <td><strong>Progression</strong></td>
-                                        <td>Niveaux avec objectifs</td>
-                                        <td>Niveaux adaptatifs</td>
-                                        <td>Plus intelligent</td>
-                                    </tr>
-                                    <tr class="comparison-difference">
-                                        <td><strong>Monétisation</strong></td>
-                                        <td>Freemium agressif</td>
-                                        <td>Gratuit + premium</td>
-                                        <td>Plus équilibré</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Candy Crush Features -->
-                        <div class="game-features-analysis">
-                            <h4><i class="fas fa-star"></i> Points Forts à Adapter</h4>
-                            <div class="features-grid">
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-mobile"></i> Mobile First</h4>
-                                    <p>Interface tactile optimisée - Accessibilité mobile</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-target"></i> Objectifs Clairs</h4>
-                                    <p>Progression par niveaux avec buts précis - Motivation continue</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-gift"></i> Récompenses</h4>
-                                    <p>Système de récompenses équilibré - Engagement long terme</p>
-                                </div>
-                                <div class="feature-item">
-                                    <h4><i class="fas fa-users"></i> Social</h4>
-                                    <p>Intégration sociale et compétitive - Communauté active</p>
-                                </div>
-                            </div>
+                <!-- Game References Section -->
+                <div class="concept-section">
+                    <h2>🎮 Références de Jeux</h2>
+                    <div class="concept-content">
+                        <div class="concept-description">
+                            <h3>Inspirations et Influences</h3>
+                            <p>Letters Cascade Challenge s'inspire des meilleurs jeux de puzzle et de mots, combinant leurs mécaniques éprouvées avec des innovations visuelles uniques. Notre étude de marché révèle les tendances actuelles et les opportunités d'innovation.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Market Analysis Logs -->
-                <div class="market-analysis-logs">
-                    <h3><i class="fas fa-terminal"></i> Logs d'Analyse de Marché</h3>
-                    <div class="log-entry log-info">
-                        <strong>[INFO]</strong> 2024-01-15 14:30:00 - Début de l'analyse concurrentielle
+                <!-- Game Analysis Section -->
+                <div class="features-section">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-puzzle-piece"></i> Wordle</h3>
+                        <p>Le phénomène Wordle a révolutionné les jeux de mots avec sa simplicité addictive et ses défis quotidiens. Notre approche s'en inspire tout en ajoutant des mécaniques de placement stratégique.</p>
+                        <ul>
+                            <li><strong>Simplicité :</strong> Interface épurée et accessible</li>
+                            <li><strong>Défis quotidiens :</strong> Contenu renouvelé régulièrement</li>
+                            <li><strong>Partage social :</strong> Comparaison des scores</li>
+                        </ul>
                     </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:32:15 - Wordle analysé : Interface minimaliste, engagement quotidien, partage viral
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-cubes"></i> Tetris</h3>
+                        <p>Le système de chute et de placement de Tetris inspire notre mécanique de cascade de lettres, adaptée pour la formation de mots plutôt que l'empilement de blocs.</p>
+                        <ul>
+                            <li><strong>Mécanique de chute :</strong> Lettres qui tombent du haut</li>
+                            <li><strong>Placement stratégique :</strong> Optimisation de l'espace</li>
+                            <li><strong>Progression :</strong> Difficulté croissante</li>
+                        </ul>
                     </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:35:42 - Scrabble analysé : Stratégie de placement, système de points, compétition sociale
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-scrabble"></i> Scrabble</h3>
+                        <p>Le placement stratégique des lettres et la formation de mots inspirent notre système de grille et de validation, avec une approche moderne et dynamique.</p>
+                        <ul>
+                            <li><strong>Formation de mots :</strong> Validation en temps réel</li>
+                            <li><strong>Placement stratégique :</strong> Optimisation des intersections</li>
+                            <li><strong>Scoring :</strong> Points basés sur la complexité</li>
+                        </ul>
                     </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:38:20 - Tetris analysé : Mécanique de chute, progression équilibrée, feedback immédiat
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-candy-cane"></i> Candy Crush</h3>
+                        <p>Les effets visuels spectaculaires et la progression par niveaux de Candy Crush inspirent notre système de récompenses et d'animations immersives.</p>
+                        <ul>
+                            <li><strong>Effets visuels :</strong> Animations et particules</li>
+                            <li><strong>Progression :</strong> Débloquage de contenus</li>
+                            <li><strong>Engagement :</strong> Mécaniques addictives</li>
+                        </ul>
                     </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:41:05 - Candy Crush analysé : Mobile first, objectifs clairs, monétisation freemium
+                </div>
+
+                <!-- Market Analysis Section -->
+                <div class="concept-section">
+                    <h2>📊 Analyse de Marché</h2>
+                    <div class="concept-content">
+                        <div class="concept-description">
+                            <h3>Tendances Actuelles</h3>
+                            <p>Le marché des jeux de puzzle et de mots connaît une renaissance avec l'arrivée de nouveaux formats hybrides. Les joueurs recherchent des expériences qui combinent simplicité d'accès et profondeur stratégique.</p>
+                            
+                            <h3>Opportunités d'Innovation</h3>
+                            <p>Letters Cascade Challenge se positionne à l'intersection de plusieurs tendances : jeux de mots, puzzle games, et expériences visuelles immersives. Notre approche unique avec les lettres anthropomorphiques crée une identité distinctive.</p>
+                        </div>
                     </div>
-                    <div class="log-entry log-warning">
-                        <strong>[WARNING]</strong> 2024-01-15 14:43:30 - Points d'amélioration identifiés : Interface plus moderne, mécaniques hybrides
+                </div>
+
+                <!-- Visual Development Section -->
+                <div class="features-section">
+                    <div class="feature-card">
+                        <h3><i class="fas fa-palette"></i> Design Visuel</h3>
+                        <p>Notre approche visuelle s'inspire des meilleures pratiques du design de jeux modernes, avec une attention particulière portée à l'accessibilité et à l'engagement émotionnel.</p>
                     </div>
-                    <div class="log-entry log-info">
-                        <strong>[INFO]</strong> 2024-01-15 14:45:15 - Synthèse des forces concurrentielles :
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-users"></i> Expérience Utilisateur</h3>
+                        <p>L'UX design s'appuie sur les principes des jeux mobiles et desktop les plus populaires, garantissant une expérience intuitive et engageante pour tous les types de joueurs.</p>
                     </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:45:20 - ✓ Simplicité d'utilisation (Wordle)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:45:25 - ✓ Stratégie et planification (Scrabble)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:45:30 - ✓ Mécanique de chute fluide (Tetris)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:45:35 - ✓ Interface mobile optimisée (Candy Crush)
-                    </div>
-                    <div class="log-entry log-info">
-                        <strong>[INFO]</strong> 2024-01-15 14:47:00 - Avantages compétitifs Letters Cascade :
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:47:05 - ✓ Mode 2D ET 3D (flexibilité unique)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:47:10 - ✓ Glass-morphism moderne (esthétique distinctive)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:47:15 - ✓ Système de combo avancé (engagement)
-                    </div>
-                    <div class="log-entry log-success">
-                        <strong>[SUCCESS]</strong> 2024-01-15 14:47:20 - ✓ Progression adaptative (IA)
-                    </div>
-                    <div class="log-entry log-info">
-                        <strong>[INFO]</strong> 2024-01-15 14:50:00 - Analyse de marché terminée - Recommandations validées
+                    
+                    <div class="feature-card">
+                        <h3><i class="fas fa-chart-line"></i> Métriques de Performance</h3>
+                        <p>Notre analyse inclut les métriques clés de rétention, d'engagement et de monétisation, alignées sur les standards de l'industrie du gaming.</p>
                     </div>
                 </div>
             </div>
