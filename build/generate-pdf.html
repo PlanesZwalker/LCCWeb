@@ -81,6 +81,52 @@
             animation: spin 1s linear infinite;
         }
 
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #764ba2);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: progressPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .step.active {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        .step.completed {
+            color: #28a745;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -127,6 +173,27 @@
             
             <div class="loading">
                 <i class="fas fa-spinner"></i> Génération en cours...
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="step" id="step1">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Initialisation</span>
+                    </div>
+                    <div class="step" id="step2">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Création contenu</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <i class="fas fa-cog"></i>
+                        <span>Génération PDF</span>
+                    </div>
+                    <div class="step" id="step4">
+                        <i class="fas fa-download"></i>
+                        <span>Téléchargement</span>
+                    </div>
+                </div>
             </div>
             
             <div class="success">
@@ -156,6 +223,7 @@
             const error = document.querySelector('.error');
             const btn = document.querySelector('.generate-btn');
             const debugInfo = document.getElementById('debugInfo');
+            const progressFill = document.getElementById('progressFill');
             
             // Reset UI
             loading.style.display = 'block';
@@ -164,6 +232,10 @@
             btn.style.display = 'none';
             debugInfo.style.display = 'block';
             debugInfo.innerHTML = '<h4>Debug Info:</h4>';
+            
+            // Reset progress
+            progressFill.style.width = '0%';
+            updateProgressStep(1);
             
             showDebugInfo('🚀 Début de la génération PDF...');
             
@@ -178,230 +250,354 @@
             }
             
             showDebugInfo('✅ html2pdf.js chargé avec succès');
+            updateProgress(25);
+            updateProgressStep(2);
             
-            // Create the complete GDD content
-            const gddContent = createCompleteGDDContent();
+            // Create the complete GDD content with enhanced structure
+            const gddContent = createEnhancedGDDContent();
             showDebugInfo('✅ Contenu GDD complet créé');
+            updateProgress(50);
+            updateProgressStep(3);
             
-            // Generate PDF
+            // Generate PDF with enhanced error handling
             generatePDFFromContent(gddContent)
                 .then(() => {
                     showDebugInfo('✅ PDF généré avec succès');
-                    loading.style.display = 'none';
-                    success.style.display = 'block';
-                    btn.style.display = 'inline-flex';
+                    updateProgress(100);
+                    updateProgressStep(4);
+                    
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        success.style.display = 'block';
+                        success.innerHTML = '<i class="fas fa-check-circle"></i> PDF généré avec succès ! <br><small>Le fichier "GameDesignOfLettersCascade.pdf" a été téléchargé.</small>';
+                        btn.style.display = 'inline-flex';
+                    }, 1000);
                 })
                 .catch(err => {
                     console.error('Erreur PDF:', err);
                     showDebugInfo(`❌ ERREUR: ${err.message}`);
                     loading.style.display = 'none';
                     error.style.display = 'block';
-                    error.textContent = `Erreur: ${err.message}`;
+                    error.innerHTML = `<i class="fas fa-exclamation-circle"></i> Erreur lors de la génération<br><small>${err.message}</small>`;
                     btn.style.display = 'inline-flex';
                 });
         }
 
-        function createCompleteGDDContent() {
+        function updateProgress(percentage) {
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = percentage + '%';
+        }
+
+        function updateProgressStep(stepNumber) {
+            // Reset all steps
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.className = 'step';
+                const icon = step.querySelector('i');
+                icon.className = 'fas fa-circle';
+            }
+            
+            // Mark completed steps
+            for (let i = 1; i < stepNumber; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.className = 'step completed';
+                const icon = step.querySelector('i');
+                icon.className = 'fas fa-check-circle';
+            }
+            
+            // Mark current step
+            const currentStep = document.getElementById(`step${stepNumber}`);
+            currentStep.className = 'step active';
+            const icon = currentStep.querySelector('i');
+            icon.className = 'fas fa-spinner fa-spin';
+        }
+
+        function createEnhancedGDDContent() {
             return `
                 <!DOCTYPE html>
                 <html lang="fr">
                 <head>
                     <meta charset="UTF-8">
                     <style>
+                        @page {
+                            margin: 0.5in;
+                            size: A4;
+                        }
+                        
                         body {
-                            font-family: Arial, sans-serif;
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                             line-height: 1.6;
-                            color: #333;
+                            color: #2c3e50;
                             margin: 0;
-                            padding: 20px;
+                            padding: 0;
                             background: white;
-                            font-size: 12px;
+                            font-size: 11px;
                         }
                         
                         .container {
-                            max-width: 800px;
+                            max-width: 100%;
                             margin: 0 auto;
                             background: white;
+                            padding: 0;
                         }
                         
                         .header {
                             text-align: center;
-                            border-bottom: 3px solid #6366f1;
-                            padding-bottom: 20px;
+                            border-bottom: 4px solid #6366f1;
+                            padding: 30px 20px;
                             margin-bottom: 30px;
                             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-                            padding: 20px;
-                            border-radius: 8px;
+                            border-radius: 12px;
+                            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                         }
                         
                         .header h1 {
                             color: #6366f1;
-                            font-size: 28px;
-                            font-weight: bold;
-                            margin: 0 0 10px 0;
+                            font-size: 32px;
+                            font-weight: 900;
+                            margin: 0 0 15px 0;
                             text-transform: uppercase;
-                            letter-spacing: 1px;
+                            letter-spacing: 2px;
+                            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
                         }
                         
                         .header h2 {
                             color: #764ba2;
-                            font-size: 20px;
-                            font-weight: bold;
-                            margin: 0 0 10px 0;
+                            font-size: 24px;
+                            font-weight: 700;
+                            margin: 0 0 15px 0;
                         }
                         
                         .header .version {
-                            color: #666;
+                            color: #6c757d;
                             font-size: 14px;
                             font-style: italic;
+                            background: rgba(255,255,255,0.8);
+                            padding: 8px 16px;
+                            border-radius: 20px;
+                            display: inline-block;
                         }
                         
                         h1, h2, h3 {
                             color: #6366f1;
-                            margin-top: 25px;
+                            margin-top: 30px;
                             margin-bottom: 15px;
                             page-break-after: avoid;
                         }
                         
-                        h1 { font-size: 20px; font-weight: bold; }
-                        h2 { font-size: 18px; font-weight: bold; }
-                        h3 { font-size: 16px; font-weight: bold; }
+                        h1 { 
+                            font-size: 22px; 
+                            font-weight: 800;
+                            border-bottom: 2px solid #6366f1;
+                            padding-bottom: 8px;
+                        }
+                        
+                        h2 { 
+                            font-size: 20px; 
+                            font-weight: 700;
+                            color: #764ba2;
+                        }
+                        
+                        h3 { 
+                            font-size: 16px; 
+                            font-weight: 600;
+                            color: #495057;
+                        }
                         
                         p {
                             margin-bottom: 12px;
                             text-align: justify;
-                            font-size: 12px;
+                            font-size: 11px;
+                            line-height: 1.5;
                         }
                         
                         ul, ol {
-                            margin-bottom: 12px;
+                            margin-bottom: 15px;
                             padding-left: 25px;
                         }
                         
                         li {
                             margin-bottom: 8px;
-                            font-size: 12px;
+                            font-size: 11px;
+                            line-height: 1.4;
                         }
                         
                         .section {
                             background: #f8f9fa;
                             border: 2px solid #e9ecef;
-                            border-radius: 8px;
-                            padding: 20px;
-                            margin-bottom: 20px;
+                            border-radius: 12px;
+                            padding: 25px;
+                            margin-bottom: 25px;
                             page-break-inside: avoid;
-                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+                            position: relative;
+                        }
+                        
+                        .section::before {
+                            content: '';
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            height: 4px;
+                            background: linear-gradient(90deg, #6366f1, #764ba2);
+                            border-radius: 12px 12px 0 0;
                         }
                         
                         .highlight-box {
                             background: linear-gradient(135deg, #667eea, #764ba2);
                             color: white;
-                            padding: 15px;
-                            border-radius: 8px;
-                            margin: 15px 0;
+                            padding: 20px;
+                            border-radius: 12px;
+                            margin: 20px 0;
                             text-align: center;
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
                         }
                         
                         .highlight-box h3 {
                             color: white;
                             margin-top: 0;
+                            font-size: 18px;
                         }
                         
                         .feature-grid {
                             display: grid;
                             grid-template-columns: 1fr 1fr;
                             gap: 15px;
-                            margin: 15px 0;
+                            margin: 20px 0;
                         }
                         
                         .feature-item {
                             background: white;
-                            border: 1px solid #e9ecef;
-                            border-radius: 5px;
-                            padding: 12px;
-                            font-size: 11px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            padding: 15px;
+                            font-size: 10px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            transition: all 0.3s ease;
+                        }
+                        
+                        .feature-item:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
                         }
                         
                         .feature-item h4 {
                             color: #6366f1;
                             margin-top: 0;
-                            font-size: 13px;
-                            font-weight: bold;
+                            font-size: 12px;
+                            font-weight: 700;
                         }
                         
                         .resources-grid {
                             display: grid;
                             grid-template-columns: 1fr 1fr;
                             gap: 15px;
-                            margin: 15px 0;
+                            margin: 20px 0;
                         }
                         
                         .resource-card {
                             background: white;
-                            border: 1px solid #e9ecef;
-                            border-radius: 5px;
-                            padding: 12px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            padding: 15px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                         }
                         
                         .resource-card h3 {
                             color: #6366f1;
                             margin-top: 0;
-                            font-size: 13px;
+                            font-size: 12px;
+                            font-weight: 700;
                         }
                         
                         .resource-card p {
-                            margin-bottom: 10px;
-                            font-size: 11px;
+                            margin-bottom: 12px;
+                            font-size: 10px;
                         }
                         
                         .resource-links {
                             display: flex;
                             flex-direction: column;
-                            gap: 5px;
+                            gap: 6px;
                         }
                         
                         .resource-link {
                             display: block;
-                            padding: 6px 8px;
+                            padding: 8px 10px;
                             background: #f1f3f4;
-                            border-radius: 3px;
-                            margin-bottom: 5px;
+                            border-radius: 6px;
+                            margin-bottom: 6px;
                             text-decoration: none;
                             color: #6366f1;
-                            font-weight: bold;
-                            font-size: 10px;
+                            font-weight: 600;
+                            font-size: 9px;
+                            border-left: 3px solid #6366f1;
                         }
                         
                         .tech-specs {
-                            background: #e3f2fd;
-                            border-left: 4px solid #2196f3;
-                            padding: 15px;
-                            margin: 15px 0;
-                            border-radius: 5px;
+                            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                            border-left: 5px solid #2196f3;
+                            padding: 20px;
+                            margin: 25px 0;
+                            border-radius: 8px;
+                            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
                         }
                         
                         .tech-specs h3 {
                             color: #1976d2;
                             margin-top: 0;
+                            font-size: 16px;
+                            font-weight: 700;
+                        }
+                        
+                        .stats-grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 15px;
+                            margin: 20px 0;
+                        }
+                        
+                        .stat-item {
+                            background: white;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            padding: 15px;
+                            text-align: center;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        }
+                        
+                        .stat-number {
+                            font-size: 24px;
+                            font-weight: 900;
+                            color: #6366f1;
+                            margin-bottom: 5px;
+                        }
+                        
+                        .stat-label {
+                            font-size: 10px;
+                            color: #6c757d;
+                            font-weight: 600;
                         }
                         
                         @media print {
                             body { margin: 0; }
                             .container { max-width: none; }
                             .section { page-break-inside: avoid; }
+                            .header { page-break-after: avoid; }
                         }
                     </style>
                 </head>
                 <body>
                     <div class="container">
                         <div class="header">
-                            <h1>Game Design Document</h1>
+                            <h1>🎮 Game Design Document</h1>
                             <h2>Letters Cascade Challenge</h2>
-                            <p class="version">Version 1.0 | Date: Juillet 2025 | Développé par Anne</p>
+                            <p class="version">Version 2.0 | Date: ${new Date().toLocaleDateString('fr-FR')} | Développé par Anne</p>
                         </div>
                         
                         <div class="highlight-box">
-                            <h3>🎮 Concept Innovant</h3>
+                            <h3>🚀 Concept Innovant</h3>
                             <p>Letters Cascade Challenge révolutionne les jeux de mots en combinant la formation de mots avec des mécaniques de chute inspirées de Tetris, créant une expérience unique et addictive.</p>
                         </div>
                         
@@ -552,11 +748,24 @@
                         
                         <div class="section">
                             <h2>📊 Statistiques du Projet</h2>
-                            <p><strong>📁 Fichiers créés :</strong> 15+ fichiers HTML, CSS, et JavaScript</p>
-                            <p><strong>🎮 Versions développées :</strong> 2D et 3D complètes</p>
-                            <p><strong>📝 Documentation :</strong> GDD complet avec analyse de marché</p>
-                            <p><strong>🎨 Assets visuels :</strong> Moodboard et concepts détaillés</p>
-                            <p><strong>⚡ Performance :</strong> Optimisé pour tous les appareils</p>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-number">15+</div>
+                                    <div class="stat-label">Fichiers créés</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">2</div>
+                                    <div class="stat-label">Versions développées</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">100%</div>
+                                    <div class="stat-label">Responsive design</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">3D</div>
+                                    <div class="stat-label">Technologies avancées</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </body>
@@ -568,61 +777,62 @@
             return new Promise((resolve, reject) => {
                 try {
                     showDebugInfo('🔧 Création de l\'élément temporaire...');
-                    
-                    // Create temporary element with better structure
+
+                    // Create a visible, off-screen element for html2pdf
                     const element = document.createElement('div');
                     element.innerHTML = pdfContent;
-                    element.style.position = 'absolute';
-                    element.style.left = '-9999px';
+                    element.style.position = 'fixed'; // Use fixed so it's always rendered
+                    element.style.left = '0';
                     element.style.top = '0';
                     element.style.width = '800px';
+                    element.style.height = 'auto';
                     element.style.background = 'white';
                     element.style.padding = '20px';
                     element.style.fontFamily = 'Arial, sans-serif';
                     element.style.fontSize = '12px';
                     element.style.lineHeight = '1.6';
                     element.style.color = '#333';
-                    
-                    // Ensure the element is properly rendered
+                    element.style.zIndex = '9999';
+                    element.style.opacity = '1';
                     element.style.display = 'block';
                     element.style.visibility = 'visible';
-                    element.style.opacity = '1';
-                    
+                    element.style.overflow = 'visible';
+
                     document.body.appendChild(element);
-                    
+
                     showDebugInfo('✅ Élément temporaire créé');
-                    
+
                     // Wait a bit for the element to be properly rendered
                     setTimeout(() => {
                         // Configure PDF options - Optimized for content rendering
                         const options = {
                             margin: [0.5, 0.5, 0.5, 0.5],
                             filename: 'GameDesignOfLettersCascade.pdf',
-                            image: { type: 'jpeg', quality: 0.9 },
-                            html2canvas: { 
+                            image: { type: 'jpeg', quality: 0.98 },
+                            html2canvas: {
                                 scale: 2, // Higher scale for better quality
                                 useCORS: true,
                                 allowTaint: true,
                                 backgroundColor: '#ffffff',
                                 logging: false,
                                 width: 800,
-                                height: undefined,
+                                height: element.offsetHeight,
                                 scrollX: 0,
                                 scrollY: 0,
                                 windowWidth: 800,
-                                windowHeight: 1200
+                                windowHeight: element.offsetHeight + 100
                             },
-                            jsPDF: { 
-                                unit: 'in', 
-                                format: 'a4', 
+                            jsPDF: {
+                                unit: 'in',
+                                format: 'a4',
                                 orientation: 'portrait',
                                 compress: true,
                                 precision: 16
                             }
                         };
-                        
+
                         showDebugInfo('⚙️ Configuration PDF définie');
-                        
+
                         // Generate PDF with better error handling
                         html2pdf()
                             .set(options)
@@ -640,8 +850,8 @@
                                 }
                                 reject(err);
                             });
-                    }, 100); // Small delay to ensure rendering
-                        
+                    }, 200); // Slightly longer delay to ensure rendering
+
                 } catch (err) {
                     showDebugInfo(`❌ Erreur lors de la création: ${err.message}`);
                     reject(err);
