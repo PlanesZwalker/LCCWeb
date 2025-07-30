@@ -488,6 +488,7 @@
                 this.wordsFound = [];
                 this.targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
                 this.fallingLetter = null;
+                this.fallingLetterPosition = { row: 0, col: 0 };
                 this.fallSpeed = 1000;
                 this.fallTimer = null;
                 
@@ -1127,7 +1128,9 @@
                 this.combo = 0;
                 this.maxCombo = 0;
                 this.wordsFound = [];
-                this.fallSpeed = 1000;
+                this.letters = [];
+                this.letterQueue = [];
+                this.fallingLetter = null;
                 
                 this.clear3DGrid();
                 this.generateLetterQueue();
@@ -1135,6 +1138,82 @@
                 
                 this.audioManager.playReset();
                 console.log('✅ 3D game reset');
+            }
+            
+            // Add missing falling letter control methods
+            moveFallingLetter(direction) {
+                console.log('⬅️➡️ moveFallingLetter() called - direction:', direction);
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot move falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Calculate new position
+                const newCol = this.fallingLetterPosition.col + direction;
+                
+                // Check bounds
+                if (newCol < 0 || newCol >= this.currentGridSize) {
+                    console.log('❌ Cannot move - out of bounds');
+                    return;
+                }
+                
+                // Check if target position is occupied
+                if (this.grid[this.fallingLetterPosition.row][newCol].userData.occupied) {
+                    console.log('❌ Cannot move - target position occupied');
+                    return;
+                }
+                
+                // Update position
+                this.fallingLetterPosition.col = newCol;
+                
+                // Update 3D position
+                this.fallingLetter.position.x = (newCol - this.currentGridSize / 2 + 0.5) * this.cellSize;
+                
+                console.log('✅ Falling letter moved to column:', newCol);
+            }
+            
+            dropFallingLetter() {
+                console.log('⬇️ dropFallingLetter() called');
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot drop falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Find the lowest available position
+                let targetRow = this.fallingLetterPosition.row;
+                
+                for (let row = this.fallingLetterPosition.row + 1; row < this.currentGridSize; row++) {
+                    if (this.grid[row][this.fallingLetterPosition.col].userData.occupied) {
+                        break;
+                    }
+                    targetRow = row;
+                }
+                
+                // Place the letter at the target position
+                this.placeLetter3D(targetRow, this.fallingLetterPosition.col);
+                
+                console.log('✅ Falling letter dropped at row:', targetRow);
+            }
+            
+            rotateFallingLetter() {
+                console.log('🔄 rotateFallingLetter() called');
+                
+                if (!this.gameRunning || this.paused || !this.fallingLetter) {
+                    console.log('❌ Cannot rotate falling letter - game not running, paused, or no falling letter');
+                    return;
+                }
+                
+                // Rotate the letter 90 degrees around Y axis
+                this.fallingLetter.rotation.y += Math.PI / 2;
+                
+                console.log('✅ Falling letter rotated');
+            }
+            
+            togglePause() {
+                console.log('⏸️ togglePause() called');
+                this.pauseGame();
             }
             
             clear3DGrid() {
