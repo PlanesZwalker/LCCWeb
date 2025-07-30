@@ -388,6 +388,29 @@
         .reference-card {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* New styles for game reference links */
+        .game-reference-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .game-reference-link:hover {
+            text-decoration: underline;
+        }
+
+        .wikipedia-badge {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
@@ -434,7 +457,13 @@
                         <h2><i class="fas fa-chess"></i> 📊 Analyse Concurrentielle</h2>
                         <!-- Wordle Reference -->
                         <div class="reference-card">
-                            <h4><i class="fas fa-wordpress"></i> Wordle - Leader du Marché</h4>
+                            <h4>
+                                <i class="fas fa-wordpress"></i> 
+                                <a href="https://en.wikipedia.org/wiki/Wordle" target="_blank" class="game-reference-link">
+                                    Wordle - Leader du Marché
+                                    <span class="wikipedia-badge">📖 Wikipédia</span>
+                                </a>
+                            </h4>
                             <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2NjdlZWE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6Izc2NGJhMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5Xb3JkbGU8L3RleHQ+Cjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJub3JtYWwiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+R2FtZSBTY3JlZW5zaG90PC90ZXh0Pgo8L3N2Zz4K" alt="Wordle Game Screenshot">
                             <p><strong>Succès phénoménal :</strong> Interface épurée et minimaliste, feedback visuel clair et immédiat, progression quotidienne avec engagement régulier, partage social viral avec codes couleur.</p>
                             <ul>
@@ -446,7 +475,13 @@
                         </div>
                         <!-- Scrabble Reference -->
                         <div class="reference-card">
-                            <h4><i class="fas fa-scrabble"></i> Scrabble - Référence Classique</h4>
+                            <h4>
+                                <i class="fas fa-scrabble"></i> 
+                                <a href="https://en.wikipedia.org/wiki/Scrabble" target="_blank" class="game-reference-link">
+                                    Scrabble - Référence Classique
+                                    <span class="wikipedia-badge">📖 Wikipédia</span>
+                                </a>
+                            </h4>
                             <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM3NjRiYTI7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzVhMzU5YztzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5TY3JhYmJsZTwvdGV4dD4KPHRleHQgeD0iNTAlIiB5PSI2MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9Im5vcm1hbCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5HYW1lIFNjcmVlbnNob3Q8L3RleHQ+Cjwvc3ZnPgo=" alt="Scrabble Game Screenshot">
                             <p><strong>Succès durable :</strong> Formation de mots stratégique avec placement intelligent, grille classique et familière, lettres colorées et distinctives, système de points compétitif et engageant.</p>
                             <ul>
@@ -462,7 +497,13 @@
                         <h2><i class="fas fa-gamepad"></i> 🎮 Références de Jeux Supplémentaires</h2>
                         <!-- Tetris Reference -->
                         <div class="reference-card">
-                            <h4><i class="fas fa-cubes"></i> Tetris - Mécanique de Chute</h4>
+                            <h4>
+                                <i class="fas fa-cubes"></i> 
+                                <a href="https://en.wikipedia.org/wiki/Tetris" target="_blank" class="game-reference-link">
+                                    Tetris - Mécanique de Chute
+                                    <span class="wikipedia-badge">📖 Wikipédia</span>
+                                </a>
+                            </h4>
                             <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM0Y2FmNTA7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzQ1YTI4NTtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UZXRyaXM8L3RleHQ+Cjx0ZXh0IHg9IjUwJSIgeT0iNjAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJub3JtYWwiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+R2FtZSBTY3JlZW5zaG90PC90ZXh0Pgo8L3N2Zz4K" alt="Tetris Game Screenshot">
                             <p><strong>Inspiration mécanique :</strong> Mécanique de chute de pièces contrôlée et fluide, placement stratégique avec anticipation, progression de difficulté progressive et équilibrée.</p>
                             <ul>
@@ -474,7 +515,13 @@
                         </div>
                         <!-- Candy Crush Reference -->
                         <div class="reference-card">
-                            <h4><i class="fas fa-candy-cane"></i> Candy Crush - Match-3 Mobile</h4>
+                            <h4>
+                                <i class="fas fa-candy-cane"></i> 
+                                <a href="https://en.wikipedia.org/wiki/Candy_Crush_Saga" target="_blank" class="game-reference-link">
+                                    Candy Crush - Match-3 Mobile
+                                    <span class="wikipedia-badge">📖 Wikipédia</span>
+                                </a>
+                            </h4>
                             <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDQwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50KSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNmZjk4MDA7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2Y1N2MxMjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCUiIHk9IjQwJSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMyIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DYW5keSBDcnVzaDwvdGV4dD4KPHRleHQgeD0iNTAlIiB5PSI2MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9Im5vcm1hbCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5TY3JlZW5zaG90PC90ZXh0Pgo8L3N2Zz4K" alt="Candy Crush Screenshot">
                             <p><strong>Référence mobile :</strong> Interface mobile optimisée et intuitive, progression par niveaux avec objectifs clairs, monétisation freemium équilibrée, engagement social et compétitif.</p>
                             <ul>

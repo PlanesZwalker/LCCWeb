@@ -903,6 +903,46 @@
             line-height: 1.5;
         }
 
+        .tech-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .tech-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .official-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: var(--spacing-sm);
+            transition: all 0.3s ease;
+        }
+
+        .tech-link:hover .official-logo {
+            transform: scale(1.1);
+        }
+
+        .wikipedia-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: var(--spacing-sm);
+            transition: all 0.3s ease;
+        }
+
+        .tech-link:hover .wikipedia-link {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            transform: scale(1.05);
+        }
+
         /* Enhanced Navigation Sidebar */
         .sidebar {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
@@ -1211,19 +1251,28 @@
                     <h2>🚀 Technologies Utilisées</h2>
                     <div class="tech-grid">
                         <div class="tech-card">
-                            <img src="images/unreal-engine-logo.svg" alt="Unreal Engine 5.6">
-                            <h3>Unreal Engine 5.6</h3>
-                            <p>Moteur de jeu 3D avancé avec graphismes immersifs et physique réaliste</p>
+                            <a href="https://en.wikipedia.org/wiki/Unreal_Engine" target="_blank" class="tech-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Unreal_Engine_logo.svg" alt="Unreal Engine 5.6" class="official-logo">
+                                <h3>Unreal Engine 5.6</h3>
+                                <p>Moteur de jeu 3D avancé avec graphismes immersifs et physique réaliste</p>
+                                <span class="wikipedia-link">📖 Wikipédia</span>
+                            </a>
                         </div>
                         <div class="tech-card">
-                            <img src="images/c++-logo.svg" alt="C++ & Blueprints">
-                            <h3>C++ & Blueprints</h3>
-                            <p>Programmation performante et logique visuelle pour des mécaniques de jeu complexes</p>
+                            <a href="https://en.wikipedia.org/wiki/C%2B%2B" target="_blank" class="tech-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" alt="C++ & Blueprints" class="official-logo">
+                                <h3>C++ & Blueprints</h3>
+                                <p>Programmation performante et logique visuelle pour des mécaniques de jeu complexes</p>
+                                <span class="wikipedia-link">📖 Wikipédia</span>
+                            </a>
                         </div>
                         <div class="tech-card">
-                            <img src="images/blender-logo.svg" alt="Blender">
-                            <h3>Blender</h3>
-                            <p>Création de modèles 3D et animations pour les personnages et environnements</p>
+                            <a href="https://en.wikipedia.org/wiki/Blender_(software)" target="_blank" class="tech-link">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg" alt="Blender" class="official-logo">
+                                <h3>Blender</h3>
+                                <p>Création de modèles 3D et animations pour les personnages et environnements</p>
+                                <span class="wikipedia-link">📖 Wikipédia</span>
+                            </a>
                         </div>
                     </div>
                 </div>
