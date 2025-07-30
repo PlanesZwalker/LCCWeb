@@ -226,72 +226,106 @@
                         
                         .header {
                             text-align: center;
-                            border-bottom: 2px solid #6366f1;
+                            border-bottom: 3px solid #6366f1;
                             padding-bottom: 20px;
                             margin-bottom: 30px;
+                            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+                            padding: 20px;
+                            border-radius: 8px;
                         }
                         
                         .header h1 {
                             color: #6366f1;
-                            font-size: 24px;
+                            font-size: 28px;
                             font-weight: bold;
                             margin: 0 0 10px 0;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
                         }
                         
                         .header h2 {
                             color: #764ba2;
-                            font-size: 18px;
+                            font-size: 20px;
                             font-weight: bold;
                             margin: 0 0 10px 0;
                         }
                         
                         .header .version {
                             color: #666;
-                            font-size: 12px;
+                            font-size: 14px;
+                            font-style: italic;
                         }
                         
                         h1, h2, h3 {
                             color: #6366f1;
                             margin-top: 25px;
-                            margin-bottom: 10px;
+                            margin-bottom: 15px;
                             page-break-after: avoid;
                         }
                         
-                        h1 { font-size: 18px; font-weight: bold; }
-                        h2 { font-size: 16px; font-weight: bold; }
-                        h3 { font-size: 14px; font-weight: bold; }
+                        h1 { font-size: 20px; font-weight: bold; }
+                        h2 { font-size: 18px; font-weight: bold; }
+                        h3 { font-size: 16px; font-weight: bold; }
                         
                         p {
-                            margin-bottom: 10px;
+                            margin-bottom: 12px;
                             text-align: justify;
+                            font-size: 12px;
                         }
                         
                         ul, ol {
-                            margin-bottom: 10px;
-                            padding-left: 20px;
+                            margin-bottom: 12px;
+                            padding-left: 25px;
                         }
                         
                         li {
-                            margin-bottom: 5px;
+                            margin-bottom: 8px;
+                            font-size: 12px;
                         }
                         
                         .section {
                             background: #f8f9fa;
-                            border: 1px solid #e9ecef;
-                            border-radius: 5px;
-                            padding: 15px;
-                            margin-bottom: 15px;
+                            border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            padding: 20px;
+                            margin-bottom: 20px;
                             page-break-inside: avoid;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                         }
                         
-                        .resource-link {
-                            display: block;
-                            padding: 8px;
-                            background: #f1f3f4;
-                            border-radius: 3px;
-                            margin-bottom: 8px;
-                            text-decoration: none;
+                        .highlight-box {
+                            background: linear-gradient(135deg, #667eea, #764ba2);
+                            color: white;
+                            padding: 15px;
+                            border-radius: 8px;
+                            margin: 15px 0;
+                            text-align: center;
+                        }
+                        
+                        .highlight-box h3 {
+                            color: white;
+                            margin-top: 0;
+                        }
+                        
+                        .feature-grid {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 15px;
+                            margin: 15px 0;
+                        }
+                        
+                        .feature-item {
+                            background: white;
+                            border: 1px solid #e9ecef;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 11px;
+                        }
+                        
+                        .feature-item h4 {
                             color: #6366f1;
+                            margin-top: 0;
+                            font-size: 13px;
                             font-weight: bold;
                         }
                         
@@ -303,21 +337,21 @@
                         }
                         
                         .resource-card {
-                            background: #f8f9fa;
+                            background: white;
                             border: 1px solid #e9ecef;
                             border-radius: 5px;
-                            padding: 10px;
+                            padding: 12px;
                         }
                         
                         .resource-card h3 {
                             color: #6366f1;
                             margin-top: 0;
-                            font-size: 12px;
+                            font-size: 13px;
                         }
                         
                         .resource-card p {
                             margin-bottom: 10px;
-                            font-size: 10px;
+                            font-size: 11px;
                         }
                         
                         .resource-links {
@@ -326,9 +360,35 @@
                             gap: 5px;
                         }
                         
+                        .resource-link {
+                            display: block;
+                            padding: 6px 8px;
+                            background: #f1f3f4;
+                            border-radius: 3px;
+                            margin-bottom: 5px;
+                            text-decoration: none;
+                            color: #6366f1;
+                            font-weight: bold;
+                            font-size: 10px;
+                        }
+                        
+                        .tech-specs {
+                            background: #e3f2fd;
+                            border-left: 4px solid #2196f3;
+                            padding: 15px;
+                            margin: 15px 0;
+                            border-radius: 5px;
+                        }
+                        
+                        .tech-specs h3 {
+                            color: #1976d2;
+                            margin-top: 0;
+                        }
+                        
                         @media print {
                             body { margin: 0; }
                             .container { max-width: none; }
+                            .section { page-break-inside: avoid; }
                         }
                     </style>
                 </head>
@@ -337,89 +397,119 @@
                         <div class="header">
                             <h1>Game Design Document</h1>
                             <h2>Letters Cascade Challenge</h2>
-                            <p class="version">Version 1.0 | Date: Juillet 2025</p>
+                            <p class="version">Version 1.0 | Date: Juillet 2025 | Développé par Anne</p>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <h3>🎮 Concept Innovant</h3>
+                            <p>Letters Cascade Challenge révolutionne les jeux de mots en combinant la formation de mots avec des mécaniques de chute inspirées de Tetris, créant une expérience unique et addictive.</p>
                         </div>
                         
                         <div class="section">
-                            <h2>Concept du Jeu</h2>
+                            <h2>📋 Concept du Jeu</h2>
                             <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui combine la formation de mots avec des mécaniques de chute inspirées de Tetris. Les lettres tombent du haut de l'écran et vous devez les placer stratégiquement pour former des mots français valides.</p>
                             
-                            <h3>Caractéristiques Principales</h3>
-                            <ul>
-                                <li><strong>Liste de Mots Prédéfinie :</strong> Formez des mots spécifiques de la liste du niveau</li>
-                                <li><strong>Système de Chute :</strong> Les lettres tombent comme dans Tetris</li>
-                                <li><strong>Scoring Avancé :</strong> Points basés sur la longueur des mots</li>
-                                <li><strong>Système de Combo :</strong> Multipliez vos points avec des enchaînements</li>
-                                <li><strong>Progression par Niveaux :</strong> Débloquez de nouveaux défis</li>
-                                <li><strong>Effets Visuels :</strong> Spectaculaires animations et particules</li>
-                            </ul>
+                            <h3>🎯 Caractéristiques Principales</h3>
+                            <div class="feature-grid">
+                                <div class="feature-item">
+                                    <h4>📝 Liste de Mots Prédéfinie</h4>
+                                    <p>Formez des mots spécifiques de la liste du niveau avec validation automatique</p>
+                                </div>
+                                <div class="feature-item">
+                                    <h4>⬇️ Système de Chute</h4>
+                                    <p>Les lettres tombent comme dans Tetris avec physique réaliste</p>
+                                </div>
+                                <div class="feature-item">
+                                    <h4>🏆 Scoring Avancé</h4>
+                                    <p>Points basés sur la longueur des mots et complexité</p>
+                                </div>
+                                <div class="feature-item">
+                                    <h4>⚡ Système de Combo</h4>
+                                    <p>Multipliez vos points avec des enchaînements rapides</p>
+                                </div>
+                                <div class="feature-item">
+                                    <h4>📈 Progression par Niveaux</h4>
+                                    <p>Débloquez de nouveaux défis et contenus</p>
+                                </div>
+                                <div class="feature-item">
+                                    <h4>✨ Effets Visuels</h4>
+                                    <p>Spectaculaires animations et particules immersives</p>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="section">
-                            <h2>Mécaniques de Jeu</h2>
+                            <h2>🎮 Mécaniques de Jeu</h2>
                             
-                            <h3>Formation de Mots</h3>
-                            <p>L'objectif principal est de former des mots français valides à partir des lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Le système reconnaît automatiquement les mots formés et les valide.</p>
+                            <h3>📝 Formation de Mots</h3>
+                            <p>L'objectif principal est de former des mots français valides à partir des lettres qui tombent. Plus les mots sont longs, plus vous gagnez de points. Le système reconnaît automatiquement les mots formés et les valide en temps réel.</p>
                             
-                            <h3>Système de Combo</h3>
-                            <p>Enchaînez rapidement les mots pour créer des combos et multiplier vos scores. Plus vous formez de mots rapidement, plus le multiplicateur de combo augmente.</p>
+                            <h3>⚡ Système de Combo</h3>
+                            <p>Enchaînez rapidement les mots pour créer des combos et multiplier vos scores. Plus vous formez de mots rapidement, plus le multiplicateur de combo augmente, créant une dynamique de jeu addictive.</p>
                             
-                            <h3>Progression</h3>
-                            <p>Le jeu propose une progression par niveaux avec des objectifs de score à atteindre pour débloquer de nouveaux défis et contenus.</p>
+                            <h3>📈 Progression</h3>
+                            <p>Le jeu propose une progression par niveaux avec des objectifs de score à atteindre pour débloquer de nouveaux défis, environnements et contenus. Chaque niveau présente des défis uniques.</p>
+                            
+                            <h3>🎯 Système de Scoring</h3>
+                            <p>Points basés sur la longueur des mots, complexité, et rapidité de formation. Bonus pour les combos et les mots rares. Système de high scores et classements.</p>
                         </div>
 
                         <div class="section">
-                            <h2>Design Visuel</h2>
+                            <h2>🎨 Design Visuel</h2>
                             
-                            <h3>Personnages Lettres</h3>
-                            <p>Chaque lettre est un personnage unique avec sa propre personnalité et design. Les lettres sont anthropomorphisées avec des bras, jambes et expressions faciales.</p>
+                            <h3>👥 Personnages Lettres</h3>
+                            <p>Chaque lettre est un personnage unique avec sa propre personnalité et design. Les lettres sont anthropomorphisées avec des bras, jambes et expressions faciales distinctives qui reflètent leur caractère.</p>
                             
-                            <h3>Environnements</h3>
-                            <p>Le jeu se déroule dans des environnements variés et thématiques, de la forêt mystique aux paysages urbains modernes.</p>
+                            <h3>🌍 Environnements</h3>
+                            <p>Le jeu se déroule dans des environnements variés et thématiques, de la forêt mystique aux paysages urbains modernes. Chaque environnement influence l'ambiance et les effets visuels.</p>
                             
-                            <h3>Effets Visuels</h3>
-                            <p>Animations fluides, particules dynamiques et effets de lumière pour une expérience visuelle immersive.</p>
+                            <h3>✨ Effets Visuels</h3>
+                            <p>Animations fluides, particules dynamiques et effets de lumière pour une expérience visuelle immersive. Système de particules avancé pour les récompenses et combos.</p>
                         </div>
 
                         <div class="section">
-                            <h2>Versions Disponibles</h2>
+                            <h2>🖥️ Versions Disponibles</h2>
                             
-                            <h3>Version 2D</h3>
-                            <p>Version classique optimisée pour tous les appareils avec une interface simple et intuitive.</p>
+                            <h3>📱 Version 2D</h3>
+                            <p>Version classique optimisée pour tous les appareils avec une interface simple et intuitive. Parfaite pour les joueurs débutants et les sessions rapides.</p>
                             
-                            <h3>Version 3D</h3>
-                            <p>Version immersive avec environnement 3D complet et navigation avancée pour une expérience plus riche.</p>
+                            <h3>🎮 Version 3D</h3>
+                            <p>Version immersive avec environnement 3D complet et navigation avancée pour une expérience plus riche. Utilise Three.js pour des graphismes 3D spectaculaires.</p>
                         </div>
 
                         <div class="section">
-                            <h2>Améliorations Futures</h2>
+                            <h2>🚀 Améliorations Futures</h2>
                             
-                            <h3>Support Multilangue</h3>
-                            <p>Extension du jeu à d'autres langues avec des dictionnaires spécialisés et adaptations culturelles.</p>
+                            <h3>🌍 Support Multilangue</h3>
+                            <p>Extension du jeu à d'autres langues avec des dictionnaires spécialisés et adaptations culturelles pour un marché international.</p>
                             
-                            <h3>Skins et Environnements</h3>
-                            <p>Nouveaux modèles de lettres, environnements thématiques et effets visuels personnalisés.</p>
+                            <h3>🎨 Skins et Environnements</h3>
+                            <p>Nouveaux modèles de lettres, environnements thématiques et effets visuels personnalisés pour enrichir l'expérience.</p>
                             
-                            <h3>Mode Éducatif</h3>
-                            <p>Définitions débloquables, niveaux thématiques et système d'apprentissage du vocabulaire.</p>
+                            <h3>📚 Mode Éducatif</h3>
+                            <p>Définitions débloquables, niveaux thématiques et système d'apprentissage du vocabulaire pour un aspect éducatif.</p>
+                            
+                            <h3>👥 Mode Multijoueur</h3>
+                            <p>Compétition en temps réel, défis entre amis et classements mondiaux pour une dimension sociale.</p>
                         </div>
 
                         <div class="section">
-                            <h2>Ressources Produites</h2>
-                            <p>Accès direct à tous les documents, prototypes et ressources créés pour le projet</p>
+                            <h2>📁 Ressources Produites</h2>
+                            <p>Accès direct à tous les documents, prototypes et ressources créés pour le projet Letters Cascade Challenge</p>
                             
                             <div class="resources-grid">
                                 <div class="resource-card">
-                                    <h3>Jeux et Prototypes</h3>
+                                    <h3>🎮 Jeux et Prototypes</h3>
                                     <p>Versions jouables et démonstrations interactives</p>
                                     <div class="resource-links">
                                         <div class="resource-link">Maquette 2D (Version Jouable)</div>
                                         <div class="resource-link">Démo 3D (Grille Interactive)</div>
+                                        <div class="resource-link">Prototype Fullscreen</div>
                                     </div>
                                 </div>
                                 
                                 <div class="resource-card">
-                                    <h3>Design et Art</h3>
+                                    <h3>🎨 Design et Art</h3>
                                     <p>Moodboards, concepts visuels et références artistiques</p>
                                     <div class="resource-links">
                                         <div class="resource-link">Moodboard Complet</div>
@@ -430,30 +520,43 @@
                                 </div>
                                 
                                 <div class="resource-card">
-                                    <h3>Navigation</h3>
+                                    <h3>🗺️ Navigation</h3>
                                     <p>Plan du site et structure du projet</p>
                                     <div class="resource-links">
                                         <div class="resource-link">Plan de Site Complet</div>
                                         <div class="resource-link">Page d'Accueil</div>
+                                        <div class="resource-link">Sitemap Interactif</div>
                                     </div>
                                 </div>
                                 
                                 <div class="resource-card">
-                                    <h3>Documentation Technique</h3>
+                                    <h3>📋 Documentation Technique</h3>
                                     <p>Spécifications techniques et guides de développement</p>
                                     <div class="resource-links">
                                         <div class="resource-link">CSS Partagé</div>
                                         <div class="resource-link">Utilitaires JavaScript</div>
+                                        <div class="resource-link">Spécifications Techniques</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="tech-specs">
+                            <h3>⚙️ Informations Techniques</h3>
+                            <p><strong>🛠️ Développé avec :</strong> HTML5, CSS3, JavaScript, Three.js</p>
+                            <p><strong>🌐 Compatibilité :</strong> Tous les navigateurs modernes (Chrome, Firefox, Safari, Edge)</p>
+                            <p><strong>⚡ Performance :</strong> Optimisé pour mobile et desktop avec rendu adaptatif</p>
+                            <p><strong>📱 Responsive :</strong> Interface adaptative pour tous les écrans</p>
+                            <p><strong>🎨 Design :</strong> Glass morphism moderne avec effets visuels avancés</p>
+                        </div>
+                        
                         <div class="section">
-                            <h2>Informations Techniques</h2>
-                            <p><strong>Développé avec :</strong> HTML5, CSS3, JavaScript, Three.js</p>
-                            <p><strong>Compatibilité :</strong> Tous les navigateurs modernes</p>
-                            <p><strong>Performance :</strong> Optimisé pour mobile et desktop</p>
+                            <h2>📊 Statistiques du Projet</h2>
+                            <p><strong>📁 Fichiers créés :</strong> 15+ fichiers HTML, CSS, et JavaScript</p>
+                            <p><strong>🎮 Versions développées :</strong> 2D et 3D complètes</p>
+                            <p><strong>📝 Documentation :</strong> GDD complet avec analyse de marché</p>
+                            <p><strong>🎨 Assets visuels :</strong> Moodboard et concepts détaillés</p>
+                            <p><strong>⚡ Performance :</strong> Optimisé pour tous les appareils</p>
                         </div>
                     </div>
                 </body>
@@ -466,7 +569,7 @@
                 try {
                     showDebugInfo('🔧 Création de l\'élément temporaire...');
                     
-                    // Create temporary element
+                    // Create temporary element with better structure
                     const element = document.createElement('div');
                     element.innerHTML = pdfContent;
                     element.style.position = 'absolute';
@@ -474,50 +577,70 @@
                     element.style.top = '0';
                     element.style.width = '800px';
                     element.style.background = 'white';
+                    element.style.padding = '20px';
+                    element.style.fontFamily = 'Arial, sans-serif';
+                    element.style.fontSize = '12px';
+                    element.style.lineHeight = '1.6';
+                    element.style.color = '#333';
+                    
+                    // Ensure the element is properly rendered
+                    element.style.display = 'block';
+                    element.style.visibility = 'visible';
+                    element.style.opacity = '1';
+                    
                     document.body.appendChild(element);
                     
                     showDebugInfo('✅ Élément temporaire créé');
                     
-                    // Configure PDF options - Simplified for better compatibility
-                    const options = {
-                        margin: [0.5, 0.5, 0.5, 0.5],
-                        filename: 'GameDesignOfLettersCascade.pdf',
-                        image: { type: 'jpeg', quality: 0.8 },
-                        html2canvas: { 
-                            scale: 1,
-                            useCORS: true,
-                            allowTaint: true,
-                            backgroundColor: '#ffffff',
-                            logging: false,
-                            width: 800,
-                            height: undefined
-                        },
-                        jsPDF: { 
-                            unit: 'in', 
-                            format: 'a4', 
-                            orientation: 'portrait',
-                            compress: true,
-                            precision: 8
-                        }
-                    };
-                    
-                    showDebugInfo('⚙️ Configuration PDF définie');
-                    
-                    // Generate PDF
-                    html2pdf()
-                        .set(options)
-                        .from(element)
-                        .save()
-                        .then(() => {
-                            showDebugInfo('✅ PDF sauvegardé avec succès');
-                            document.body.removeChild(element);
-                            resolve();
-                        })
-                        .catch(err => {
-                            showDebugInfo(`❌ Erreur lors de la sauvegarde: ${err.message}`);
-                            document.body.removeChild(element);
-                            reject(err);
-                        });
+                    // Wait a bit for the element to be properly rendered
+                    setTimeout(() => {
+                        // Configure PDF options - Optimized for content rendering
+                        const options = {
+                            margin: [0.5, 0.5, 0.5, 0.5],
+                            filename: 'GameDesignOfLettersCascade.pdf',
+                            image: { type: 'jpeg', quality: 0.9 },
+                            html2canvas: { 
+                                scale: 2, // Higher scale for better quality
+                                useCORS: true,
+                                allowTaint: true,
+                                backgroundColor: '#ffffff',
+                                logging: false,
+                                width: 800,
+                                height: undefined,
+                                scrollX: 0,
+                                scrollY: 0,
+                                windowWidth: 800,
+                                windowHeight: 1200
+                            },
+                            jsPDF: { 
+                                unit: 'in', 
+                                format: 'a4', 
+                                orientation: 'portrait',
+                                compress: true,
+                                precision: 16
+                            }
+                        };
+                        
+                        showDebugInfo('⚙️ Configuration PDF définie');
+                        
+                        // Generate PDF with better error handling
+                        html2pdf()
+                            .set(options)
+                            .from(element)
+                            .save()
+                            .then(() => {
+                                showDebugInfo('✅ PDF sauvegardé avec succès');
+                                document.body.removeChild(element);
+                                resolve();
+                            })
+                            .catch(err => {
+                                showDebugInfo(`❌ Erreur lors de la sauvegarde: ${err.message}`);
+                                if (document.body.contains(element)) {
+                                    document.body.removeChild(element);
+                                }
+                                reject(err);
+                            });
+                    }, 100); // Small delay to ensure rendering
                         
                 } catch (err) {
                     showDebugInfo(`❌ Erreur lors de la création: ${err.message}`);
