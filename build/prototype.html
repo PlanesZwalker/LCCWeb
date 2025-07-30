@@ -863,6 +863,165 @@
         .sidebar-section {
             animation: fadeInUp 0.6s ease-out;
         }
+
+        /* Power-up Animations */
+        @keyframes powerupAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes powerupDisappear {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+        }
+
+        /* Enhanced Game Controls */
+        .game-controls .btn {
+            background: linear-gradient(135deg, #667eea, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-controls .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .game-controls .btn:active {
+            transform: translateY(0);
+        }
+
+        .game-controls .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .game-controls .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced Sidebar Sections */
+        .sidebar-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-section h3 {
+            color: #4f46e5;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 8px;
+        }
+
+        /* Enhanced Word List */
+        .word-list {
+            max-height: 100px;
+            overflow-y: auto;
+            padding: 8px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .word-list li {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border-radius: 8px;
+            border-left: 3px solid #4f46e5;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e1b4b;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .word-list li:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Enhanced Letter Queue */
+        .queue-display {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 8px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .queue-letter {
+            background: linear-gradient(135deg, #667eea, #8b5cf6);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            animation: letterFloat 2s ease-in-out infinite;
+        }
+
+        .queue-letter:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes letterFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
     </style>
 </head>
 <body>

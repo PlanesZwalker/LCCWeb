@@ -464,77 +464,46 @@ class LettersCascadeGame {
     }
     
     completeWord(word) {
-        console.log('🎉 completeWord() called:', {
-            word: word,
-            length: word.length,
-            currentScore: this.score,
-            currentLevel: this.level
-        });
+        console.log('🎉 Word completed:', word);
         
-        // Calculate points based on word length
-        let points = 0;
-        switch (word.length) {
-            case 3: points = 10; break;
-            case 4: points = 25; break;
-            case 5: points = 50; break;
-            case 6: points = 100; break;
-            default: points = 200; // 7+ letters
-        }
-        
-        console.log('💰 Word scoring breakdown:', {
-            word: word,
-            length: word.length,
-            basePoints: points,
-            combo: this.combo,
-            finalPoints: points * this.combo
-        });
-        
-        // Add word to found list
+        // Add to found words
         this.wordsFound.push(word);
-        console.log('📝 Word added to found list:', {
-            word: word,
-            totalWordsFound: this.wordsFound.length,
-            targetWords: this.targetWords.length
-        });
         
-        // Add score with combo multiplier
-        this.addScore(points * this.combo);
+        // Calculate enhanced score
+        const baseScore = word.length * 10;
+        const comboBonus = this.combo * 5;
+        const timeBonus = Math.max(0, 10 - Math.floor((Date.now() - this.lastWordTime) / 1000));
+        const totalScore = baseScore + comboBonus + timeBonus;
+        
+        this.addScore(totalScore);
+        
+        // Update combo
+        this.combo++;
+        this.lastWordTime = Date.now();
+        
+        // Enhanced visual effects
+        this.showEnhancedWordCompletionNotification(word, totalScore);
+        
+        // Remove word from grid with enhanced effect
+        this.removeWordFromGrid(word);
         
         // Update level
         this.updateLevel();
         
-        // Remove word from grid
-        this.removeWordFromGrid(word);
-        
-        // Update display
-        this.updateDisplay();
-        
-        // Update progression bar
-        this.updateProgressionBar();
-        
-        // Show completion notification
-        this.showWordCompletionNotification(word, points * this.combo);
-        
-        // Combo system
-        const now = Date.now();
-        if (now - this.lastWordTime < this.comboTimeout) {
-            this.combo++;
-            console.log('🔥 Combo increased:', this.combo);
-        } else {
-            this.combo = 1;
-            console.log('🔄 Combo reset to 1');
+        // Random power-up chance
+        if (Math.random() < 0.2) {
+            this.addPowerUp();
         }
-        this.lastWordTime = now;
         
-        console.log('✅ Word completion finished:', {
+        console.log('📊 Word completion stats:', {
             word: word,
-            finalScore: this.score,
+            score: totalScore,
             combo: this.combo,
             wordsFound: this.wordsFound.length
         });
     }
     
-    showWordCompletionNotification(word, score) {
+    showEnhancedWordCompletionNotification(word, score) {
         console.log('🎉 Showing word completion notification:', { word, score });
         
         // Create notification element with enhanced styling
@@ -1476,46 +1445,55 @@ class LettersCascadeGame {
     }
     
     drawEnhancedCell(x, y, letter) {
-        // Create gradient background
+        // Create gradient background with better contrast
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, 'rgba(102, 126, 234, 0.9)');
-        gradient.addColorStop(1, 'rgba(139, 92, 246, 0.9)');
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+        gradient.addColorStop(1, 'rgba(240, 240, 250, 0.95)');
         
         this.ctx.save();
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         this.ctx.restore();
         
-        // Add border and glow
+        // Add enhanced border and glow
         this.ctx.strokeStyle = '#4f46e5';
-        this.ctx.lineWidth = 2;
+        this.ctx.lineWidth = 3;
         this.ctx.shadowColor = '#4f46e5';
-        this.ctx.shadowBlur = 10;
+        this.ctx.shadowBlur = 15;
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Draw letter with enhanced styling and better font
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.font = 'bold 20px "Segoe UI", "Arial", sans-serif';
+        // Draw letter with enhanced styling and better visibility
+        this.ctx.fillStyle = '#1e1b4b'; // Dark blue for better contrast
+        this.ctx.font = 'bold 24px "Segoe UI", "Arial", sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
         this.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        this.ctx.shadowBlur = 3;
-        this.ctx.shadowOffsetX = 1;
-        this.ctx.shadowOffsetY = 1;
+        this.ctx.shadowBlur = 4;
+        this.ctx.shadowOffsetX = 2;
+        this.ctx.shadowOffsetY = 2;
         
         // Ensure letter is properly displayed
         const displayLetter = this.ensureLetterDisplay(letter);
         this.ctx.fillText(displayLetter, x + this.cellSize / 2, y + this.cellSize / 2);
         
-        // Add subtle animation
-        const time = Date.now() * 0.002;
-        const pulse = Math.sin(time + x + y) * 0.1 + 1;
+        // Add enhanced animation with pulsing effect
+        const time = Date.now() * 0.003;
+        const pulse = Math.sin(time + x + y) * 0.15 + 1;
         
         this.ctx.save();
-        this.ctx.globalAlpha = 0.3;
+        this.ctx.globalAlpha = 0.4;
         this.ctx.fillStyle = '#4f46e5';
         this.ctx.beginPath();
-        this.ctx.arc(x + this.cellSize / 2, y + this.cellSize / 2, this.cellSize * 0.3 * pulse, 0, Math.PI * 2);
+        this.ctx.arc(x + this.cellSize / 2, y + this.cellSize / 2, this.cellSize * 0.35 * pulse, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.restore();
+        
+        // Add letter highlight effect
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.2;
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.beginPath();
+        this.ctx.arc(x + this.cellSize / 2, y + this.cellSize / 2, this.cellSize * 0.25, 0, Math.PI * 2);
         this.ctx.fill();
         this.ctx.restore();
     }
@@ -1551,29 +1529,30 @@ class LettersCascadeGame {
     drawEnhancedFallingLetter() {
         if (!this.fallingLetter) return;
         
-        const x = this.fallingLetter.x;
-        const y = this.fallingLetter.y;
+        const x = this.fallingLetter.x * this.cellSize + this.cellSize / 2;
+        const y = this.fallingLetter.y * this.cellSize + this.cellSize / 2;
         const letter = this.fallingLetter.letter;
         const time = Date.now() * 0.005;
         
-        // Create pulsing effect
-        const pulse = Math.sin(time) * 0.2 + 1;
+        // Create enhanced pulsing effect
+        const pulse = Math.sin(time) * 0.3 + 1;
         const glowIntensity = Math.sin(time * 2) * 0.5 + 0.5;
         
-        // Draw glow effect
+        // Draw enhanced glow effect
         this.ctx.save();
         this.ctx.shadowColor = '#667eea';
-        this.ctx.shadowBlur = 20 * pulse;
-        this.ctx.globalAlpha = glowIntensity * 0.3;
+        this.ctx.shadowBlur = 25 * pulse;
+        this.ctx.globalAlpha = glowIntensity * 0.4;
         
-        // Create gradient for glow
-        const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.cellSize * 0.8);
+        // Create enhanced gradient for glow
+        const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, this.cellSize * 1.2);
         gradient.addColorStop(0, '#667eea');
+        gradient.addColorStop(0.5, '#8b5cf6');
         gradient.addColorStop(1, 'transparent');
         
         this.ctx.fillStyle = gradient;
         this.ctx.beginPath();
-        this.ctx.arc(x, y, this.cellSize * 0.8 * pulse, 0, Math.PI * 2);
+        this.ctx.arc(x, y, this.cellSize * 1.2 * pulse, 0, Math.PI * 2);
         this.ctx.fill();
         
         this.ctx.restore();
@@ -1581,21 +1560,31 @@ class LettersCascadeGame {
         // Draw falling letter with enhanced styling
         this.ctx.save();
         this.ctx.shadowColor = '#667eea';
-        this.ctx.shadowBlur = 15;
+        this.ctx.shadowBlur = 20;
         
-        // Create gradient for letter background
+        // Create enhanced gradient for letter background
         const letterGradient = this.ctx.createLinearGradient(x - this.cellSize/2, y - this.cellSize/2, x + this.cellSize/2, y + this.cellSize/2);
         letterGradient.addColorStop(0, '#667eea');
-        letterGradient.addColorStop(1, '#8b5cf6');
+        letterGradient.addColorStop(0.5, '#8b5cf6');
+        letterGradient.addColorStop(1, '#a855f7');
         
         this.ctx.fillStyle = letterGradient;
-        this.ctx.fillRect(x - this.cellSize/2 + 2, y - this.cellSize/2 + 2, this.cellSize - 4, this.cellSize - 4);
+        this.ctx.fillRect(x - this.cellSize/2 + 3, y - this.cellSize/2 + 3, this.cellSize - 6, this.cellSize - 6);
         
-        // Draw letter
-        this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 24px "Segoe UI", "Arial", sans-serif';
+        // Add border to falling letter
+        this.ctx.strokeStyle = '#ffffff';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(x - this.cellSize/2 + 3, y - this.cellSize/2 + 3, this.cellSize - 6, this.cellSize - 6);
+        
+        // Draw letter with enhanced styling
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = 'bold 26px "Segoe UI", "Arial", sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        this.ctx.shadowBlur = 3;
+        this.ctx.shadowOffsetX = 1;
+        this.ctx.shadowOffsetY = 1;
         
         // Ensure letter is properly displayed
         const displayLetter = this.ensureLetterDisplay(letter);
@@ -1603,45 +1592,121 @@ class LettersCascadeGame {
         
         this.ctx.restore();
         
-        // Add rotation animation
+        // Add enhanced rotation animation
         this.ctx.save();
         this.ctx.translate(x, y);
-        this.ctx.rotate(this.fallingLetter.rotation || 0);
+        this.ctx.rotate((this.fallingLetter.rotation || 0) * Math.PI / 180);
         this.ctx.globalAlpha = 0.3;
         this.ctx.fillStyle = '#667eea';
         this.ctx.beginPath();
-        this.ctx.arc(0, 0, this.cellSize * 0.4, 0, Math.PI * 2);
+        this.ctx.arc(0, 0, this.cellSize * 0.5, 0, Math.PI * 2);
         this.ctx.fill();
+        this.ctx.restore();
+        
+        // Add floating particles around falling letter
+        this.drawFallingLetterParticles(x, y, time);
+    }
+    
+    drawFallingLetterParticles(x, y, time) {
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.6;
+        
+        for (let i = 0; i < 8; i++) {
+            const angle = (i / 8) * Math.PI * 2 + time;
+            const radius = 30 + Math.sin(time * 3 + i) * 10;
+            const px = x + Math.cos(angle) * radius;
+            const py = y + Math.sin(angle) * radius;
+            
+            this.ctx.fillStyle = `hsl(${240 + i * 30}, 70%, 60%)`;
+            this.ctx.beginPath();
+            this.ctx.arc(px, py, 2 + Math.sin(time * 2 + i) * 1, 0, Math.PI * 2);
+            this.ctx.fill();
+        }
+        
         this.ctx.restore();
     }
     
     drawUIOverlays() {
-        // Draw score overlay
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        // Enhanced score overlay with gradient
+        const scoreGradient = this.ctx.createLinearGradient(10, 10, 130, 50);
+        scoreGradient.addColorStop(0, 'rgba(99, 102, 241, 0.9)');
+        scoreGradient.addColorStop(1, 'rgba(139, 92, 246, 0.9)');
+        
+        this.ctx.fillStyle = scoreGradient;
         this.ctx.fillRect(10, 10, 120, 40);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 16px Arial';
+        this.ctx.font = 'bold 18px "Segoe UI", Arial, sans-serif';
         this.ctx.textAlign = 'left';
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        this.ctx.shadowBlur = 2;
         this.ctx.fillText(`Score: ${this.score}`, 20, 30);
         
-        // Draw level overlay
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        // Enhanced level overlay
+        const levelGradient = this.ctx.createLinearGradient(10, 60, 130, 100);
+        levelGradient.addColorStop(0, 'rgba(16, 185, 129, 0.9)');
+        levelGradient.addColorStop(1, 'rgba(5, 150, 105, 0.9)');
+        
+        this.ctx.fillStyle = levelGradient;
         this.ctx.fillRect(10, 60, 120, 40);
         
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 16px Arial';
+        this.ctx.font = 'bold 18px "Segoe UI", Arial, sans-serif';
         this.ctx.fillText(`Level: ${this.level}`, 20, 80);
         
-        // Draw combo overlay if active
+        // Enhanced combo overlay with animation
         if (this.combo > 1) {
-            this.ctx.fillStyle = 'rgba(251, 191, 36, 0.9)';
+            const comboGradient = this.ctx.createLinearGradient(10, 110, 130, 150);
+            comboGradient.addColorStop(0, 'rgba(251, 191, 36, 0.9)');
+            comboGradient.addColorStop(1, 'rgba(245, 158, 11, 0.9)');
+            
+            this.ctx.fillStyle = comboGradient;
             this.ctx.fillRect(10, 110, 120, 40);
             
             this.ctx.fillStyle = 'white';
-            this.ctx.font = 'bold 16px Arial';
+            this.ctx.font = 'bold 18px "Segoe UI", Arial, sans-serif';
             this.ctx.fillText(`Combo: x${this.combo}`, 20, 130);
+            
+            // Add pulsing effect for combo
+            const time = Date.now() * 0.005;
+            const pulse = Math.sin(time) * 0.2 + 1;
+            this.ctx.save();
+            this.ctx.globalAlpha = 0.3;
+            this.ctx.fillStyle = '#fbbf24';
+            this.ctx.beginPath();
+            this.ctx.arc(70, 130, 15 * pulse, 0, Math.PI * 2);
+            this.ctx.fill();
+            this.ctx.restore();
         }
+        
+        // Add game progress indicator
+        this.drawProgressIndicator();
+    }
+    
+    drawProgressIndicator() {
+        const progressWidth = 200;
+        const progressHeight = 8;
+        const x = (this.canvas.width - progressWidth) / 2;
+        const y = this.canvas.height - 30;
+        
+        // Background
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        this.ctx.fillRect(x, y, progressWidth, progressHeight);
+        
+        // Progress bar
+        const progress = Math.min((this.wordsFound.length / this.targetWords.length) * 100, 100);
+        const progressGradient = this.ctx.createLinearGradient(x, y, x + progressWidth, y);
+        progressGradient.addColorStop(0, '#667eea');
+        progressGradient.addColorStop(1, '#8b5cf6');
+        
+        this.ctx.fillStyle = progressGradient;
+        this.ctx.fillRect(x, y, (progressWidth * progress) / 100, progressHeight);
+        
+        // Progress text
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = 'bold 12px "Segoe UI", Arial, sans-serif';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(`${this.wordsFound.length}/${this.targetWords.length} mots`, this.canvas.width / 2, y - 5);
     }
     
     // Display Updates
@@ -1798,6 +1863,122 @@ class LettersCascadeGame {
                 }
             }
         });
+    }
+    
+    // Add enhanced gameplay features
+    addPowerUp() {
+        const powerUps = ['freeze', 'clear', 'hint', 'bonus'];
+        const randomPowerUp = powerUps[Math.floor(Math.random() * powerUps.length)];
+        
+        this.activatePowerUp(randomPowerUp);
+        console.log('🎁 Power-up activated:', randomPowerUp);
+    }
+    
+    activatePowerUp(type) {
+        switch(type) {
+            case 'freeze':
+                this.freezeTime = 5000; // 5 seconds
+                this.showPowerUpNotification('⏰ Temps Gelé!', '#3b82f6');
+                break;
+            case 'clear':
+                this.clearRandomLetters();
+                this.showPowerUpNotification('🧹 Nettoyage!', '#ef4444');
+                break;
+            case 'hint':
+                this.showHint();
+                this.showPowerUpNotification('💡 Indice!', '#f59e0b');
+                break;
+            case 'bonus':
+                this.addScore(100);
+                this.showPowerUpNotification('💰 Bonus!', '#10b981');
+                break;
+        }
+    }
+    
+    showPowerUpNotification(message, color) {
+        const notification = document.createElement('div');
+        notification.className = 'powerup-notification';
+        notification.innerHTML = `
+            <div class="powerup-content">
+                <span class="powerup-message">${message}</span>
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: ${color};
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            z-index: 1000;
+            animation: powerupAppear 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'powerupDisappear 0.5s ease-in';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 500);
+        }, 2000);
+    }
+    
+    clearRandomLetters() {
+        let cleared = 0;
+        const maxToClear = Math.min(3, this.letters.length);
+        
+        for (let i = 0; i < this.currentGridSize && cleared < maxToClear; i++) {
+            for (let j = 0; j < this.currentGridSize && cleared < maxToClear; j++) {
+                if (this.grid[i][j] && Math.random() < 0.3) {
+                    this.grid[i][j] = null;
+                    cleared++;
+                    
+                    // Add explosion effect
+                    this.particleSystem.createExplosionEffect(
+                        j * this.cellSize + this.cellSize / 2,
+                        i * this.cellSize + this.cellSize / 2,
+                        0.5
+                    );
+                }
+            }
+        }
+        
+        console.log('🧹 Cleared', cleared, 'letters');
+    }
+    
+    showHint() {
+        if (this.targetWords.length === 0) return;
+        
+        const remainingWords = this.targetWords.filter(word => !this.wordsFound.includes(word));
+        if (remainingWords.length === 0) return;
+        
+        const hintWord = remainingWords[0];
+        const hintLetter = hintWord[0];
+        
+        // Highlight cells that could contain this letter
+        this.hintCells = [];
+        for (let i = 0; i < this.currentGridSize; i++) {
+            for (let j = 0; j < this.currentGridSize; j++) {
+                if (this.grid[i][j] === hintLetter) {
+                    this.hintCells.push({row: i, col: j});
+                }
+            }
+        }
+        
+        // Show hint notification
+        this.showPowerUpNotification(`💡 Cherchez "${hintLetter}"`, '#f59e0b');
+        
+        // Clear hint after 3 seconds
+        setTimeout(() => {
+            this.hintCells = [];
+        }, 3000);
     }
 }
 
