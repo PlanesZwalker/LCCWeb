@@ -1476,41 +1476,36 @@ class LettersCascadeGame {
     }
     
     drawEnhancedCell(x, y, letter) {
-        // Create cell background with gradient
+        // Create gradient background
         const gradient = this.ctx.createLinearGradient(x, y, x + this.cellSize, y + this.cellSize);
-        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-        gradient.addColorStop(1, 'rgba(255, 255, 255, 0.7)');
+        gradient.addColorStop(0, 'rgba(102, 126, 234, 0.9)');
+        gradient.addColorStop(1, 'rgba(139, 92, 246, 0.9)');
         
-        // Draw cell background with shadow
         this.ctx.save();
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        this.ctx.shadowBlur = 5;
-        this.ctx.shadowOffsetX = 2;
-        this.ctx.shadowOffsetY = 2;
-        
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
-        
         this.ctx.restore();
         
-        // Draw cell border with glow effect
+        // Add border and glow
         this.ctx.strokeStyle = '#4f46e5';
         this.ctx.lineWidth = 2;
         this.ctx.shadowColor = '#4f46e5';
         this.ctx.shadowBlur = 10;
         this.ctx.strokeRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
         
-        // Draw letter with enhanced styling
-        this.ctx.fillStyle = '#4f46e5';
-        this.ctx.font = 'bold 22px Arial';
+        // Draw letter with enhanced styling and better font
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = 'bold 20px "Segoe UI", "Arial", sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        this.ctx.shadowBlur = 2;
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        this.ctx.shadowBlur = 3;
         this.ctx.shadowOffsetX = 1;
         this.ctx.shadowOffsetY = 1;
         
-        this.ctx.fillText(letter, x + this.cellSize / 2, y + this.cellSize / 2);
+        // Ensure letter is properly displayed
+        const displayLetter = this.ensureLetterDisplay(letter);
+        this.ctx.fillText(displayLetter, x + this.cellSize / 2, y + this.cellSize / 2);
         
         // Add subtle animation
         const time = Date.now() * 0.002;
@@ -1523,6 +1518,27 @@ class LettersCascadeGame {
         this.ctx.arc(x + this.cellSize / 2, y + this.cellSize / 2, this.cellSize * 0.3 * pulse, 0, Math.PI * 2);
         this.ctx.fill();
         this.ctx.restore();
+    }
+    
+    // Helper method to ensure proper letter display
+    ensureLetterDisplay(letter) {
+        // Map common problematic characters
+        const letterMap = {
+            'B': 'B',
+            '6': 'B', // Fix for B appearing as 6
+            '8': 'B',
+            '0': 'O',
+            'O': 'O',
+            '1': 'I',
+            'I': 'I',
+            '5': 'S',
+            'S': 'S',
+            'Z': 'Z',
+            '2': 'Z'
+        };
+        
+        // Return mapped letter or original if no mapping
+        return letterMap[letter] || letter;
     }
     
     drawEnhancedEmptyCell(x, y) {
@@ -1577,10 +1593,13 @@ class LettersCascadeGame {
         
         // Draw letter
         this.ctx.fillStyle = 'white';
-        this.ctx.font = 'bold 24px Arial';
+        this.ctx.font = 'bold 24px "Segoe UI", "Arial", sans-serif';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        this.ctx.fillText(letter, x, y);
+        
+        // Ensure letter is properly displayed
+        const displayLetter = this.ensureLetterDisplay(letter);
+        this.ctx.fillText(displayLetter, x, y);
         
         this.ctx.restore();
         
@@ -1689,7 +1708,8 @@ class LettersCascadeGame {
             
             this.letterQueue.slice(0, 5).forEach(letter => {
                 const li = document.createElement('li');
-                li.textContent = letter;
+                // Ensure proper letter display
+                li.textContent = this.ensureLetterDisplay(letter);
                 li.className = 'queue-letter';
                 queueElement.appendChild(li);
             });
@@ -2188,16 +2208,18 @@ class ParticleSystem {
             
             // Draw particle based on type
             if (particle.type === 'wordComplete' && particle.letter) {
-                // Draw letter particle
+                // Draw letter particle with proper display
                 ctx.fillStyle = particle.color;
-                ctx.font = `${currentSize * 2}px Arial`;
+                ctx.font = `${currentSize * 2}px "Segoe UI", "Arial", sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(particle.letter, 0, 0);
+                // Ensure proper letter display
+                const displayLetter = window.game ? window.game.ensureLetterDisplay(particle.letter) : particle.letter;
+                ctx.fillText(displayLetter, 0, 0);
             } else if (particle.type === 'combo' && particle.text) {
                 // Draw combo text
                 ctx.fillStyle = particle.color;
-                ctx.font = `bold ${currentSize * 1.5}px Arial`;
+                ctx.font = `bold ${currentSize * 1.5}px "Segoe UI", "Arial", sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(particle.text, 0, 0);
