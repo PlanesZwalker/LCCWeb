@@ -108,6 +108,8 @@ class LettersCascadeGame {
         // Systems
         this.particleSystem = new ParticleSystem();
         this.audioManager = new AudioManager();
+        this.scoreManager = new ScoreManager();
+        this.levelManager = new LevelManager();
         
         // Input handling
         this.keys = {};
@@ -127,17 +129,19 @@ class LettersCascadeGame {
     }
     
     // Initialize game
-    init() {
+    async init() {
         console.log('🚀 Initializing LettersCascadeGame...');
         
         try {
             // Initialize canvas
             this.canvas = document.getElementById('gameCanvas');
-            this.ctx = this.canvas.getContext('2d');
+            if (!this.canvas) {
+                throw new Error('Canvas element #gameCanvas not found');
+            }
             
-            if (!this.canvas || !this.ctx) {
-                console.error('❌ Canvas initialization failed');
-                return;
+            this.ctx = this.canvas.getContext('2d');
+            if (!this.ctx) {
+                throw new Error('Unable to get 2D rendering context');
             }
             
             // Resize canvas to proper dimensions
@@ -155,8 +159,15 @@ class LettersCascadeGame {
             // Initialize letter queue
             this.generateLetterQueue();
             
-            // Initialize word detector
-            this.wordDetector = new WordDetector(this.targetWords);
+            // Load dictionary first
+            this.dictionary = this.loadDictionary();
+            
+            // Initialize word detector with dictionary
+            this.wordDetector = new WordDetector(this.dictionary);
+            
+            // Initialize score and level managers
+            this.scoreManager = new ScoreManager();
+            this.levelManager = new LevelManager();
             
             // Setup controls
             this.setupControls();
@@ -164,16 +175,18 @@ class LettersCascadeGame {
             // Setup event listeners
             this.setupEventListeners();
             
-            // Load dictionary
-            this.loadDictionary();
+            // Apply intelligent balancing
+            this.applyBalancing();
             
             // Initial render
             this.render();
             
             console.log('✅ Game initialization completed successfully');
+            return Promise.resolve();
             
         } catch (error) {
             console.error('❌ Error during game initialization:', error);
+            return Promise.reject(error);
         }
     }
     
@@ -1015,6 +1028,60 @@ class LettersCascadeGame {
         }
     }
     
+    showGameOverMessage() {
+        console.log('🎮 Showing game over message');
+        
+        // Stop any timers
+        this.stopFallTimer();
+        
+        // Create game over overlay
+        const gameContainer = document.querySelector('.game-container');
+        if (!gameContainer) return;
+        
+        const gameOverOverlay = document.createElement('div');
+        gameOverOverlay.className = 'game-over-overlay';
+        gameOverOverlay.innerHTML = `
+            <div class="game-over-content">
+                <h2>🎮 Partie Terminée</h2>
+                <div class="game-over-stats">
+                    <p><strong>Score Final:</strong> ${this.score}</p>
+                    <p><strong>Niveau Atteint:</strong> ${this.level}</p>
+                    <p><strong>Lettres Placées:</strong> ${this.stats.lettersPlaced}</p>
+                    <p><strong>Mots Complétés:</strong> ${this.wordsFound.length}</p>
+                </div>
+                <div class="game-over-buttons">
+                    <button onclick="window.game.resetGame()" class="btn-restart">
+                        <i class="fas fa-redo"></i> Rejouer
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        gameOverOverlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.5s ease-out;
+        `;
+        
+        gameContainer.appendChild(gameOverOverlay);
+        
+        // Save high score
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            this.saveHighScore();
+            console.log('🏆 New high score:', this.highScore);
+        }
+    }
+    
     // Falling Letter System
     createFallingLetter() {
         console.log('📝 Creating falling letter...');
@@ -1120,12 +1187,30 @@ class LettersCascadeGame {
         // Check bounds
         if (x < 0 || x >= this.currentGridSize || y < 0 || y >= this.currentGridSize) {
             console.error('❌ Letter placement out of bounds:', { x, y });
+            
+            // Game over - letter fell out of bounds
+            console.log('🎮 Game Over: Letter out of bounds');
+            this.gameOver = true;
+            this.gameRunning = false;
+            this.fallingLetter = null;
+            
+            // Show game over message
+            this.showGameOverMessage();
             return;
         }
         
         // Check if position is already occupied
         if (this.grid[y][x] !== null) {
             console.error('❌ Position already occupied:', { x, y, existingLetter: this.grid[y][x] });
+            
+            // Game over - no valid placement position
+            console.log('🎮 Game Over: Grid is full');
+            this.gameOver = true;
+            this.gameRunning = false;
+            this.fallingLetter = null;
+            
+            // Show game over message
+            this.showGameOverMessage();
             return;
         }
         
@@ -1142,8 +1227,8 @@ class LettersCascadeGame {
         // Update statistics
         this.stats.lettersPlaced++;
         
-        // Create placement effect
-        this.particleSystem.createPlacementEffect(x * this.cellSize, y * this.cellSize);
+        // Create enhanced placement effect with letter
+        this.particleSystem.createPlacementEffect(x * this.cellSize, y * this.cellSize, letter);
         
         // Play sound
         this.audioManager.playPlace();
@@ -1787,85 +1872,81 @@ class LettersCascadeGame {
     }
     
     updateScoreDisplay() {
-        const scoreElement = document.getElementById('scoreDisplay');
+        const scoreElement = document.getElementById('score');
         if (scoreElement) {
             scoreElement.textContent = this.score;
         }
     }
     
     updateLevelDisplay() {
-        const levelElement = document.getElementById('levelDisplay');
+        const levelElement = document.getElementById('level');
         if (levelElement) {
             levelElement.textContent = this.level;
         }
     }
     
     updateWordList() {
-        console.log('📝 updateWordList() called - wordsFound:', this.wordsFound);
-        const wordListElement = document.getElementById('wordList');
-        if (wordListElement) {
-            wordListElement.innerHTML = '';
-            
-            // Demo word list for display
-            const targetWords = ['CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE'];
-            targetWords.forEach(word => {
-                const li = document.createElement('li');
-                li.textContent = word;
-                li.className = this.wordsFound.includes(word) ? 'completed' : 'demo-word';
-                wordListElement.appendChild(li);
-            });
-            console.log('✅ Word list updated with', targetWords.length, 'items');
-        } else {
-            // Element not found - this is expected with the new layout
-            console.log('ℹ️ Word list element not found - using new layout without word list display');
+        // Update words completed counter in the current layout
+        const wordsCompletedElement = document.getElementById('wordsCompleted');
+        if (wordsCompletedElement) {
+            wordsCompletedElement.textContent = this.wordsFound.length;
         }
         
-        // Update progression display
-        const currentLevelElement = document.getElementById('currentLevel');
-        const targetScoreElement = document.getElementById('targetScore');
-        const wordsFoundElement = document.getElementById('wordsFound');
+        // Update canvas info display
+        const canvasInfoElement = document.querySelector('.canvas-info');
+        if (canvasInfoElement) {
+            canvasInfoElement.textContent = `${this.wordsFound.length}/3 mots`;
+        }
         
-        if (currentLevelElement) currentLevelElement.textContent = this.level;
-        if (targetScoreElement) targetScoreElement.textContent = this.level * 100;
-        if (wordsFoundElement) wordsFoundElement.textContent = this.wordsFound.length;
-        
-        // Log if elements are missing (expected with new layout)
-        if (!currentLevelElement || !targetScoreElement || !wordsFoundElement) {
-            console.log('ℹ️ Some progression elements not found - using new layout without detailed progression display');
+        // Update level display
+        const levelElement = document.getElementById('level');
+        if (levelElement) {
+            levelElement.textContent = this.level;
         }
     }
     
     updateLetterQueueDisplay() {
-        console.log('📝 updateLetterQueueDisplay() called - letterQueue:', this.letterQueue);
-        const queueElement = document.getElementById('letterPreview');
-        if (queueElement) {
-            queueElement.innerHTML = '';
-            
-            // Ensure we have letters to display
-            if (this.letterQueue.length === 0) {
-                this.generateLetterQueue();
-            }
-            
-            this.letterQueue.slice(0, 5).forEach(letter => {
-                const li = document.createElement('li');
-                // Ensure proper letter display
-                li.textContent = this.ensureLetterDisplay(letter);
-                li.className = 'queue-letter';
-                queueElement.appendChild(li);
-            });
-            console.log('✅ Letter queue updated with', queueElement.children.length, 'letters');
-        } else {
-            // Element not found - this is expected with the new layout
-            console.log('ℹ️ Letter queue element not found - using new layout without letter preview display');
-        }
+        // No letter queue display in the current simplified layout
+        // The falling letter is shown directly on the canvas
+        // This function is kept for compatibility but does nothing
     }
     
     // Utility Methods
     resizeCanvas() {
         console.log('📏 Resizing canvas...');
-        const size = this.currentGridSize * this.cellSize;
-        this.canvas.width = size;
-        this.canvas.height = size;
+        try {
+            const container = this.canvas.parentElement;
+            if (!container) {
+                // Default size if no container
+                const size = this.currentGridSize * this.cellSize;
+                this.canvas.width = size;
+                this.canvas.height = size;
+                return;
+            }
+            
+            // Calculate responsive size
+            const containerWidth = container.clientWidth || 600;
+            const containerHeight = container.clientHeight || 600;
+            const maxSize = Math.min(containerWidth, containerHeight, 600) * 0.9;
+            const size = Math.max(400, maxSize); // Minimum 400px
+            
+            this.canvas.width = size;
+            this.canvas.height = size;
+            this.cellSize = size / this.currentGridSize;
+            
+            console.log('✅ Canvas resized:', {
+                containerSize: `${containerWidth}x${containerHeight}`,
+                canvasSize: `${this.canvas.width}x${this.canvas.height}`,
+                cellSize: this.cellSize
+            });
+            
+        } catch (error) {
+            console.error('❌ Error resizing canvas:', error);
+            // Fallback to default size
+            const size = this.currentGridSize * this.cellSize;
+            this.canvas.width = size;
+            this.canvas.height = size;
+        }
         
         console.log('✅ Canvas resized:', {
             width: this.canvas.width,
@@ -1878,6 +1959,28 @@ class LettersCascadeGame {
     updateStats() {
         if (this.stats.startTime) {
             this.stats.playTime = Math.floor((Date.now() - this.stats.startTime) / 1000);
+        }
+        
+        // Update all UI elements in the current layout
+        this.updateScoreDisplay();
+        this.updateLevelDisplay();
+        
+        // Update combo display
+        const comboElement = document.getElementById('combo');
+        if (comboElement) {
+            comboElement.textContent = this.combo || 0;
+        }
+        
+        // Update words completed
+        const wordsCompletedElement = document.getElementById('wordsCompleted');
+        if (wordsCompletedElement) {
+            wordsCompletedElement.textContent = this.wordsFound.length;
+        }
+        
+        // Update canvas info
+        const canvasInfoElement = document.querySelector('.canvas-info');
+        if (canvasInfoElement) {
+            canvasInfoElement.textContent = `${this.wordsFound.length}/3 mots`;
         }
     }
     
@@ -1902,8 +2005,12 @@ class LettersCascadeGame {
     }
     
     loadDictionary() {
-        // French dictionary for word validation
+        // French dictionary for word validation (including target words for testing)
         return new Set([
+            // Target words from tests
+            'CHAT', 'MAISON', 'MUSIQUE', 'JARDIN', 'LIVRE', 'TABLE', 'FENÊTRE', 'PORTE',
+            
+            // Common French words
             'BONJOUR', 'AU REVOIR', 'MERCI', 'SIL VOUS PLAIT', 'PARDON',
             'OUI', 'NON', 'PEUT ETRE', 'CERTAINEMENT', 'PROBABLEMENT',
             'MAINTENANT', 'AUJOURDHUI', 'HIER', 'DEMAIN', 'TOUJOURS',
@@ -2773,19 +2880,26 @@ class ParticleSystem {
         };
     }
     
-    createPlacementEffect(x, y) {
-        console.log('✨ Creating placement effect at:', { x, y });
+    createPlacementEffect(x, y, letter = 'A') {
+        console.log('✨ Creating enhanced placement effect at:', { x, y, letter });
+        
+        // Call the new enhanced HTML-based effect if available
+        if (typeof createLetterPlacementEffect === 'function') {
+            createLetterPlacementEffect(x, y, letter);
+        }
+        
+        // Original canvas-based particle effect
         const effect = this.effects.placement;
         
-        for (let i = 0; i < effect.count; i++) {
+        for (let i = 0; i < effect.count * 1.5; i++) { // More particles
             const particle = {
                 x: x + Math.random() * 40 - 20,
                 y: y + Math.random() * 40 - 20,
-                vx: (Math.random() - 0.5) * effect.speed,
-                vy: (Math.random() - 0.5) * effect.speed,
+                vx: (Math.random() - 0.5) * effect.speed * 1.2,
+                vy: (Math.random() - 0.5) * effect.speed * 1.2,
                 life: 1.0,
                 maxLife: 1.0,
-                size: effect.size + Math.random() * 2,
+                size: effect.size + Math.random() * 3,
                 color: effect.color,
                 type: 'placement',
                 alpha: 1.0,

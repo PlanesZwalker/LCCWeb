@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letters Cascade Challenge - Jeu de Mots Immersif</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/shared.css">
     <script src="js/utils.js"></script>
@@ -1195,8 +1195,9 @@
                 <h3>Navigation</h3>
                 <div class="nav-links">
                     <a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="unified-game.html"><i class="fas fa-gamepad"></i> Maquette Unifiée</a>
                     <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
-                    <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
+                    <a href="game.html"><i class="fas fa-cube"></i> Maquette 3D</a>
                     <a href="GDD.html"><i class="fas fa-file-alt"></i> Documentation</a>
                     <a href="rules.html"><i class="fas fa-book"></i> Règles</a>
                     <a href="moodboard.html"><i class="fas fa-palette"></i> Moodboard</a>
@@ -1211,23 +1212,19 @@
                     <p>Découvrez un jeu de mots innovant combinant la simplicité addictive de Wordle avec l'innovation visuelle distinctive des lettres anthropomorphiques dans un environnement immersif asiatique.</p>
                     
                     <div class="action-buttons">
-                        <a href="prototype.html" class="action-btn primary">
+                        <a href="unified-game.html" class="action-btn primary">
                             <i class="fas fa-gamepad"></i>
-                            Jouer en 2D
+                            Jouer (2D/3D Unifié)
                         </a>
-                        <a href="prototype-fullscreen.html" class="action-btn secondary">
-                            <i class="fas fa-expand"></i>
-                            2D Plein Écran
+                        <a href="prototype.html" class="action-btn">
+                            <i class="fas fa-square"></i>
+                            Mode 2D Seul
                         </a>
                         <a href="game.html" class="action-btn">
                             <i class="fas fa-cube"></i>
-                            Jouer en 3D
+                            Mode 3D Seul
                         </a>
-                        <a href="game-fullscreen.html" class="action-btn secondary">
-                            <i class="fas fa-expand"></i>
-                            3D Plein Écran
-                        </a>
-                        <a href="moodboard.html" class="action-btn">
+                        <a href="moodboard.html" class="action-btn secondary">
                             <i class="fas fa-palette"></i>
                             Références de Jeux
                         </a>
@@ -1246,7 +1243,7 @@
                         </div>
                         <div class="concept-description">
                             <h3>Une Cascade de Lettres</h3>
-                            <p>Une cascade majestueuse s'écoule au centre de l'illustration, entourée d'une végétation luxuriante. Trois lettres anthropomorphiques colorées - un 'A' rouge, un '6' rose et un 'C' orange - flottent dans l'air avec des bras et jambes stylisés. Une pagode traditionnelle japonaise se dresse en arrière-plan, créant une ambiance sereine et culturellement riche.</p>
+                            <p>Une cascade majestueuse s'écoule au centre de l'illustration, entourée d'une végétation luxuriante. Trois lettres anthropomorphiques colorées - un 'A' rouge, un 'B'rose et un 'C' orange - flottent dans l'air avec des bras et jambes stylisés. Une pagode traditionnelle japonaise se dresse en arrière-plan, créant une ambiance sereine et culturellement riche.</p>
                         </div>
                     </div>
                 </div>
@@ -1280,7 +1277,7 @@
                     <div class="tech-grid">
                         <div class="tech-card">
                             <a href="https://en.wikipedia.org/wiki/Unreal_Engine" target="_blank" class="tech-link">
-                                <img src="https://www.unrealengine.com/static/images/unreal-engine-logo.svg" alt="Unreal Engine 5.6" class="official-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjgiIGZpbGw9IiMwMDAiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjUwJSIgeT0iMzUlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VVNFUjwvdGV4dD4KPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5FTkdJTkU8L3RleHQ+Cjwvc3ZnPgo='">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Unreal_Engine_Logo_%28new_typeface%29.svg/250px-Unreal_Engine_Logo_%28new_typeface%29.svg.png" alt="Unreal Engine 5.6" class="official-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjgiIGZpbGw9IiMwMDAiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjx0ZXh0IHg9IjUwJSIgeT0iMzUlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VVNFUjwvdGV4dD4KPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5FTkdJTkU8L3RleHQ+Cjwvc3ZnPgo='">
                                 <h3>Unreal Engine 5.6</h3>
                                 <p>Moteur de jeu 3D avancé avec graphismes immersifs et physique réaliste</p>
                                 <span class="wikipedia-link">📖 Wikipédia</span>
@@ -1296,7 +1293,7 @@
                         </div>
                         <div class="tech-card">
                             <a href="https://en.wikipedia.org/wiki/Blender_(software)" target="_blank" class="tech-link">
-                                <img src="https://www.blender.org/wp-content/uploads/2021/05/blender_logo_no_splash.svg" alt="Blender" class="official-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNmNzc3MjIiLz4KPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QjwvdGV4dD4KPC9zdmc+Cg=='">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Logo_Blender.svg/250px-Logo_Blender.svg.png" alt="Blender" class="official-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMzAiIGZpbGw9IiNmNzc3MjIiLz4KPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+QjwvdGV4dD4KPC9zdmc+Cg=='">
                                 <h3>Blender</h3>
                                 <p>Création de modèles 3D et animations pour les personnages et environnements</p>
                                 <span class="wikipedia-link">📖 Wikipédia</span>
@@ -1376,7 +1373,7 @@
                     <p>Découvrez l'expérience Letters Cascade Challenge et testez vos compétences en formation de mots !</p>
                     <div class="cta-section">
                         <div class="cta-buttons">
-                            <a href="prototype.html" class="btn btn-primary">
+                            <a href="unified-game.html" class="btn btn-primary">
                                 <i class="fas fa-play"></i> Commencer le Jeu
                             </a>
                             <a href="GDD.html" class="btn btn-secondary">
