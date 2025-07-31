@@ -669,6 +669,7 @@
                 <h3>Navigation</h3>
                 <div class="nav-links">
                     <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
+                    <a href="unified-game.html"><i class="fas fa-cube"></i> Jeu 3D Unifié</a>
                     <a href="prototype.html"><i class="fas fa-flask"></i> Maquette 2D</a>
                     <a href="game.html"><i class="fas fa-gamepad"></i> Maquette 3D</a>
                     <a href="GDD.html" class="active"><i class="fas fa-file-alt"></i> Documentation</a>
@@ -710,11 +711,14 @@
                             <h3><i class="fas fa-gamepad"></i> Jeux et Prototypes</h3>
                             <p>Versions jouables et démonstrations interactives</p>
                             <div class="resource-links">
+                                <a href="unified-game.html" class="resource-link">
+                                    <i class="fas fa-cube"></i> Jeu 3D Unifié (Modes 2D/3D)
+                                </a>
                                 <a href="prototype.html" class="resource-link">
-                                    <i class="fas fa-flask"></i> Maquette 2D (Version Jouable)
+                                    <i class="fas fa-flask"></i> Maquette 2D (Version Classique)
                                 </a>
                                 <a href="game.html" class="resource-link">
-                                    <i class="fas fa-cube"></i> Démo 3D (Grille Interactive)
+                                    <i class="fas fa-cube"></i> Démo 3D (Version Originale)
                                 </a>
                             </div>
                         </div>
@@ -758,11 +762,14 @@
                                 <a href="css/shared.css" class="resource-link" target="_blank">
                                     <i class="fas fa-paint-brush"></i> CSS Partagé
                                 </a>
-                                <a href="js/utils.js" class="resource-link" target="_blank">
-                                    <i class="fas fa-cogs"></i> Utilitaires JavaScript
-                                </a>
                                 <a href="js/index.js" class="resource-link" target="_blank">
-                                    <i class="fas fa-gamepad"></i> Moteur de Jeu
+                                    <i class="fas fa-gamepad"></i> Moteur 2D
+                                </a>
+                                <a href="js/game3d.js" class="resource-link" target="_blank">
+                                    <i class="fas fa-cube"></i> Moteur 3D Unifié
+                                </a>
+                                <a href="README.md" class="resource-link" target="_blank">
+                                    <i class="fas fa-book"></i> Documentation Projet
                                 </a>
                             </div>
                         </div>
@@ -774,8 +781,14 @@
                                 <a href="rules.html" class="resource-link">
                                     <i class="fas fa-book"></i> Règles du Jeu
                                 </a>
-                                <a href="TODO.md" class="resource-link broken" target="_blank">
-                                    <i class="fas fa-tasks"></i> TODO du Projet
+                                <a href="README.md" class="resource-link" target="_blank">
+                                    <i class="fas fa-book"></i> README Projet
+                                </a>
+                                <a href="Docs/Game-Design.md" class="resource-link" target="_blank">
+                                    <i class="fas fa-puzzle-piece"></i> Game Design
+                                </a>
+                                <a href="Docs/Technical-Architecture.md" class="resource-link" target="_blank">
+                                    <i class="fas fa-microchip"></i> Architecture Technique
                                 </a>
                             </div>
                         </div>
@@ -785,10 +798,10 @@
                 <!-- Game Design Document Content -->
                 <div class="glass-card">
                     <h2>🎮 Vue d'Ensemble du Projet</h2>
-                    <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui révolutionne le concept traditionnel de formation de mots en intégrant des mécaniques de chute inspirées de Tetris. Le projet se distingue par sa dualité technologique unique, offrant deux expériences distinctes : un mode 2D classique optimisé pour la performance et un mode 3D immersif pour une expérience sensorielle complète.</p>
+                    <p><strong>Letters Cascade Challenge</strong> est un jeu de puzzle innovant qui révolutionne le concept traditionnel de formation de mots en intégrant des mécaniques de chute inspirées de Tetris. Le projet se distingue par son moteur 3D unifié offrant deux modes de grille distincts : un mode grille 2D classique optimisé pour la performance et un mode grille 3D immersif pour une expérience sensorielle complète, tous deux rendus dans un environnement 3D unifié.</p>
                     
                     <h3><i class="fas fa-star"></i> Proposition de Valeur Unique</h3>
-                    <p>Combinaison inédite de mécaniques de puzzle classiques avec des technologies de pointe, créant une expérience de jeu accessible à tous les publics tout en offrant une profondeur stratégique significative.</p>
+                    <p>Moteur 3D unifié avec modes de grille interchangeables, combinant mécaniques de puzzle classiques avec technologies de pointe Three.js, créant une expérience de jeu accessible à tous les publics tout en offrant une profondeur stratégique significative.</p>
                 </div>
 
                 <div class="glass-card">
@@ -812,8 +825,8 @@
 
                     <h3><i class="fas fa-keyboard" aria-hidden="true"></i> Interface de Contrôle</h3>
                     <ul>
-                        <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Contrôles clavier :</strong> Flèches directionnelles (déplacement), Espace (rotation), Flèche bas (chute rapide)</li>
-                        <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Contrôles tactiles :</strong> Gestes de swipe optimisés pour appareils mobiles</li>
+                        <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Contrôles clavier :</strong> Flèches directionnelles (déplacement gauche/droite/bas), Entrée/Espace (placement), Pas de rotation des lettres</li>
+                        <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Contrôles souris :</strong> Glisser pour faire pivoter la caméra, molette pour zoom avant/arrière</li>
                         <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Accessibilité :</strong> Support complet pour technologies d'assistance</li>
                         <li><i class="fas fa-check" style="color: #4CAF50; margin-right: 8px;"></i><strong>Personnalisation :</strong> Remapping des contrôles selon les préférences utilisateur</li>
                     </ul>
@@ -822,11 +835,11 @@
                 <div class="glass-card">
                     <h2>🎯 Architecture des Modes de Jeu</h2>
                     
-                    <h3><i class="fas fa-square"></i> Mode 2D Classique</h3>
-                    <p>Interface épurée optimisée pour la performance, compatible avec tous les appareils. Contrôles intuitifs et feedback visuel immédiat pour une expérience de jeu fluide et accessible.</p>
+                    <h3><i class="fas fa-square"></i> Mode Grille 2D</h3>
+                    <p>Grille plate rendue en 3D avec style "Periodic Table", optimisée pour la performance et la lisibilité. Contrôles intuitifs et feedback visuel immédiat pour une expérience de jeu fluide et accessible.</p>
                     
-                    <h3><i class="fas fa-cube"></i> Mode 3D Immersif</h3>
-                    <p>Environnement 3D photoréaliste avec physique avancée, caméra dynamique et effets visuels de pointe. Expérience sensorielle complète avec audio spatialisé.</p>
+                    <h3><i class="fas fa-cube"></i> Mode Grille 3D</h3>
+                    <p>Grille volumétrique 3D avec profondeur variable, style "Periodic Table" avec effets visuels avancés, caméra dynamique et physique réaliste. Expérience sensorielle complète avec particules et effets lumineux.</p>
                 </div>
 
                 <div class="glass-card">
@@ -885,11 +898,11 @@
                 <div class="glass-card">
                     <h2>🌟 Caractéristiques Innovantes</h2>
                     
-                    <h3><i class="fas fa-layer-group"></i> Dualité Technologique</h3>
-                    <p>Choix intelligent entre expérience classique et immersive selon les capacités de l'appareil et les préférences utilisateur, garantissant une accessibilité universelle.</p>
+                    <h3><i class="fas fa-layer-group"></i> Moteur 3D Unifié</h3>
+                    <p>Moteur Three.js unifié avec modes de grille interchangeables, garantissant une expérience cohérente et des performances optimales sur tous les appareils.</p>
                     
-                    <h3><i class="fas fa-tree"></i> Environnement 3D Photoréaliste</h3>
-                    <p>Forêt enchantée avec cascade réaliste, éclairage dynamique et effets atmosphériques pour une immersion sensorielle complète.</p>
+                    <h3><i class="fas fa-tree"></i> Style "Periodic Table"</h3>
+                    <p>Inspiration du tableau périodique avec couleurs distinctives par lettre, effets lumineux, particules flottantes et animations fluides pour une expérience visuelle unique.</p>
                     
                     <h3><i class="fas fa-smile"></i> Personnalités Lettres</h3>
                     <p>Chaque lettre possède une personnalité unique avec animations distinctes, comportements spécifiques et interactions visuelles personnalisées.</p>
@@ -909,22 +922,23 @@
                     
                     <h3><i class="fas fa-microchip"></i> Stack Technologique</h3>
                     <ul>
-                        <li><strong>Mode 2D :</strong> HTML5 Canvas avec JavaScript ES6+, WebGL pour accélération matérielle</li>
-                        <li><strong>Mode 3D :</strong> Unreal Engine 5.6 avec Blueprints et C++ natif</li>
+                        <li><strong>Moteur 3D Unifié :</strong> Three.js avec WebGL, JavaScript ES6+ et optimisations GPU</li>
+                        <li><strong>Prototypage Web :</strong> HTML5 Canvas avec JavaScript natif et WebGL</li>
+                        <li><strong>Production Finale :</strong> Unreal Engine 5.6 avec Blueprints et C++ natif</li>
                     </ul>
 
                     <h3><i class="fas fa-palette"></i> Pipeline de Production</h3>
                     <ul>
+                        <li><strong>Prototypage Web :</strong> Three.js avec style "Periodic Table" et effets visuels</li>
                         <li><strong>Modélisation 3D :</strong> Blender 4.0 avec workflow PBR optimisé</li>
-                        <li><strong>Prototypage 2D :</strong> JavaScript natif avec optimisations WebGL</li>
-                        <li><strong>Développement 3D :</strong> Unreal Engine 5.6 - Blueprints + C++ hybride</li>
+                        <li><strong>Développement Final :</strong> Unreal Engine 5.6 - Blueprints + C++ hybride</li>
                         <li><strong>Assets Pipeline :</strong> Blender vers UE5.6 avec FBX/glTF optimisé</li>
                     </ul>
 
                     <h3><i class="fas fa-rocket"></i> Performance et Optimisation</h3>
                     <ul>
-                        <li><strong>2D Canvas :</strong> 60 FPS avec WebGL et optimisations GPU</li>
-                        <li><strong>3D UE5.6 :</strong> Rendu temps réel optimisé avec Lumen et Nanite</li>
+                        <li><strong>Prototype Web :</strong> 60 FPS avec Three.js et optimisations WebGL</li>
+                        <li><strong>Production UE5.6 :</strong> Rendu temps réel optimisé avec Lumen et Nanite</li>
                         <li><strong>Mémoire :</strong> Gestion automatique selon les plateformes cibles</li>
                         <li><strong>Assets :</strong> LOD automatique et compression optimisée</li>
                     </ul>
@@ -951,6 +965,13 @@
                                     <td>Mécaniques de jeu, équilibrage, progression</td>
                                     <td>Design de systèmes, analyse de données</td>
                                     <td>Excel, Unity/UE5, Miro</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Développeur Web/Three.js</strong></td>
+                                    <td>1</td>
+                                    <td>Prototypage Three.js, optimisation WebGL</td>
+                                    <td>JavaScript ES6+, Three.js, WebGL</td>
+                                    <td>VS Code, Three.js, Git</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Développeur UE5</strong></td>
@@ -990,11 +1011,11 @@
                     
                     <h3><i class="fas fa-flag-checkered"></i> Phases de Développement</h3>
                     <ul>
-                        <li><strong>Mois 1-2 :</strong> Pré-production - Conception détaillée, prototypage, validation des mécaniques</li>
-                        <li><strong>Mois 3-4 :</strong> Prototype jouable - Implémentation des mécaniques de base, tests utilisateur</li>
-                        <li><strong>Mois 5-6 :</strong> Alpha - Fonctionnalités complètes, optimisation performance, tests internes</li>
-                        <li><strong>Mois 7-8 :</strong> Beta - Tests utilisateur étendus, corrections, préparation release</li>
-                        <li><strong>Mois 9 :</strong> Release - Déploiement, monitoring, support post-lancement</li>
+                        <li><strong>Phase 1 (Terminée) :</strong> Prototypage Web - Moteur Three.js unifié avec modes 2D/3D, style "Periodic Table"</li>
+                        <li><strong>Phase 2 (En cours) :</strong> Optimisation et tests - Amélioration des performances, tests utilisateur</li>
+                        <li><strong>Phase 3 (Prévue) :</strong> Production UE5 - Migration vers Unreal Engine 5.6 avec Blueprints et C++</li>
+                        <li><strong>Phase 4 (Prévue) :</strong> Beta UE5 - Tests utilisateur étendus, corrections, préparation release</li>
+                        <li><strong>Phase 5 (Prévue) :</strong> Release Finale - Déploiement UE5, monitoring, support post-lancement</li>
                     </ul>
 
                     <h3><i class="fas fa-bullseye"></i> Objectifs Qualité</h3>
