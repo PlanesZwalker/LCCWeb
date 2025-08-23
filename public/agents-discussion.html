@@ -406,8 +406,8 @@
                      position: relative;
                    }
              
-                   .agent-chip[data-tooltip]:hover::after {
-                     content: attr(data-tooltip);
+                   /* Tooltip styles for JavaScript-generated tooltips */
+                   .tooltip {
                      position: fixed;
                      left: 50%;
                      top: 50%;
@@ -434,6 +434,7 @@
                      text-align: left;
                      word-wrap: break-word;
                      overflow-wrap: break-word;
+                     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                    }
              
                    /* Remove arrow for centered tooltip */
@@ -516,24 +517,36 @@
          0 0 0 4px rgba(102, 126, 234, 0.1),
          0 15px 45px rgba(102, 126, 234, 0.6);
      }
-       transform: translateY(-6px) scale(1.1);
-       box-shadow: 
-         0 20px 60px rgba(102, 126, 234, 0.7),
-         0 10px 30px rgba(102, 126, 234, 0.5);
-       border-color: rgba(255, 255, 255, 0.4);
-     }
 
-     .fab:active {
-       transform: translateY(-3px) scale(0.95);
-       transition: transform 0.1s ease;
-     }
-
-     .fab:focus {
-       outline: 2px solid var(--primary-500);
-       outline-offset: 2px;
+     /* Tooltip styles for JavaScript-generated tooltips */
+     .tooltip {
+       position: fixed;
+       left: 50%;
+       top: 50%;
+       transform: translate(-50%, -50%);
+       padding: 20px 24px;
+       background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+       backdrop-filter: blur(20px);
+       border: 2px solid rgba(102, 126, 234, 0.4);
+       border-radius: 16px;
+       color: #ffffff;
+       font-size: 0.9rem;
+       line-height: 1.6;
+       white-space: pre-line;
+       max-width: 400px;
+       min-width: 300px;
+       z-index: 999999;
        box-shadow: 
-         0 0 0 4px rgba(102, 126, 234, 0.1),
-         0 15px 45px rgba(102, 126, 234, 0.6);
+         0 25px 50px rgba(0, 0, 0, 0.5),
+         0 10px 20px rgba(0, 0, 0, 0.3),
+         0 0 0 1px rgba(255, 255, 255, 0.15);
+       animation: tooltipFadeIn 0.3s ease;
+       pointer-events: none;
+       font-weight: 500;
+       text-align: left;
+       word-wrap: break-word;
+       overflow-wrap: break-word;
+       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
      }
 
     .skip-link {
@@ -895,7 +908,42 @@ class AgentsDiscussion {
            checkbox.dispatchEvent(new Event('change'));
          });
        }
+
+       // Add tooltip functionality
+       const tooltipText = chip.getAttribute('data-tooltip');
+       if (tooltipText) {
+         chip.addEventListener('mouseenter', (e) => {
+           this.showTooltip(tooltipText, e);
+         });
+         
+         chip.addEventListener('mouseleave', () => {
+           this.hideTooltip();
+         });
+       }
     });
+  }
+
+  showTooltip(text, event) {
+    // Remove any existing tooltip
+    this.hideTooltip();
+    
+    // Create tooltip element
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = text;
+    
+    // Add to body to ensure it's above everything
+    document.body.appendChild(tooltip);
+    
+    // Store reference for removal
+    this.currentTooltip = tooltip;
+  }
+
+  hideTooltip() {
+    if (this.currentTooltip) {
+      this.currentTooltip.remove();
+      this.currentTooltip = null;
+    }
   }
 
   setupToolButtons() {
