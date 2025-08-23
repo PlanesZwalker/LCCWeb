@@ -1,1157 +1,262 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="stylesheet" href="css/shared.css">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/base-theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letters Cascade Challenge - Spécifications Techniques</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>⚙️ Technical Specifications - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/theme-dark.css">
-    <style id="inline-hero-style">
-        .glass-panel { background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,255,255,.94)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.3); border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 2rem; }
-        .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.6rem 1rem; border-radius:8px; text-decoration:none; font-weight:600; transition:.2s ease; }
-        .btn.primary { color:#fff; background: linear-gradient(135deg, var(--primary-color,#667eea), var(--secondary-color,#764ba2)); }
-        .btn.subtle { color: var(--primary-color,#667eea); background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,.1); }
-    </style>
-    <style>
-        :root {
-            --primary-color: #667eea;
-            --primary-dark: #5a6fd8;
-            --secondary-color: #764ba2;
-            --accent-color: #4ecdc4;
-            --success-color: #4ade80;
-            --warning-color: #fbbf24;
-            --danger-color: #ef4444;
-            --gray-50: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            --white: #ffffff;
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 0.75rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --spacing-3xl: 4rem;
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            --radius-2xl: 1.5rem;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--gray-800);
-            background: var(--gray-900);
-            min-height: 100vh;
-            font-size: 16px;
-            font-weight: 400;
-        }
-
-        .nav-menu {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-sm);
-            box-shadow: var(--shadow-2xl);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-        }
-
-        .nav-menu:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-menu a {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            color: var(--primary-color);
-            text-decoration: none;
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            transition: var(--transition);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .nav-menu a:hover {
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateX(4px);
-        }
-
-        .nav-menu i {
-            font-size: 1.2rem;
-        }
-
-        .nav-menu span {
-            font-size: 0.9rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-2xl);
-            padding-top: calc(var(--spacing-2xl) + 80px);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: var(--spacing-3xl);
-            background: rgba(255, 255, 255, 0.95);
-            padding: var(--spacing-3xl);
-            border-radius: var(--radius-2xl);
-            box-shadow: var(--shadow-2xl);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .header p {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-3xl);
-            margin-bottom: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .section h2 {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: var(--gray-900);
-            margin-bottom: var(--spacing-xl);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-md);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section h2 i {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .spec-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: var(--spacing-xl);
-            margin-top: var(--spacing-xl);
-        }
-
-        .spec-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: var(--transition);
-        }
-
-        .spec-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .spec-card h3 {
-            color: var(--gray-900);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-md);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .spec-card h3 i {
-            color: var(--primary-color);
-        }
-
-        .spec-card p {
-            color: var(--gray-700);
-            margin-bottom: var(--spacing-md);
-            line-height: 1.6;
-        }
-
-        .spec-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .spec-list li {
-            color: var(--gray-700);
-            margin-bottom: var(--spacing-sm);
-            padding-left: var(--spacing-md);
-            position: relative;
-        }
-
-        .spec-list li::before {
-            content: '✓';
-            color: var(--success-color);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        .priority-high {
-            border-left: 4px solid var(--danger-color);
-        }
-
-        .priority-medium {
-            border-left: 4px solid var(--warning-color);
-        }
-
-        .priority-low {
-            border-left: 4px solid var(--success-color);
-        }
-
-        .code-block {
-            background: var(--gray-900);
-            color: var(--gray-100);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            margin: var(--spacing-md) 0;
-            overflow-x: auto;
-        }
-
-        .status-pending {
-            color: var(--warning-color);
-        }
-
-        .status-completed {
-            color: var(--success-color);
-        }
-
-        .status-in-progress {
-            color: var(--primary-color);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: var(--spacing-lg);
-                padding-top: calc(var(--spacing-lg) + 80px);
-            }
-            
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section h2 {
-                font-size: 1.8rem;
-            }
-            
-            .spec-grid {
-                grid-template-columns: 1fr;
-                gap: var(--spacing-lg);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://planeszwalker.github.io/LCCWeb/shared-styles.css">
 </head>
-<body data-theme="dark">
-    <div class="navigation-container"></div>
-    <div class="nav-menu" role="navigation" aria-label="Navigation rapide">
-        <a href="index.html" aria-label="Aller à l'accueil"><i class="fas fa-home"></i><span>Accueil</span></a>
-    </div>
-
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
     <div class="container">
-        <section class="hero glass-panel" style="margin-top: var(--spacing-xl);">
-            <div class="hero-content" style="display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: var(--spacing-xl); align-items: center;">
-                <div class="hero-text">
-                    <h1 style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); letter-spacing: .2px">🎮 Spécifications Techniques</h1>
-                    <p style="opacity:.92; margin-bottom: var(--spacing-md); max-width: 60ch">Document de référence des fonctionnalités et de l’architecture du projet.</p>
-                    <div style="display:flex; gap: var(--spacing-sm); flex-wrap: wrap; align-items:center">
-                        <a href="index.html" class="btn subtle" aria-label="Retour à l’accueil"><i class="fas fa-home"></i>&nbsp;Accueil</a>
-                        <a href="docs/index.html" class="btn primary" aria-label="Consulter la documentation"><i class="fas fa-book"></i>&nbsp;Documentation</a>
-                    </div>
-                </div>
+        <header class="page-header">
+            <h1 class="page-title">⚙️ Technical Specifications</h1>
+            <p class="page-subtitle">Letters Cascade Challenge - Comprehensive Technical Architecture</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="https://planeszwalker.github.io/LCCWeb/" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/public/agents-discussion.html" class="btn btn-secondary">
+                <i class="fas fa-comments"></i> Agents Discussion
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/GDD.html" class="btn btn-secondary">
+                <i class="fas fa-file-alt"></i> Game Design
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/rules.html" class="btn btn-primary">
+                <i class="fas fa-book"></i> Rules
+            </a>
+        </nav>
+
+        <main id="main-content" class="glass-panel">
+            <div class="content-section">
+                <h1>🏗️ Technical Architecture</h1>
+                <p class="highlight-box">
+                    <strong>Letters Cascade Challenge</strong> is built with a modern, scalable architecture that ensures 
+                    optimal performance, maintainability, and cross-platform compatibility.
+                </p>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-gamepad"></i> Système de Jeu Principal</h2>
-            <p>Fonctionnalités core du jeu de puzzle avec lettres tombantes</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-cube"></i> Grille de Jeu</h3>
-                    <p>Système de grille dynamique pour le placement des lettres</p>
-                    <ul class="spec-list">
-                        <li>Grilles disponibles : 8×8, 10×10, 12×12 (configurables)</li>
-                        <li>Grille par défaut : 10×10 (100 cellules)</li>
-                        <li>Détection de collision avec les bords</li>
-                        <li>Détection de collision avec les lettres placées</li>
-                        <li>Validation de placement valide</li>
-                        <li>Rendu visuel avec couleurs par lettre</li>
-                        <li><strong>UE5.6 :</strong> UGrid3DComponent avec Instanced Static Meshes</li>
-                    </ul>
-                    <div class="code-block">
-// Structure de la grille
-class GameGrid {
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
-        this.grid = Array(height).fill().map(() => Array(width).fill(null));
-    }
-    
-    isValidPosition(x, y) { /* ... */ }
-    placeLetter(x, y, letter) { /* ... */ }
-    checkCollision(x, y) { /* ... */ }
-}
+            <div class="content-section">
+                <h2>🎯 Technology Stack</h2>
+                
+                <h3><i class="fas fa-code"></i> Frontend Technologies</h3>
+                <p>
+                    The game interface is built with modern web technologies for maximum compatibility and performance:
+                </p>
+                <ul>
+                    <li><strong>HTML5:</strong> Semantic markup with accessibility features</li>
+                    <li><strong>CSS3:</strong> Modern styling with glassmorphism effects and responsive design</li>
+                    <li><strong>JavaScript ES6+:</strong> Modern JavaScript with classes, modules, and async/await</li>
+                    <li><strong>Canvas API:</strong> High-performance 2D rendering for game graphics</li>
+                    <li><strong>WebGL:</strong> Hardware-accelerated 3D rendering via Three.js</li>
+                </ul>
 
-// UE5.6 Implementation:
-// UGrid3DComponent with UInstancedStaticMeshComponent
-// BP_Grid3D Actor with Grid3DComponent
-// Grid Sizes: 8x8, 10x10, 12x12
-                    </div>
-                </div>
-
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-arrow-down"></i> Système de Chute</h3>
-                    <p>Mécanique de chute des lettres avec contrôles</p>
-                    <ul class="spec-list">
-                        <li>Génération aléatoire de lettres</li>
-                        <li>Chute automatique à vitesse configurable</li>
-                        <li>Contrôles de déplacement (gauche/droite)</li>
-                        <li>Rotation des lettres (espace)</li>
-                        <li>Chute rapide (flèche bas)</li>
-                        <li>Prévisualisation de la prochaine lettre</li>
-                        <li><strong>UE5.6 :</strong> AFallingLetter avec UStaticMeshComponent et physique</li>
-                    </ul>
-                    <div class="code-block">
-// Système de chute
-class FallingLetter {
-    constructor(letter) {
-        this.letter = letter;
-        this.x = 5; // Position initiale
-        this.y = 0;
-        this.rotation = 0;
-    }
-    
-    moveLeft() { /* ... */ }
-    moveRight() { /* ... */ }
-    rotate() { /* ... */ }
-    drop() { /* ... */ }
-}
-
-// UE5.6 Implementation:
-// AFallingLetter class with UStaticMeshComponent
-// Input Mapping in Project Settings
-// UTimelineComponent for animations
-                    </div>
-                </div>
-
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-spell-check"></i> Détection de Mots</h3>
-                    <p>Algorithme de reconnaissance et validation des mots</p>
-                    <ul class="spec-list">
-                        <li>Scan horizontal de la grille</li>
-                        <li>Détection de mots de 3+ lettres</li>
-                        <li>Validation contre dictionnaire français</li>
-                        <li>Suppression automatique des mots trouvés</li>
-                        <li>Animation de suppression</li>
-                        <li>Mise à jour du score</li>
-                        <li><strong>UE5.6 :</strong> UWordDetector avec TSet&lt;FString&gt; et AsyncTask</li>
-                    </ul>
-                    <div class="code-block">
-// Détection de mots
-class WordDetector {
-    constructor(dictionary) {
-        this.dictionary = dictionary;
-    }
-    
-    scanGrid(grid) { /* ... */ }
-    findWords(row) { /* ... */ }
-    validateWord(word) { /* ... */ }
-    removeWord(word, grid) { /* ... */ }
-}
-
-// UE5.6 Implementation:
-// UWordDetector class with TSet<FString> Dictionary
-// Multithreading with AsyncTask for performance
-// Blueprint Interface for communication
-                    </div>
-                </div>
+                <h3><i class="fas fa-server"></i> Backend & Services</h3>
+                <p>
+                    Robust backend infrastructure supporting real-time gameplay and data management:
+                </p>
+                <ul>
+                    <li><strong>Node.js:</strong> Server-side JavaScript runtime</li>
+                    <li><strong>Express.js:</strong> Web application framework</li>
+                    <li><strong>WebSocket:</strong> Real-time bidirectional communication</li>
+                    <li><strong>Ollama:</strong> Local AI model integration for intelligent gameplay</li>
+                    <li><strong>SQLite:</strong> Lightweight database for local data storage</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-trophy"></i> Système de Score</h2>
-            <p>Calcul et affichage du score avec bonus et multiplicateurs</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-calculator"></i> Calcul du Score</h3>
-                    <p>Logique de calcul des points et bonus</p>
-                    <ul class="spec-list">
-                        <li>1 point par lettre placée</li>
-                        <li>Bonus : longueur du mot × 10</li>
-                        <li>Multiplicateur de combo (mots consécutifs)</li>
-                        <li>Bonus de vitesse (placement rapide)</li>
-                        <li>Bonus de difficulté (niveau)</li>
-                        <li>Score maximum possible</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>🎮 Game Engine Architecture</h2>
+                
+                <h3><i class="fas fa-cogs"></i> Core Systems</h3>
+                <p>
+                    Modular architecture with specialized systems for different game aspects:
+                </p>
+                <ul>
+                    <li><strong>Game Loop:</strong> 60 FPS update cycle with delta time compensation</li>
+                    <li><strong>Input Manager:</strong> Unified input handling for keyboard, mouse, and touch</li>
+                    <li><strong>Audio System:</strong> Spatial audio with Web Audio API integration</li>
+                    <li><strong>Physics Engine:</strong> Custom 2D physics for letter interactions</li>
+                    <li><strong>Rendering Pipeline:</strong> Optimized rendering with layer management</li>
+                </ul>
 
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-chart-line"></i> Interface Score</h3>
-                    <p>Affichage et mise à jour du score en temps réel</p>
-                    <ul class="spec-list">
-                        <li>Affichage du score actuel</li>
-                        <li>Animation de mise à jour</li>
-                        <li>Affichage du meilleur score</li>
-                        <li>Historique des scores</li>
-                        <li>Classement des meilleurs scores</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-layer-group"></i> Rendering Architecture</h3>
+                <p>
+                    Multi-layered rendering system supporting both 2D and 3D modes:
+                </p>
+                <ul>
+                    <li><strong>2D Mode:</strong> Canvas-based rendering for maximum performance</li>
+                    <li><strong>3D Mode:</strong> WebGL rendering with Three.js for immersive experience</li>
+                    <li><strong>Particle System:</strong> GPU-accelerated particle effects</li>
+                    <li><strong>Post-Processing:</strong> Real-time visual effects and filters</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-cog"></i> Système de Contrôles</h2>
-            <p>Gestion des entrées clavier et tactiles</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-keyboard"></i> Contrôles Clavier</h3>
-                    <p>Gestion des événements clavier</p>
-                    <ul class="spec-list">
-                        <li>Flèches gauche/droite : Déplacement</li>
-                        <li>Flèche bas : Chute rapide</li>
-                        <li>Espace : Rotation</li>
-                        <li>P : Pause/Reprendre</li>
-                        <li>R : Redémarrer</li>
-                        <li>Échap : Menu principal</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>📱 Platform Support</h2>
+                
+                <h3><i class="fas fa-desktop"></i> Desktop Platforms</h3>
+                <p>
+                    Full-featured desktop experience with advanced graphics and controls:
+                </p>
+                <ul>
+                    <li><strong>Windows:</strong> Windows 10/11 with DirectX support</li>
+                    <li><strong>macOS:</strong> macOS 12+ with Metal API optimization</li>
+                    <li><strong>Linux:</strong> Ubuntu 20.04+ with Vulkan support</li>
+                    <li><strong>Web Browsers:</strong> Chrome, Firefox, Safari, Edge (latest versions)</li>
+                </ul>
 
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-mobile-alt"></i> Contrôles Tactiles</h3>
-                    <p>Support des contrôles sur mobile</p>
-                    <ul class="spec-list">
-                        <li>Boutons virtuels pour mobile</li>
-                        <li>Gestes de swipe</li>
-                        <li>Support orientation portrait/paysage</li>
-                        <li>Adaptation automatique de l'interface</li>
-                        <li>Vibration feedback</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-mobile-alt"></i> Mobile Platforms</h3>
+                <p>
+                    Optimized mobile experience with touch controls and performance tuning:
+                </p>
+                <ul>
+                    <li><strong>iOS:</strong> iOS 15+ with Safari optimization</li>
+                    <li><strong>Android:</strong> Android 11+ with Chrome optimization</li>
+                    <li><strong>Progressive Web App:</strong> Offline support and app-like experience</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-layer-group"></i> Système de Niveaux</h2>
-            <p>Progression de difficulté et objectifs</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-chart-bar"></i> Progression</h3>
-                    <p>Système de niveaux avec objectifs</p>
-                    <ul class="spec-list">
-                        <li>4 niveaux de difficulté (Facile, Moyen, Difficile, Expert)</li>
-                        <li>Vitesse de chute progressive</li>
-                        <li>Objectifs de mots à former</li>
-                        <li>Déblocage de nouveaux niveaux</li>
-                        <li>Système de vies (optionnel)</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>🔧 Development Tools</h2>
+                
+                <h3><i class="fas fa-tools"></i> Build System</h3>
+                <p>
+                    Modern development workflow with automated build and deployment:
+                </p>
+                <ul>
+                    <li><strong>Webpack:</strong> Module bundling and asset optimization</li>
+                    <li><strong>Babel:</strong> JavaScript transpilation for browser compatibility</li>
+                    <li><strong>ESLint:</strong> Code quality and style enforcement</li>
+                    <li><strong>Prettier:</strong> Automatic code formatting</li>
+                    <li><strong>Git:</strong> Version control with GitHub integration</li>
+                </ul>
 
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-star"></i> Récompenses</h3>
-                    <p>Système de récompenses et achievements</p>
-                    <ul class="spec-list">
-                        <li>Badges pour objectifs atteints</li>
-                        <li>Déblocage de thèmes visuels</li>
-                        <li>Statistiques de jeu</li>
-                        <li>Leaderboard</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-vial"></i> Testing Framework</h3>
+                <p>
+                    Comprehensive testing strategy ensuring code quality and reliability:
+                </p>
+                <ul>
+                    <li><strong>Jest:</strong> Unit testing framework</li>
+                    <li><strong>Cypress:</strong> End-to-end testing</li>
+                    <li><strong>Lighthouse:</strong> Performance and accessibility auditing</li>
+                    <li><strong>Cross-browser Testing:</strong> Automated testing across browsers</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-eye"></i> Interface Utilisateur</h2>
-            <p>Éléments d'interface et expérience utilisateur</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-palette"></i> Interface de Jeu</h3>
-                    <p>Éléments visuels du jeu</p>
-                    <ul class="spec-list">
-                        <li>Grille de jeu avec bordures</li>
-                        <li>Affichage du score en temps réel</li>
-                        <li>Prévisualisation de la prochaine lettre</li>
-                        <li>Liste des mots à former</li>
-                        <li>Indicateur de niveau</li>
-                        <li>Boutons de contrôle</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>🚀 Performance Optimization</h2>
+                
+                <h3><i class="fas fa-tachometer-alt"></i> Rendering Performance</h3>
+                <p>
+                    Optimized rendering pipeline for smooth 60 FPS gameplay:
+                </p>
+                <ul>
+                    <li><strong>Object Pooling:</strong> Efficient memory management for game objects</li>
+                    <li><strong>Spatial Partitioning:</strong> Optimized collision detection</li>
+                    <li><strong>Texture Atlasing:</strong> Reduced draw calls and memory usage</li>
+                    <li><strong>Level of Detail:</strong> Adaptive quality based on performance</li>
+                </ul>
 
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-music"></i> Effets Visuels et Audio</h3>
-                    <p>Animations et feedback sonore</p>
-                    <ul class="spec-list">
-                        <li>Animation de chute des lettres</li>
-                        <li>Effet de suppression des mots</li>
-                        <li>Particules pour les bonus</li>
-                        <li>Sons de placement de lettres</li>
-                        <li>Musique de fond</li>
-                        <li>Effets sonores pour les actions</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-memory"></i> Memory Management</h3>
+                <p>
+                    Efficient memory usage and garbage collection optimization:
+                </p>
+                <ul>
+                    <li><strong>Memory Pooling:</strong> Pre-allocated memory for frequent operations</li>
+                    <li><strong>Asset Streaming:</strong> Dynamic loading and unloading of resources</li>
+                    <li><strong>Garbage Collection:</strong> Minimized GC pressure through object reuse</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-palette"></i> Design Visuel 3D</h2>
-            <p>Spécifications détaillées pour l'environnement 3D immersif</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-paint-brush"></i> Style Artistique</h3>
-                    <p>Direction artistique et références visuelles</p>
-                    <ul class="spec-list">
-                        <li><strong>Style :</strong> Réalisme stylisé inspiré des films d'animation Pixar/DreamWorks</li>
-                        <li><strong>Ambiance :</strong> Forêt enchantée lumineuse avec cascade majestueuse</li>
-                        <li><strong>Palette :</strong> Couleurs vives et contrastées avec éclairage naturel dynamique</li>
-                        <li><strong>Références :</strong> Avatar, Princesse Mononoké, Ori and the Blind Forest</li>
-                        <li><strong>Texture :</strong> PBR (Physically Based Rendering) avec subsurface scattering</li>
-                        <li><strong>Animation :</strong> Fluide et organique avec squash and stretch</li>
-                    </ul>
-                    <div class="code-block">
-// Configuration du style artistique
-const artStyle = {
-    reference: "Pixar/DreamWorks Animation",
-    lighting: "Natural Dynamic Lighting",
-    colorPalette: "Vibrant Contrasted Colors",
-    textureSystem: "PBR with Subsurface Scattering",
-    animationStyle: "Fluid Organic with Squash & Stretch"
-};
-                    </div>
-                </div>
+            <div class="content-section">
+                <h2>🔒 Security & Privacy</h2>
+                
+                <h3><i class="fas fa-shield-alt"></i> Data Protection</h3>
+                <p>
+                    Comprehensive security measures protecting user data and privacy:
+                </p>
+                <ul>
+                    <li><strong>Local Storage:</strong> Game data stored locally for privacy</li>
+                    <li><strong>Input Validation:</strong> Robust validation preventing injection attacks</li>
+                    <li><strong>HTTPS:</strong> Secure communication for online features</li>
+                    <li><strong>Content Security Policy:</strong> Protection against XSS attacks</li>
+                </ul>
 
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-tree"></i> Environnement 3D - Forêt Primaire</h3>
-                    <p>Système d'environnement forestier détaillé</p>
-                    <ul class="spec-list">
-                        <li><strong>Arbres détaillés :</strong> Système de vent procédural avec LOD (Level of Detail)</li>
-                        <li><strong>Végétation :</strong> Fougères, mousses, fleurs sauvages avec croissance dynamique</li>
-                        <li><strong>Sol organique :</strong> Textures de terre, racines exposées, feuilles mortes</li>
-                        <li><strong>Rochers et pierres :</strong> Géométrie procédurale avec érosion naturelle</li>
-                        <li><strong>Eau et cascades :</strong> Système de fluides réaliste avec réflexions</li>
-                        <li><strong>Particules :</strong> Pollen, feuilles volantes, brume matinale</li>
-                        <li><strong>UE5.6 :</strong> Foliage System avec Wind Direction, Niagara Particles</li>
-                    </ul>
-                    <div class="code-block">
-// Système d'environnement forestier
-class ForestEnvironment {
-    constructor() {
-        this.trees = new ProceduralTreeSystem();
-        this.vegetation = new DynamicVegetation();
-        this.terrain = new OrganicTerrain();
-        this.waterSystem = new RealisticWaterSystem();
-        this.particleSystem = new EnvironmentalParticles();
-    }
-    
-    updateWind(windStrength, windDirection) { /* ... */ }
-    updateTimeOfDay(time) { /* ... */ }
-    updateWeather(weatherType) { /* ... */ }
-}
-
-// UE5.6 Implementation:
-// Foliage System with Wind Direction
-// Niagara Particle System for environmental effects
-// Landscape System for terrain generation
-// Water System with fluid simulation
-                    </div>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-lightbulb"></i> Système d'Éclairage</h3>
-                    <p>Éclairage dynamique et atmosphérique</p>
-                    <ul class="spec-list">
-                        <li><strong>Éclairage principal :</strong> Soleil avec ombres douces et volumétriques</li>
-                        <li><strong>Éclairage secondaire :</strong> Lumière ambiante pour les zones ombragées</li>
-                        <li><strong>Éclairage local :</strong> Lanternes magiques et cristaux lumineux</li>
-                        <li><strong>Effets spéciaux :</strong> God rays, lens flares, bloom</li>
-                        <li><strong>Cycle jour/nuit :</strong> Transition progressive avec couleurs atmosphériques</li>
-                        <li><strong>Performance :</strong> Optimisation avec LOD et culling</li>
-                        <li><strong>UE5.6 :</strong> Lumen Global Illumination, Volumetric Fog, Post Process Volume</li>
-                    </ul>
-                    <div class="code-block">
-// Système d'éclairage dynamique
-class DynamicLighting {
-    constructor() {
-        this.sunLight = new DirectionalLight();
-        this.ambientLight = new AmbientLight();
-        this.pointLights = new PointLightArray();
-        this.volumetricFog = new VolumetricFogSystem();
-    }
-    
-    updateTimeOfDay(time) { /* ... */ }
-    updateWeather(weather) { /* ... */ }
-    calculateShadows() { /* ... */ }
-}
-
-// UE5.6 Implementation:
-// Directional Light with Lumen GI
-// Volumetric Fog with Fog Cards
-// Post Process Volume for atmospheric effects
-// Sky Atmosphere for realistic sky rendering
-                    </div>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-water"></i> Cascade et Système Aquatique</h3>
-                    <p>Éléments aquatiques et effets de cascade</p>
-                    <ul class="spec-list">
-                        <li><strong>Cascade principale :</strong> Géométrie procédurale avec simulation de fluides</li>
-                        <li><strong>Bassin d'eau :</strong> Réflexions réalistes et ondulations</li>
-                        <li><strong>Particules d'eau :</strong> Brume, éclaboussures, gouttelettes</li>
-                        <li><strong>Son ambiant :</strong> Bruit de cascade avec spatialisation 3D</li>
-                        <li><strong>Interaction :</strong> Ripple effects lors du contact avec l'eau</li>
-                        <li><strong>Performance :</strong> Optimisation GPU avec compute shaders</li>
-                        <li><strong>UE5.6 :</strong> Water System, Niagara Fluid Simulation, Audio Spatialization</li>
-                    </ul>
-                    <div class="code-block">
-// Système de cascade et eau
-class WaterfallSystem {
-    constructor() {
-        this.waterfallGeometry = new ProceduralWaterfall();
-        this.waterParticles = new WaterParticleSystem();
-        this.reflectionSystem = new WaterReflection();
-        this.audioSystem = new SpatializedAudio();
-    }
-    
-    updateWaterFlow(flowRate) { /* ... */ }
-    generateSplash(position) { /* ... */ }
-    updateReflections() { /* ... */ }
-}
-
-// UE5.6 Implementation:
-// Water System with fluid simulation
-// Niagara Particle System for water effects
-// Audio Spatialization for 3D sound
-// Planar Reflection for water reflections
-                    </div>
-                </div>
-
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-magic"></i> Effets Magiques et Particules</h3>
-                    <p>Système d'effets spéciaux pour l'ambiance enchantée</p>
-                    <ul class="spec-list">
-                        <li><strong>Particules magiques :</strong> Étincelles dorées, poussière de fée</li>
-                        <li><strong>Effets de lettre :</strong> Glow, traînées, transformations</li>
-                        <li><strong>Ambiance :</strong> Brume lumineuse, rayons de lumière</li>
-                        <li><strong>Feedback visuel :</strong> Explosions de mots, bonus visuels</li>
-                        <li><strong>Performance :</strong> GPU particles avec instancing</li>
-                        <li><strong>Optimisation :</strong> Culling et LOD pour les particules</li>
-                    </ul>
-                    <div class="code-block">
-// Système d'effets magiques
-class MagicParticleSystem {
-    constructor() {
-        this.goldenSparks = new SparkParticleSystem();
-        this.fairyDust = new DustParticleSystem();
-        this.wordExplosions = new ExplosionSystem();
-        this.letterEffects = new LetterEffectSystem();
-    }
-    
-    spawnMagicEffect(position, type) { /* ... */ }
-    updateParticles(deltaTime) { /* ... */ }
-    optimizeForPerformance() { /* ... */ }
-}
-                    </div>
-                </div>
-
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-camera"></i> Caméra et Cinématique</h3>
-                    <p>Système de caméra dynamique et cinématique</p>
-                    <ul class="spec-list">
-                        <li><strong>Caméra principale :</strong> Mouvement fluide avec interpolation</li>
-                        <li><strong>Transitions :</strong> Smooth transitions entre angles de vue</li>
-                        <li><strong>Cinématique :</strong> Séquences pré-calculées pour les moments clés</li>
-                        <li><strong>Contrôle utilisateur :</strong> Zoom, rotation, déplacement libre</li>
-                        <li><strong>Collision :</strong> Évitement automatique des obstacles</li>
-                        <li><strong>Performance :</strong> Frustum culling et occlusion culling</li>
-                    </ul>
-                    <div class="code-block">
-// Système de caméra dynamique
-class DynamicCamera {
-    constructor() {
-        this.mainCamera = new Camera();
-        this.cinematicSystem = new CinematicSystem();
-        this.collisionAvoidance = new CollisionAvoidance();
-        this.smoothInterpolation = new SmoothInterpolation();
-    }
-    
-    updateCameraPosition(target) { /* ... */ }
-    playCinematic(sequence) { /* ... */ }
-    handleUserInput(input) { /* ... */ }
-}
-                    </div>
-                </div>
+                <h3><i class="fas fa-user-shield"></i> Privacy Compliance</h3>
+                <p>
+                    Full compliance with privacy regulations and best practices:
+                </p>
+                <ul>
+                    <li><strong>GDPR Compliance:</strong> European data protection standards</li>
+                    <li><strong>COPPA Compliance:</strong> Children's online privacy protection</li>
+                    <li><strong>Data Minimization:</strong> Only essential data collection</li>
+                    <li><strong>User Consent:</strong> Clear consent mechanisms for data usage</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-cube"></i> Mode 3D (Futur)</h2>
-            <p>Fonctionnalités avancées pour la version 3D</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-cube"></i> Grille 3D</h3>
-                    <p>Système de grille tridimensionnelle</p>
-                    <ul class="spec-list">
-                        <li>Grille 3D avec profondeur</li>
-                        <li>Détection de mots en 6 directions</li>
-                        <li>Caméra 3D dynamique</li>
-                        <li>Physique réaliste des lettres</li>
-                        <li>Éclairage et ombres</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>📊 Analytics & Monitoring</h2>
+                
+                <h3><i class="fas fa-chart-line"></i> Performance Monitoring</h3>
+                <p>
+                    Real-time monitoring and analytics for optimal user experience:
+                </p>
+                <ul>
+                    <li><strong>Performance Metrics:</strong> FPS, load times, and memory usage tracking</li>
+                    <li><strong>Error Tracking:</strong> Automated error reporting and analysis</li>
+                    <li><strong>User Analytics:</strong> Anonymous gameplay statistics</li>
+                    <li><strong>Crash Reporting:</strong> Detailed crash analysis and resolution</li>
+                </ul>
 
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-vr-cardboard"></i> Immersion</h3>
-                    <p>Fonctionnalités immersives</p>
-                    <ul class="spec-list">
-                        <li>Support VR (optionnel)</li>
-                        <li>Contrôles gestuels</li>
-                        <li>Environnement 3D immersif</li>
-                        <li>Effets haptiques</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-bug"></i> Quality Assurance</h3>
+                <p>
+                    Comprehensive testing and quality assurance processes:
+                </p>
+                <ul>
+                    <li><strong>Automated Testing:</strong> Continuous integration and deployment</li>
+                    <li><strong>Manual Testing:</strong> User experience validation</li>
+                    <li><strong>Performance Testing:</strong> Load testing and optimization</li>
+                    <li><strong>Accessibility Testing:</strong> WCAG 2.1 compliance verification</li>
+                </ul>
             </div>
-        </section>
 
-        <section class="section">
-            <h2><i class="fas fa-database"></i> Système de Données</h2>
-            <p>Gestion des données et sauvegarde</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-save"></i> Sauvegarde</h3>
-                    <p>Système de sauvegarde des données</p>
-                    <ul class="spec-list">
-                        <li>Sauvegarde locale (localStorage)</li>
-                        <li>Sauvegarde cloud (optionnel)</li>
-                        <li>Récupération de partie</li>
-                        <li>Synchronisation multi-appareils</li>
-                    </ul>
-                </div>
+            <div class="content-section">
+                <h2>🔮 Future Roadmap</h2>
+                
+                <h3><i class="fas fa-rocket"></i> Planned Enhancements</h3>
+                <p>
+                    Exciting features and improvements planned for future releases:
+                </p>
+                <ul>
+                    <li><strong>WebAssembly:</strong> Performance-critical code optimization</li>
+                    <li><strong>Service Workers:</strong> Enhanced offline capabilities</li>
+                    <li><strong>WebRTC:</strong> Real-time multiplayer functionality</li>
+                    <li><strong>Progressive Web App:</strong> Native app-like experience</li>
+                    <li><strong>AI Integration:</strong> Advanced AI-powered gameplay features</li>
+                </ul>
 
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-chart-pie"></i> Analytics</h3>
-                    <p>Collecte de données de jeu</p>
-                    <ul class="spec-list">
-                        <li>Statistiques de jeu</li>
-                        <li>Analytics de performance</li>
-                        <li>Rapports d'erreurs</li>
-                        <li>Métriques d'engagement</li>
-                    </ul>
-                </div>
+                <h3><i class="fas fa-cloud"></i> Cloud Integration</h3>
+                <p>
+                    Cloud-based features for enhanced user experience:
+                </p>
+                <ul>
+                    <li><strong>Cloud Saves:</strong> Cross-device game progress synchronization</li>
+                    <li><strong>Leaderboards:</strong> Global competitive rankings</li>
+                    <li><strong>Social Features:</strong> Friend systems and sharing</li>
+                    <li><strong>Content Updates:</strong> Dynamic content delivery</li>
+                </ul>
             </div>
-        </section>
+        </main>
 
-        <section class="section">
-            <h2><i class="fas fa-code"></i> Architecture Technique</h2>
-            <p>Structure du code et organisation</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-sitemap"></i> Structure du Code</h3>
-                    <p>Organisation des classes et modules</p>
-                    <ul class="spec-list">
-                        <li>Classe GameEngine (logique principale)</li>
-                        <li>Classe GameGrid (gestion de la grille)</li>
-                        <li>Classe FallingLetter (lettres tombantes)</li>
-                        <li>Classe WordDetector (détection de mots)</li>
-                        <li>Classe ScoreManager (gestion du score)</li>
-                        <li>Classe InputHandler (gestion des contrôles)</li>
-                        <li>Classe UIManager (interface utilisateur)</li>
-                    </ul>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-cogs"></i> Configuration</h3>
-                    <p>Système de configuration du jeu</p>
-                    <ul class="spec-list">
-                        <li>Fichier de configuration JSON</li>
-                        <li>Paramètres de difficulté</li>
-                        <li>Personnalisation des contrôles</li>
-                        <li>Options graphiques</li>
-                        <li>Paramètres audio</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2><i class="fas fa-unity"></i> Développement Unreal Engine 5.6</h2>
-            <p>Spécifications techniques pour le développement en C++ et Blueprints</p>
-            
-            <div class="spec-grid">
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-code"></i> Architecture C++ UE5.6</h3>
-                    <p>Structure des classes C++ pour Unreal Engine 5.6</p>
-                    <ul class="spec-list">
-                        <li><strong>GameMode :</strong> ALettersCascadeGameMode (hérite de AGameModeBase)</li>
-                        <li><strong>PlayerController :</strong> ALettersCascadePlayerController (hérite de APlayerController)</li>
-                        <li><strong>Pawn :</strong> ALettersCascadePawn (hérite de APawn)</li>
-                        <li><strong>GameState :</strong> ALettersCascadeGameState (hérite de AGameStateBase)</li>
-                        <li><strong>HUD :</strong> ALettersCascadeHUD (hérite de AHUD)</li>
-                        <li><strong>Widgets :</strong> ULettersCascadeWidget (hérite de UUserWidget)</li>
-                    </ul>
-                    <div class="code-block">
-// Exemple de classe C++ UE5.6
-UCLASS(BlueprintType, Blueprintable)
-class LETTERSCASCADE_API ALettersCascadeGameMode : public AGameModeBase
-{
-    GENERATED_BODY()
-    
-public:
-    ALettersCascadeGameMode();
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Settings")
-    int32 GridWidth = 10;
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game Settings")
-    int32 GridHeight = 20;
-    
-    UFUNCTION(BlueprintCallable, Category = "Game Logic")
-    void StartGame();
-    
-    UFUNCTION(BlueprintCallable, Category = "Game Logic")
-    void PauseGame();
-    
-protected:
-    virtual void BeginPlay() override;
-    virtual void Tick(float DeltaTime) override;
-};
-                    </div>
-                </div>
-
-                <div class="spec-card priority-high">
-                    <h3><i class="fas fa-puzzle-piece"></i> Système Blueprint</h3>
-                    <p>Architecture Blueprint pour la logique de jeu</p>
-                    <ul class="spec-list">
-                        <li><strong>GameMode BP :</strong> BP_LettersCascadeGameMode (Blueprint de GameMode)</li>
-                        <li><strong>PlayerController BP :</strong> BP_LettersCascadePlayerController (Contrôles)</li>
-                        <li><strong>UI Widgets :</strong> WBP_GameHUD, WBP_MainMenu, WBP_PauseMenu</li>
-                        <li><strong>Game Logic :</strong> BP_GameManager, BP_WordDetector, BP_ScoreManager</li>
-                        <li><strong>Visual Effects :</strong> BP_ParticleManager, BP_LightingController</li>
-                        <li><strong>Audio System :</strong> BP_AudioManager, BP_SoundEffects</li>
-                    </ul>
-                    <div class="code-block">
-// Structure Blueprint recommandée
-Blueprint Hierarchy:
-├── BP_LettersCascadeGameMode
-│   ├── BP_GameManager
-│   ├── BP_WordDetector
-│   └── BP_ScoreManager
-├── BP_LettersCascadePlayerController
-│   ├── BP_InputHandler
-│   └── BP_CameraController
-└── BP_UI_Manager
-    ├── WBP_GameHUD
-    ├── WBP_MainMenu
-    └── WBP_PauseMenu
-                    </div>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-cube"></i> Système de Grille 3D</h3>
-                    <p>Implémentation de la grille de jeu en C++ et Blueprint</p>
-                    <ul class="spec-list">
-                        <li><strong>Classe C++ :</strong> UGrid3DComponent (hérite de USceneComponent)</li>
-                        <li><strong>Blueprint :</strong> BP_Grid3D (Actor avec Grid3DComponent)</li>
-                        <li><strong>Cellules :</strong> UGridCell (Struct avec position et contenu)</li>
-                        <li><strong>Collision :</strong> Collision detection avec UBoxComponent</li>
-                        <li><strong>Rendu :</strong> UStaticMeshComponent pour les cellules</li>
-                        <li><strong>Performance :</strong> Instanced Static Meshes pour optimisation</li>
-                        <li><strong>Tailles :</strong> 8×8, 10×10, 12×12 (carrées)</li>
-                    </ul>
-                    <div class="code-block">
-// Classe C++ pour la grille 3D
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class LETTERSCASCADE_API UGrid3DComponent : public USceneComponent
-{
-    GENERATED_BODY()
-    
-public:
-    UGrid3DComponent();
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid Settings")
-    FIntVector GridSize = FIntVector(10, 10, 3); // Default: 10x10x3
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid Settings")
-    float CellSize = 100.0f;
-    
-    UFUNCTION(BlueprintCallable, Category = "Grid Logic")
-    bool PlaceLetter(const FIntVector& Position, const FString& Letter);
-    
-    UFUNCTION(BlueprintCallable, Category = "Grid Logic")
-    TArray<FString> FindWords();
-    
-protected:
-    UPROPERTY()
-    TArray<UGridCell*> GridCells;
-    
-    UPROPERTY()
-    UInstancedStaticMeshComponent* CellMeshComponent;
-};
-                    </div>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-font"></i> Système de Lettres Tombantes</h3>
-                    <p>Gestion des lettres en chute avec physique UE5.6</p>
-                    <ul class="spec-list">
-                        <li><strong>Classe C++ :</strong> AFallingLetter (hérite de AActor)</li>
-                        <li><strong>Physique :</strong> UStaticMeshComponent avec simulation</li>
-                        <li><strong>Contrôles :</strong> Input mapping dans Project Settings</li>
-                        <li><strong>Animation :</strong> UTimelineComponent pour les effets</li>
-                        <li><strong>Son :</strong> UAudioComponent pour les effets sonores</li>
-                        <li><strong>Particules :</strong> UParticleSystemComponent pour les effets visuels</li>
-                    </ul>
-                    <div class="code-block">
-// Classe C++ pour les lettres tombantes
-UCLASS(BlueprintType, Blueprintable)
-class LETTERSCASCADE_API AFallingLetter : public AActor
-{
-    GENERATED_BODY()
-    
-public:
-    AFallingLetter();
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letter")
-    FString Letter = "A";
-    
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Letter")
-    FVector CurrentPosition = FVector::ZeroVector;
-    
-    UFUNCTION(BlueprintCallable, Category = "Letter Movement")
-    void MoveLeft();
-    
-    UFUNCTION(BlueprintCallable, Category = "Letter Movement")
-    void MoveRight();
-    
-    UFUNCTION(BlueprintCallable, Category = "Letter Movement")
-    void Rotate();
-    
-    UFUNCTION(BlueprintCallable, Category = "Letter Movement")
-    void Drop();
-    
-protected:
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UStaticMeshComponent* LetterMesh;
-    
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UAudioComponent* AudioComponent;
-    
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UParticleSystemComponent* ParticleComponent;
-};
-                    </div>
-                </div>
-
-                <div class="spec-card priority-medium">
-                    <h3><i class="fas fa-spell-check"></i> Détection de Mots UE5.6</h3>
-                    <p>Algorithme de reconnaissance de mots optimisé pour UE5.6</p>
-                    <ul class="spec-list">
-                        <li><strong>Classe C++ :</strong> UWordDetector (hérite de UObject)</li>
-                        <li><strong>Dictionnaire :</strong> TSet&lt;FString&gt; pour la validation</li>
-                        <li><strong>Algorithme :</strong> Scan horizontal, vertical et diagonal</li>
-                        <li><strong>Performance :</strong> Multithreading avec AsyncTask</li>
-                        <li><strong>Blueprint Interface :</strong> Interface pour communication</li>
-                        <li><strong>Debug :</strong> Visualisation des mots trouvés</li>
-                    </ul>
-                    <div class="code-block">
-// Classe C++ pour la détection de mots
-UCLASS(BlueprintType, Blueprintable)
-class LETTERSCASCADE_API UWordDetector : public UObject
-{
-    GENERATED_BODY()
-    
-public:
-    UWordDetector();
-    
-    UFUNCTION(BlueprintCallable, Category = "Word Detection")
-    TArray<FString> ScanGrid(const TArray<FString>& Grid);
-    
-    UFUNCTION(BlueprintCallable, Category = "Word Detection")
-    bool ValidateWord(const FString& Word);
-    
-    UFUNCTION(BlueprintCallable, Category = "Word Detection")
-    void RemoveWord(const FString& Word, TArray<FString>& Grid);
-    
-protected:
-    UPROPERTY()
-    TSet<FString> Dictionary;
-    
-    UFUNCTION()
-    TArray<FString> FindHorizontalWords(const TArray<FString>& Grid);
-    
-    UFUNCTION()
-    TArray<FString> FindVerticalWords(const TArray<FString>& Grid);
-    
-    UFUNCTION()
-    TArray<FString> FindDiagonalWords(const TArray<FString>& Grid);
-};
-                    </div>
-                </div>
-
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-trophy"></i> Système de Score UE5.6</h3>
-                    <p>Gestion du score avec sauvegarde et statistiques</p>
-                    <ul class="spec-list">
-                        <li><strong>Classe C++ :</strong> UScoreManager (hérite de UObject)</li>
-                        <li><strong>Sauvegarde :</strong> UGameplayStatics pour localStorage</li>
-                        <li><strong>UI :</strong> UTextBlock pour affichage en temps réel</li>
-                        <li><strong>Animation :</strong> UWidgetAnimation pour les effets</li>
-                        <li><strong>Leaderboard :</strong> Intégration avec Online Subsystem</li>
-                        <li><strong>Achievements :</strong> Système de badges et récompenses</li>
-                    </ul>
-                    <div class="code-block">
-// Classe C++ pour la gestion du score
-UCLASS(BlueprintType, Blueprintable)
-class LETTERSCASCADE_API UScoreManager : public UObject
-{
-    GENERATED_BODY()
-    
-public:
-    UScoreManager();
-    
-    UPROPERTY(BlueprintReadWrite, Category = "Score")
-    int32 CurrentScore = 0;
-    
-    UPROPERTY(BlueprintReadWrite, Category = "Score")
-    int32 HighScore = 0;
-    
-    UFUNCTION(BlueprintCallable, Category = "Score")
-    void AddScore(int32 Points);
-    
-    UFUNCTION(BlueprintCallable, Category = "Score")
-    void SaveScore();
-    
-    UFUNCTION(BlueprintCallable, Category = "Score")
-    void LoadScore();
-    
-    UFUNCTION(BlueprintCallable, Category = "Score")
-    void ResetScore();
-    
-protected:
-    UFUNCTION()
-    void UpdateHighScore();
-    
-    UFUNCTION()
-    void SaveToLocalStorage();
-    
-    UFUNCTION()
-    void LoadFromLocalStorage();
-};
-                    </div>
-                </div>
-
-                <div class="spec-card priority-low">
-                    <h3><i class="fas fa-cogs"></i> Configuration UE5.6</h3>
-                    <p>Paramètres et configuration du projet UE5.6</p>
-                    <ul class="spec-list">
-                        <li><strong>Project Settings :</strong> Configuration des paramètres de base</li>
-                        <li><strong>Input Mapping :</strong> Définition des contrôles clavier/souris</li>
-                        <li><strong>Rendering :</strong> Paramètres graphiques et performance</li>
-                        <li><strong>Audio :</strong> Configuration du système audio</li>
-                        <li><strong>Packaging :</strong> Paramètres de build et déploiement</li>
-                        <li><strong>Plugins :</strong> Gestion des plugins nécessaires</li>
-                    </ul>
-                    <div class="code-block">
-// Configuration UE5.6 recommandée
-Project Settings:
-├── Maps & Modes
-│   ├── Default GameMode: BP_LettersCascadeGameMode
-│   ├── Default Pawn: BP_LettersCascadePawn
-│   └── Default PlayerController: BP_LettersCascadePlayerController
-├── Input
-│   ├── Action Mappings: MoveLeft, MoveRight, Rotate, Drop
-│   └── Axis Mappings: MouseX, MouseY
-├── Rendering
-│   ├── Anti-aliasing: TAA
-│   ├── Post Processing: Enabled
-│   └── Lumen: Enabled for Global Illumination
-└── Audio
-    ├── Spatialization: Enabled
-    ├── Reverb: Enabled
-    └── Occlusion: Enabled
-                    </div>
-                </div>
-            </div>
-        </section>
+        <footer class="footer">
+            <p>&copy; 2024 Letters Cascade Challenge. All rights reserved.</p>
+        </footer>
     </div>
-    <footer class="glass-panel" id="page-footer" style="margin: var(--spacing-xl,2rem) 0; text-align:center;"></footer>
-    <script>
-      (function(){
-        const el = document.getElementById('page-footer');
-        if (el) {
-          const d = new Date();
-          el.textContent = d.toLocaleDateString('fr-FR', { year:'numeric', month:'long', day:'numeric' });
-        }
-      })();
-    </script>
-    <script src="js/navigation.js"></script>
 </body>
 </html>
