@@ -406,8 +406,8 @@
                      position: relative;
                    }
              
-                   /* Tooltip styles for JavaScript-generated tooltips */
-                   .tooltip {
+                   .agent-chip[data-tooltip]:hover::after {
+                     content: attr(data-tooltip);
                      position: fixed;
                      left: 50%;
                      top: 50%;
@@ -434,7 +434,6 @@
                      text-align: left;
                      word-wrap: break-word;
                      overflow-wrap: break-word;
-                     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                    }
              
                    /* Remove arrow for centered tooltip */
@@ -517,36 +516,24 @@
          0 0 0 4px rgba(102, 126, 234, 0.1),
          0 15px 45px rgba(102, 126, 234, 0.6);
      }
-
-     /* Tooltip styles for JavaScript-generated tooltips */
-     .tooltip {
-       position: fixed;
-       left: 50%;
-       top: 50%;
-       transform: translate(-50%, -50%);
-       padding: 20px 24px;
-       background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
-       backdrop-filter: blur(20px);
-       border: 2px solid rgba(102, 126, 234, 0.4);
-       border-radius: 16px;
-       color: #ffffff;
-       font-size: 0.9rem;
-       line-height: 1.6;
-       white-space: pre-line;
-       max-width: 400px;
-       min-width: 300px;
-       z-index: 999999;
+       transform: translateY(-6px) scale(1.1);
        box-shadow: 
-         0 25px 50px rgba(0, 0, 0, 0.5),
-         0 10px 20px rgba(0, 0, 0, 0.3),
-         0 0 0 1px rgba(255, 255, 255, 0.15);
-       animation: tooltipFadeIn 0.3s ease;
-       pointer-events: none;
-       font-weight: 500;
-       text-align: left;
-       word-wrap: break-word;
-       overflow-wrap: break-word;
-       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+         0 20px 60px rgba(102, 126, 234, 0.7),
+         0 10px 30px rgba(102, 126, 234, 0.5);
+       border-color: rgba(255, 255, 255, 0.4);
+     }
+
+     .fab:active {
+       transform: translateY(-3px) scale(0.95);
+       transition: transform 0.1s ease;
+     }
+
+     .fab:focus {
+       outline: 2px solid var(--primary-500);
+       outline-offset: 2px;
+       box-shadow: 
+         0 0 0 4px rgba(102, 126, 234, 0.1),
+         0 15px 45px rgba(102, 126, 234, 0.6);
      }
 
     .skip-link {
@@ -661,55 +648,55 @@
           <h4 style="margin-bottom: var(--space-2);">Available Agents</h4>
                                                         <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                                <label class="agent-chip active" data-tooltip="🎯 COORDINATOR AGENT&#10;&#10;📋 PURPOSE&#10;Orchestrates and manages the overall workflow between different agents. Acts as the central intelligence that coordinates tasks and ensures smooth collaboration.&#10;&#10;⏰ WHEN TO USE&#10;Always active by default. Use for complex multi-step tasks, project management, or when you need agents to work together systematically.&#10;&#10;⚡ CAPABILITIES&#10;• Task delegation&#10;• Progress tracking&#10;• Conflict resolution&#10;• Workflow optimization&#10;• Result synthesis&#10;&#10;🎯 BEST FOR&#10;Project planning, code reviews, system architecture decisions, and complex problem-solving scenarios.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-coordinator" checked />
                   <span>🎯 Coordinator</span>
              </label>
                                <label class="agent-chip" data-tooltip="🧪 TEST RUNNER AGENT&#10;&#10;📋 PURPOSE&#10;Executes comprehensive testing across your codebase including unit tests, integration tests, and end-to-end testing.&#10;&#10;⏰ WHEN TO USE&#10;Before deployments, after code changes, or when you need to verify system stability and functionality.&#10;&#10;⚡ CAPABILITIES&#10;• Automated test execution&#10;• Test result analysis&#10;• Coverage reporting&#10;• Performance testing&#10;• Bug detection&#10;&#10;🎯 BEST FOR&#10;Quality assurance, regression testing, performance optimization, and ensuring code reliability.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-test-runner" />
                   <span>🧪 Test Runner</span>
              </label>
                 <label class="agent-chip" data-tooltip="🎨 BEAUTIFIER AGENT&#10;&#10;📋 PURPOSE&#10;Automatically formats and beautifies code to improve readability and maintain consistent coding standards.&#10;&#10;⏰ WHEN TO USE&#10;After writing new code, before code reviews, or when you want to clean up existing code formatting.&#10;&#10;⚡ CAPABILITIES&#10;• Code formatting&#10;• Indentation fixing&#10;• Comment alignment&#10;• Variable naming consistency&#10;• Style guide enforcement&#10;&#10;🎯 BEST FOR&#10;Code cleanup, maintaining coding standards, improving code readability, and preparing code for collaboration.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-beautifier" />
                   <span>🎨 Beautifier</span>
              </label>
                 <label class="agent-chip" data-tooltip="🔧 FIXER AGENT&#10;&#10;📋 PURPOSE&#10;Identifies and automatically fixes common code issues, bugs, and potential problems in your codebase.&#10;&#10;⏰ WHEN TO USE&#10;When you encounter errors, want to improve code quality, or need to resolve technical debt.&#10;&#10;⚡ CAPABILITIES&#10;• Bug detection&#10;• Code optimization&#10;• Security vulnerability fixes&#10;• Dependency updates&#10;• Performance improvements&#10;&#10;🎯 BEST FOR&#10;Debugging, code maintenance, security hardening, and technical debt reduction.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-fixer" />
                   <span>🔧 Fixer</span>
              </label>
                 <label class="agent-chip" data-tooltip="📸 SCREENSHOT AGENT&#10;&#10;📋 PURPOSE&#10;Captures visual snapshots of your application for documentation, testing, or visual verification purposes.&#10;&#10;⏰ WHEN TO USE&#10;For creating documentation, visual regression testing, UI/UX analysis, or when you need to capture the current state of your application.&#10;&#10;⚡ CAPABILITIES&#10;• Full-page screenshots&#10;• Element-specific captures&#10;• Responsive design testing&#10;• Visual comparison&#10;• Automated visual testing&#10;&#10;🎯 BEST FOR&#10;Documentation, visual testing, UI/UX reviews, and visual regression detection.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-screenshot" />
                   <span>📸 Screenshot</span>
              </label>
                 <label class="agent-chip" data-tooltip="👁️ LLAVA VISION AGENT&#10;&#10;📋 PURPOSE&#10;Analyzes images and visual content using advanced computer vision capabilities to understand and describe visual elements.&#10;&#10;⏰ WHEN TO USE&#10;When you need to analyze UI screenshots, understand visual layouts, identify design issues, or extract information from images.&#10;&#10;⚡ CAPABILITIES&#10;• Image analysis&#10;• Visual element detection&#10;• Layout understanding&#10;• Design pattern recognition&#10;• Visual accessibility assessment&#10;&#10;🎯 BEST FOR&#10;UI/UX analysis, visual design reviews, accessibility testing, and image-based problem solving.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-llava" />
                   <span>👁️ LLaVA Vision</span>
              </label>
                 <label class="agent-chip" data-tooltip="📋 PROJECT COORDINATOR AGENT&#10;&#10;📋 PURPOSE&#10;Manages project structure, documentation, and organizational aspects of your development workflow.&#10;&#10;⏰ WHEN TO USE&#10;For project setup, documentation management, file organization, or when you need to maintain project structure and standards.&#10;&#10;⚡ CAPABILITIES&#10;• Project structure management&#10;• Documentation generation&#10;• File organization&#10;• Dependency tracking&#10;• Project health monitoring&#10;&#10;🎯 BEST FOR&#10;Project initialization, documentation maintenance, file organization, and project structure optimization.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-project-coordinator" />
                   <span>📋 Project Coordinator</span>
                 </label>
                 <label class="agent-chip" data-tooltip="🌊 PROMPT WAVE AGENT&#10;&#10;📋 PURPOSE&#10;Optimizes and enhances prompts for better AI interactions, ensuring more accurate and relevant responses.&#10;&#10;⏰ WHEN TO USE&#10;When you need to improve AI responses, create better prompts, or optimize communication with AI systems.&#10;&#10;⚡ CAPABILITIES&#10;• Prompt optimization&#10;• Context enhancement&#10;• Response quality improvement&#10;• AI interaction refinement&#10;&#10;🎯 BEST FOR&#10;Improving AI interactions, prompt engineering, response optimization, and communication enhancement.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-prompt-wave" />
                   <span>🌊 Prompt Wave</span>
                 </label>
                 <label class="agent-chip" data-tooltip="💬 DISCUSSION SYSTEM AGENT&#10;&#10;📋 PURPOSE&#10;Facilitates intelligent discussions and conversations between multiple agents, enabling collaborative problem-solving.&#10;&#10;⏰ WHEN TO USE&#10;For complex problem-solving that requires multiple perspectives, brainstorming sessions, or when you need agents to discuss and debate solutions.&#10;&#10;⚡ CAPABILITIES&#10;• Multi-agent conversations&#10;• Debate facilitation&#10;• Consensus building&#10;• Idea synthesis&#10;• Collaborative decision-making&#10;&#10;🎯 BEST FOR&#10;Complex problem-solving, brainstorming, decision-making processes, and collaborative analysis.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-discussion-system" />
                   <span>💬 Discussion System</span>
                 </label>
                 <label class="agent-chip" data-tooltip="📄 PDF GENERATOR AGENT&#10;&#10;📋 PURPOSE&#10;Creates professional PDF documents from various content sources including code documentation, reports, and project summaries.&#10;&#10;⏰ WHEN TO USE&#10;When you need to generate documentation, create reports, export project information, or share formatted content.&#10;&#10;⚡ CAPABILITIES&#10;• PDF generation&#10;• Document formatting&#10;• Content compilation&#10;• Report creation&#10;• Professional document preparation&#10;&#10;🎯 BEST FOR&#10;Documentation generation, report creation, content export, and professional document preparation.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-pdf-generator" />
                   <span>📄 PDF Generator</span>
                 </label>
                 <label class="agent-chip" data-tooltip="🎮 BABYLON GAME AGENT&#10;&#10;📋 PURPOSE&#10;Specializes in 3D game development using Babylon.js, handling 3D graphics, physics, and interactive game elements.&#10;&#10;⏰ WHEN TO USE&#10;For 3D game development, 3D visualization projects, interactive 3D applications, or when you need advanced 3D graphics capabilities.&#10;&#10;⚡ CAPABILITIES&#10;• 3D scene creation&#10;• Physics simulation&#10;• Game mechanics&#10;• 3D asset management&#10;• Interactive 3D experiences&#10;&#10;🎯 BEST FOR&#10;3D game development, 3D visualization, interactive 3D applications, and advanced graphics projects.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-babylon-game" />
                   <span>🎮 Babylon Game</span>
                 </label>
                 <label class="agent-chip" data-tooltip="🎯 JS2D GAME AGENT&#10;&#10;📋 PURPOSE&#10;Focuses on 2D game development using JavaScript, handling 2D graphics, game mechanics, and interactive elements.&#10;&#10;⏰ WHEN TO USE&#10;For 2D game development, interactive 2D applications, educational games, or when you need 2D graphics and game mechanics.&#10;&#10;⚡ CAPABILITIES&#10;• 2D graphics rendering&#10;• Game mechanics implementation&#10;• Sprite management&#10;• Collision detection&#10;• 2D animation&#10;&#10;🎯 BEST FOR&#10;2D game development, interactive 2D applications, educational content, and 2D graphics projects.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-js2d-game" />
                   <span>🎯 JS2D Game</span>
                 </label>
                 <label class="agent-chip" data-tooltip="🎲 THREEJS GAME AGENT&#10;&#10;📋 PURPOSE&#10;Specializes in 3D web graphics and applications using Three.js, creating immersive 3D experiences and visualizations.&#10;&#10;⏰ WHEN TO USE&#10;For 3D web applications, data visualization, interactive 3D experiences, or when you need advanced 3D web graphics.&#10;&#10;⚡ CAPABILITIES&#10;• 3D web graphics&#10;• Scene management&#10;• 3D visualization&#10;• Interactive 3D experiences&#10;• Web-based 3D applications&#10;&#10;🎯 BEST FOR&#10;3D web applications, data visualization, interactive 3D experiences, and web-based 3D graphics.">
-                  <input id="input-blkusjgs1" />
+                  <input type="checkbox" class="agent-checkbox" id="agent-threejs-game" />
                   <span>🎲 ThreeJS Game</span>
              </label>
           </div>
@@ -718,13 +705,13 @@
                  <div style="margin-bottom: var(--space-4);">
            <h4 style="margin-bottom: var(--space-3);">Quick Actions</h4>
                                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
-               <button role="button" />
+               <button class="btn btn-primary" onclick="agentsDiscussion.connect()">
                  <i class="fas fa-plug"></i> Connect
            </button>
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="agentsDiscussion.clearMessages()">
                  <i class="fas fa-trash"></i> Clear
            </button>
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="location.reload()">
                  <i class="fas fa-sync-alt"></i> Refresh
            </button>
              </div>
@@ -740,8 +727,8 @@
         </div>
 
                                   <form class="prompt-form" id="promptForm" style="display: flex; gap: var(--space-4); margin-bottom: var(--space-6);">
-               <input id="input-blkusjgs1" />
-               <button role="button" />
+               <input type="text" class="prompt-input" id="promptInput" placeholder="Ask your agents anything..." />
+               <button type="submit" class="btn btn-primary">
                  <i class="fas fa-paper-plane"></i> Send
              </button>
            </form>
@@ -769,16 +756,16 @@
         <div class="glass-panel" style="padding: var(--space-6);">
           <h3 style="margin-bottom: var(--space-4);">🛠️ Tools</h3>
                                     <div style="display: flex; flex-direction: column; gap: var(--space-3);">
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('analyze')">
                  <i class="fas fa-search"></i> Analyze Code
              </button>
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('test')">
                  <i class="fas fa-vial"></i> Run Tests
              </button>
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('beautify')">
                  <i class="fas fa-magic"></i> Beautify
              </button>
-               <button role="button" />
+               <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('screenshot')">
                  <i class="fas fa-camera"></i> Screenshot
              </button>
            </div>
@@ -796,9 +783,9 @@
     </aside>
   </div>
 
-                    <button role="button" />
-     <i class="fas fa-compress"></i>
-   </button>
+                                         <button class="fab" onclick="agentsDiscussion.toggleCompactView()">
+       <i class="fas fa-compress"></i>
+     </button>
 
      <script src="https://planeszwalker.github.io/LCCWeb/config.js"></script>
    <script src="https://planeszwalker.github.io/LCCWeb/api/backend.js"></script>
@@ -908,138 +895,7 @@ class AgentsDiscussion {
            checkbox.dispatchEvent(new Event('change'));
          });
        }
-
-       // Add tooltip functionality
-       const tooltipText = chip.getAttribute('data-tooltip');
-       if (tooltipText) {
-         chip.addEventListener('mouseenter', (e) => {
-           this.showTooltip(tooltipText, e);
-         });
-         
-         chip.addEventListener('mouseleave', () => {
-           this.hideTooltip();
-         });
-       }
     });
-  }
-
-  showTooltip(text, event) {
-    // Remove any existing tooltip
-    this.hideTooltip();
-    
-    // Create tooltip element
-    const tooltip = document.createElement('div');
-    tooltip.className = 'tooltip';
-    tooltip.textContent = text;
-    
-    // Add to body to ensure it's above everything
-    document.body.appendChild(tooltip);
-    
-    // Store reference for removal
-    this.currentTooltip = tooltip;
-  }
-
-  hideTooltip() {
-    if (this.currentTooltip) {
-      this.currentTooltip.remove();
-      this.currentTooltip = null;
-    }
-  }
-
-  getRelevantAgents(prompt) {
-    const p = prompt.toLowerCase();
-    const relevantAgents = new Set();
-    
-    // Always include coordinator for synthesis
-    relevantAgents.add('coordinator');
-    
-    // Image analysis with LLaVA
-    if (/\b(image|screenshot|photo|picture|capture|écran|image|photo)\b/i.test(p) && 
-        /\b(describe|analyze|explain|what|décrire|analyser|expliquer|quoi)\b/i.test(p)) {
-      relevantAgents.add('llava-agent');
-    }
-
-    // Testing tasks
-    if (/(run|launch|start)\s+(all\s+)?tests?|test\s*suite|run\s*e2e|run\s*unit|lighthouse|axe|accessibilit|perf|performance/.test(p)) {
-      relevantAgents.add('test-runner');
-    }
-
-    // Code generation and file creation
-    if (/(ecris|écris|creer|créer|crée|create|write)\b/.test(p) && /(html|css|js)\b/.test(p)) {
-      relevantAgents.add('project-coordinator');
-    }
-
-    // Styling and theming
-    if (/dark|theme|style|harmonis(er|e)|css|brace|sanitize|validation|selector|duplicate/.test(p)) {
-      relevantAgents.add('website-beautifier');
-      relevantAgents.add('fixer-agent');
-    }
-
-    // Game development
-    if (/babylon|3d|unified/.test(p)) {
-      relevantAgents.add('babylon-game-finisher');
-    }
-    if (/three\.js|threejs|three\b/.test(p)) {
-      relevantAgents.add('threejs-game-finisher');
-    }
-    if (/2d|canvas|classique/.test(p)) {
-      relevantAgents.add('js2d-game-finisher');
-    }
-
-    // Screenshot and documentation
-    if (/screenshot|capture|photo|image/.test(p)) {
-      relevantAgents.add('screenshot-agent');
-    }
-
-    // General analysis and fixing
-    if (/analyze|fix|problem|issue|bug|error/.test(p)) {
-      relevantAgents.add('fixer-agent');
-    }
-
-    // If no specific agents identified, use coordinator and fixer
-    if (relevantAgents.size === 1) {
-      relevantAgents.add('fixer-agent');
-    }
-    
-    return Array.from(relevantAgents);
-  }
-
-  synthesizeAgentResponses(userPrompt, agentResponses) {
-    if (agentResponses.length === 0) {
-      return "❌ **Coordinator**: No agents were able to process your request. Please try rephrasing your question.";
-    }
-
-    // Filter out error responses
-    const validResponses = agentResponses.filter(response => response.phase !== 'ERROR');
-    
-    if (validResponses.length === 0) {
-      return "❌ **Coordinator**: All agents encountered errors while processing your request. Please check your system configuration.";
-    }
-
-    // Build comprehensive response
-    let synthesis = `🎯 **Coordinator's Comprehensive Response**\n\n`;
-    synthesis += `**User Question**: ${userPrompt}\n\n`;
-    synthesis += `**Analysis Summary**: I consulted with ${validResponses.length} specialized agent${validResponses.length > 1 ? 's' : ''} to provide you with a comprehensive answer.\n\n`;
-
-    // Add each agent's contribution
-    validResponses.forEach((response, index) => {
-      synthesis += `**${response.agent}**: ${response.content}\n\n`;
-    });
-
-    // Add final synthesis
-    synthesis += `**🎯 Final Answer**: Based on the analysis from ${validResponses.length} agent${validResponses.length > 1 ? 's' : ''}, `;
-    
-    // Generate a summary based on the responses
-    const allContent = validResponses.map(r => r.content).join(' ');
-    if (allContent.includes('error') || allContent.includes('Error')) {
-      synthesis += `there are some issues that need attention. Please review the detailed responses above for specific recommendations.`;
-    } else if (allContent.includes('success') || allContent.includes('Success') || allContent.includes('✅')) {
-      synthesis += `the task has been completed successfully. All agents have provided their expertise and recommendations.`;
-    } else {
-      synthesis += `I've gathered comprehensive information from the specialized agents. Please review their detailed responses above for complete guidance.`;
-    }
-
-    return synthesis;
   }
 
   setupToolButtons() {
@@ -1088,34 +944,24 @@ class AgentsDiscussion {
     input.value = '';
 
     try {
-      // Step 1: Determine which agents are relevant for this prompt
+      // Determine which agents are relevant for this prompt
       const relevantAgents = this.getRelevantAgents(message);
       
-      // Step 2: Show coordinator is analyzing the request
+      // Show coordinator is analyzing
       const analysisMessage = {
         type: 'agent',
-        content: `🔍 **Coordinator Analysis**: I'm analyzing your request and will consult with ${relevantAgents.length} specialized agent${relevantAgents.length > 1 ? 's' : ''}: ${relevantAgents.join(', ')}`,
+        content: `🔍 **Coordinator**: Analyzing request and consulting with ${relevantAgents.length} specialized agent${relevantAgents.length > 1 ? 's' : ''}: ${relevantAgents.join(', ')}`,
         timestamp: new Date(),
         agent: 'Coordinator',
         phase: 'ANALYSIS'
       };
       this.addToOutput(analysisMessage);
       
-      // Step 3: Send request to each relevant agent and collect responses
+      // Collect responses from each agent
       const agentResponses = [];
       
       for (const agent of relevantAgents) {
         try {
-          const agentRequest = {
-            type: 'agent',
-            content: `🤖 **${agent}**: Processing your request...`,
-            timestamp: new Date(),
-            agent: agent,
-            phase: 'PROCESSING'
-          };
-          this.addToOutput(agentRequest);
-          
-          // Send individual request to each agent
           const agentData = await window.LCC_API.handleAPIRequest('prompt', {
             prompt: message,
             agents: [agent]
@@ -1135,7 +981,7 @@ class AgentsDiscussion {
         } catch (error) {
           const errorResponse = {
             type: 'agent',
-            content: `❌ **${agent}**: Error processing request - ${error.message}`,
+            content: `❌ **${agent}**: Error - ${error.message}`,
             timestamp: new Date(),
             agent: agent,
             phase: 'ERROR'
@@ -1145,18 +991,8 @@ class AgentsDiscussion {
         }
       }
       
-      // Step 4: Coordinator synthesizes all responses into a comprehensive answer
-      const synthesisMessage = {
-        type: 'agent',
-        content: `🧠 **Coordinator**: Synthesizing responses from ${agentResponses.length} agent${agentResponses.length > 1 ? 's' : ''}...`,
-        timestamp: new Date(),
-        agent: 'Coordinator',
-        phase: 'SYNTHESIS'
-      };
-      this.addToOutput(synthesisMessage);
-      
-      // Step 5: Generate final coordinated response
-      const finalResponse = this.synthesizeAgentResponses(message, agentResponses);
+      // Generate final coordinated response
+      const finalResponse = this.synthesizeResponses(message, agentResponses);
       
       const coordinatorMessage = {
         type: 'agent',
@@ -1378,23 +1214,18 @@ class AgentsDiscussion {
      
      this.connecting = true;
      
-           // For GitHub Pages deployment, use mock connection instead of SSE
-      if (window.location.hostname === 'planeszwalker.github.io') {
-        console.log('GitHub Pages detected, using mock connection...');
-        setTimeout(() => {
-          this.isConnected = true;
-          this.connecting = false;
-          this.updateConnectionStatus('connected', 'Connected (Mock)');
-          this.retryCount = 0;
-          console.log('Mock connection established for GitHub Pages');
-        }, 1000);
-        return;
-      }
-      
-      // For local development, use real SSE connection
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        console.log('Local development detected, using real SSE connection...');
-      }
+     // For GitHub Pages deployment, use mock connection instead of SSE
+     if (window.location.hostname === 'planeszwalker.github.io') {
+       console.log('GitHub Pages detected, using mock connection...');
+       setTimeout(() => {
+         this.isConnected = true;
+         this.connecting = false;
+         this.updateConnectionStatus('connected', 'Connected (Mock)');
+         this.retryCount = 0;
+         console.log('Mock connection established for GitHub Pages');
+       }, 1000);
+       return;
+     }
      
      // Close existing connection if any
      if (this.sse && this.sse.readyState !== EventSource.CLOSED) {
@@ -1422,103 +1253,80 @@ class AgentsDiscussion {
            }
            
            const trimmedData = event.data.trim();
-           
-           // Skip non-JSON data (console logs, debug info)
            if (!trimmedData.startsWith('{') || !trimmedData.endsWith('}')) {
-             return; // Silently skip non-JSON data
-           }
-           
-           const data = JSON.parse(trimmedData);
-           if (!data || !data.text) {
+             console.log('Incomplete JSON data received, skipping:', trimmedData.substring(0, 50));
              return;
            }
            
-           // Filter out debug messages and console logs
-           const text = data.text.toLowerCase();
-           if (text.includes('duplicate sse message') || 
-               text.includes('incomplete json data') ||
-               text.includes('console.log') ||
-               text.includes('console.error') ||
-               text.includes('modifiés:') ||
-               text.includes('size:') ||
-               text.includes('vague terminée') ||
-               text.includes('agent exécuté') ||
-               text.includes('🚀 exécution') ||
-               text.includes('💡 instruction') ||
-               text.includes('✅ agent') ||
-               text.includes('▶ node tools') ||
-               text.includes('priority:') ||
-               text.includes('needs') ||
-               text.includes('fixall:') ||
-               text.includes('corrections d\'accessibilité') ||
-               text.includes('c:\\users\\anne\\desktop') ||
-               text.includes('public\\') ||
-               text.includes('agents-discussion')) {
-             return; // Skip debug and system messages
-           }
-           
-           const timestamp = data.timestamp || Date.now();
-           
-           // Create a more robust message ID using content hash
-           const contentHash = this.hashString(data.text);
-           const messageId = `${data.agent || 'Agent'}-${data.phase || 'INFO'}-${contentHash}-${timestamp}`;
-           
-           if (this.processedMessages.has(messageId)) {
-             return; // Silently skip duplicates
-           }
-           
-           // Check for recent duplicates with same content (more strict)
-           const currentTime = Date.now();
-           const isRecentDuplicate = Array.from(this.processedMessages).some(existingId => {
-             const parts = existingId.split('-');
-             const existingHash = parts[2];
-             const existingTimestamp = parseInt(parts[parts.length - 1]);
+           const data = JSON.parse(trimmedData);
+           if (data && data.text) {
+             const timestamp = data.timestamp || Date.now();
              
-             return existingHash === contentHash.toString() && 
-                    Math.abs(currentTime - existingTimestamp) < 3000; // Reduced time window
-           });
-           
-           if (isRecentDuplicate) {
-             return; // Silently skip recent duplicates
+             // Create a more robust message ID using content hash
+             const contentHash = this.hashString(data.text);
+             const messageId = `${data.agent || 'Agent'}-${data.phase || 'INFO'}-${contentHash}-${timestamp}`;
+             
+             if (this.processedMessages.has(messageId)) {
+               console.log('Duplicate SSE message detected, skipping:', data.text.substring(0, 50));
+               return;
+             }
+             
+             // Check for recent duplicates with same content (more strict)
+             const currentTime = Date.now();
+             const isRecentDuplicate = Array.from(this.processedMessages).some(existingId => {
+               const parts = existingId.split('-');
+               const existingHash = parts[2];
+               const existingTimestamp = parseInt(parts[parts.length - 1]);
+               
+               return existingHash === contentHash.toString() && 
+                      Math.abs(currentTime - existingTimestamp) < 5000; // Increased time window
+             });
+             
+             if (isRecentDuplicate) {
+               console.log('Recent duplicate SSE message detected, skipping:', data.text.substring(0, 50));
+               return;
+             }
+             
+             // Additional check: limit messages per agent per time window
+             const recentAgentMessages = this.messages.filter(msg => {
+               const timeDiff = Math.abs(msg.timestamp.getTime() - timestamp);
+               return msg.agent === (data.agent || 'Agent') && timeDiff < 10000;
+             });
+             
+             if (recentAgentMessages.length > 10) {
+               console.log('Too many recent messages from agent, skipping:', data.text.substring(0, 50));
+               return;
+             }
+             
+             this.processedMessages.add(messageId);
+             
+             // Clean up old processed messages more aggressively
+             if (this.processedMessages.size > 500) {
+               const keys = Array.from(this.processedMessages.keys());
+               keys.slice(0, 100).forEach(key => this.processedMessages.delete(key));
+             }
+             
+             // Create message object
+             const messageObj = {
+               type: data.role === 'user' ? 'user' : 'agent',
+               content: data.text,
+               timestamp: new Date(timestamp),
+               agent: data.agent || 'Agent',
+               phase: data.phase || 'INFO'
+             };
+             
+             // Only show final answers in chat, show all discussions in output
+             if (data.phase === 'ANSWER' || data.phase === 'FINAL') {
+               this.addMessage(messageObj);
+             }
+             
+             // Always add to output section for full discussion
+             this.addToOutput(messageObj);
            }
-           
-           // Additional check: limit messages per agent per time window
-           const recentAgentMessages = this.messages.filter(msg => {
-             const timeDiff = Math.abs(msg.timestamp.getTime() - timestamp);
-             return msg.agent === (data.agent || 'Agent') && timeDiff < 5000; // Reduced time window
-           });
-           
-           if (recentAgentMessages.length > 5) { // Reduced limit
-             return; // Silently skip if too many messages
-           }
-           
-           this.processedMessages.add(messageId);
-           
-           // Clean up old processed messages more aggressively
-           if (this.processedMessages.size > 200) { // Reduced size
-             const keys = Array.from(this.processedMessages.keys());
-             keys.slice(0, 50).forEach(key => this.processedMessages.delete(key));
-           }
-           
-           // Create message object
-           const messageObj = {
-             type: data.role === 'user' ? 'user' : 'agent',
-             content: data.text,
-             timestamp: new Date(timestamp),
-             agent: data.agent || 'Agent',
-             phase: data.phase || 'INFO'
-           };
-           
-           // Only show final answers in chat, show all discussions in output
-           if (data.phase === 'ANSWER' || data.phase === 'FINAL' || data.phase === 'RESULT' || data.phase === 'FINAL_ANSWER') {
-             this.addMessage(messageObj);
-           }
-           
-           // Always add to output section for full discussion
-           this.addToOutput(messageObj);
          } catch (error) {
-           // Silently ignore parsing errors
-           return;
+           if (event.data && event.data.trim() !== '') {
+             console.error('Error parsing SSE data:', error, 'Raw data:', event.data.substring(0, 100));
+           }
          }
        };
       
@@ -1637,6 +1445,92 @@ class AgentsDiscussion {
        }
      }
    }
+
+  // Coordinator workflow helper methods
+  getRelevantAgents(prompt) {
+    const p = prompt.toLowerCase();
+    const relevantAgents = new Set();
+    
+    // Always include coordinator
+    relevantAgents.add('coordinator');
+    
+    // Image analysis
+    if (/\b(image|screenshot|photo|picture|capture)\b/i.test(p)) {
+      relevantAgents.add('llava-agent');
+    }
+
+    // Testing
+    if (/(run|launch|start)\s+(all\s+)?tests?|test\s*suite|lighthouse|axe|accessibilit|perf|performance/.test(p)) {
+      relevantAgents.add('test-runner');
+    }
+
+    // Styling and theming
+    if (/dark|theme|style|css|brace|sanitize|validation|selector|duplicate/.test(p)) {
+      relevantAgents.add('website-beautifier');
+      relevantAgents.add('fixer-agent');
+    }
+
+    // Game development
+    if (/babylon|3d|unified/.test(p)) {
+      relevantAgents.add('babylon-game-finisher');
+    }
+    if (/three\.js|threejs|three\b/.test(p)) {
+      relevantAgents.add('threejs-game-finisher');
+    }
+    if (/2d|canvas|classique/.test(p)) {
+      relevantAgents.add('js2d-game-finisher');
+    }
+
+    // Screenshot
+    if (/screenshot|capture|photo|image/.test(p)) {
+      relevantAgents.add('screenshot-agent');
+    }
+
+    // General analysis and fixing
+    if (/analyze|fix|problem|issue|bug|error/.test(p)) {
+      relevantAgents.add('fixer-agent');
+    }
+
+    // Default to coordinator and fixer if no specific agents
+    if (relevantAgents.size === 1) {
+      relevantAgents.add('fixer-agent');
+    }
+    
+    return Array.from(relevantAgents);
+  }
+
+  synthesizeResponses(userPrompt, agentResponses) {
+    if (agentResponses.length === 0) {
+      return "❌ **Coordinator**: No agents were able to process your request.";
+    }
+
+    const validResponses = agentResponses.filter(response => response.phase !== 'ERROR');
+    
+    if (validResponses.length === 0) {
+      return "❌ **Coordinator**: All agents encountered errors while processing your request.";
+    }
+
+    let synthesis = `🎯 **Coordinator's Response**\n\n`;
+    synthesis += `**Question**: ${userPrompt}\n\n`;
+    synthesis += `**Analysis**: I consulted with ${validResponses.length} specialized agent${validResponses.length > 1 ? 's' : ''}.\n\n`;
+
+    validResponses.forEach((response) => {
+      synthesis += `**${response.agent}**: ${response.content}\n\n`;
+    });
+
+    synthesis += `**🎯 Summary**: Based on the analysis from ${validResponses.length} agent${validResponses.length > 1 ? 's' : ''}, `;
+    
+    const allContent = validResponses.map(r => r.content).join(' ');
+    if (allContent.includes('error') || allContent.includes('Error')) {
+      synthesis += `there are some issues that need attention. Please review the detailed responses above.`;
+    } else if (allContent.includes('success') || allContent.includes('Success') || allContent.includes('✅')) {
+      synthesis += `the task has been completed successfully. All agents have provided their expertise.`;
+    } else {
+      synthesis += `I've gathered comprehensive information from the specialized agents. Please review their detailed responses above.`;
+    }
+
+    return synthesis;
+  }
 }
 
 // Global variable for agents discussion instance
