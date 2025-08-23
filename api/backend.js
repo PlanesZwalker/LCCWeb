@@ -33,7 +33,46 @@ const mockResponses = {
 };
 
 // Simple API handler
-function handleAPIRequest(endpoint, data = null) {
+async function handleAPIRequest(endpoint, data = null) {
+  // Check if we're running locally
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  
+  if (isLocal) {
+    // Use real API calls for local development
+    try {
+      switch (endpoint) {
+        case 'health':
+          const healthResponse = await fetch('http://localhost:8011/health');
+          return await healthResponse.json();
+          
+        case 'prompt':
+          const promptResponse = await fetch('http://localhost:8011/prompt', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          return await promptResponse.json();
+          
+        case 'models':
+          const modelsResponse = await fetch('http://localhost:11434/api/tags');
+          return await modelsResponse.json();
+          
+        default:
+          return { error: 'Endpoint not found' };
+      }
+    } catch (error) {
+      console.error('API request failed:', error);
+      // Fall back to mock responses if local API fails
+      return getMockResponse(endpoint, data);
+    }
+  } else {
+    // Use mock responses for GitHub Pages
+    return getMockResponse(endpoint, data);
+  }
+}
+
+// Mock response generator
+function getMockResponse(endpoint, data = null) {
   switch (endpoint) {
     case 'health':
       return mockResponses.health;

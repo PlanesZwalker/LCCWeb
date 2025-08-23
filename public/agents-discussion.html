@@ -993,7 +993,7 @@ class AgentsDiscussion {
 
     try {
       // Use local API for GitHub Pages deployment
-      const data = window.LCC_API.handleAPIRequest('prompt', {
+      const data = await window.LCC_API.handleAPIRequest('prompt', {
           prompt: message,
           agents: Array.from(this.selectedAgents)
       });
@@ -1218,18 +1218,23 @@ class AgentsDiscussion {
      
      this.connecting = true;
      
-     // For GitHub Pages deployment, use mock connection instead of SSE
-     if (window.location.hostname === 'planeszwalker.github.io') {
-       console.log('GitHub Pages detected, using mock connection...');
-       setTimeout(() => {
-         this.isConnected = true;
-         this.connecting = false;
-         this.updateConnectionStatus('connected', 'Connected (Mock)');
-         this.retryCount = 0;
-         console.log('Mock connection established for GitHub Pages');
-       }, 1000);
-       return;
-     }
+           // For GitHub Pages deployment, use mock connection instead of SSE
+      if (window.location.hostname === 'planeszwalker.github.io') {
+        console.log('GitHub Pages detected, using mock connection...');
+        setTimeout(() => {
+          this.isConnected = true;
+          this.connecting = false;
+          this.updateConnectionStatus('connected', 'Connected (Mock)');
+          this.retryCount = 0;
+          console.log('Mock connection established for GitHub Pages');
+        }, 1000);
+        return;
+      }
+      
+      // For local development, use real SSE connection
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        console.log('Local development detected, using real SSE connection...');
+      }
      
      // Close existing connection if any
      if (this.sse && this.sse.readyState !== EventSource.CLOSED) {
