@@ -2,103 +2,311 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/base-theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📋 Règles du Jeu - Letters Cascade Challenge</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>📖 Game Rules - Letters Cascade Challenge</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/shared.css">
-    <link rel="stylesheet" href="css/theme-dark.css">
-    <style id="inline-hero-style">
-        .glass-panel { background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,255,255,.94)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.3); border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 2rem; }
-        .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.6rem 1rem; border-radius:8px; text-decoration:none; font-weight:600; transition:.2s ease; }
-        .btn.primary { color:#fff; background: linear-gradient(135deg, var(--primary-color,#667eea), var(--secondary-color,#764ba2)); }
-        .btn.subtle { color: var(--primary-color,#667eea); background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,.1); }
-    </style>
-    <script src="js/utils.js"></script>
-    <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --accent-color: #06b6d4;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9fafb;
-            --bg-accent: #f3f4f6;
-            --border-color: #e5e7eb;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-            --spacing-xs: 0.25rem;
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-            --border-radius: 0.5rem;
-            --border-radius-lg: 0.75rem;
-            --border-radius-xl: 1rem;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://planeszwalker.github.io/LCCWeb/shared-styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">📖 Game Rules</h1>
+            <p class="page-subtitle">Letters Cascade Challenge - Complete Game Rules and Guidelines</p>
+        </header>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        <nav class="nav-menu">
+            <a href="https://planeszwalker.github.io/LCCWeb/" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/public/agents-discussion.html" class="btn btn-secondary">
+                <i class="fas fa-comments"></i> Agents Discussion
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/GDD.html" class="btn btn-secondary">
+                <i class="fas fa-file-alt"></i> Game Design
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/technical-spec.html" class="btn btn-primary">
+                <i class="fas fa-cogs"></i> Technical Specs
+            </a>
+        </nav>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--gray-900);
-            min-height: 100vh;
-        }
+        <main id="main-content" class="glass-panel">
+            <div class="content-section">
+                <h1>🎮 How to Play</h1>
+                <p class="highlight-box">
+                    <strong>Letters Cascade Challenge</strong> is a puzzle game where you manipulate falling letters 
+                    to create words and achieve high scores. Master the cascading mechanics and become a word wizard!
+                </p>
+            </div>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: var(--spacing-lg);
-        }
+            <div class="content-section">
+                <h2>🎯 Objective</h2>
+                <p>
+                    Your goal is to create words by strategically placing letters on the game grid. Form words of 3 or more 
+                    letters to score points and clear space for more letters. The longer the word, the higher your score!
+                </p>
+            </div>
 
-        /* Page Layout */
-        .page-layout {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: var(--spacing-lg);
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: var(--spacing-lg);
-        }
+            <div class="content-section">
+                <h2>🎮 Basic Gameplay</h2>
+                
+                <h3><i class="fas fa-arrow-down"></i> Letter Placement</h3>
+                <p>
+                    Letters fall from the top of the screen. You can control their movement and placement:
+                </p>
+                <ul>
+                    <li><strong>Move Left/Right:</strong> Use arrow keys or A/D to move letters horizontally</li>
+                    <li><strong>Rotate:</strong> Press Spacebar to rotate the current letter</li>
+                    <li><strong>Drop Faster:</strong> Press Down arrow to accelerate the fall</li>
+                    <li><strong>Preview:</strong> See the next letter coming to plan your strategy</li>
+                </ul>
 
-        /* Navigation Sidebar */
-        .nav-sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: var(--border-radius-xl);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            height: fit-content;
-            position: sticky;
-            top: var(--spacing-lg);
-        }
+                <h3><i class="fas fa-spell-check"></i> Word Formation</h3>
+                <p>
+                    Create words by placing letters adjacent to each other:
+                </p>
+                <ul>
+                    <li><strong>Minimum Length:</strong> Words must be at least 3 letters long</li>
+                    <li><strong>Directions:</strong> Words can be formed horizontally (left to right)</li>
+                    <li><strong>Validation:</strong> All words are checked against a French dictionary</li>
+                    <li><strong>Scoring:</strong> Longer words earn more points</li>
+                </ul>
+            </div>
 
-        .nav-sidebar h3 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: var(--spacing-lg);
-            text-align: center;
-        }
+            <div class="content-section">
+                <h2>🏆 Scoring System</h2>
+                
+                <h3><i class="fas fa-calculator"></i> Point Calculation</h3>
+                <p>
+                    Points are awarded based on word length and placement efficiency:
+                </p>
+                <ul>
+                    <li><strong>Base Points:</strong> 1 point per letter placed</li>
+                    <li><strong>Word Bonus:</strong> Length of word × 10 points</li>
+                    <li><strong>Combo Multiplier:</strong> Consecutive words earn bonus multipliers</li>
+                    <li><strong>Speed Bonus:</strong> Quick placement earns extra points</li>
+                    <li><strong>Difficulty Bonus:</strong> Higher levels offer more points</li>
+                </ul>
 
-        .nav-links {
+                <h3><i class="fas fa-star"></i> Special Bonuses</h3>
+                <p>
+                    Achieve special bonuses for exceptional gameplay:
+                </p>
+                <ul>
+                    <li><strong>Perfect Placement:</strong> Bonus for optimal letter positioning</li>
+                    <li><strong>Word Chains:</strong> Create multiple words simultaneously</li>
+                    <li><strong>Rare Words:</strong> Bonus points for uncommon vocabulary</li>
+                    <li><strong>Speed Master:</strong> Rewards for rapid word formation</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🎲 Game Modes</h2>
+                
+                <h3><i class="fas fa-play"></i> Classic Mode</h3>
+                <p>
+                    The standard game mode with progressive difficulty:
+                </p>
+                <ul>
+                    <li><strong>Progressive Speed:</strong> Letters fall faster as you advance</li>
+                    <li><strong>Level System:</strong> Unlock new challenges and features</li>
+                    <li><strong>Endless Play:</strong> Continue until the grid is full</li>
+                    <li><strong>High Score Tracking:</strong> Compete for the best scores</li>
+                </ul>
+
+                <h3><i class="fas fa-clock"></i> Time Attack</h3>
+                <p>
+                    Race against the clock to achieve maximum score:
+                </p>
+                <ul>
+                    <li><strong>Time Limit:</strong> 2, 5, or 10-minute challenges</li>
+                    <li><strong>Speed Focus:</strong> Emphasis on quick word formation</li>
+                    <li><strong>Bonus Time:</strong> Earn extra time for long words</li>
+                    <li><strong>Leaderboards:</strong> Compare times with other players</li>
+                </ul>
+
+                <h3><i class="fas fa-target"></i> Challenge Mode</h3>
+                <p>
+                    Specific objectives and constraints for advanced players:
+                </p>
+                <ul>
+                    <li><strong>Word Goals:</strong> Create specific words or word types</li>
+                    <li><strong>Limited Moves:</strong> Achieve objectives with restricted actions</li>
+                    <li><strong>Theme Challenges:</strong> Focus on specific categories</li>
+                    <li><strong>Daily Challenges:</strong> New objectives every day</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>⚡ Power-ups and Special Features</h2>
+                
+                <h3><i class="fas fa-magic"></i> Special Letters</h3>
+                <p>
+                    Special letters with unique abilities appear randomly:
+                </p>
+                <ul>
+                    <li><strong>Wild Letter:</strong> Can represent any letter in a word</li>
+                    <li><strong>Bomb Letter:</strong> Clears surrounding letters when used</li>
+                    <li><strong>Score Multiplier:</strong> Doubles points for the next word</li>
+                    <li><strong>Time Freeze:</strong> Temporarily stops letter falling</li>
+                </ul>
+
+                <h3><i class="fas fa-gem"></i> Combo System</h3>
+                <p>
+                    Chain words together for massive score multipliers:
+                </p>
+                <ul>
+                    <li><strong>Combo Counter:</strong> Track consecutive word formations</li>
+                    <li><strong>Multiplier Increase:</strong> Each combo increases the multiplier</li>
+                    <li><strong>Combo Breaker:</strong> Missing a word resets the combo</li>
+                    <li><strong>Combo Rewards:</strong> Special bonuses for long combos</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🎨 Visual and Audio Feedback</h2>
+                
+                <h3><i class="fas fa-eye"></i> Visual Effects</h3>
+                <p>
+                    Rich visual feedback enhances the gaming experience:
+                </p>
+                <ul>
+                    <li><strong>Word Highlighting:</strong> Valid words glow when formed</li>
+                    <li><strong>Particle Effects:</strong> Celebratory effects for word completion</li>
+                    <li><strong>Score Animations:</strong> Dynamic score display updates</li>
+                    <li><strong>Letter Animations:</strong> Smooth movement and rotation</li>
+                </ul>
+
+                <h3><i class="fas fa-volume-up"></i> Audio Experience</h3>
+                <p>
+                    Immersive audio design provides feedback and atmosphere:
+                </p>
+                <ul>
+                    <li><strong>Sound Effects:</strong> Distinct sounds for each action</li>
+                    <li><strong>Background Music:</strong> Dynamic music that adapts to gameplay</li>
+                    <li><strong>Voice Feedback:</strong> Encouraging messages for achievements</li>
+                    <li><strong>Audio Cues:</strong> Helpful audio hints for gameplay</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🏅 Achievements and Progression</h2>
+                
+                <h3><i class="fas fa-trophy"></i> Achievement System</h3>
+                <p>
+                    Unlock achievements by mastering different aspects of the game:
+                </p>
+                <ul>
+                    <li><strong>Word Master:</strong> Create words of various lengths</li>
+                    <li><strong>Speed Demon:</strong> Achieve high scores in time attack</li>
+                    <li><strong>Combo King:</strong> Master the combo system</li>
+                    <li><strong>Vocabulary Expert:</strong> Use rare and complex words</li>
+                    <li><strong>Perfect Player:</strong> Achieve flawless gameplay sessions</li>
+                </ul>
+
+                <h3><i class="fas fa-chart-line"></i> Statistics Tracking</h3>
+                <p>
+                    Monitor your progress and improvement over time:
+                </p>
+                <ul>
+                    <li><strong>Personal Records:</strong> Track your best scores and times</li>
+                    <li><strong>Word History:</strong> Review all words you've created</li>
+                    <li><strong>Performance Analytics:</strong> Detailed gameplay statistics</li>
+                    <li><strong>Progress Charts:</strong> Visual representation of improvement</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 Tips and Strategies</h2>
+                
+                <h3><i class="fas fa-lightbulb"></i> Beginner Tips</h3>
+                <p>
+                    Essential strategies for new players:
+                </p>
+                <ul>
+                    <li><strong>Plan Ahead:</strong> Always look at the next letter coming</li>
+                    <li><strong>Start Small:</strong> Focus on 3-4 letter words initially</li>
+                    <li><strong>Use Corners:</strong> Place letters strategically to create multiple word opportunities</li>
+                    <li><strong>Practice Rotation:</strong> Master letter rotation for optimal placement</li>
+                    <li><strong>Watch the Speed:</strong> Don't let letters pile up too high</li>
+                </ul>
+
+                <h3><i class="fas fa-crown"></i> Advanced Strategies</h3>
+                <p>
+                    Advanced techniques for experienced players:
+                </p>
+                <ul>
+                    <li><strong>Word Chaining:</strong> Plan words that can lead to additional words</li>
+                    <li><strong>Combo Management:</strong> Maintain combos for maximum scoring</li>
+                    <li><strong>Grid Management:</strong> Keep the grid organized for future opportunities</li>
+                    <li><strong>Special Letter Timing:</strong> Save special letters for optimal moments</li>
+                    <li><strong>Speed Optimization:</strong> Develop muscle memory for rapid placement</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🔧 Controls and Accessibility</h2>
+                
+                <h3><i class="fas fa-keyboard"></i> Control Options</h3>
+                <p>
+                    Multiple control schemes for different preferences:
+                </p>
+                <ul>
+                    <li><strong>Keyboard:</strong> Arrow keys, WASD, or custom key mapping</li>
+                    <li><strong>Mouse:</strong> Click and drag for letter placement</li>
+                    <li><strong>Touch:</strong> Swipe gestures for mobile devices</li>
+                    <li><strong>Gamepad:</strong> Full controller support</li>
+                </ul>
+
+                <h3><i class="fas fa-universal-access"></i> Accessibility Features</h3>
+                <p>
+                    Inclusive design for all players:
+                </p>
+                <ul>
+                    <li><strong>Color Blind Support:</strong> Alternative color schemes</li>
+                    <li><strong>High Contrast Mode:</strong> Enhanced visibility options</li>
+                    <li><strong>Audio Descriptions:</strong> Spoken feedback for visual elements</li>
+                    <li><strong>Adjustable Speed:</strong> Customizable game speed</li>
+                    <li><strong>Large Text Options:</strong> Scalable interface elements</li>
+                </ul>
+            </div>
+
+            <div class="content-section">
+                <h2>🏆 Competitive Play</h2>
+                
+                <h3><i class="fas fa-medal"></i> Leaderboards</h3>
+                <p>
+                    Compete with players worldwide:
+                </p>
+                <ul>
+                    <li><strong>Global Rankings:</strong> Compare scores with players worldwide</li>
+                    <li><strong>Weekly Challenges:</strong> Special events with unique rules</li>
+                    <li><strong>Tournament Mode:</strong> Organized competitive events</li>
+                    <li><strong>Friend Challenges:</strong> Compete directly with friends</li>
+                </ul>
+
+                <h3><i class="fas fa-users"></i> Community Features</h3>
+                <p>
+                    Connect with other players and share achievements:
+                </p>
+                <ul>
+                    <li><strong>Social Sharing:</strong> Share scores and achievements</li>
+                    <li><strong>Player Profiles:</strong> Customizable player statistics</li>
+                    <li><strong>Friend System:</strong> Add and compete with friends</li>
+                    <li><strong>Community Events:</strong> Participate in special challenges</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Letters Cascade Challenge. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
             display: flex;
             flex-direction: column;
             gap: var(--spacing-sm);
