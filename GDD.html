@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <link rel="stylesheet" href="css/theme-dark.css">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/base-theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GDD - Letters Cascade Challenge</title>
+    <title>📋 Game Design Document - Letters Cascade Challenge</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/shared.css">
-    <link rel="stylesheet" href="css/breadcrumb.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://planeszwalker.github.io/LCCWeb/shared-styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        /* Enhanced Page-specific styles for GDD */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-2xl);
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        /* Enhanced Header Styling */
-        .glass-panel {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .glass-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at top right, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        
-        .glass-panel h1 {
-            color: var(--primary-color);
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">📋 Game Design Document</h1>
+            <p class="page-subtitle">Letters Cascade Challenge - Comprehensive Design Specification</p>
+        </header>
+
+        <nav class="nav-menu">
+            <a href="https://planeszwalker.github.io/LCCWeb/" class="btn btn-secondary">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/public/agents-discussion.html" class="btn btn-primary">
+                <i class="fas fa-comments"></i> Agents Discussion
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/technical-spec.html" class="btn btn-secondary">
+                <i class="fas fa-cogs"></i> Technical Specs
+            </a>
+            <a href="https://planeszwalker.github.io/LCCWeb/rules.html" class="btn btn-secondary">
+                <i class="fas fa-book"></i> Rules
+            </a>
+        </nav>
+
+        <main id="main-content" class="glass-panel"
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: var(--spacing-md);

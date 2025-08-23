@@ -1195,6 +1195,19 @@ class AgentsDiscussion {
      
      this.connecting = true;
      
+     // For GitHub Pages deployment, use mock connection instead of SSE
+     if (window.location.hostname === 'planeszwalker.github.io') {
+       console.log('GitHub Pages detected, using mock connection...');
+       setTimeout(() => {
+         this.isConnected = true;
+         this.connecting = false;
+         this.updateConnectionStatus('connected', 'Connected (Mock)');
+         this.retryCount = 0;
+         console.log('Mock connection established for GitHub Pages');
+       }, 1000);
+       return;
+     }
+     
      // Close existing connection if any
      if (this.sse && this.sse.readyState !== EventSource.CLOSED) {
        console.log('SSE connection already exists, closing first...');
@@ -1415,10 +1428,13 @@ class AgentsDiscussion {
    }
 }
 
+// Global variable for agents discussion instance
+let agentsDiscussion;
+
 document.addEventListener('DOMContentLoaded', () => {
    console.log('🚀 Initializing Agents Discussion Interface...');
    try {
-  new AgentsDiscussion();
+     agentsDiscussion = new AgentsDiscussion();
      console.log('✅ Agents Discussion Interface initialized successfully');
    } catch (error) {
      console.error('❌ Error initializing Agents Discussion Interface:', error);
