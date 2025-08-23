@@ -20,7 +20,7 @@ def setup_basic_render():
     scene.render.resolution_x = 1920
     scene.render.resolution_y = 1080
     scene.render.image_settings.file_format = 'PNG'
-    scene.render.filepath = "C:/Users/anne/Desktop/LettersCascadChallengeProjet/LCCWeb/.agents/ALPHABET-PYTHON/references_and_renders/renders/basic_test.png"
+    scene.render.filepath = "./.agents/ALPHABET-PYTHON/references_and_renders/renders/basic_test.png"
     print("✅ Basic render setup complete")
 
 def create_basic_scene():
