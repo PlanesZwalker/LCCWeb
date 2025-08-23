@@ -78,21 +78,21 @@
       min-height: 80vh;
     }
 
-         .btn {
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
        gap: var(--space-2);
        padding: var(--space-4) var(--space-6);
-       border: none;
+      border: none;
        border-radius: var(--radius-lg);
        font-weight: 600;
        font-size: var(--text-sm);
-       cursor: pointer;
+      cursor: pointer;
        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-       text-decoration: none;
-       position: relative;
-       overflow: hidden;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
        backdrop-filter: blur(20px);
        transform: translateY(0);
        box-shadow: 
@@ -100,22 +100,22 @@
          0 2px 8px rgba(0, 0, 0, 0.05);
        letter-spacing: 0.025em;
        min-height: 44px;
-     }
+    }
 
-     .btn::before {
-       content: '';
-       position: absolute;
-       top: 0;
-       left: -100%;
-       width: 100%;
-       height: 100%;
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
        transition: left 0.6s ease;
-     }
+    }
 
-     .btn:hover::before {
-       left: 100%;
-     }
+    .btn:hover::before {
+      left: 100%;
+    }
 
      .btn:hover {
        transform: translateY(-3px) scale(1.02);
@@ -137,50 +137,50 @@
          0 8px 25px rgba(0, 0, 0, 0.15);
      }
 
-         .btn-primary {
+    .btn-primary {
        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-       color: white;
+      color: white;
        border: 1px solid rgba(255, 255, 255, 0.2);
        box-shadow: 
          0 8px 25px rgba(102, 126, 234, 0.3),
          0 4px 12px rgba(102, 126, 234, 0.2);
-     }
+    }
 
-     .btn-primary:hover {
+    .btn-primary:hover {
        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
        transform: translateY(-3px) scale(1.02);
        box-shadow: 
          0 15px 35px rgba(102, 126, 234, 0.4),
          0 8px 20px rgba(102, 126, 234, 0.3);
-     }
+    }
 
-         .btn-secondary {
+    .btn-secondary {
        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-       color: white;
+      color: white;
        border: 1px solid rgba(255, 255, 255, 0.2);
        box-shadow: 
          0 8px 25px rgba(240, 147, 251, 0.3),
          0 4px 12px rgba(245, 87, 108, 0.2);
-     }
+    }
 
-     .btn-secondary:hover {
+    .btn-secondary:hover {
        background: linear-gradient(135deg, #e91e63 0%, #f50057 100%);
        transform: translateY(-3px) scale(1.02);
        box-shadow: 
          0 15px 35px rgba(240, 147, 251, 0.4),
          0 8px 20px rgba(245, 87, 108, 0.3);
-     }
+    }
 
-         .btn-subtle {
+    .btn-subtle {
        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-       color: var(--text-secondary);
+      color: var(--text-secondary);
        border: 1px solid rgba(255, 255, 255, 0.15);
        backdrop-filter: blur(10px);
-     }
+    }
 
-           .btn-subtle:hover {
+    .btn-subtle:hover {
         background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-        color: var(--text-primary);
+      color: var(--text-primary);
         border-color: rgba(255, 255, 255, 0.3);
         transform: translateY(-2px) scale(1.02);
         box-shadow: 
@@ -210,7 +210,7 @@
         box-shadow: 
           0 15px 35px rgba(240, 147, 251, 0.4),
           0 8px 20px rgba(245, 87, 108, 0.3);
-      }
+    }
 
     .prompt-input {
       flex: 1;
@@ -361,18 +361,18 @@
       word-wrap: break-word;
     }
 
-         .agent-chip {
-       display: inline-flex;
-       align-items: center;
+    .agent-chip {
+      display: inline-flex;
+      align-items: center;
        gap: 0.5rem;
        padding: 8px 16px;
-       border-radius: 9999px;
+      border-radius: 9999px;
        border: 1px solid rgba(255,255,255,0.15);
        background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-       color: var(--text-secondary);
-       cursor: pointer;
+      color: var(--text-secondary);
+      cursor: pointer;
        transition: all 0.3s ease;
-       user-select: none;
+      user-select: none;
        backdrop-filter: blur(10px);
        font-weight: 500;
        font-size: 0.875rem;
@@ -381,7 +381,7 @@
 
      .agent-chip:hover {
        background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
-       color: var(--text-primary);
+      color: var(--text-primary);
        transform: translateY(-2px);
        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
        border-color: rgba(255, 255, 255, 0.25);
@@ -418,7 +418,7 @@
                      backdrop-filter: blur(20px);
                      border: 2px solid rgba(102, 126, 234, 0.3);
                      border-radius: 12px;
-                     color: var(--text-primary);
+      color: var(--text-primary);
                      font-size: 0.85rem;
                      line-height: 1.5;
                      white-space: pre-line;
@@ -582,7 +582,7 @@
 
      /* Compact View Styles */
      body.compact .page-layout {
-       grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
        gap: var(--space-4);
      }
 
@@ -640,7 +640,7 @@
        body.compact .main-content {
          padding: var(--space-4);
        }
-     }
+    }
   </style>
 </head>
 <body>
@@ -668,34 +668,34 @@
             </a>
           </div>
         </div>
-        
+
         <div style="margin-bottom: var(--space-4);">
           <h4 style="margin-bottom: var(--space-2);">Available Agents</h4>
                                                         <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                                <label class="agent-chip active" data-tooltip="🎯 COORDINATOR AGENT&#10;&#10;📋 PURPOSE&#10;Orchestrates and manages the overall workflow between different agents. Acts as the central intelligence that coordinates tasks and ensures smooth collaboration.&#10;&#10;⏰ WHEN TO USE&#10;Always active by default. Use for complex multi-step tasks, project management, or when you need agents to work together systematically.&#10;&#10;⚡ CAPABILITIES&#10;• Task delegation&#10;• Progress tracking&#10;• Conflict resolution&#10;• Workflow optimization&#10;• Result synthesis&#10;&#10;🎯 BEST FOR&#10;Project planning, code reviews, system architecture decisions, and complex problem-solving scenarios.">
                   <input type="checkbox" class="agent-checkbox" id="agent-coordinator" checked />
                   <span>🎯 Coordinator</span>
-                </label>
+             </label>
                                <label class="agent-chip" data-tooltip="🧪 TEST RUNNER AGENT&#10;&#10;📋 PURPOSE&#10;Executes comprehensive testing across your codebase including unit tests, integration tests, and end-to-end testing.&#10;&#10;⏰ WHEN TO USE&#10;Before deployments, after code changes, or when you need to verify system stability and functionality.&#10;&#10;⚡ CAPABILITIES&#10;• Automated test execution&#10;• Test result analysis&#10;• Coverage reporting&#10;• Performance testing&#10;• Bug detection&#10;&#10;🎯 BEST FOR&#10;Quality assurance, regression testing, performance optimization, and ensuring code reliability.">
                   <input type="checkbox" class="agent-checkbox" id="agent-test-runner" />
                   <span>🧪 Test Runner</span>
-                </label>
+             </label>
                 <label class="agent-chip" data-tooltip="🎨 BEAUTIFIER AGENT&#10;&#10;📋 PURPOSE&#10;Automatically formats and beautifies code to improve readability and maintain consistent coding standards.&#10;&#10;⏰ WHEN TO USE&#10;After writing new code, before code reviews, or when you want to clean up existing code formatting.&#10;&#10;⚡ CAPABILITIES&#10;• Code formatting&#10;• Indentation fixing&#10;• Comment alignment&#10;• Variable naming consistency&#10;• Style guide enforcement&#10;&#10;🎯 BEST FOR&#10;Code cleanup, maintaining coding standards, improving code readability, and preparing code for collaboration.">
                   <input type="checkbox" class="agent-checkbox" id="agent-beautifier" />
                   <span>🎨 Beautifier</span>
-                </label>
+             </label>
                 <label class="agent-chip" data-tooltip="🔧 FIXER AGENT&#10;&#10;📋 PURPOSE&#10;Identifies and automatically fixes common code issues, bugs, and potential problems in your codebase.&#10;&#10;⏰ WHEN TO USE&#10;When you encounter errors, want to improve code quality, or need to resolve technical debt.&#10;&#10;⚡ CAPABILITIES&#10;• Bug detection&#10;• Code optimization&#10;• Security vulnerability fixes&#10;• Dependency updates&#10;• Performance improvements&#10;&#10;🎯 BEST FOR&#10;Debugging, code maintenance, security hardening, and technical debt reduction.">
                   <input type="checkbox" class="agent-checkbox" id="agent-fixer" />
                   <span>🔧 Fixer</span>
-                </label>
+             </label>
                 <label class="agent-chip" data-tooltip="📸 SCREENSHOT AGENT&#10;&#10;📋 PURPOSE&#10;Captures visual snapshots of your application for documentation, testing, or visual verification purposes.&#10;&#10;⏰ WHEN TO USE&#10;For creating documentation, visual regression testing, UI/UX analysis, or when you need to capture the current state of your application.&#10;&#10;⚡ CAPABILITIES&#10;• Full-page screenshots&#10;• Element-specific captures&#10;• Responsive design testing&#10;• Visual comparison&#10;• Automated visual testing&#10;&#10;🎯 BEST FOR&#10;Documentation, visual testing, UI/UX reviews, and visual regression detection.">
                   <input type="checkbox" class="agent-checkbox" id="agent-screenshot" />
                   <span>📸 Screenshot</span>
-                </label>
+             </label>
                 <label class="agent-chip" data-tooltip="👁️ LLAVA VISION AGENT&#10;&#10;📋 PURPOSE&#10;Analyzes images and visual content using advanced computer vision capabilities to understand and describe visual elements.&#10;&#10;⏰ WHEN TO USE&#10;When you need to analyze UI screenshots, understand visual layouts, identify design issues, or extract information from images.&#10;&#10;⚡ CAPABILITIES&#10;• Image analysis&#10;• Visual element detection&#10;• Layout understanding&#10;• Design pattern recognition&#10;• Visual accessibility assessment&#10;&#10;🎯 BEST FOR&#10;UI/UX analysis, visual design reviews, accessibility testing, and image-based problem solving.">
                   <input type="checkbox" class="agent-checkbox" id="agent-llava" />
                   <span>👁️ LLaVA Vision</span>
-                </label>
+             </label>
                 <label class="agent-chip" data-tooltip="📋 PROJECT COORDINATOR AGENT&#10;&#10;📋 PURPOSE&#10;Manages project structure, documentation, and organizational aspects of your development workflow.&#10;&#10;⏰ WHEN TO USE&#10;For project setup, documentation management, file organization, or when you need to maintain project structure and standards.&#10;&#10;⚡ CAPABILITIES&#10;• Project structure management&#10;• Documentation generation&#10;• File organization&#10;• Dependency tracking&#10;• Project health monitoring&#10;&#10;🎯 BEST FOR&#10;Project initialization, documentation maintenance, file organization, and project structure optimization.">
                   <input type="checkbox" class="agent-checkbox" id="agent-project-coordinator" />
                   <span>📋 Project Coordinator</span>
@@ -723,8 +723,8 @@
                 <label class="agent-chip" data-tooltip="🎲 THREEJS GAME AGENT&#10;&#10;📋 PURPOSE&#10;Specializes in 3D web graphics and applications using Three.js, creating immersive 3D experiences and visualizations.&#10;&#10;⏰ WHEN TO USE&#10;For 3D web applications, data visualization, interactive 3D experiences, or when you need advanced 3D web graphics.&#10;&#10;⚡ CAPABILITIES&#10;• 3D web graphics&#10;• Scene management&#10;• 3D visualization&#10;• Interactive 3D experiences&#10;• Web-based 3D applications&#10;&#10;🎯 BEST FOR&#10;3D web applications, data visualization, interactive 3D experiences, and web-based 3D graphics.">
                   <input type="checkbox" class="agent-checkbox" id="agent-threejs-game" />
                   <span>🎲 ThreeJS Game</span>
-                </label>
-             </div>
+             </label>
+          </div>
         </div>
 
                  <div style="margin-bottom: var(--space-4);">
@@ -732,13 +732,13 @@
                                     <div style="display: flex; flex-direction: column; gap: var(--space-2);">
                <button class="btn btn-primary" onclick="agentsDiscussion.connect()">
                  <i class="fas fa-plug"></i> Connect
-               </button>
+           </button>
                <button class="btn btn-secondary" onclick="agentsDiscussion.clearMessages()">
                  <i class="fas fa-trash"></i> Clear
-               </button>
+           </button>
                <button class="btn btn-secondary" onclick="location.reload()">
                  <i class="fas fa-sync-alt"></i> Refresh
-               </button>
+           </button>
              </div>
          </div>
       </div>
@@ -755,8 +755,8 @@
                <input type="text" class="prompt-input" id="promptInput" placeholder="Ask your agents anything..." />
                <button type="submit" class="btn btn-primary">
                  <i class="fas fa-paper-plane"></i> Send
-               </button>
-             </form>
+             </button>
+           </form>
 
         <div class="chat-container">
           <div class="chat" id="chatArea">
@@ -783,17 +783,17 @@
                                     <div style="display: flex; flex-direction: column; gap: var(--space-3);">
                <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('analyze')">
                  <i class="fas fa-search"></i> Analyze Code
-               </button>
+             </button>
                <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('test')">
                  <i class="fas fa-vial"></i> Run Tests
-               </button>
+             </button>
                <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('beautify')">
                  <i class="fas fa-magic"></i> Beautify
-               </button>
+             </button>
                <button class="btn btn-secondary" onclick="agentsDiscussion.sendToolRequest('screenshot')">
                  <i class="fas fa-camera"></i> Screenshot
-               </button>
-             </div>
+             </button>
+           </div>
         </div>
 
         <div class="glass-panel" style="padding: var(--space-6);">
@@ -809,17 +809,17 @@
   </div>
 
                     <button class="fab" onclick="agentsDiscussion.toggleCompactMode()">
-             <i class="fas fa-compress"></i>
-           </button>
+     <i class="fas fa-compress"></i>
+   </button>
 
-     <script src="../config.js"></script>
-   <script src="../api/backend.js"></script>
-   <script>
+     <script src="https://planeszwalker.github.io/LCCWeb/config.js"></script>
+   <script src="https://planeszwalker.github.io/LCCWeb/api/backend.js"></script>
+<script>
      // Ensure config is loaded
      if (!window.LCC_CONFIG) {
        console.warn('LCC_CONFIG not found, using fallback configuration');
        window.LCC_CONFIG = {
-         sseBase: window.location.origin,
+         sseBase: 'https://planeszwalker.github.io/LCCWeb',
          ollamaUrl: 'http://localhost:11434'
        };
      }
@@ -842,7 +842,7 @@ class AgentsDiscussion {
     this.setupToolButtons();
     
     setTimeout(() => {
-      this.connect();
+    this.connect();
     }, 1000);
     
     setInterval(() => this.updateTime(), 1000);
@@ -891,25 +891,25 @@ class AgentsDiscussion {
     }
   }
 
-     setupAgentChips() {
-     const agentChips = document.querySelectorAll('.agent-chip');
-     agentChips.forEach(chip => {
+  setupAgentChips() {
+    const agentChips = document.querySelectorAll('.agent-chip');
+    agentChips.forEach(chip => {
        const checkbox = chip.querySelector('.agent-checkbox');
-       if (checkbox) {
+      if (checkbox) {
          // Set initial state for coordinator
          if (checkbox.id === 'agent-coordinator' && checkbox.checked) {
            chip.classList.add('active');
          }
          
-         checkbox.addEventListener('change', (e) => {
+        checkbox.addEventListener('change', (e) => {
            const agentName = e.target.id.replace('agent-', '');
-           if (e.target.checked) {
+          if (e.target.checked) {
              this.selectedAgents.add(agentName);
-             chip.classList.add('active');
-           } else {
+            chip.classList.add('active');
+          } else {
              this.selectedAgents.delete(agentName);
-             chip.classList.remove('active');
-           }
+            chip.classList.remove('active');
+          }
            console.log('Selected agents:', Array.from(this.selectedAgents));
          });
          
@@ -920,8 +920,8 @@ class AgentsDiscussion {
            checkbox.dispatchEvent(new Event('change'));
          });
        }
-     });
-   }
+    });
+  }
 
   setupToolButtons() {
     const toolButtons = {
@@ -971,8 +971,8 @@ class AgentsDiscussion {
     try {
       // Use local API for GitHub Pages deployment
       const data = window.LCC_API.handleAPIRequest('prompt', {
-        prompt: message,
-        agents: Array.from(this.selectedAgents)
+          prompt: message,
+          agents: Array.from(this.selectedAgents)
       });
       
       const agentMessage = {
@@ -1037,7 +1037,7 @@ class AgentsDiscussion {
     }
   }
 
-           addMessage(message) {
+  addMessage(message) {
       // Create a more robust message ID that includes content hash
       const contentHash = this.hashString(message.content);
       const messageId = `${message.agent}-${message.phase}-${contentHash}-${message.timestamp.getTime()}`;
@@ -1080,11 +1080,11 @@ class AgentsDiscussion {
         keys.slice(0, 100).forEach(key => this.processedMessages.delete(key));
       }
       
-      this.messages.push(message);
+    this.messages.push(message);
       
       // Only render if it's a final answer or user message
       if (message.phase === 'ANSWER' || message.phase === 'FINAL' || message.type === 'user') {
-        this.renderMessage(message);
+    this.renderMessage(message);
       }
     }
 
@@ -1098,7 +1098,7 @@ class AgentsDiscussion {
        hash = hash & hash; // Convert to 32bit integer
      }
      return Math.abs(hash);
-   }
+  }
 
   renderMessage(message) {
     const chatArea = document.getElementById('chatArea');
@@ -1126,13 +1126,13 @@ class AgentsDiscussion {
     chatArea.scrollTop = chatArea.scrollHeight;
   }
 
-     getAgentIcon(agent) {
-     const icons = {
-       'User': '👤',
-       'Coordinator': '🎯',
-       'Test Runner': '🧪',
-       'Beautifier': '🎨',
-       'Fixer': '🔧',
+  getAgentIcon(agent) {
+    const icons = {
+      'User': '👤',
+      'Coordinator': '🎯',
+      'Test Runner': '🧪',
+      'Beautifier': '🎨',
+      'Fixer': '🔧',
        'Screenshot': '📸',
        'LLaVA': '👁️',
        'Project Coordinator': '📋',
@@ -1142,10 +1142,10 @@ class AgentsDiscussion {
        'Babylon Game': '🎮',
        'JS2D Game': '🎯',
        'ThreeJS Game': '🎲',
-       'System': '⚙️'
-     };
-     return icons[agent] || '🤖';
-   }
+      'System': '⚙️'
+    };
+    return icons[agent] || '🤖';
+  }
 
   formatMessageContent(content) {
     content = content.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
@@ -1161,19 +1161,19 @@ class AgentsDiscussion {
     
     const chatArea = document.getElementById('chatArea');
     if (chatArea) {
-      chatArea.innerHTML = `
-        <div class="bubble system">
-          <div class="bubble-meta">
-            <div class="avatar system">⚙️</div>
-            <span>System</span>
-            <span class="phase-tag">INFO</span>
-            <span>${new Date().toLocaleTimeString()}</span>
-          </div>
-          <div class="bubble-content">
-            Messages cleared. Ready for new conversation.
-          </div>
+    chatArea.innerHTML = `
+      <div class="bubble system">
+        <div class="bubble-meta">
+          <div class="avatar system">⚙️</div>
+          <span>System</span>
+          <span class="phase-tag">INFO</span>
+          <span>${new Date().toLocaleTimeString()}</span>
         </div>
-      `;
+        <div class="bubble-content">
+          Messages cleared. Ready for new conversation.
+        </div>
+      </div>
+    `;
     }
     
     const codeOutput = document.getElementById('codeOutput');
@@ -1186,7 +1186,7 @@ class AgentsDiscussion {
     }
   }
 
-     connect() {
+  connect() {
      // Prevent multiple connection attempts
      if (this.connecting) {
        console.log('Connection already in progress, skipping...');
@@ -1198,21 +1198,21 @@ class AgentsDiscussion {
      // Close existing connection if any
      if (this.sse && this.sse.readyState !== EventSource.CLOSED) {
        console.log('SSE connection already exists, closing first...');
-       this.sse.close();
+      this.sse.close();
        this.sse = null;
-     }
+    }
 
-     try {
+    try {
        console.log('Connecting to SSE stream...');
-       this.sse = new EventSource(`${this.sseBase}/logs/stream?file=latest.log`);
-       
-       this.sse.onopen = () => {
+      this.sse = new EventSource(`${this.sseBase}/logs/stream?file=latest.log`);
+      
+      this.sse.onopen = () => {
          console.log('SSE connection opened successfully');
-         this.isConnected = true;
+        this.isConnected = true;
          this.connecting = false;
-         this.updateConnectionStatus('connected', 'Connected');
+        this.updateConnectionStatus('connected', 'Connected');
          this.retryCount = 0;
-       };
+      };
       
              this.sse.onmessage = (event) => {
          try {
@@ -1300,9 +1300,9 @@ class AgentsDiscussion {
       
              this.sse.onerror = (error) => {
          console.error('SSE connection error:', error);
-         this.isConnected = false;
+        this.isConnected = false;
          this.connecting = false;
-         this.updateConnectionStatus('disconnected', 'Connection Error');
+        this.updateConnectionStatus('disconnected', 'Connection Error');
          
          if (!this.retryCount) this.retryCount = 0;
          this.retryCount++;
@@ -1320,7 +1320,7 @@ class AgentsDiscussion {
            console.log('SSE connection failed after 3 retries, giving up');
            this.retryCount = 0; // Reset for manual retry
          }
-       };
+      };
       
     } catch (error) {
       console.error('Failed to create SSE connection:', error);
@@ -1338,19 +1338,19 @@ class AgentsDiscussion {
     this.updateConnectionStatus('disconnected', 'Disconnected');
   }
 
-     updateConnectionStatus(type, text) {
-     const connectBtn = document.getElementById('connectBtn');
-     
-     if (connectBtn) {
-       if (type === 'connected') {
-         connectBtn.innerHTML = '<i class="fas fa-unplug"></i> Disconnect';
-         connectBtn.classList.remove('btn-primary');
-         connectBtn.classList.add('btn-secondary');
+  updateConnectionStatus(type, text) {
+    const connectBtn = document.getElementById('connectBtn');
+    
+    if (connectBtn) {
+      if (type === 'connected') {
+        connectBtn.innerHTML = '<i class="fas fa-unplug"></i> Disconnect';
+        connectBtn.classList.remove('btn-primary');
+        connectBtn.classList.add('btn-secondary');
          this.isConnected = true;
-       } else {
-         connectBtn.innerHTML = '<i class="fas fa-plug"></i> Connect';
-         connectBtn.classList.remove('btn-secondary');
-         connectBtn.classList.add('btn-primary');
+      } else {
+        connectBtn.innerHTML = '<i class="fas fa-plug"></i> Connect';
+        connectBtn.classList.remove('btn-secondary');
+        connectBtn.classList.add('btn-primary');
          this.isConnected = false;
        }
      }
@@ -1395,35 +1395,35 @@ class AgentsDiscussion {
            outputItems[i].remove();
          }
        }
-     }
-   }
+    }
+  }
 
-     toggleCompactView() {
+  toggleCompactView() {
      document.body.classList.toggle('compact');
-     
-     const fabToggle = document.getElementById('fabToggle');
-     if (fabToggle) {
-       const icon = fabToggle.querySelector('i');
+    
+    const fabToggle = document.getElementById('fabToggle');
+    if (fabToggle) {
+      const icon = fabToggle.querySelector('i');
        if (document.body.classList.contains('compact')) {
-         icon.className = 'fas fa-expand';
+        icon.className = 'fas fa-expand';
          console.log('Compact view enabled');
-       } else {
-         icon.className = 'fas fa-compress';
+      } else {
+        icon.className = 'fas fa-compress';
          console.log('Compact view disabled');
        }
      }
    }
 }
 
- document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
    console.log('🚀 Initializing Agents Discussion Interface...');
    try {
-     new AgentsDiscussion();
+  new AgentsDiscussion();
      console.log('✅ Agents Discussion Interface initialized successfully');
    } catch (error) {
      console.error('❌ Error initializing Agents Discussion Interface:', error);
    }
- });
-  </script>
+});
+</script>
 </body>
 </html>

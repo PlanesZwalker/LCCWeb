@@ -8,7 +8,7 @@ const config = {
   
   // Production backend (GitHub Pages)
   production: {
-    sseBase: window.location.origin, // Use same origin for GitHub Pages
+    sseBase: 'https://planeszwalker.github.io/LCCWeb', // GitHub Pages origin
     ollamaUrl: 'http://localhost:11434' // Local Ollama for now
   }
 };
