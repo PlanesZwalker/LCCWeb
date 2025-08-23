@@ -1,0 +1,7 @@
+public/js/libs/**
+**/*.min.js
+public/js/html2pdf.bundle.min.js
+.agents/**
+dist/**
+node_modules/**
+coverage/**

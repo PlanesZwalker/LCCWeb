@@ -1,0 +1,48 @@
+# 🚫 Fichiers ignorés par les agents
+.agents/
+node_modules/
+dist/
+coverage/
+*.backup
+*-backup.*
+*.bak
+*.old
+*.orig
+public/**/*.backup
+public/**/*-backup.*
+public/**/*.bak
+public/**/*.old
+public/**/*.orig
+*.png
+!.agents/logs/tests/**/*.png
+*.tmp
+*.log.old
+*.agent.tmp
+tools/screenshots/batch-*/
+public/js/libs/**
+**/*.min.js
+public/js/html2pdf.bundle.min.js
+public/js/vendor/**
+public/js/third-party/**
+public/js/**/vendor/**
+public/js/**/externals/**
+
+# CSS vendor/minified and common library styles
+public/css/libs/**
+public/css/vendor/**
+public/css/**/vendor/**
+public/css/**/lib/**
+**/*.min.css
+public/css/**/*.min.css
+public/css/**/bootstrap*.css
+public/css/**/normalize*.css
+public/css/**/reset*.css
+public/css/**/fontawesome*.css
+public/css/**/all.min.css
+
+# Source maps and artifacts
+**/*.map
+public/**/*.map
+
+# Legacy/old content outside of active site
+old_files/**

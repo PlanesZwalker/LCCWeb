@@ -126,3 +126,22 @@ coverage/
 # Package manager lock files (uncomment if you want to ignore them)
 # package-lock.json
 # yarn.lock
+# 🤖 Agent files (auto-generated)
+.agents/logs/
+.agents/backups/
+.agents/temp/
+.agents/reports/
+tools/screenshots/batch-*/
+*.agent.tmp
+*.backup
+*-backup.*
+*.bak
+*.old
+*.orig
+public/**/*.backup
+public/**/*-backup.*
+public/**/*.bak
+public/**/*.old
+public/**/*.orig
+*.png
+!.agents/logs/tests/**/*.png

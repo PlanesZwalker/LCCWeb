@@ -1,83 +1,127 @@
 {
   "name": "letters-cascade-challenge",
   "version": "2.0.0",
-  "description": "A modern word formation game with 2D and 3D modes",
-  "main": "src/index.js",
+  "description": "A modern 2D/3D word puzzle game built with Babylon.js and enhanced gameplay mechanics",
+  "main": "public/index.html",
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "eslint src/**/*.js --fix",
-    "format": "prettier --write src/**/*.{js,css,html}",
-    "serve": "http-server dist -p 8000",
-    "analyze": "webpack --mode production --analyze"
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathPattern=tests/.*\\.test\\.js",
+    "test:integration": "jest --testPathPattern=tests/integration\\.test\\.js",
+    "test:2d": "jest --testPathPattern=tests/2d-game\\.test\\.js",
+    "test:3d": "jest --testPathPattern=tests/enhanced-3d-game\\.test\\.js",
+    "test:e2e": "node wait-for-server.js && jest --config jest.config.js",
+    "lint": "eslint public/js/*.js tests/*.js",
+    "lint:fix": "eslint public/js/*.js tests/*.js --fix",
+    "build": "echo 'Building production-ready static files...' && npm run copy-files && npm run optimize",
+    "build:dev": "echo 'Building development files...' && npm run copy-files",
+    "copy-files": "xcopy /E /I /Y public dist",
+    "optimize": "echo 'Files copied and ready for production'",
+    "dev:webpack": "webpack serve --mode=development",
+    "deploy": "echo 'Deploy to your preferred hosting service'",
+    "dist:check": "node tools/clean-dist.js --check",
+    "dist:fix": "node tools/clean-dist.js --fix",
+    "dist:purge": "node tools/clean-dist.js --purge",
+    "project:optimize:dry": "node tools/optimize-project.js --dry",
+    "project:optimize": "node tools/optimize-project.js",
+    "theme:inject": "node tools/inject-base-theme.js",
+    "sitemap:generate": "node tools/generate-sitemap.js",
+    "previews:update": "node tools/update-previews-from-screens.js",
+    "logs:sse": "node tools/logs-sse.js 8011",
+    "logs:prune": "node tools/scripts/cleanup-logs.js --days 14",
+    "start:all": "node tools/scripts/start-all.js",
+    "logs:sse:tail": "powershell -NoProfile -Command Get-Content -Path .agents\\logs\\console\\sse-server.log -Wait",
+    "logs:sse:open": "powershell -NoProfile -Command notepad .agents\\logs\\console\\sse-server.log",
+    "ollama:prepare": "node tools/scripts/ollama-prepare.js",
+    "ollama:serve": "ollama serve",
+    "logs:tail:latest": "powershell -NoProfile -Command Get-Content -Path .agents\\logs\\console\\latest.log -Wait",
+    "logs:tail:ollama": "powershell -NoProfile -Command Get-Content -Path .agents\\logs\\console\\ollama-prepare.log -Wait"
   },
   "keywords": [
     "game",
+    "puzzle",
     "word-game",
-    "2d",
+    "babylon.js",
     "3d",
-    "threejs",
+    "2d",
+    "javascript",
+    "html5",
     "canvas",
     "webgl"
   ],
   "author": "Letters Cascade Challenge Team",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.23.0",
+    "@babel/core": "^7.22.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/preset-env": "^7.23.0",
-    "@testing-library/jest-dom": "^6.1.4",
-    "babel-loader": "^9.1.3",
+    "@babel/plugin-transform-class-properties": "^7.27.1",
+    "@babel/preset-env": "^7.22.0",
+    "babel-jest": "^29.0.0",
+    "babel-loader": "^10.0.0",
     "copy-webpack-plugin": "^13.0.0",
-    "css-loader": "^6.8.1",
-    "eslint": "^8.51.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "html-webpack-plugin": "^5.5.3",
+    "css-loader": "^7.1.2",
+    "cypress": "^14.5.4",
+    "eslint": "^8.57.1",
+    "html-webpack-plugin": "^5.6.3",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^30.0.5",
-    "mini-css-extract-plugin": "^2.7.6",
-    "prettier": "^3.0.3",
-    "style-loader": "^3.3.3",
-    "webpack": "^5.88.2",
-    "webpack-bundle-analyzer": "^4.9.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "jest-environment-jsdom": "^29.5.0",
+    "mini-css-extract-plugin": "^2.9.3",
+    "puppeteer": "^24.16.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.101.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "@tweenjs/tween.js": "^21.0.0",
-    "three": "^0.158.0"
+    "babylonjs": "^6.0.0",
+    "cannon-es": "^0.20.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
-
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  },
   "eslintConfig": {
-    "extends": [
-      "eslint:recommended",
-      "prettier"
-    ],
     "env": {
       "browser": true,
       "es2021": true,
+      "node": true,
       "jest": true
     },
+    "extends": [
+      "eslint:recommended"
+    ],
     "parserOptions": {
-      "ecmaVersion": 2021,
+      "ecmaVersion": "latest",
       "sourceType": "module"
+    },
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn",
+      "prefer-const": "error",
+      "no-var": "error"
     }
   },
-  "prettier": {
-    "semi": true,
-    "trailingComma": "es5",
-    "singleQuote": true,
-    "printWidth": 80,
-    "tabWidth": 2
-  }
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PlanesZwalker/LCCWeb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PlanesZwalker/LCCWeb/issues"
+  },
+  "homepage": "https://cohmbox.art/LCCWeb/"
 }
