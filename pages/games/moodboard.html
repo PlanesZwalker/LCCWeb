@@ -2,959 +2,257 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/base-theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Références de Jeux - Letters Cascade Challenge</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Moodboard - Letters Cascade Challenge</title>
+    <meta name="description" content="Références visuelles et inspiration">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/shared.css">
-    <link rel="stylesheet" href="css/unified-colors.css">
-    <link rel="stylesheet" href="css/theme-dark.css">
-    <style id="inline-hero-style">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Unified CSS System -->
+    <link rel="stylesheet" href="../../assets/css/unified-colors.css">
+    <link rel="stylesheet" href="../../assets/css/unified-layout.css">
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="../../assets/css/theme-dark.css">
+    <link rel="stylesheet" href="../../assets/css/enhanced-ui.css">
+    <link rel="stylesheet" href="../../assets/css/unified-enhanced.css">
+    
+    <!-- Page-specific CSS -->
+    <style>
         .glass-panel { background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,255,255,.94)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.3); border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,.1); padding: 2rem; }
         .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.6rem 1rem; border-radius:8px; text-decoration:none; font-weight:600; transition:.2s ease; }
         .btn.primary { color: var(--neutral-50); background: var(--gradient-primary); }
         .btn.subtle { color: var(--primary-color); background: var(--glass-bg-secondary); border: 1px solid var(--glass-border-primary); }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,.1); }
     </style>
+    
     <style>
-        /* Enhanced Market Study Layout - Reference Games Focus */
-        body { background: var(--gray-900); }
-        .page-layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: var(--spacing-2xl);
+        /* Base page styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--secondary-600) 100%);
+            color: var(--neutral-50);
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
-            max-width: 1800px;
+            line-height: 1.6;
+        }
+        
+        /* Unified Navigation */
+        .unified-nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .unified-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        
+        .unified-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-600);
+            text-decoration: none;
+        }
+        
+        .unified-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .unified-nav-link {
+            color: var(--neutral-700);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+        }
+        
+        .unified-nav-link:hover {
+            color: var(--primary-600);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .unified-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neutral-700);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .container {
+            max-width: 1400px;
             margin: 0 auto;
             padding: var(--spacing-xl);
         }
-
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-2xl);
-        }
-
-        /* Enhanced Market Study Header */
-        .market-header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
+        
+        /* Glass Panel System */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
             border-radius: var(--radius-2xl);
             padding: var(--spacing-2xl);
             box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            animation: slideInFromTop 0.8s ease-out;
-        }
-
-        .market-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .market-header::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-        }
-
-        .market-header h1 {
-            color: var(--primary-color);
-            font-size: 2.8rem;
-            font-weight: 900;
-            margin-bottom: var(--spacing-lg);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .market-header p {
-            color: var(--gray-600);
-            font-size: 1.3rem;
-            line-height: 1.7;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Enhanced Game Reference Cards */
-        .game-reference-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
-            gap: var(--spacing-2xl);
-        }
-
-        .game-reference-card {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .game-reference-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .game-reference-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-        }
-
-        .game-reference-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .game-reference-card:hover::after {
-            left: 100%;
-        }
-
-        .game-reference-header {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
-            padding-bottom: var(--spacing-lg);
-            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
-            position: relative;
         }
-
-        .game-reference-logo {
-            width: 90px;
-            height: 90px;
-            border-radius: var(--radius-lg);
-            object-fit: cover;
-            box-shadow: var(--shadow-md);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .game-reference-card:hover .game-reference-logo {
-            transform: scale(1.1);
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
             box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all var(--transition-normal);
         }
-
-        .game-reference-title {
-            flex: 1;
-        }
-
-        .game-reference-title h3 {
-            color: var(--primary-color);
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-xs);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .game-reference-title p {
-            color: var(--gray-600);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .wikipedia-badge {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 6px 12px;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .wikipedia-badge:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Game Screenshots Section */
-        .game-screenshots {
-            margin: var(--spacing-xl) 0;
-        }
-
-        .game-screenshots h4 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .screenshots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-lg);
-        }
-
-        .screenshot-item {
-            position: relative;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: white;
-        }
-
-        .screenshot-item:hover {
-            transform: scale(1.08) translateY(-5px);
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
             box-shadow: var(--shadow-xl);
         }
-
-        .screenshot-item img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
+        
+        /* Button System */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
             border-radius: var(--radius-md);
-            transition: all 0.3s ease;
-        }
-
-        .screenshot-item:hover img {
-            filter: brightness(1.1) contrast(1.1);
-        }
-
-        .screenshot-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
-            color: white;
-            padding: var(--spacing-md);
-            font-size: 0.85rem;
             font-weight: 600;
-            text-align: center;
-        }
-
-        /* Game Rules Comparison */
-        .game-rules-comparison {
-            margin: var(--spacing-xl) 0;
-        }
-
-        .game-rules-comparison h4 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .rules-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: var(--spacing-lg);
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            backdrop-filter: blur(10px);
-        }
-
-        .rules-table th,
-        .rules-table td {
-            padding: var(--spacing-md);
-            text-align: left;
-            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-        }
-
-        .rules-table th {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            border: none;
+            cursor: pointer;
             font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-
-        .rules-table tr {
-            transition: all 0.3s ease;
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
         }
-
-        .rules-table tr:hover {
-            background: rgba(102, 126, 234, 0.08);
-            transform: scale(1.01);
-        }
-
-        .comparison-highlight {
-            background: rgba(76, 175, 80, 0.08);
-            border-left: 4px solid var(--success-color);
-        }
-
-        .comparison-difference {
-            background: rgba(255, 152, 0, 0.08);
-            border-left: 4px solid var(--warning-color);
-        }
-
-        /* Game Features Analysis */
-        .game-features-analysis {
-            margin: var(--spacing-xl) 0;
-        }
-
-        .game-features-analysis h4 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-lg);
-            margin-top: var(--spacing-lg);
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-lg);
-            border-left: 4px solid var(--primary-color);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .feature-item:hover::before {
-            left: 100%;
-        }
-
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.98);
-            transform: translateX(8px) translateY(-3px);
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
             box-shadow: var(--shadow-lg);
         }
-
-        .feature-item h4 {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .feature-item p {
-            color: var(--gray-700);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Market Analysis Logs */
-        .market-analysis-logs {
-            background: rgba(0, 0, 0, 0.08);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            margin: var(--spacing-xl) 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            backdrop-filter: blur(10px);
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--neutral-700);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .market-analysis-logs h3 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
-
-        .log-entry {
-            margin-bottom: var(--spacing-sm);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            background: rgba(255, 255, 255, 0.8);
-            transition: all 0.3s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .log-entry:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateX(5px);
-        }
-
-        .log-info { 
-            color: var(--primary-500); 
-            border-left-color: var(--primary-500);
-        }
-        .log-success { 
-            color: var(--success-500); 
-            border-left-color: var(--success-500);
-        }
-        .log-warning { 
-            color: var(--warning-500); 
-            border-left-color: var(--warning-500);
-        }
-        .log-error { 
-            color: var(--error-500); 
-            border-left-color: var(--error-500);
-        }
-
-        /* Enhanced Responsive Design */
-        @media (max-width: 1400px) {
-            .page-layout {
-                grid-template-columns: 280px 1fr;
-                gap: var(--spacing-xl);
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .page-layout {
-                grid-template-columns: 250px 1fr;
-                gap: var(--spacing-lg);
-            }
-            
-            .game-reference-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .page-layout {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-                gap: var(--spacing-lg);
+            .unified-nav-menu {
+                display: none;
             }
             
-            .nav-sidebar {
-                position: static;
-                margin-bottom: var(--spacing-lg);
+            .unified-nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding: var(--spacing-lg);
+                box-shadow: var(--shadow-lg);
             }
             
-            .market-header h1 {
-                font-size: 2.2rem;
+            .unified-nav-toggle {
+                display: block;
             }
             
-            .game-reference-card {
+            .container {
                 padding: var(--spacing-lg);
             }
-        }
-
-        /* Animation Enhancements */
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
+            
+            .glass-panel {
+                padding: var(--spacing-xl);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes shimmer {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
-        }
-
-        .market-section {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .reference-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* New styles for game reference links */
-        .game-reference-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-xs);
-            transition: all 0.3s ease;
-        }
-
-        .game-reference-link:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* Enhanced Concept Showcase */
-        .concept-showcase {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
-            margin-bottom: var(--spacing-2xl);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .concept-showcase h2 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .concept-showcase img {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            margin: var(--spacing-lg) 0;
-            transition: all 0.3s ease;
-        }
-
-        .concept-showcase img:hover {
-            transform: scale(1.02);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .image-credit {
-            background: rgba(102, 126, 234, 0.1);
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-sm);
-            margin: var(--spacing-sm) 0;
-            border-left: 3px solid var(--primary-color);
-        }
-
-        .image-credit p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--gray-600);
-            font-style: italic;
-        }
-
-        .concept-showcase h3 {
-            color: var(--secondary-color);
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: var(--spacing-lg) 0 var(--spacing-md) 0;
-        }
-
-        .concept-showcase p {
-            color: var(--gray-700);
-            line-height: 1.7;
-            font-size: 1.1rem;
-        }
-
-        /* Enhanced Navigation Sidebar */
-        .nav-sidebar {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            height: fit-content;
-            position: sticky;
-            top: var(--spacing-xl);
-        }
-
-        .nav-sidebar h3 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-sm);
-        }
-
-        .nav-links a {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm) var(--spacing-md);
-            color: var(--gray-700);
-            text-decoration: none;
-            border-radius: var(--radius-md);
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-
-        .nav-links a.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        /* New styles for hero section */
-        .hero-section {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            animation: slideInFromTop 0.8s ease-out;
-            margin-bottom: var(--spacing-2xl);
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .hero-section::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-        }
-
-        .hero-section h1 {
-            color: var(--primary-color);
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: var(--spacing-lg);
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-section p {
-            color: var(--gray-600);
-            font-size: 1.5rem;
-            line-height: 1.8;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: var(--spacing-lg);
-            justify-content: center;
-        }
-
-        .action-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: var(--radius-lg);
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-md);
-        }
-
-        .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .action-btn.primary {
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-        }
-
-        .action-btn.primary:hover {
-            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-        }
-
-        /* New styles for concept-section and features-section */
-        .concept-section {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95));
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: var(--spacing-2xl);
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .concept-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .concept-section::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-        }
-
-        .concept-section h2 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .concept-section p {
-            color: var(--gray-600);
-            font-size: 1.3rem;
-            line-height: 1.8;
-            font-weight: 500;
-            position: relative;
-            z-index: 1;
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .concept-content {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-2xl);
-        }
-
-        .concept-description {
-            flex: 1;
-            padding-right: var(--spacing-lg);
-            border-right: 1px solid rgba(102, 126, 234, 0.1);
-        }
-
-        .concept-description h3 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .concept-description p {
-            color: var(--gray-700);
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .features-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: var(--spacing-2xl);
-            margin-top: var(--spacing-2xl);
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-        }
-
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .feature-card:hover::after {
-            left: 100%;
-        }
-
-        .feature-card h3 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-card p {
-            color: var(--gray-700);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .feature-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: var(--spacing-md);
-        }
-
-        .feature-card li {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            color: var(--gray-700);
-            font-size: 1rem;
-        }
-
-        .feature-card li strong {
-            color: var(--primary-color);
-            font-weight: 600;
         }
     </style>
 </head>
-<body data-theme="dark">
-    <div class="navigation-container"></div>
+<body>
+    <!-- Unified Navigation -->
+    <header class="unified-nav-header">
+        <div class="unified-nav-container">
+            <a href="../../" class="unified-nav-brand">
+                <i class="fas fa-gamepad"></i>
+                Letters Cascade
+            </a>
+            
+            <nav>
+                <ul class="unified-nav-menu" id="nav-menu">
+                    <li><a href="../../" class="unified-nav-link">Accueil</a></li>
+                    <li><a href="./" class="unified-nav-link">Jeux</a></li>
+                    <li><a href="../docs/" class="unified-nav-link">Documentation</a></li>
+                    <li><a href="../docs/rules.html" class="unified-nav-link">Règles</a></li>
+                </ul>
+            </nav>
+            
+            <button class="unified-nav-toggle" id="nav-toggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Unified Navigation -->
+    
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="navigation-container"></div>
     <div class="container">
         <div class="page-layout">
             <!-- Enhanced Navigation Sidebar -->
@@ -1538,18 +836,77 @@
             </div>
         </div>
     </div>
-    <footer class="glass-panel" id="page-footer" style="margin: var(--spacing-xl,2rem) 0; text-align:center;"></footer>
+    
     <!-- Add SEO meta tags and analytics script -->
     <meta name="description" content="Moodboard visuel pour Letters Cascade Challenge, inspirant le design en français." />
     <meta name="keywords" content="moodboard, design jeu, inspiration visuelle, cascade lettres" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-X"></script>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    
+
+    <!-- Navigation Script -->
+    
+
+    <!-- Page-specific JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel" style="margin-top: var(--spacing-2xl); text-align: center;">
+        <p>&copy; 2025 Letters Cascade Challenge. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Navigation Script -->
     <script>
+        // Mobile navigation toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function() {
+                const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', !isExpanded);
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        
+        // Hide/show navigation on scroll
+        let lastScrollTop = 0;
+        const navHeader = document.querySelector('.unified-nav-header');
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navHeader.style.transform = 'translateY(-100%)';
+            } else {
+                navHeader.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+
+    <!-- Page-specific JavaScript -->
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-X"></script>
+<script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-XXXXX-X');
     </script>
-    <script>
+<script>
       (function(){
         const el = document.getElementById('page-footer');
         if (el) {
@@ -1558,6 +915,5 @@
         }
       })();
     </script>
-    <script src="js/navigation.js"></script>
 </body>
 </html>

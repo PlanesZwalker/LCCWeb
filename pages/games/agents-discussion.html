@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  <title>💬 Agents – Discussion Live</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🤖</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css?v=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../../assets/css/unified-colors.css" />
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme Agents IA - Letters Cascade Challenge</title>
+    <meta name="description" content="Plateforme de discussion avec agents IA">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Unified CSS System -->
+    <link rel="stylesheet" href="../../assets/css/unified-colors.css">
+    <link rel="stylesheet" href="../../assets/css/unified-layout.css">
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="../../assets/css/theme-dark.css">
+    <link rel="stylesheet" href="../../assets/css/enhanced-ui.css">
+    <link rel="stylesheet" href="../../assets/css/unified-enhanced.css">
+    
+    <!-- Page-specific CSS -->
+    <style>
 
     * {
       margin: 0;
@@ -439,9 +452,228 @@
        }
     }
   </style>
+    
+    <style>
+        /* Base page styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--secondary-600) 100%);
+            color: var(--neutral-50);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Unified Navigation */
+        .unified-nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .unified-nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        
+        .unified-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-600);
+            text-decoration: none;
+        }
+        
+        .unified-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .unified-nav-link {
+            color: var(--neutral-700);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-normal);
+        }
+        
+        .unified-nav-link:hover {
+            color: var(--primary-600);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        
+        .unified-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--neutral-700);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-md);
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+        
+        /* Glass Panel System */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all var(--transition-normal);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        /* Button System */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--neutral-700);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .unified-nav-menu {
+                display: none;
+            }
+            
+            .unified-nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding: var(--spacing-lg);
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .unified-nav-toggle {
+                display: block;
+            }
+            
+            .container {
+                padding: var(--spacing-lg);
+            }
+            
+            .glass-panel {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- Unified Navigation -->
+    <header class="unified-nav-header">
+        <div class="unified-nav-container">
+            <a href="../../" class="unified-nav-brand">
+                <i class="fas fa-gamepad"></i>
+                Letters Cascade
+            </a>
+            
+            <nav>
+                <ul class="unified-nav-menu" id="nav-menu">
+                    <li><a href="../../" class="unified-nav-link">Accueil</a></li>
+                    <li><a href="./" class="unified-nav-link">Jeux</a></li>
+                    <li><a href="../docs/" class="unified-nav-link">Documentation</a></li>
+                    <li><a href="../docs/rules.html" class="unified-nav-link">Règles</a></li>
+                </ul>
+            </nav>
+            
+            <button class="unified-nav-toggle" id="nav-toggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Unified Navigation -->
+    
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <a href="#main-content" class="skip-link">Skip to main content</a>
   
   <div class="page-layout">
     <aside class="nav-sidebar">
@@ -608,9 +840,67 @@
                                          <button role="button" />
        <i class="fas fa-compress"></i>
      </button>
+        </div>
+    </main>
 
-     <script src="https://planeszwalker.github.io/LCCWeb/config.js"></script>
-   <script src="https://planeszwalker.github.io/LCCWeb/api/backend.js"></script>
+    <!-- Footer -->
+    
+
+    <!-- Navigation Script -->
+    
+
+    <!-- Page-specific JavaScript -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel" style="margin-top: var(--spacing-2xl); text-align: center;">
+        <p>&copy; 2025 Letters Cascade Challenge. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Navigation Script -->
+    <script>
+        // Mobile navigation toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function() {
+                const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                navToggle.setAttribute('aria-expanded', !isExpanded);
+                navMenu.classList.toggle('active');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+        
+        // Hide/show navigation on scroll
+        let lastScrollTop = 0;
+        const navHeader = document.querySelector('.unified-nav-header');
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navHeader.style.transform = 'translateY(-100%)';
+            } else {
+                navHeader.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+
+    <!-- Page-specific JavaScript -->
+    
+<script src="https://planeszwalker.github.io/LCCWeb/config.js"></script>
+<script src="https://planeszwalker.github.io/LCCWeb/api/backend.js"></script>
 <script>
      // Ensure config is loaded
      if (!window.LCC_CONFIG) {

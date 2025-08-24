@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centre de Jeux - Letters Cascade Challenge</title>
-    <meta name="description" content="Choisissez votre mode de jeu préféré">
+    <title>{{PAGE_TITLE}} - Letters Cascade Challenge</title>
+    <meta name="description" content="{{PAGE_DESCRIPTION}}">
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
@@ -16,94 +16,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <!-- Unified CSS System -->
-    <link rel="stylesheet" href="../../assets/css/unified-colors.css">
-    <link rel="stylesheet" href="../../assets/css/unified-layout.css">
-    <link rel="stylesheet" href="../../assets/css/shared.css">
-    <link rel="stylesheet" href="../../assets/css/theme-dark.css">
-    <link rel="stylesheet" href="../../assets/css/enhanced-ui.css">
-    <link rel="stylesheet" href="../../assets/css/unified-enhanced.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}unified-colors.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}unified-layout.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}shared.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}theme-dark.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}enhanced-ui.css">
+    <link rel="stylesheet" href="{{CSS_PATH}}unified-enhanced.css">
     
     <!-- Page-specific CSS -->
-    <style>
-        .games-hub {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.125);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-        
-        .game-card:hover::before {
-            left: 100%;
-        }
-        
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(96, 165, 250, 0.5);
-        }
-        
-        .game-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .game-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #60a5fa;
-            font-weight: 700;
-        }
-        
-        .game-description {
-            font-size: 1rem;
-            margin: 0;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-        
-        .game-features {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        
-        .feature-tag {
-            display: inline-block;
-            background: rgba(96, 165, 250, 0.2);
-            color: #60a5fa;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            margin: 0.25rem;
-            font-size: 0.8rem;
-        }
-    </style>
+    {{PAGE_CSS}}
     
     <style>
         /* Base page styles */
@@ -296,17 +217,17 @@
     <!-- Unified Navigation -->
     <header class="unified-nav-header">
         <div class="unified-nav-container">
-            <a href="../../" class="unified-nav-brand">
+            <a href="{{HOME_PATH}}" class="unified-nav-brand">
                 <i class="fas fa-gamepad"></i>
                 Letters Cascade
             </a>
             
             <nav>
                 <ul class="unified-nav-menu" id="nav-menu">
-                    <li><a href="../../" class="unified-nav-link">Accueil</a></li>
-                    <li><a href="./" class="unified-nav-link">Jeux</a></li>
-                    <li><a href="../docs/" class="unified-nav-link">Documentation</a></li>
-                    <li><a href="../docs/rules.html" class="unified-nav-link">Règles</a></li>
+                    <li><a href="{{HOME_PATH}}" class="unified-nav-link">Accueil</a></li>
+                    <li><a href="{{GAMES_PATH}}" class="unified-nav-link">Jeux</a></li>
+                    <li><a href="{{DOCS_PATH}}" class="unified-nav-link">Documentation</a></li>
+                    <li><a href="{{RULES_PATH}}" class="unified-nav-link">Règles</a></li>
                 </ul>
             </nav>
             
@@ -319,73 +240,7 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-            <!-- Unified Navigation -->
-    
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <main class="main-content">
-        <div class="container">
-            
-            
-            <div class="games-hub">
-                <a href="classic-2d-game.html" class="game-card">
-                    <span class="game-icon">📱</span>
-                    <h3 class="game-title">Classic 2D Mode</h3>
-                    <p class="game-description">Traditional Tetris-style gameplay on an 8×8 grid. Perfect for quick sessions and mobile play.</p>
-                    <div class="game-features">
-                        <span class="feature-tag">8×8 Grid</span>
-                        <span class="feature-tag">Mobile Friendly</span>
-                        <span class="feature-tag">Quick Play</span>
-                    </div>
-                </a>
-                
-                <a href="threejs-3d-game.html" class="game-card">
-                    <span class="game-icon">🌐</span>
-                    <h3 class="game-title">3D Immersive Mode</h3>
-                    <p class="game-description">Advanced 3D environment with camera controls, lighting effects, and multi-layer gameplay.</p>
-                    <div class="game-features">
-                        <span class="feature-tag">3D Graphics</span>
-                        <span class="feature-tag">Camera Controls</span>
-                        <span class="feature-tag">Multi-layer</span>
-                    </div>
-                </a>
-                
-                <a href="agents-discussion.html" class="game-card">
-                    <span class="game-icon">🤖</span>
-                    <h3 class="game-title">AI Agents Platform</h3>
-                    <p class="game-description">Advanced AI-powered development environment with 13 specialized agents for game creation.</p>
-                    <div class="game-features">
-                        <span class="feature-tag">13 AI Agents</span>
-                        <span class="feature-tag">Development Tools</span>
-                        <span class="feature-tag">Collaborative</span>
-                    </div>
-                </a>
-                
-                <a href="moodboard.html" class="game-card">
-                    <span class="game-icon">🎨</span>
-                    <h3 class="game-title">Visual Moodboard</h3>
-                    <p class="game-description">Explore the visual design inspiration and creative direction for the game.</p>
-                    <div class="game-features">
-                        <span class="feature-tag">Design Inspiration</span>
-                        <span class="feature-tag">Visual Reference</span>
-                        <span class="feature-tag">Creative Direction</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </main>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    
-
-    <!-- Navigation Script -->
-    
-
-    <!-- Page-specific JavaScript -->
+            {{PAGE_CONTENT}}
         </div>
     </main>
 
@@ -434,6 +289,6 @@
     </script>
 
     <!-- Page-specific JavaScript -->
-    
+    {{PAGE_JS}}
 </body>
 </html>
