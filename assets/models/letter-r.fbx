@@ -1,0 +1,150 @@
+; FBX 7.7.0 project file
+; ---------------------------------------------------
+
+FBXHeaderExtension:  {
+    FBXHeaderVersion: 1003
+    FBXVersion: 7700
+    CreationTimeStamp:  {
+        Version: 1000
+        Year: 2024
+        Month: 12
+        Day: 19
+        Hour: 10
+        Minute: 0
+        Second: 0
+        Millisecond: 0
+    }
+    Creator: "Letters Cascade Challenge - Enhanced FBX Generator"
+    OtherFlags:  {
+        FlagPLE: 0
+    }
+}
+
+GlobalSettings:  {
+    Version: 1000
+    Properties70:  {
+        P: "UpAxis", "int", "Integer", "",3
+        P: "UpAxisSign", "int", "Integer", "",1
+        P: "FrontAxis", "int", "Integer", "",2
+        P: "FrontAxisSign", "int", "Integer", "",1
+        P: "CoordAxis", "int", "Integer", "",1
+        P: "CoordAxisSign", "int", "Integer", "",1
+        P: "OriginalUpAxis", "int", "Integer", "",3
+        P: "OriginalUpAxisSign", "int", "Integer", "",1
+        P: "UnitScaleFactor", "double", "Number", "",1
+        P: "OriginalUnitScaleFactor", "double", "Number", "",1
+        P: "AmbientColor", "Color", "", "A",0.4,0.4,0.4
+        P: "DefaultCamera", "KString", "", "", "Producer Perspective"
+        P: "TimeMode", "enum", "", "",6
+        P: "TimeProtocol", "enum", "", "",2
+        P: "SnapOnFrameMode", "enum", "", "",0
+        P: "TimeSpanStart", "KTime", "Time", "",0
+        P: "TimeSpanStop", "KTime", "Time", "",153953860000
+        P: "CustomFrameRate", "double", "Number", "",-1
+        P: "TimeMarker", "Compound", "", ""
+        P: "CurrentTimeMarker", "int", "Integer", "",-1
+    }
+}
+
+Documents:  {
+    Count: 1
+    Document: "Letters Cascade Challenge", "Scene" {
+        Properties70:  {
+            P: "SourceObject", "object", "", ""
+            P: "ActiveAnimStackName", "KString", "", "", ""
+        }
+        RootNode: "Model::RootNode"
+    }
+}
+
+References:  {
+}
+
+Definitions:  {
+    Version: 100
+    Count: 3
+    ObjectType: "Model" {
+        Count: 1
+    }
+    ObjectType: "Geometry" {
+        Count: 1
+    }
+    ObjectType: "Material" {
+        Count: 1
+    }
+}
+
+Objects:  {
+    Model: "Model::LetterR" {
+        MultiLayer: ""
+        MultiTake: ""
+        Shading: Y
+        Culling: "CullingOff"
+        Properties70:  {
+            P: "DefaultAttributeIndex", "int", "Integer", "",0
+        }
+        Version: 232
+        Properties70:  {
+            P: "Lcl Translation", "Lcl Translation", "", "A",0,0,0
+            P: "Lcl Rotation", "Lcl Rotation", "", "A",0,0,0
+            P: "Lcl Scaling", "Lcl Scaling", "", "A",1,1,1
+            P: "Visibility", "Visibility", "", "A",1
+            P: "Visibility Inheritance", "Visibility Inheritance", "", "",1
+        }
+    }
+    Geometry: "Geometry::LetterR" {
+        Properties70:  {
+            P: "Color", "Color", "", "A",0.8,0.8,0.8
+            P: "BBoxMin", "Vector3D", "Vector", "",-0.4,-0.5,-0.2
+            P: "BBoxMax", "Vector3D", "Vector", "",0.4,0.5,0.2
+        }
+        GeometryVersion: 124
+        Vertices: *8 {
+            a: -0.3, -0.5, -0.1, 0.3, -0.5, -0.1, 0.3, 0.5, -0.1, -0.3, 0.5, -0.1, -0.3, -0.5, 0.1, 0.3, -0.5, 0.1, 0.3, 0.5, 0.1, -0.3, 0.5, 0.1
+        }
+        PolygonVertexIndex: *4 {
+            a: 0, 1, 2, -4, 4, 5, 6, -8, 0, 4, 7, -4, 1, 5, 6, -3
+        }
+        Edges: *12 {
+            a: 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 0
+        }
+    }
+    Material: "Material::LetterRMaterial" {
+        Version: 102
+        Properties70:  {
+            P: "ShadingModel", "KString", "", "", "phong"
+            P: "MultiLayer", "bool", "", "",0
+            P: "EmissiveColor", "Color", "", "A",0,0,0
+            P: "EmissiveFactor", "Number", "", "A",1
+            P: "AmbientColor", "Color", "", "A",0.2,0.2,0.2
+            P: "AmbientFactor", "Number", "", "A",1
+            P: "DiffuseColor", "Color", "", "A",0.8,0.8,0.8
+            P: "DiffuseFactor", "Number", "", "A",1
+            P: "Bump", "Vector3D", "Vector", "",0,0,0
+            P: "NormalMap", "Vector3D", "Vector", "",0,0,0
+            P: "BumpFactor", "Number", "", "A",1
+            P: "TransparentColor", "Color", "", "A",0,0,0
+            P: "TransparencyFactor", "Number", "", "A",0
+            P: "Opacity", "Number", "", "A",1
+            P: "ReflectionColor", "Color", "", "A",0,0,0
+            P: "ReflectionFactor", "Number", "", "A",1
+            P: "DisplacementColor", "Color", "", "A",0,0,0
+            P: "DisplacementFactor", "Number", "", "A",1
+            P: "VectorDisplacementColor", "Color", "", "A",0,0,0
+            P: "VectorDisplacementFactor", "Number", "", "A",1
+            P: "SpecularColor", "Color", "", "A",0.2,0.2,0.2
+            P: "SpecularFactor", "Number", "", "A",1
+            P: "ShininessExponent", "Number", "", "A",20
+            P: "Shininess", "Number", "", "A",20
+            P: "SpecularFactor", "Number", "", "A",1
+        }
+    }
+}
+
+Connections:  {
+    C: "OO",0,1,"Model::LetterR","Model::RootNode"
+    C: "OO",1,0,"Geometry::LetterR","Model::LetterR"
+    C: "OO",2,0,"Material::LetterRMaterial","Model::LetterR"
+}
+
+; End of FBX file

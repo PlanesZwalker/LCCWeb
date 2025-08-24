@@ -1,0 +1,1144 @@
+{
+  "timestamp": "2025-08-08T13:37:10.947Z",
+  "instruction": "Prendre toutes les captures (site + jeux) en fullscreen avec gameplay, responsive et erreurs",
+  "analysis": {
+    "needsAllScreenshots": true,
+    "needsSpecificScreenshots": false,
+    "needsResponsiveScreenshots": true,
+    "needsGameScreenshots": true,
+    "needsWebsiteScreenshots": true,
+    "needsComparisonScreenshots": false,
+    "needsErrorScreenshots": true,
+    "needsFullscreen": true,
+    "needsGameplaySequence": true,
+    "priority": "high",
+    "maxShots": null
+  },
+  "screenshots": [
+    {
+      "url": "http://localhost:8000/public/classic-2d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.log",
+      "timestamp": "2025-08-08T13:23:27.728Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": true,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/classic-2d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.log",
+      "timestamp": "2025-08-08T13:23:49.688Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "ArrowRight,ArrowUp,ArrowLeft,ArrowDown",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/classic-2d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.log",
+      "timestamp": "2025-08-08T13:24:11.104Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "Space,Space",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.log",
+      "timestamp": "2025-08-08T13:24:31.986Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": true,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.log",
+      "timestamp": "2025-08-08T13:24:54.732Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "ArrowRight,ArrowUp,ArrowLeft,ArrowDown",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.log",
+      "timestamp": "2025-08-08T13:25:17.020Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "Space,Space",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/threejs-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.log",
+      "timestamp": "2025-08-08T13:25:21.869Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": true,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/threejs-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.log",
+      "timestamp": "2025-08-08T13:25:28.780Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "ArrowRight,ArrowUp,ArrowLeft,ArrowDown",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/threejs-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.log",
+      "timestamp": "2025-08-08T13:25:35.271Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "Space,Space",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/unified-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.log",
+      "timestamp": "2025-08-08T13:25:40.903Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": true,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/unified-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.log",
+      "timestamp": "2025-08-08T13:25:48.368Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "ArrowRight,ArrowUp,ArrowLeft,ArrowDown",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/unified-3d-game.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.log",
+      "timestamp": "2025-08-08T13:25:55.394Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": false,
+        "waitForSelector": "canvas",
+        "delay": 4000,
+        "fullscreen": true,
+        "keySequence": "Space,Space",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.log",
+      "timestamp": "2025-08-08T13:26:30.113Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/agent-test-interface.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.log",
+      "timestamp": "2025-08-08T13:27:11.279Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "body",
+        "delay": 4000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": true
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/docs/index.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.log",
+      "timestamp": "2025-08-08T13:27:45.246Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/GDD.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.log",
+      "timestamp": "2025-08-08T13:28:20.687Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/index.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.log",
+      "timestamp": "2025-08-08T13:28:55.420Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/moodboard.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.log",
+      "timestamp": "2025-08-08T13:29:31.409Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/rules.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.log",
+      "timestamp": "2025-08-08T13:30:06.210Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/sitemap.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.log",
+      "timestamp": "2025-08-08T13:30:39.963Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/technical-spec.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.log",
+      "timestamp": "2025-08-08T13:31:15.607Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/test-modular.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.log",
+      "timestamp": "2025-08-08T13:31:38.390Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "body",
+        "delay": 4000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": true
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/test-suite-comprehensive.html",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.log",
+      "timestamp": "2025-08-08T13:32:00.909Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "body",
+        "delay": 4000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": true
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.log",
+      "timestamp": "2025-08-08T13:32:35.530Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.log",
+      "timestamp": "2025-08-08T13:33:09.804Z",
+      "options": {
+        "width": 768,
+        "height": 1024,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.log",
+      "timestamp": "2025-08-08T13:33:43.835Z",
+      "options": {
+        "width": 375,
+        "height": 667,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.log",
+      "timestamp": "2025-08-08T13:34:18.579Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.log",
+      "timestamp": "2025-08-08T13:34:52.793Z",
+      "options": {
+        "width": 768,
+        "height": 1024,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.log",
+      "timestamp": "2025-08-08T13:35:26.790Z",
+      "options": {
+        "width": 375,
+        "height": 667,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 2000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/nonexistent",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.log",
+      "timestamp": "2025-08-08T13:36:01.462Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/error",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.log",
+      "timestamp": "2025-08-08T13:36:36.186Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    },
+    {
+      "url": "http://localhost:8000/public/500",
+      "path": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.png",
+      "logPath": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.log",
+      "timestamp": "2025-08-08T13:37:10.947Z",
+      "options": {
+        "width": 1920,
+        "height": 1080,
+        "fullPage": true,
+        "waitForSelector": "canvas",
+        "delay": 3000,
+        "fullscreen": false,
+        "keySequence": "",
+        "runTests": false
+      }
+    }
+  ],
+  "agentComments": {
+    "website-beautifier": [
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/agent-test-interface.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/agent-test-interface.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/docs/index.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/docs/index.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/GDD.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/GDD.html",
+        "notes": [
+          "1 erreur(s) console/page"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/index.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/index.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/moodboard.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/moodboard.html",
+        "notes": [
+          "11 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/rules.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/rules.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/sitemap.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/sitemap.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/technical-spec.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/technical-spec.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/test-modular.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/test-modular.html",
+        "notes": [
+          "5 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-suite-comprehensive.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/test-suite-comprehensive.html",
+        "notes": [
+          "23 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.log",
+        "description": "Capture 768x1024 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.log",
+        "description": "Capture 375x667 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.log",
+        "description": "Capture 768x1024 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.log",
+        "description": "Capture 375x667 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/nonexistent",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/nonexistent",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/error",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/error",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/500",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/500",
+        "notes": [],
+        "priority": "medium"
+      }
+    ],
+    "babylon-game-finisher": [
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      }
+    ],
+    "threejs-game-finisher": [
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      }
+    ],
+    "js2d-game-finisher": [
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      }
+    ],
+    "fixer-agent": [
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-start-2025-08-08T13-23-06-634Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-move-2025-08-08T13-23-27-728Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/classic-2d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\classic-2d-game-action-2025-08-08T13-23-49-689Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/classic-2d-game.html",
+        "notes": [
+          "2 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-start-2025-08-08T13-24-11-104Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-move-2025-08-08T13-24-31-986Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-optimized-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\test-optimized-3d-game-action-2025-08-08T13-24-54-733Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/test-optimized-3d-game.html",
+        "notes": [
+          "4 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-start-2025-08-08T13-25-17-020Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-move-2025-08-08T13-25-21-870Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/threejs-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\threejs-3d-game-action-2025-08-08T13-25-28-780Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/threejs-3d-game.html",
+        "notes": [
+          "1 erreur(s) console/page",
+          "2 avertissement(s)"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-start-2025-08-08T13-25-35-272Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-move-2025-08-08T13-25-40-903Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/unified-3d-game.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\unified-3d-game-action-2025-08-08T13-25-48-368Z.log",
+        "description": "Capture 1920x1080 en plein écran de http://localhost:8000/public/unified-3d-game.html",
+        "notes": [
+          "1 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-main-2025-08-08T13-25-55-394Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/agent-test-interface.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-agent-test-interface-2025-08-08T13-26-30-113Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/agent-test-interface.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/docs/index.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-27-11-279Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/docs/index.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/GDD.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-GDD-2025-08-08T13-27-45-246Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/GDD.html",
+        "notes": [
+          "1 erreur(s) console/page"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/index.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-index-2025-08-08T13-28-20-688Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/index.html",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/moodboard.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-moodboard-2025-08-08T13-28-55-421Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/moodboard.html",
+        "notes": [
+          "11 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/rules.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-rules-2025-08-08T13-29-31-410Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/rules.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/sitemap.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-sitemap-2025-08-08T13-30-06-211Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/sitemap.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/technical-spec.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-technical-spec-2025-08-08T13-30-39-964Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/technical-spec.html",
+        "notes": [
+          "1 requête(s) réseau en échec"
+        ],
+        "priority": "high"
+      },
+      {
+        "url": "http://localhost:8000/public/test-modular.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-modular-2025-08-08T13-31-15-607Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/test-modular.html",
+        "notes": [
+          "5 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/test-suite-comprehensive.html",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\page-test-suite-comprehensive-2025-08-08T13-31-38-390Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/test-suite-comprehensive.html",
+        "notes": [
+          "23 avertissement(s)"
+        ],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-desktop-2025-08-08T13-32-00-910Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-tablet-2025-08-08T13-32-35-530Z.log",
+        "description": "Capture 768x1024 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\website-responsive-mobile-2025-08-08T13-33-09-805Z.log",
+        "description": "Capture 375x667 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-desktop-2025-08-08T13-33-43-836Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-tablet-2025-08-08T13-34-18-579Z.log",
+        "description": "Capture 768x1024 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\responsive-mobile-2025-08-08T13-34-52-793Z.log",
+        "description": "Capture 375x667 de http://localhost:8000/public/",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/nonexistent",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-35-26-791Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/nonexistent",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/error",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-01-462Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/error",
+        "notes": [],
+        "priority": "medium"
+      },
+      {
+        "url": "http://localhost:8000/public/500",
+        "image": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.png",
+        "log": "tools\\screenshots\\batch-2025-08-08T13-23-05-630Z\\error-page-2025-08-08T13-36-36-187Z.log",
+        "description": "Capture 1920x1080 de http://localhost:8000/public/500",
+        "notes": [],
+        "priority": "medium"
+      }
+    ]
+  },
+  "summary": {
+    "total": 32,
+    "games": 12,
+    "website": 4,
+    "responsive": 6,
+    "errors": 3
+  }
+}

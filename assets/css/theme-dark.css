@@ -1,0 +1,198 @@
+:root{
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --nav-link-color: #9cc5ff;
+  --nav-link-hover: rgba(156, 197, 255, 0.12);
+  --nav-link-active: #2563eb;
+}
+
+
+
+
+
+
+
+body[data-theme="dark"] {
+  /* Use unified color system - no overrides needed */
+  /* All colors now come from unified-colors.css */
+}
+
+
+
+  
+  
+  
+  
+  
+
+
+body[data-theme="dark"] .game-options {
+  background: rgba(16, 24, 48, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.55) !important;
+}
+
+body[data-theme="dark"] h4 {
+  color: #dbeafe;
+  background: linear-gradient(135deg, #60a5fa 0%, #7aa7ff 40%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body[data-theme="dark"] .option-button small {
+  color: #b9c4de !important;
+}
+
+body[data-theme="dark"] .nav-link {
+  color: #9cc5ff;
+}
+
+body[data-theme="dark"] .option-button {
+  background: linear-gradient(135deg, #2563eb, #7c3aed) !important;
+  color: #e6edf7 !important;
+  border-color: rgba(255,255,255,0.14) !important;
+}
+
+body[data-theme="dark"] .game-version-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+}
+
+.game-version-btn:active {
+  transform: translateY(0);
+}
+
+
+
+body[data-theme="dark"] .nav-sidebar::before {
+  background: radial-gradient(circle at 28% 18%, rgba(96, 165, 250, 0.08) 0%, transparent 52%),
+              radial-gradient(circle at 72% 82%, rgba(167, 139, 250, 0.08) 0%, transparent 52%) !important;
+}
+
+body[data-theme="dark"] .form-input {
+  background: rgba(255,255,255,0.06) !important;
+  color: #e5e7eb !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+body[data-theme="dark"] h3 {
+  color: #eaf2ff;
+}
+body[data-theme="dark"] .subtitle {
+  color: #cbd5e1;
+}
+
+body[data-theme="dark"] .glass-card {
+  color: #e6edf7;
+}
+body[data-theme="dark"] .glass-card .small {
+  color: #b9c4de;
+}
+
+body[data-theme="dark"] .btn-secondary {
+  color: #f8fafc !important;
+}
+
+body[data-theme="dark"] .filters input {
+  color: #e5ecff;
+}
+body[data-theme="dark"] .filters input::placeholder {
+  color: #9db5d9;
+}
+
+body[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+body[data-theme="dark"] .nav-link.active {
+  background: var(--nav-link-active) !important;
+  color: #f8fafc !important;
+}
+
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition-slow);
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-danger {
+  background: var(--error-color);
+  color: var(--text-primary);
+}
+
+.btn-success {
+  background: var(--success-color);
+  color: var(--text-primary);
+}
+
+
+
+
+.btn-primary efore {
+  left: 100%;
+}
+
+
+
+.btn-secondary ver {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+
+
+.btn-danger ry:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+
