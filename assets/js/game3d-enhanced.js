@@ -94,7 +94,7 @@ class Enhanced3DGame extends Game3D {
         const totalModels = letters.length;
         
         letters.forEach(letter => {
-            const modelPath = `models/letter-${letter.toLowerCase()}.fbx`;
+            const modelPath = `assets/models/letter-${letter.toLowerCase()}.fbx`;
             
             this.fbxLoader.load(
                 modelPath,
