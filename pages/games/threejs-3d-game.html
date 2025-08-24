@@ -2,17 +2,17 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/base-theme.css">
+    <link rel="stylesheet" href="../../assets/css/base-theme.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letters Cascade Challenge - Three.js 3D Version</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎨</text></svg>">
     <!-- FontAwesome CDN with fallback -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/shared.css">
-    <link rel="stylesheet" href="css/unified-colors.css">
-    <link rel="stylesheet" href="css/theme-dark.css">
-    <link rel="stylesheet" href="css/unified-layout.css">
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="../../assets/css/unified-colors.css">
+    <link rel="stylesheet" href="../../assets/css/theme-dark.css">
+    <link rel="stylesheet" href="../../assets/css/unified-layout.css">
     <!-- Add SEO meta tags and analytics script -->
     <meta name="description" content="Version 3D du jeu Letters Cascade Challenge, optimisée pour une expérience immersive en français." />
     <meta name="keywords" content="jeu 3D, lettres, cascade, Babylon.js, performance" />
@@ -370,12 +370,12 @@
     <!-- Unified Navigation Header -->
     <header class="unified-nav-header">
         <nav class="unified-nav-container">
-            <a href="index.html" class="unified-nav-logo">
+            <a href="../../index.html" class="unified-nav-logo">
                 <i class="fas fa-gamepad"></i>
                 <span>LCC</span>
             </a>
             
-            <button role="button" />
+            <button class="unified-nav-toggle" role="button" aria-expanded="false" aria-controls="nav-menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -383,13 +383,13 @@
 
             <ul class="unified-nav-menu" id="nav-menu" role="menubar">
                 <li class="unified-nav-item" role="none">
-                    <a href="index.html" class="unified-nav-link" role="menuitem">
+                    <a href="../../index.html" class="unified-nav-link" role="menuitem">
                         <i class="fas fa-home"></i>
                         <span>Accueil</span>
                     </a>
                 </li>
                 <li class="unified-nav-item" role="none">
-                    <a href="unified-3d-game.html" class="unified-nav-link" role="menuitem">
+                    <a href="../../pages/games/unified-3d-game.html" class="unified-nav-link" role="menuitem">
                         <i class="fas fa-cube"></i>
                         <span>3D Babylon.js</span>
                     </a>
@@ -407,13 +407,13 @@
                     </a>
                 </li>
                 <li class="unified-nav-item" role="none">
-                    <a href="rules.html" class="unified-nav-link" role="menuitem">
+                    <a href="../../pages/docs/rules.html" class="unified-nav-link" role="menuitem">
                         <i class="fas fa-book"></i>
                         <span>Règles</span>
                     </a>
                 </li>
                 <li class="unified-nav-item" role="none">
-                    <a href="docs/index.html" class="unified-nav-link" role="menuitem">
+                    <a href="../../pages/docs/index.html" class="unified-nav-link" role="menuitem">
                         <i class="fas fa-file-alt"></i>
                         <span>Documentation</span>
                     </a>
@@ -1691,13 +1691,13 @@
     </script>
     
     <!-- Three.js Library -->
-    <script src="js/libs/three.min.js"></script>
-    <script src="js/libs/tween.umd.js"></script>
-    <script src="js/libs/FBXLoader.js"></script>
+    <script src="../../assets/js/libs/three.min.js"></script>
+    <script src="../../assets/js/libs/tween.umd.js"></script>
+    <script src="../../assets/js/libs/FBXLoader.js"></script>
     
     <!-- Game Scripts -->
-    <script src="js/shaders.js"></script>
-    <script src="js/game3d-enhanced.js"></script>
+    <script src="../../assets/js/shaders.js"></script>
+    <script src="../../assets/js/game3d-enhanced.js"></script>
 
     <footer class="glass-panel" id="page-footer" style="margin: var(--spacing-xl,2rem) 0; text-align:center;"></footer>
   
