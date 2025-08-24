@@ -24,9 +24,195 @@
     <link rel="stylesheet" href="../../assets/css/unified-enhanced.css">
     
     <!-- Page-specific CSS -->
-    
-    
-    
+    <style>
+        /* Enhanced Background with Animated Gradients */
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #475569, #64748b);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--neutral-50);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Enhanced Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: var(--spacing-4xl) 0;
+            margin-bottom: var(--spacing-3xl);
+            position: relative;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #a855f7, #f59e0b, #10b981);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.1;
+            animation: titleGradient 8s ease infinite;
+            text-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes titleGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--neutral-200);
+            margin-bottom: var(--spacing-xl);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Enhanced Navigation */
+        .unified-nav-header {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .unified-nav-brand {
+            color: var(--primary-300);
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.3);
+        }
+        
+        .unified-nav-link {
+            color: var(--neutral-200);
+            font-weight: 600;
+        }
+        
+        .unified-nav-link:hover {
+            color: var(--primary-300);
+            background: rgba(96, 165, 250, 0.15);
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+        }
+        
+        /* Enhanced Content Sections */
+        .content-section {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .content-section:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-400);
+            transform: translateY(-2px);
+            transition: all var(--transition-normal);
+        }
+        
+        /* Enhanced Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--neutral-100);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--primary-300);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-300);
+        }
+        
+        p {
+            color: var(--neutral-200);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        /* Enhanced Links */
+        a {
+            color: var(--primary-300);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+        }
+        
+        a:hover {
+            color: var(--primary-200);
+            text-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+        }
+        
+        /* Enhanced Icons */
+        .fas, .fab, .far {
+            color: var(--primary-300);
+            margin-right: var(--spacing-sm);
+        }
+    </style>
 </head>
 <body>
     
