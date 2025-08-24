@@ -8,27 +8,8 @@
     <link rel="stylesheet" href="../assets/css/base-theme.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Docs – Letters Cascade Challenge</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{--bg:#0f172a;--panel:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--accent1:#667eea;--accent2:#764ba2}
-    *{box-sizing:border-box}
-    body{margin:0;display:grid;grid-template-columns:280px 1fr;min-height:100vh;background:linear-gradient(135deg,var(--bg),#111827);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    aside{background:linear-gradient(135deg,rgba(102,126,234,.15),rgba(118,75,162,.15));border-right:1px solid rgba(255,255,255,.06)}
-    header{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06);font-weight:800;letter-spacing:.3px}
-    .list{padding:10px}
-    .link{display:block;padding:10px 12px;margin:6px 8px;border-radius:10px;color:var(--text);text-decoration:none;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:all .2s}
-    .link:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.25);border-color:rgba(255,255,255,.16)}
-    .link.active{background:linear-gradient(135deg,rgba(102,126,234,.25),rgba(118,75,162,.25));border-color:transparent}
-    main{padding:24px 28px}
-    .content{max-width:980px;margin:0 auto;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:16px;backdrop-filter:blur(8px);padding:28px}
-    .content h1,.content h2,.content h3{color:#ffffff}
-    .content pre{background:#0b1220;padding:12px;border-radius:8px;overflow:auto;border:1px solid rgba(255,255,255,.06)}
-    .content code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
-    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
-    .badge{padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,var(--accent1),var(--accent2));font-size:12px;font-weight:700}
-    .file{font-size:12px;color:var(--muted)}
-    @media (max-width: 900px){body{grid-template-columns:1fr}aside{position:sticky;top:0;z-index:2}}
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
 </head>
 <body data-theme="dark">
     
@@ -52,8 +33,7 @@
       <div class="topbar">
         <div class="badge">Letters Cascade Challenge</div>
         <div class="file" id="filename"></div>
-      </div>
-      <!-- Add new section for user guides and technical documentation -->
+            <!-- Add new section for user guides and technical documentation -->
 <section id="user-guides">
     <h2>Guides Utilisateur</h2>
     <p>Cette section fournit des guides détaillés pour les utilisateurs, y compris des tutoriels pour les versions 2D et 3D du jeu.</p>
@@ -63,8 +43,7 @@
     </ul>
 </section>
       <div id="doc">Loading…</div>
-    </div>
-  </main>
+        </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
@@ -111,5 +90,57 @@
     <footer class="glass-panel" id="page-footer" style="margin: var(--spacing-xl,2rem) 0; text-align:center;"></footer>
   
     <script>(function(){try{var el=document.getElementById('page-footer');if(el){var d=new Date();el.textContent=d.toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});}}catch(e){}})();</script>
-  </body>
+  
+    <script>
+        // Enhanced animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // Animate hero elements
+            if (heroTitle) {
+                heroTitle.style.opacity = '0';
+                heroTitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroTitle.style.transition = 'all 1s ease';
+                    heroTitle.style.opacity = '1';
+                    heroTitle.style.transform = 'translateY(0)';
+                }, 200);
+            }
+            
+            if (heroSubtitle) {
+                heroSubtitle.style.opacity = '0';
+                heroSubtitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroSubtitle.style.transition = 'all 1s ease';
+                    heroSubtitle.style.opacity = '1';
+                    heroSubtitle.style.transform = 'translateY(0)';
+                }, 400);
+            }
+            
+            // Animate content sections with stagger
+            contentSections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    section.style.transition = 'all 0.6s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 600 + index * 100);
+            });
+            
+            // Add parallax effect to particles
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach((particle, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    particle.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        });
+</script></body>
 </html>

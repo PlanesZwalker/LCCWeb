@@ -6,123 +6,23 @@
     <title>Letters Cascade Challenge - Game Launcher</title>
     <meta name="description" content="Choose your game mode: 2D Classic, 3D Immersive, or AI Agents Platform">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🎮</text></svg>">
-    <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
-            color: #f8fafc;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        
-        .container {
-            max-width: 1000px;
-            padding: 2rem;
-        }
-        
-        h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        p {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
-        
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .game-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.125);
-            border-radius: 1rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(96, 165, 250, 0.5);
-        }
-        
-        .game-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #60a5fa;
-        }
-        
-        .game-card p {
-            font-size: 1rem;
-            margin: 0;
-            color: #cbd5e1;
-        }
-        
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .back-btn {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            color: #f8fafc;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .games-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .back-btn {
-                position: relative;
-                top: auto;
-                left: auto;
-                margin-bottom: 2rem;
-            }
-        }
-    </style>
+    
 </head>
 <body>
+    
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
     <a href="../../index.html" class="back-btn">← Back to Home</a>
     
     <div class="container">
@@ -164,5 +64,57 @@
             }
         }, 10000);
     </script>
-</body>
+
+    <script>
+        // Enhanced animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // Animate hero elements
+            if (heroTitle) {
+                heroTitle.style.opacity = '0';
+                heroTitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroTitle.style.transition = 'all 1s ease';
+                    heroTitle.style.opacity = '1';
+                    heroTitle.style.transform = 'translateY(0)';
+                }, 200);
+            }
+            
+            if (heroSubtitle) {
+                heroSubtitle.style.opacity = '0';
+                heroSubtitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroSubtitle.style.transition = 'all 1s ease';
+                    heroSubtitle.style.opacity = '1';
+                    heroSubtitle.style.transform = 'translateY(0)';
+                }, 400);
+            }
+            
+            // Animate content sections with stagger
+            contentSections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    section.style.transition = 'all 0.6s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 600 + index * 100);
+            });
+            
+            // Add parallax effect to particles
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach((particle, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    particle.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        });
+</script></body>
 </html>

@@ -7,10 +7,10 @@
     <meta name="description" content="Plan du site Letters Cascade Challenge">
     
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -24,641 +24,24 @@
     <link rel="stylesheet" href="../../assets/css/unified-enhanced.css">
     
     <!-- Page-specific CSS -->
-    <style>
-        /* ===== RESET & BASE STYLES ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body[data-theme="dark"] {
-            font-family: var(--font-primary, 'Inter', sans-serif);
-            background:
-              radial-gradient(1400px 900px at 12% 10%, rgba(59,130,246,0.10), transparent 60%),
-              radial-gradient(1400px 900px at 88% 92%, rgba(167,139,250,0.09), transparent 60%),
-              linear-gradient(135deg, #0a1226 0%, #0b1430 45%, #0e1d40 100%);
-            color: #e6edf7;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        /* ===== LAYOUT CONTAINERS ===== */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .sitemap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        /* ===== HEADER STYLES ===== */
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px 0;
-        }
-        
-        header h1 {
-            font-size: 36px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        header h1::before {
-            content: '🗺️';
-            font-size: 32px;
-        }
-        
-        header p {
-            opacity: 0.9;
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px 25px;
-            border-radius: 25px;
-            backdrop-filter: blur(10px);
-        }
-        
-        /* ===== GLASS PANEL EFFECTS ===== */
-        .glass-panel {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* ===== SITEMAP SECTIONS ===== */
-        .sitemap-section {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        .sitemap-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .sitemap-section:hover::before {
-            transform: translateX(0);
-        }
-        
-        .sitemap-section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .sitemap-section h2 {
-            color: #4ecdc4;
-            font-size: 24px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            position: relative;
-        }
-        
-        .sitemap-section h2::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(78, 205, 196, 0.5) 0%, transparent 100%);
-            margin-left: 15px;
-        }
-        
-        /* ===== SECTION ICONS ===== */
-        .sitemap-section h2::before {
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            font-size: 20px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .sitemap-section:nth-child(1) h2::before { content: '\f02d'; } /* Documentation - book */
-        .sitemap-section:nth-child(2) h2::before { content: '\f11b'; } /* 2D Games - gamepad */
-        .sitemap-section:nth-child(3) h2::before { content: '\f1b2'; } /* 3D Games - cube */
-        .sitemap-section:nth-child(4) h2::before { content: '\f015'; } /* Site - home */
-        
-        /* ===== NAVIGATION LISTS ===== */
-        .sitemap-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            gap: 8px;
-        }
-        
-        .sitemap-list li {
-            position: relative;
-            padding-left: 25px;
-            transition: all 0.2s ease;
-        }
-        
-        .sitemap-list li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #4ecdc4;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .sitemap-list li:hover::before {
-            transform: translateX(5px) scale(1.2);
-            color: #ff6b6b;
-        }
-        
-        .sitemap-list a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            background: transparent;
-        }
-        
-        .sitemap-list a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .sitemap-list a:hover::before {
-            left: 100%;
-        }
-        
-        .sitemap-list a:hover {
-            color: #4ecdc4;
-            background: rgba(78, 205, 196, 0.1);
-            transform: translateX(8px);
-            border-left: 3px solid #4ecdc4;
-        }
-        
-        /* ===== STATISTICS BAR ===== */
-        .stats-bar {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .stats-content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #4ecdc4;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        /* ===== SEARCH FUNCTIONALITY ===== */
-        .search-container {
-            margin-bottom: 30px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .search-box {
-            position: relative;
-            width: 100%;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 15px 50px 15px 20px;
-            border: none;
-            border-radius: 25px;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            font-size: 16px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
-            background: rgba(0, 0, 0, 0.8);
-        }
-        
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .search-icon {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4ecdc4;
-            font-size: 18px;
-        }
-        
-        /* ===== FOOTER STYLES ===== */
-        footer.glass-panel, footer {
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.9;
-            font-size: 14px;
-        }
-        
-        footer::before {
-            content: '⏰';
-            margin-right: 8px;
-        }
-        
-        /* ===== NAVIGATION ENHANCEMENT ===== */
-        #global-nav {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-        
-        .sitemap-section:nth-child(1) { animation-delay: 0.1s; }
-        .sitemap-section:nth-child(2) { animation-delay: 0.2s; }
-        .sitemap-section:nth-child(3) { animation-delay: 0.3s; }
-        .sitemap-section:nth-child(4) { animation-delay: 0.4s; }
-        
-        /* ===== HIGHLIGHT EFFECT ===== */
-        .highlight {
-            background: rgba(255, 107, 107, 0.2) !important;
-            animation: pulse 1s ease-in-out 3;
-        }
-        
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1024px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .sitemap-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-            }
-            
-            header h1 {
-                font-size: 28px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .sitemap-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            header h1 {
-                font-size: 24px;
-                flex-direction: column;
-            }
-            
-            header p {
-                font-size: 16px;
-                padding: 12px 20px;
-            }
-            
-            .stats-content {
-                gap: 20px;
-            }
-            
-            .sitemap-section {
-                padding: 20px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
-            
-            header {
-                padding: 20px 0;
-                margin-bottom: 30px;
-            }
-            
-            header h1 {
-                font-size: 20px;
-            }
-            
-            .sitemap-section {
-                padding: 15px;
-            }
-            
-            .sitemap-section h2 {
-                font-size: 18px;
-            }
-            
-            .sitemap-list a {
-                font-size: 14px;
-                padding: 8px 12px;
-            }
-            
-            .stats-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-        
-        /* ===== UTILITY CLASSES ===== */
-        .text-center { text-align: center; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .opacity-70 { opacity: 0.7; }
-        .opacity-80 { opacity: 0.8; }
-        .opacity-90 { opacity: 0.9; }
-    </style>
     
-    <style>
-        /* Base page styles */
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, var(--primary-600) 0%, var(--secondary-600) 100%);
-            color: var(--neutral-50);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-        
-        /* Unified Navigation */
-        .unified-nav-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .unified-nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-lg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 70px;
-        }
-        
-        .unified-nav-brand {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--primary-600);
-            text-decoration: none;
-        }
-        
-        .unified-nav-menu {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-lg);
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .unified-nav-link {
-            color: var(--neutral-700);
-            text-decoration: none;
-            font-weight: 500;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-md);
-            transition: all var(--transition-normal);
-        }
-        
-        .unified-nav-link:hover {
-            color: var(--primary-600);
-            background: rgba(99, 102, 241, 0.1);
-        }
-        
-        .unified-nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--neutral-700);
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: var(--spacing-sm);
-            border-radius: var(--radius-md);
-        }
-        
-        /* Main Content */
-        .main-content {
-            margin-top: 70px;
-            min-height: calc(100vh - 70px);
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-xl);
-        }
-        
-        /* Glass Panel System */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(25px);
-            border-radius: var(--radius-2xl);
-            padding: var(--spacing-2xl);
-            box-shadow: var(--shadow-xl);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: var(--spacing-xl);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-xl);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all var(--transition-normal);
-        }
-        
-        .glass-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        /* Button System */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-sm) var(--spacing-lg);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            text-decoration: none;
-            transition: all var(--transition-normal);
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--neutral-700);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .unified-nav-menu {
-                display: none;
-            }
-            
-            .unified-nav-menu.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                padding: var(--spacing-lg);
-                box-shadow: var(--shadow-lg);
-            }
-            
-            .unified-nav-toggle {
-                display: block;
-            }
-            
-            .container {
-                padding: var(--spacing-lg);
-            }
-            
-            .glass-panel {
-                padding: var(--spacing-xl);
-            }
-        }
-    </style>
+    
+    
 </head>
 <body>
-    <!-- Unified Navigation -->
+    
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+            <!-- Unified Navigation -->
     <header class="unified-nav-header">
         <div class="unified-nav-container">
             <a href="../../" class="unified-nav-brand">
@@ -682,16 +65,21 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <div class="container">
-            <!-- Unified Navigation -->
+    
     
 
-    <!-- Main Content -->
+    </div><div class="content-section"><!-- Main Content -->
     <main class="main-content">
         <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">🗺️ Plan du Site</h1>
+                <p class="hero-subtitle">Navigation complète du site web</p>
+            </section>
+            
+            
             <main class="container">
-        <section class="hero">
+        </div><div class="content-section"><section class="hero">
           <div class="hero-content">
             <h1 class="title-gradient-test">🗺️ Plan du Site</h1>
             <p class="subtitle">Toutes les pages HTML détectées automatiquement dans le dossier public</p>
@@ -702,7 +90,7 @@
           </div>
         </section>
 
-        <!-- Search Functionality -->
+        </div><div class="content-section"><!-- Search Functionality -->
         <div class="search-container">
             <div class="search-box">
                 <input id="input-z5ppua5mk" />
@@ -710,7 +98,7 @@
             </div>
         </div>
 
-        <!-- Statistics Bar -->
+        </div><div class="content-section"><!-- Statistics Bar -->
         <div class="stats-bar">
             <div class="stats-content">
                 <div class="stat-item">
@@ -733,21 +121,21 @@
         </div>
 
         <div class="sitemap-grid">
-            <section class="sitemap-section" data-category="documentation">
+            </div><div class="content-section"><section class="sitemap-section" data-category="documentation">
                 <h2>Documentation</h2>
                 <ul class="sitemap-list">
                     <li><a href="docs/index.html" data-keywords="documentation docs guide">docs/index.html</a></li>
                 </ul>
             </section>
 
-            <section class="sitemap-section" data-category="2d-games">
+            </div><div class="content-section"><section class="sitemap-section" data-category="2d-games">
                 <h2>Jeux 2D</h2>
                 <ul class="sitemap-list">
                     <li><a href="classic-2d-game.html" data-keywords="2d jeu classic classique">classic-2d-game.html</a></li>
                 </ul>
             </section>
 
-            <section class="sitemap-section" data-category="3d-games">
+            </div><div class="content-section"><section class="sitemap-section" data-category="3d-games">
                 <h2>Jeux 3D</h2>
                 <ul class="sitemap-list">
                     <li><a href="test-optimized-3d-game.html" data-keywords="3d jeu test optimized optimisé">test-optimized-3d-game.html</a></li>
@@ -756,7 +144,7 @@
                 </ul>
             </section>
 
-            <section class="sitemap-section" data-category="site">
+            </div><div class="content-section"><section class="sitemap-section" data-category="site">
                 <h2>Site</h2>
                 <ul class="sitemap-list">
                     <li><a href="agents_flowchart_table.html" data-keywords="agents flowchart table diagramme">agents_flowchart_table.html</a></li>
@@ -776,22 +164,22 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    </div><div class="content-section"><!-- Footer -->
     
 
-    <!-- Navigation Script -->
+    </div><div class="content-section"><!-- Navigation Script -->
     
 
-    <!-- Page-specific JavaScript -->
+    </div><div class="content-section"><!-- Page-specific JavaScript -->
         </div>
     </main>
 
-    <!-- Footer -->
+    </div><div class="content-section"><!-- Footer -->
     <footer class="glass-panel" style="margin-top: var(--spacing-2xl); text-align: center;">
         <p>&copy; 2025 Letters Cascade Challenge. Tous droits réservés.</p>
     </footer>
 
-    <!-- Navigation Script -->
+    </div><div class="content-section"><!-- Navigation Script -->
     <script>
         // Mobile navigation toggle
         const navToggle = document.getElementById('nav-toggle');
@@ -830,7 +218,7 @@
         });
     </script>
 
-    <!-- Page-specific JavaScript -->
+    </div><div class="content-section"><!-- Page-specific JavaScript -->
     
 <script defer src="js/credits.js"></script>
 <script>window.gameInitialized = true;</script>
@@ -839,5 +227,58 @@
             navigator.serviceWorker.register('service-worker.js').catch(()=>{}); 
         }
     </script>
-</body>
+
+    <script>
+        // Enhanced animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // Animate hero elements
+            if (heroTitle) {
+                heroTitle.style.opacity = '0';
+                heroTitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroTitle.style.transition = 'all 1s ease';
+                    heroTitle.style.opacity = '1';
+                    heroTitle.style.transform = 'translateY(0)';
+                }, 200);
+            }
+            
+            if (heroSubtitle) {
+                heroSubtitle.style.opacity = '0';
+                heroSubtitle.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    heroSubtitle.style.transition = 'all 1s ease';
+                    heroSubtitle.style.opacity = '1';
+                    heroSubtitle.style.transform = 'translateY(0)';
+                }, 400);
+            }
+            
+            // Animate content sections with stagger
+            contentSections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    section.style.transition = 'all 0.6s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 600 + index * 100);
+            });
+            
+            // Add parallax effect to particles
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const particles = document.querySelectorAll('.particle');
+                
+                particles.forEach((particle, index) => {
+                    const speed = 0.5 + (index * 0.1);
+                    particle.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        });
+</script></body>
 </html>
+</div>
