@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>🗺️ Plan du Site - Letters Cascade Challenge</title>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/base-theme.css" />
+    <link rel="stylesheet" href="css/shared.css" />
+    <link rel="stylesheet" href="css/unified-colors.css" />
+    <link rel="stylesheet" href="css/theme-dark.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body[data-theme="dark"] {
+            font-family: var(--font-primary, 'Inter', sans-serif);
+            background:
+              radial-gradient(1400px 900px at 12% 10%, rgba(59,130,246,0.10), transparent 60%),
+              radial-gradient(1400px 900px at 88% 92%, rgba(167,139,250,0.09), transparent 60%),
+              linear-gradient(135deg, #0a1226 0%, #0b1430 45%, #0e1d40 100%);
+            color: #e6edf7;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* ===== LAYOUT CONTAINERS ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        /* ===== HEADER STYLES ===== */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+        
+        header h1 {
+            font-size: 36px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        header h1::before {
+            content: '🗺️';
+            font-size: 32px;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* ===== GLASS PANEL EFFECTS ===== */
+        .glass-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* ===== SITEMAP SECTIONS ===== */
+        .sitemap-section {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .sitemap-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .sitemap-section:hover::before {
+            transform: translateX(0);
+        }
+        
+        .sitemap-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .sitemap-section h2 {
+            color: #4ecdc4;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .sitemap-section h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(78, 205, 196, 0.5) 0%, transparent 100%);
+            margin-left: 15px;
+        }
+        
+        /* ===== SECTION ICONS ===== */
+        .sitemap-section h2::before {
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sitemap-section:nth-child(1) h2::before { content: '\f02d'; } /* Documentation - book */
+        .sitemap-section:nth-child(2) h2::before { content: '\f11b'; } /* 2D Games - gamepad */
+        .sitemap-section:nth-child(3) h2::before { content: '\f1b2'; } /* 3D Games - cube */
+        .sitemap-section:nth-child(4) h2::before { content: '\f015'; } /* Site - home */
+        
+        /* ===== NAVIGATION LISTS ===== */
+        .sitemap-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 8px;
+        }
+        
+        .sitemap-list li {
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.2s ease;
+        }
+        
+        .sitemap-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #4ecdc4;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .sitemap-list li:hover::before {
+            transform: translateX(5px) scale(1.2);
+            color: #ff6b6b;
+        }
+        
+        .sitemap-list a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+        
+        .sitemap-list a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .sitemap-list a:hover::before {
+            left: 100%;
+        }
+        
+        .sitemap-list a:hover {
+            color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.1);
+            transform: translateX(8px);
+            border-left: 3px solid #4ecdc4;
+        }
+        
+        /* ===== STATISTICS BAR ===== */
+        .stats-bar {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .stats-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* ===== SEARCH FUNCTIONALITY ===== */
+        .search-container {
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            background: rgba(0, 0, 0, 0.8);
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4ecdc4;
+            font-size: 18px;
+        }
+        
+        /* ===== FOOTER STYLES ===== */
+        footer.glass-panel, footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        footer::before {
+            content: '⏰';
+            margin-right: 8px;
+        }
+        
+        /* ===== NAVIGATION ENHANCEMENT ===== */
+        #global-nav {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .sitemap-section:nth-child(1) { animation-delay: 0.1s; }
+        .sitemap-section:nth-child(2) { animation-delay: 0.2s; }
+        .sitemap-section:nth-child(3) { animation-delay: 0.3s; }
+        .sitemap-section:nth-child(4) { animation-delay: 0.4s; }
+        
+        /* ===== HIGHLIGHT EFFECT ===== */
+        .highlight {
+            background: rgba(255, 107, 107, 0.2) !important;
+            animation: pulse 1s ease-in-out 3;
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .sitemap-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+            }
+            
+            header h1 {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sitemap-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            header h1 {
+                font-size: 24px;
+                flex-direction: column;
+            }
+            
+            header p {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            
+            .stats-content {
+                gap: 20px;
+            }
+            
+            .sitemap-section {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px 0;
+                margin-bottom: 30px;
+            }
+            
+            header h1 {
+                font-size: 20px;
+            }
+            
+            .sitemap-section {
+                padding: 15px;
+            }
+            
+            .sitemap-section h2 {
+                font-size: 18px;
+            }
+            
+            .sitemap-list a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+            
+            .stats-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        /* ===== UTILITY CLASSES ===== */
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .opacity-70 { opacity: 0.7; }
+        .opacity-80 { opacity: 0.8; }
+        .opacity-90 { opacity: 0.9; }
+    </style>
+    
+    <script defer src="js/navigation.js"></script>
+    <script defer src="js/credits.js"></script>
+    <script>window.gameInitialized = true;</script>
+    <link rel="manifest" href="manifest.json" />
+    
+    <script>
+        if ('serviceWorker' in navigator) { 
+            navigator.serviceWorker.register('service-worker.js').catch(()=>{}); 
+        }
+    </script>
+    
+    <meta name="description" content="Plan du site – toutes les pages accessibles du projet Letters Cascade Challenge" />
+    <meta name="robots" content="index,follow" />
+</head>
+<body>
+    <nav class="nav-bar" aria-label="Navigation principale">
+      <div class="nav-links">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Accueil</a>
+        <a class="nav-link" href="agents_flowchart_table.html"><i class="fas fa-diagram-project"></i> Schéma Agents</a>
+        <a class="nav-link active" href="sitemap.html"><i class="fas fa-compass"></i> Plan du site</a>
+      </div>
+    </nav>
+    
+    <main class="container">
+        <section class="hero">
+          <div class="hero-content">
+            <h1 class="title-gradient-test">🗺️ Plan du Site</h1>
+            <p class="subtitle">Toutes les pages HTML détectées automatiquement dans le dossier public</p>
+            <div class="actions">
+              <a class="btn primary" href="index.html"><i class="fas fa-home"></i> Accueil</a>
+              <a class="btn subtle" href="agents_flowchart_table.html"><i class="fas fa-diagram-project"></i> Schéma Agents</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Search Functionality -->
+        <div class="search-container">
+            <div class="search-box">
+                <input id="input-z5ppua5mk" />
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+
+        <!-- Statistics Bar -->
+        <div class="stats-bar">
+            <div class="stats-content">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPages">8</div>
+                    <div class="stat-label">Pages Total</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="gamePages">4</div>
+                    <div class="stat-label">Jeux</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="docPages">1</div>
+                    <div class="stat-label">Documentation</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="sitePages">8</div>
+                    <div class="stat-label">Pages Site</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sitemap-grid">
+            <section class="sitemap-section" data-category="documentation">
+                <h2>Documentation</h2>
+                <ul class="sitemap-list">
+                    <li><a href="docs/index.html" data-keywords="documentation docs guide">docs/index.html</a></li>
+                </ul>
+            </section>
+
+            <section class="sitemap-section" data-category="2d-games">
+                <h2>Jeux 2D</h2>
+                <ul class="sitemap-list">
+                    <li><a href="classic-2d-game.html" data-keywords="2d jeu classic classique">classic-2d-game.html</a></li>
+                </ul>
+            </section>
+
+            <section class="sitemap-section" data-category="3d-games">
+                <h2>Jeux 3D</h2>
+                <ul class="sitemap-list">
+                    <li><a href="test-optimized-3d-game.html" data-keywords="3d jeu test optimized optimisé">test-optimized-3d-game.html</a></li>
+                    <li><a href="threejs-3d-game.html" data-keywords="3d jeu threejs three.js">threejs-3d-game.html</a></li>
+                    <li><a href="unified-3d-game.html" data-keywords="3d jeu unified unifié">unified-3d-game.html</a></li>
+                </ul>
+            </section>
+
+            <section class="sitemap-section" data-category="site">
+                <h2>Site</h2>
+                <ul class="sitemap-list">
+                    <li><a href="agents_flowchart_table.html" data-keywords="agents flowchart table diagramme">agents_flowchart_table.html</a></li>
+                    <li><a href="GDD.html" data-keywords="gdd game design document">GDD.html</a></li>
+                    <li><a href="index.html" data-keywords="accueil home index">index.html</a></li>
+                    <li><a href="moodboard.html" data-keywords="moodboard mood board inspiration">moodboard.html</a></li>
+                    <li><a href="rules.html" data-keywords="rules règles jeu">rules.html</a></li>
+                    <li><a href="technical-spec.html" data-keywords="technical spec specification technique">technical-spec.html</a></li>
+                    <li><a href="test-modular.html" data-keywords="test modular modulaire">test-modular.html</a></li>
+                    <li><a href="test-suite-comprehensive.html" data-keywords="test suite comprehensive complet">test-suite-comprehensive.html</a></li>
+                </ul>
+            </section>
+        </div>
+
+        <footer>
+            Généré le 2025-08-08T22:14:40.544Z
+        </footer>
+    </main>
+
+    <script>
+        // Enhanced Search Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('sitemapSearch');
+            const sections = document.querySelectorAll('.sitemap-section');
+            const links = document.querySelectorAll('.sitemap-list a');
+
+            let searchTimeout;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    performSearch(this.value.toLowerCase().trim());
+                }, 300);
+            });
+
+            function performSearch(query) {
+                if (!query) {
+                    resetSearch();
+                    return;
+                }
+
+                let hasResults = false;
+
+                sections.forEach(section => {
+                    const sectionLinks = section.querySelectorAll('.sitemap-list a');
+                    let sectionHasResults = false;
+
+                    sectionLinks.forEach(link => {
+                        const keywords = link.getAttribute('data-keywords') || '';
+                        const text = link.textContent.toLowerCase();
+                        const href = link.getAttribute('href').toLowerCase();
+                        
+                        const matches = text.includes(query) || 
+                                       keywords.includes(query) || 
+                                       href.includes(query);
+
+                        const listItem = link.parentElement;
+                        
+                        if (matches) {
+                            listItem.style.display = 'block';
+                            listItem.classList.add('highlight');
+                            sectionHasResults = true;
+                            hasResults = true;
+                            
+                            setTimeout(() => {
+                                listItem.classList.remove('highlight');
+                            }, 2000);
+                        } else {
+                            listItem.style.display = 'none';
+                            listItem.classList.remove('highlight');
+                        }
+                    });
+
+                    section.style.display = sectionHasResults ? 'block' : 'none';
+                });
+
+                // Show "no results" message if needed
+                if (!hasResults) {
+                    showNoResults();
+                } else {
+                    hideNoResults();
+                }
+            }
+
+            function resetSearch() {
+                sections.forEach(section => {
+                    section.style.display = 'block';
+                    const listItems = section.querySelectorAll('.sitemap-list li');
+                    listItems.forEach(item => {
+                        item.style.display = 'block';
+                        item.classList.remove('highlight');
+                    });
+                });
+                hideNoResults();
+            }
+
+            function showNoResults() {
+                hideNoResults();
+                const noResultsDiv = document.createElement('div');
+                noResultsDiv.id = 'no-results';
+                noResultsDiv.className = 'glass-panel text-center';
+                noResultsDiv.style.margin = '20px 0';
+                noResultsDiv.innerHTML = `
+                    <h3 style="color: #ff6b6b; margin-bottom: 10px;">
+                        <i class="fas fa-search"></i> Aucun résultat trouvé
+                    </h3>
+                    <p style="opacity: 0.8;">Essayez avec d'autres mots-clés ou vérifiez l'orthographe.</p>
+                `;
+                document.querySelector('.sitemap-grid').appendChild(noResultsDiv);
+            }
+
+            function hideNoResults() {
+                const existing = document.getElementById('no-results');
+                if (existing) {
+                    existing.remove();
+                }
+            }
+
+            // Keyboard navigation
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    resetSearch();
+                    this.blur();
+                }
+            });
+
+            // Auto-focus search on '/' key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === '/' && document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+
+            console.log('🗺️ Enhanced Sitemap loaded with search functionality');
+        });
+
+        // Update statistics dynamically
+        function updateStats() {
+            const sections = document.querySelectorAll('.sitemap-section');
+            const gamePages = document.querySelectorAll('[data-category="2d-games"] a, [data-category="3d-games"] a').length;
+            const docPages = document.querySelectorAll('[data-category="documentation"] a').length;
+            const sitePages = document.querySelectorAll('[data-category="site"] a').length;
+            const totalPages = document.querySelectorAll('.sitemap-list a').length;
+
+            document.getElementById('totalPages').textContent = totalPages;
+            document.getElementById('gamePages').textContent = gamePages;
+            document.getElementById('docPages').textContent = docPages;
+            document.getElementById('sitePages').textContent = sitePages;
+        }
+
+        // Initialize stats
+        document.addEventListener('DOMContentLoaded', updateStats);
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters Cascade Challenge - Game Launcher</title>
+    <meta name="description" content="Choose your game mode: 2D Classic, 3D Immersive, or AI Agents Platform">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🎮</text></svg>">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1000px;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(96, 165, 250, 0.5);
+        }
+        
+        .game-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+        
+        .game-card p {
+            font-size: 1rem;
+            margin: 0;
+            color: #cbd5e1;
+        }
+        
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            color: #f8fafc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-btn {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+    
+    <div class="container">
+        <h1>🎮 Game Launcher</h1>
+        <p>Choose your preferred game mode and start playing Letters Cascade Challenge!</p>
+        
+        <div class="games-grid">
+            <a href="classic-2d-game.html" class="game-card">
+                <span class="game-icon">📱</span>
+                <h3>Classic 2D Mode</h3>
+                <p>Traditional Tetris-style gameplay on an 8×8 grid. Perfect for quick sessions and mobile play.</p>
+            </a>
+            
+            <a href="threejs-3d-game.html" class="game-card">
+                <span class="game-icon">🌐</span>
+                <h3>3D Immersive Mode</h3>
+                <p>Advanced 3D environment with camera controls, lighting effects, and multi-layer gameplay.</p>
+            </a>
+            
+            <a href="agents-discussion.html" class="game-card">
+                <span class="game-icon">🤖</span>
+                <h3>AI Agents Platform</h3>
+                <p>Advanced AI-powered development environment with 13 specialized agents for game creation.</p>
+            </a>
+            
+            <a href="moodboard.html" class="game-card">
+                <span class="game-icon">🎨</span>
+                <h3>Visual Moodboard</h3>
+                <p>Explore the visual design inspiration and creative direction for the game.</p>
+            </a>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect to classic 2D game after 10 seconds if no choice is made
+        setTimeout(() => {
+            if (confirm('No game selected. Would you like to try the Classic 2D Mode?')) {
+                window.location.href = 'classic-2d-game.html';
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
