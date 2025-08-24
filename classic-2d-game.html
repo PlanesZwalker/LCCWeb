@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Letters Cascade Challenge - 2D Classique (Enhanced)</title>
+  <link rel="stylesheet" href="css/base-theme.css" />
+  <link rel="stylesheet" href="css/shared.css" />
+  <link rel="stylesheet" href="css/unified-colors.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+  <style>
+/* Responsive design */
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 1200px) {
+    .game-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 5px;
+    }
+    
+    .ui-element {
+        font-size: 14px;
+    }
+}
+
+/* Flexible layout */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flex-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+@media (max-width: 600px) {
+    .flex-item {
+        flex: 100%;
+    }
+}
+
+/* Start Screen Styles */
+.start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.start-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.start-content {
+    text-align: center;
+    color: white;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+.start-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.start-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.start-button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    margin: 1rem;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+}
+
+.start-button:active {
+    transform: translateY(-1px);
+}
+
+.game-instructions {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-instructions h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.instructions-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.instructions-list li {
+    padding: 0.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.instructions-list li::before {
+    content: "🎯";
+    font-size: 1.2rem;
+}
+
+/* Game State Overlay */
+.game-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 2px solid rgba(102, 126, 234, 0.4);
+    color: white;
+    text-align: center;
+    z-index: 500;
+    display: none;
+}
+
+.game-overlay.show {
+    display: block;
+}
+
+.overlay-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #667eea;
+}
+
+.overlay-message {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.overlay-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.overlay-button {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.overlay-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.overlay-button.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive design */
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+@media (max-width: 1200px) {
+    .game-container {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    canvas {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    .start-title {
+        font-size: 2.5rem;
+    }
+    
+    .start-subtitle {
+        font-size: 1rem;
+    }
+    
+    .start-button {
+        font-size: 1.2rem;
+        padding: 0.8rem 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 5px;
+    }
+    
+    .ui-element {
+        font-size: 14px;
+    }
+    
+    .start-title {
+        font-size: 2rem;
+    }
+    
+    .start-content {
+        padding: 1rem;
+    }
+}
+
+/* Flexible layout */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flex-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+@media (max-width: 600px) {
+    .flex-item {
+        flex: 100%;
+    }
+}
+
+/* Enhanced game styles */
+.enhanced-wrap {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+}
+
+.enhanced-panel {
+  background: var(--glass-bg-primary);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border-primary);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.canvas-zone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--glass-bg-secondary);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-card > div:first-child {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card > div:last-child {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-400);
+}
+
+.game-version-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.controls button {
+  background: var(--glass-bg-secondary);
+  border: 1px solid var(--glass-border-primary);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.controls button:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-1px);
+}
+
+.controls button:active {
+  transform: translateY(0);
+}
+
+#gameCanvas {
+  width: 900px; height: 600px;
+  border-radius: 14px;
+  background: rgba(0,0,0,.25);
+  border: 2px solid rgba(255,255,255,.28);
+  box-shadow: var(--shadow-lg);
+}
+
+.queue {
+  display: flex; gap: 6px; flex-wrap: wrap; color: #fff;
+}
+
+.queue .letter { 
+  min-width: 28px; height: 28px; display: grid; place-items: center;
+  border-radius: 6px; border: 1px solid rgba(255,255,255,.2);
+  background: rgba(255,255,255,.15);
+}
+
+header.enhanced-header { 
+  padding: 10px 16px; color: #fff; font-weight: 700; letter-spacing: .5px; 
+}
+
+.hint { 
+  color: #e9efff; opacity: .85; font-size: 12px; 
+}
+
+/* Loading indicator */
+.loading-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2000;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+  </style>
+</head>
+<body data-theme="dark">
+  <header class="enhanced-header unified-glass-panel">
+    <h1 class="unified-hero-title">🎮 Letters Cascade Challenge</h1>
+    <p class="unified-hero-subtitle">Formez des mots, battez des records, devenez le champion des lettres !</p>
+  </header>
+
+  <!-- Start Screen -->
+  <div class="start-screen" id="startScreen">
+    <div class="start-content">
+      <h1 class="start-title">🎮 Letters Cascade</h1>
+      <p class="start-subtitle">
+        Bienvenue dans le jeu de lettres en cascade !<br>
+        Formez des mots en plaçant les lettres qui tombent et obtenez le meilleur score.
+      </p>
+      
+      <button class="start-button" id="startGameBtn">
+        🚀 Commencer le Jeu
+      </button>
+      
+      <div class="game-instructions">
+        <h3>🎯 Comment jouer :</h3>
+        <ul class="instructions-list">
+          <li>Utilisez les flèches ← → pour déplacer les lettres</li>
+          <li>Appuyez sur Entrée pour placer la lettre</li>
+          <li>Formez des mots pour gagner des points</li>
+          <li>Évitez que la grille se remplisse complètement</li>
+          <li>Plus vous formez de mots, plus le niveau augmente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Chargement du jeu...</p>
+  </div>
+
+  <!-- Game Overlay -->
+  <div class="game-overlay" id="gameOverlay">
+    <h2 class="overlay-title" id="overlayTitle">Pause</h2>
+    <p class="overlay-message" id="overlayMessage">Le jeu est en pause.</p>
+    <div class="overlay-buttons">
+      <button class="overlay-button" id="resumeBtn">▶ Reprendre</button>
+      <button class="overlay-button secondary" id="restartBtn">↻ Recommencer</button>
+      <button class="overlay-button secondary" id="mainMenuBtn">🏠 Menu Principal</button>
+    </div>
+  </div>
+
+  <div class="enhanced-wrap">
+    <aside class="enhanced-panel">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div>Score</div>
+          <div id="score">0</div>
+        </div>
+        <div class="stat-card">
+          <div>Niveau</div>
+          <div id="level">1</div>
+        </div>
+        <div class="stat-card">
+          <div>Combo</div>
+          <div id="combo">1x</div>
+        </div>
+        <div class="stat-card">
+          <div>Mots</div>
+          <div id="words">0</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="game-version-title" style="color:#fff;">File d'attente</h3>
+        <div id="letterQueue" class="queue"></div>
+      </div>
+
+      <div>
+        <h3 class="game-version-title" style="color:#fff;">Contrôles</h3>
+        <div class="controls">
+          <button id="pauseBtn">⏸ Pause</button>
+          <button id="resumeBtn2">▶ Reprendre</button>
+          <button id="restartBtn2">↻ Recommencer</button>
+        </div>
+        <div class="hint">Astuce: utilisez les flèches du clavier pour déplacer, Entrée pour valider.</div>
+      </div>
+    </aside>
+
+    <main class="canvas-zone">
+      <div class="controls unified-text-center" style="position:absolute;top:10px;right:10px;display:flex;gap:8px;">
+        <button data-difficulty="easy">Facile</button>
+        <button data-difficulty="normal">Normal</button>
+        <button data-difficulty="hard">Difficile</button>
+        <button data-difficulty="extreme">Extrême</button>
+      </div>
+      <canvas id="gameCanvas" width="900" height="600" data-difficulty="normal"></canvas>
+    </main>
+  </div>
+
+  <script type="module" src="js/game-modular.js?v=20250823"></script>
+  <script>
+    // Game state management
+    let gameInstance = null;
+    let gameState = 'start'; // 'start', 'loading', 'playing', 'paused', 'gameover'
+
+    // Initialize game when DOM is loaded
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🎮 DOMContentLoaded - Starting game initialization...');
+      console.log('🎮 window.LettersCascadeGameModular available:', !!window.LettersCascadeGameModular);
+      
+      // Show loading indicator
+      document.getElementById('loadingIndicator').style.display = 'block';
+      
+      try {
+        // Wait for modules to load and be available
+        let attempts = 0;
+        const maxAttempts = 50; // 5 seconds max
+        
+        while (!window.LettersCascadeGameModular && attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          attempts++;
+          console.log(`⏳ Waiting for game module... (${attempts}/${maxAttempts})`);
+        }
+        
+        if (!window.LettersCascadeGameModular) {
+          throw new Error('Game module not loaded after 5 seconds');
+        }
+        
+        console.log('📦 Game module found, initializing...');
+        
+        // Create and initialize the game instance with timeout
+        gameInstance = new window.LettersCascadeGameModular();
+        
+        // Add timeout to game initialization
+        const initPromise = gameInstance.init();
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Game initialization timeout after 15 seconds')), 15000);
+        });
+        
+        await Promise.race([initPromise, timeoutPromise]);
+        
+        // Verify initialization
+        if (!gameInstance.isInitialized) {
+          throw new Error('Game initialization completed but isInitialized flag is false');
+        }
+        
+        // Hide loading and show start screen
+        document.getElementById('loadingIndicator').style.display = 'none';
+        document.getElementById('startScreen').classList.remove('hidden');
+        
+        // Update start button to show it's ready
+        const startBtn = document.getElementById('startGameBtn');
+        startBtn.innerHTML = '🚀 Commencer le Jeu';
+        startBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        startBtn.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
+        
+        // Show initialization status
+        if (gameInstance && gameInstance.useFallback) {
+          console.log('⚠️ Game initialized with fallback mode (some features may be limited)');
+          startBtn.innerHTML = '🚀 Commencer le Jeu (Mode Simplifié)';
+          startBtn.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+          startBtn.style.boxShadow = '0 8px 25px rgba(245, 158, 11, 0.4)';
+        } else {
+          console.log('✅ Game initialized successfully with full features!');
+        }
+        
+      } catch (error) {
+        console.error('❌ Failed to initialize game:', error);
+        document.getElementById('loadingIndicator').style.display = 'none';
+        document.getElementById('loadingIndicator').innerHTML = `
+          <div style="color: white; text-align: center;">
+            <p>❌ Erreur lors du chargement du jeu</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">${error.message}</p>
+            <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">
+              Recharger la page
+            </button>
+          </div>
+        `;
+      }
+    });
+
+    // Start game button
+    document.getElementById('startGameBtn').addEventListener('click', async () => {
+      const startBtn = document.getElementById('startGameBtn');
+      const originalText = startBtn.innerHTML;
+      
+      if (!gameInstance) {
+        console.error('❌ Game instance not available');
+        startBtn.innerHTML = '⏳ Chargement...';
+        startBtn.disabled = true;
+        
+        // Wait a bit and try again
+        setTimeout(() => {
+          startBtn.innerHTML = originalText;
+          startBtn.disabled = false;
+        }, 2000);
+        return;
+      }
+      
+      // Game should already be initialized from DOMContentLoaded
+      if (!gameInstance.isInitialized) {
+        console.error('❌ Game not initialized - this should not happen');
+        alert('Erreur: Le jeu n\'est pas initialisé. Veuillez recharger la page.');
+        return;
+      }
+      
+      // Game is ready, start it
+      try {
+        startBtn.innerHTML = '🚀 Démarrage...';
+        startBtn.disabled = true;
+        
+        gameState = 'playing';
+        document.getElementById('startScreen').classList.add('hidden');
+        gameInstance.startGame();
+        
+        console.log('🎮 Game started successfully!');
+        
+      } catch (error) {
+        console.error('❌ Failed to start game:', error);
+        startBtn.innerHTML = originalText;
+        startBtn.disabled = false;
+        document.getElementById('startScreen').classList.remove('hidden');
+        alert('Erreur lors du démarrage du jeu: ' + error.message);
+      }
+    });
+
+    // Pause button
+    document.getElementById('pauseBtn').addEventListener('click', () => {
+      if (gameInstance && gameState === 'playing') {
+        gameState = 'paused';
+        gameInstance.pauseGame();
+        showOverlay('Pause', 'Le jeu est en pause.', ['resume', 'restart', 'mainMenu']);
+      }
+    });
+
+    // Resume buttons
+    document.getElementById('resumeBtn').addEventListener('click', () => {
+      if (gameInstance && gameState === 'paused') {
+        gameState = 'playing';
+        gameInstance.resumeGame();
+        hideOverlay();
+      }
+    });
+
+    document.getElementById('resumeBtn2').addEventListener('click', () => {
+      if (gameInstance && gameState === 'paused') {
+        gameState = 'playing';
+        gameInstance.resumeGame();
+        hideOverlay();
+      }
+    });
+
+    // Restart buttons
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      if (gameInstance) {
+        gameInstance.resetGame();
+        gameState = 'playing';
+        gameInstance.startGame();
+        hideOverlay();
+      }
+    });
+
+    document.getElementById('restartBtn2').addEventListener('click', () => {
+      if (gameInstance) {
+        gameInstance.resetGame();
+        gameState = 'playing';
+        gameInstance.startGame();
+        hideOverlay();
+      }
+    });
+
+    // Main menu button
+    document.getElementById('mainMenuBtn').addEventListener('click', () => {
+      if (gameInstance) {
+        gameInstance.resetGame();
+      }
+      gameState = 'start';
+      hideOverlay();
+      document.getElementById('startScreen').classList.remove('hidden');
+    });
+
+    // Show overlay
+    function showOverlay(title, message, buttons = []) {
+      document.getElementById('overlayTitle').textContent = title;
+      document.getElementById('overlayMessage').textContent = message;
+      document.getElementById('gameOverlay').classList.add('show');
+    }
+
+    // Hide overlay
+    function hideOverlay() {
+      document.getElementById('gameOverlay').classList.remove('show');
+    }
+
+    // UI sync from GameCore if it exposes events; fallback updates for demo
+    (function syncUI(){
+      const q = document.getElementById('letterQueue');
+      if (!q) return;
+      const sample = (window.sampleQueue || ['A','R','T','E','S','N','I','O']).slice(0,8);
+      q.innerHTML = sample.map(l => `<span class="letter">${l}</span>`).join('');
+    })();
+
+    // Difficulty buttons toggle (applies via URL param and reloads to set initial fall speed)
+    (function difficultyMenu(){
+      document.querySelectorAll('[data-difficulty]').forEach(btn => {
+        if (btn.tagName.toLowerCase() === 'button') {
+          btn.addEventListener('click', () => {
+            const diff = btn.getAttribute('data-difficulty');
+            const url = new URL(window.location.href);
+            url.searchParams.set('difficulty', diff);
+            window.location.replace(url.toString());
+          });
+        }
+      });
+    })();
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (gameState === 'playing') {
+        switch(e.code) {
+          case 'Escape':
+            e.preventDefault();
+            document.getElementById('pauseBtn').click();
+            break;
+          case 'KeyR':
+            if (e.ctrlKey) {
+              e.preventDefault();
+              document.getElementById('restartBtn2').click();
+            }
+            break;
+        }
+      } else if (gameState === 'paused') {
+        if (e.code === 'Escape') {
+          e.preventDefault();
+          document.getElementById('resumeBtn').click();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+

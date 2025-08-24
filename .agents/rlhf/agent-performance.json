@@ -1,0 +1,30 @@
+{
+  "fixer-agent": {
+    "totalRatings": 2,
+    "averageRating": 2,
+    "ratings": [
+      null,
+      4
+    ],
+    "improvementTrend": [],
+    "lastUpdated": "2025-08-23T14:29:18.800Z"
+  },
+  "beautifier-agent": {
+    "totalRatings": 1,
+    "averageRating": 5,
+    "ratings": [
+      5
+    ],
+    "improvementTrend": [],
+    "lastUpdated": "2025-08-23T14:29:22.931Z"
+  },
+  "test-runner": {
+    "totalRatings": 1,
+    "averageRating": 2,
+    "ratings": [
+      2
+    ],
+    "improvementTrend": [],
+    "lastUpdated": "2025-08-23T14:29:26.946Z"
+  }
+}
